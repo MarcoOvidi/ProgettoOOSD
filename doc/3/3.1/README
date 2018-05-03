@@ -1,0 +1,4 @@
+È stata data priorità alla strutturazione delle classi Model, in quanto rispecchiano la logica del sistema.
+Le classi nel Controller sono organizzate seguendo quanto emerso nell'analisi Entity-Boundary-Controller ma andranno riviste,
+in quanto non si sono considerati struttura interna dei vari controller e dettagli implementativi.
+Le classi View e VO sono solo una bozza.
