@@ -53,12 +53,12 @@ public class Document {
 		this.pageList.addLast(p);
 	}
 	
-	public void setScanningProject(ScanningWorkProject swp) {
-		this.scanningWorkProject=swp;
+	public void setScanningProject(UUID id) {
+		this.scanningWorkProject=id;
 	}
 	
-	public void setTranscriptionWorkProject(TranscriptionWorkProject twp) {
-		this.transcriptionWorkProject=twp;
+	public void setTranscriptionWorkProject(UUID twp) {
+		this.transcriptionWorkProject=id;
 	}
 	
 	
