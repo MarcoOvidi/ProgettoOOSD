@@ -3,8 +3,11 @@ package model;
 import java.util.LinkedList;
 
 import vo.UserRoles;
-import vo.UUID;
+import vo.UUIDUser;
+import vo.UUIDTranscriptionWorkProject;
+import vo.UUIDScanningWorkProject;
 import vo.UserInformations;
+import vo.UserPermissions;
 import controller.SessionDataHandler;
 
 
@@ -13,13 +16,15 @@ public class User {
 
 	//variabili istanza
 	
-	private UUID id;
+	private UUIDUser id;
 	private SessionDataHandler session;
 	private String username;
 	private UserInformations informations;
 	private UserRoles role;
-	private LinkedList<UUID> projects;
-	private LinkedList<UUID> bookMarks;
+	private UserPermissions permissions;
+	private LinkedList<UUIDTranscriptionWorkProject> transcriptionProject;
+	private LinkedList<UUIDScanningWorkProject> digitalizationProject;
+	//TODO bhooooo???!!!   private LinkedList<UUID> bookMarks;
 	private Boolean active;
 	
 	/**
@@ -33,7 +38,7 @@ public class User {
 	
 	//Metodi get e set
 	
-	public UUID getID() {
+	public UUIDUser getID() {
 		return this.id;
 	}
 	
@@ -45,11 +50,11 @@ public class User {
 		return this.informations;
 	}
 	
-	public LinkedList<UserRoles> getRole() {
+	public UserRoles getRole() {
 		return this.role;
 	}
 	
-	public getPermissions() {
+	public UserPermissions getPermissions() {
 		return this.permissions;
 	}
 	

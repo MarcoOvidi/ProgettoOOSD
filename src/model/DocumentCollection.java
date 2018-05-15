@@ -1,16 +1,17 @@
 package model;
 
 import java.util.LinkedList;
-import vo.UUID;
+import vo.UUIDDocumentCollection;
+import vo.UUIDDocument;
 import controller.SessionDataHandler;
 
 public class DocumentCollection {
 	//variabili istanza
 	
-	private UUID id;
+	private UUIDDocumentCollection id;
 	private SessionDataHandler session;
 	private String name;
-	private LinkedList<UUID> documents;
+	private LinkedList<UUIDDocument> documents;
 	
 	
 	//Costruttore
@@ -21,7 +22,7 @@ public class DocumentCollection {
 	
 	// metodi get e set
 	
-	public UUID getID() {
+	public UUIDDocumentCollection getID() {
 		return this.id;
 	}
 	
@@ -29,11 +30,11 @@ public class DocumentCollection {
 		return this.name;
 	}
 	
-	public LinkedList<UUID> getDocuments() {
+	public LinkedList<UUIDDocument> getDocuments() {
 		return this.documents;
 	}
 	
-	public void setID(UUID id) {
+	public void setID(UUIDDocumentCollection id) {
 		this.id=id;
 	}
 	
@@ -41,17 +42,17 @@ public class DocumentCollection {
 		this.name=n;
 	}
 	
-	public void setDocuments(UUID id) {
+	public void setDocuments(UUIDDocument id) {
 		this.documents.addLast(id);
 	}
 	
 	// metodi ausiliari
 	
-	public boolean addDocuments(LinkedList<UUID> l) {
+	public boolean addDocuments(LinkedList<UUIDDocument> l) {
 		return this.documents.addAll(l);
 	}
 	
-	public boolean removeDocument(UUID id) {
+	public boolean removeDocument(UUIDDocument id) {
 		return this.documents.remove(id);
 	}
 	

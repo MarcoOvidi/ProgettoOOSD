@@ -1,11 +1,11 @@
 package model;
 
-import vo.UUID;
+import vo.UUIDUser;
 public class PageScanStaff {
 	//variabili istanza
 	
-	private UUID digitalizer;
-	private UUID reviser;
+	private UUIDUser digitalizer;
+	private UUIDUser reviser;
 	
 	//costruttore
 	
@@ -15,11 +15,11 @@ public class PageScanStaff {
 	
 	//metodi get e set 
 	
-	public UUID getDigitalizer() {
+	public UUIDUser getDigitalizer() {
 		return this.digitalizer;
 	}
 	
-	public UUID getReviser() {
+	public UUIDUser getReviser() {
 		return this.reviser;
 	}
 	

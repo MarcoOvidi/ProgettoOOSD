@@ -1,14 +1,14 @@
 package model;
 
 import java.util.LinkedList;
-import vo.UUID;
+import vo.UUIDUser;
 import vo.UUIDScanningWorkProject;
 
 public class ScanningWorkProject extends WorkProject {
 	
 	//variabili istanza
-	private LinkedList<UUID> digitalizers;
-	private LinkedList<UUID> revisers;
+	private LinkedList<UUIDUser> digitalizers;
+	private LinkedList<UUIDUser> revisers;
 	private Boolean completed;
 	private UUIDScanningWorkProject id;
 	
@@ -23,11 +23,11 @@ public class ScanningWorkProject extends WorkProject {
 		return this.completed;
 	}
 	
-	public LinkedList<UUID> getDigitalizers(){
+	public LinkedList<UUIDUser> getDigitalizers(){
 		return this.digitalizers;
 	}
 	
-	public LinkedList<UUID> getRevisers(){
+	public LinkedList<UUIDUser> getRevisers(){
 		return this.revisers;
 	}
 	

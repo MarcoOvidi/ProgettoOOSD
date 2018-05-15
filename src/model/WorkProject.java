@@ -1,15 +1,15 @@
 package model;
 
-import vo.UUID;
+import vo.UUIDUser;
 import controller.SessionDataHandler;
 import java.util.Date;
 
 public class WorkProject {
 	
 	//variabili istanza
-	private UUID id;
+	//TODO come risolviamo ?private UUID id;
 	private SessionDataHandler session;
-	private UUID coordinator;
+	private UUIDUser coordinator;
 	private Date publishingDate;
 	
 	// costruttore
@@ -19,11 +19,12 @@ public class WorkProject {
 	
 	//metodi get e set
 	
+	/*
 	public UUID getID() {
 		return this.id;
-	}
+	} */
 	
-	public UUID getCoordinator() {
+	public UUIDUser getCoordinator() {
 		return this.coordinator;
 	}
 	
@@ -31,9 +32,11 @@ public class WorkProject {
 		return this.publishingDate;
 	}
 	
+	/*
 	public void setId(UUID id) {
 		this.id=id;
-	}
+	}*/
+	
 	//TODO implementare con imput UUID
 	public void setCoordinator(User c) {
 		this.coordinator=c.getID();

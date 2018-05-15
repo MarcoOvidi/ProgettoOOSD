@@ -1,6 +1,6 @@
 package model;
 
-import vo.UUID;
+import vo.UUIDUser;
 import java.util.LinkedList;
 import vo.UUIDTranscriptionWorkProject;
 
@@ -9,8 +9,8 @@ import vo.UUIDTranscriptionWorkProject;
 public class TranscriptionWorkProject extends WorkProject{
 	
 	//variabili istanza
-	private LinkedList<UUID> transcribers;
-	private LinkedList<UUID> revisers;
+	private LinkedList<UUIDUser> transcribers;
+	private LinkedList<UUIDUser> revisers;
 	private UUIDTranscriptionWorkProject id;
 	
 	//costruttore
@@ -19,11 +19,11 @@ public class TranscriptionWorkProject extends WorkProject{
 	}
 	
 	//metodi get e set
-	public LinkedList<UUID> getTranscribers(){
+	public LinkedList<UUIDUser> getTranscribers(){
 		return this.transcribers;
 	}
 	
-	public LinkedList<UUID> getRevisers(){
+	public LinkedList<UUIDUser> getRevisers(){
 		return this.revisers;
 	}
 	

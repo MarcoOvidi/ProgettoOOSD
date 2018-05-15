@@ -6,14 +6,14 @@ package model;
  *
  */
 
-import vo.UUID;
+import vo.UUIDPage;
 import controller.SessionDataHandler;
 
 
 public class Page {
 	
 	//variabili istanza
-	private UUID id;
+	private UUIDPage id;
 	private SessionDataHandler session;
 	private Integer pageNumber;
 	private PageScan scan;
@@ -28,7 +28,7 @@ public class Page {
 	
 	//metodi get e set
 	
-	public UUID getID() {
+	public UUIDPage getID() {
 		return this.id;
 	}
 	
@@ -44,7 +44,7 @@ public class Page {
 		return this.transcription;
 	}
 	
-	public void setID(UUID id) {
+	public void setID(UUIDPage id) {
 		this.id=id;
 	}
 	

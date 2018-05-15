@@ -31,7 +31,11 @@ public class Document {
 	
 	//metodi get e set
 	
-	public Metadata getMetaData() {
+	public UUIDDocument getUUID() {
+		return this.id;
+	}
+	
+	public DocumentMetadata getMetaData() {
 		return this.metadata;
 	}
 	
@@ -47,7 +51,11 @@ public class Document {
 		return this.transcriptionWorkProject;
 	}
 	
-	public void setMetaData(Metadata m) {
+	public void setUUID(UUIDDocument id) {
+		this.id=id;
+	}
+	
+	public void setMetaData(DocumentMetadata m) {
 		this.metadata=m;
 	}
 	
@@ -56,12 +64,12 @@ public class Document {
 		this.pageList.addLast(p);
 	}
 	
-	public void setScanningProject(UUID id) {
-		this.scanningWorkProject=id;
+	public void setScanningProject(UUIDScanningWorkProject swp) {
+		this.scanningWorkProject=swp;
 	}
 	
-	public void setTranscriptionWorkProject(UUID twp) {
-		this.transcriptionWorkProject=id;
+	public void setTranscriptionWorkProject(UUIDTranscriptionWorkProject twp) {
+		this.transcriptionWorkProject=twp;
 	}
 	
 	

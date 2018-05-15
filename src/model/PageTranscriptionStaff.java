@@ -1,13 +1,13 @@
 package model;
 
 import java.util.LinkedList;
-import vo.UUID;
+import vo.UUIDUser;
 
 public class PageTranscriptionStaff {
 
 	//variabili istanza
-	private LinkedList<UUID> transcribers;
-	private UUID reviser;
+	private LinkedList<UUIDUser> transcribers;
+	private UUIDUser reviser;
 	
 	//costruttore
 	public PageTranscriptionStaff() {
@@ -16,11 +16,11 @@ public class PageTranscriptionStaff {
 	
 	// metodi get e set
 	
-	public LinkedList<UUID> getTranscribers(){
+	public LinkedList<UUIDUSer> getTranscribers(){
 		return this.transcribers;
 	}
 	
-	public UUID getReviser() {
+	public UUIDUser getReviser() {
 		return this.reviser;
 	}
 	//TODO metodo che aggiunge una lista di utenti 
