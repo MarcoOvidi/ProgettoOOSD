@@ -2,6 +2,7 @@ package model;
 
 import java.util.LinkedList;
 import vo.UUID;
+import vo.UUIDScanningWorkProject;
 
 public class ScanningWorkProject extends WorkProject {
 	
@@ -9,6 +10,7 @@ public class ScanningWorkProject extends WorkProject {
 	private LinkedList<UUID> digitalizers;
 	private LinkedList<UUID> revisers;
 	private Boolean completed;
+	private UUIDScanningWorkProject id;
 	
 	//costruttore
 	public ScanningWorkProject() {

@@ -1,7 +1,10 @@
 package model;
 
 import java.util.LinkedList;
-import vo.UUID;
+import vo.UUIDDocument;
+import vo.UUIDScanningWorkProject;
+import vo.UUIDTranscriptionWorkProject;
+import vo.DocumentMetadata;
 import controller.SessionDataHandler;
 /**
  * 
@@ -12,12 +15,12 @@ import controller.SessionDataHandler;
 
 public class Document {
 	//variabili istanza
-	private UUID id;
+	private UUIDDocument id;
 	private SessionDataHandler session;
-	private Metadata metadata;
+	private DocumentMetadata metadata;
 	private LinkedList<Page> pageList;
-	private UUID scanningWorkProject;
-	private UUID transcriptionWorkProject;
+	private UUIDScanningWorkProject scanningWorkProject;
+	private UUIDTranscriptionWorkProject transcriptionWorkProject;
 	
 	//TODO
 	//costruttore
@@ -36,11 +39,11 @@ public class Document {
 		return this.pageList;
 	}
 	
-	public UUID getScanningWorkProject() {
+	public UUIDScanningWorkProject getScanningWorkProject() {
 		return this.scanningWorkProject;
 	}
 	
-	public UUID getTranscriptionWorkProject() {
+	public UUIDTranscriptionWorkProject getTranscriptionWorkProject() {
 		return this.transcriptionWorkProject;
 	}
 	

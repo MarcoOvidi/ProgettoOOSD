@@ -1,6 +1,11 @@
 package vo;
 
-public class Role {
-	private Integer id;
-	private String name;
+public class UserRoles {
+	//variabili istanza
+	private Boolean administrator;
+	private Boolean coordinator;
+	private Boolean transcriptionReviser;
+	private Boolean digitalizationReviser;
+	private Boolean transcriber;
+	private Boolean digitalizer;
 }

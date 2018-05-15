@@ -1,7 +1,10 @@
 package model;
 
 import java.util.LinkedList;
+
+import vo.UserRoles;
 import vo.UUID;
+import vo.UserInformations;
 import controller.SessionDataHandler;
 
 
@@ -14,8 +17,7 @@ public class User {
 	private SessionDataHandler session;
 	private String username;
 	private UserInformations informations;
-	private LinkedList<Role> role;
-	private LinkedList<Boolean> permissions;
+	private UserRoles role;
 	private LinkedList<UUID> projects;
 	private LinkedList<UUID> bookMarks;
 	private Boolean active;
@@ -43,7 +45,7 @@ public class User {
 		return this.informations;
 	}
 	
-	public LinkedList<Role> getRole() {
+	public LinkedList<UserRoles> getRole() {
 		return this.role;
 	}
 	
@@ -72,7 +74,7 @@ public class User {
 	}
 	
 	//TODO è necessario inserire più permessi o ruoli per volta? importando una lista? 
-	public setRole(Role r) {
+	public setRole(UserRoles r) {
 		this.role.addLast(r);
 	}
 	
