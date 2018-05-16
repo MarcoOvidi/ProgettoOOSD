@@ -58,7 +58,7 @@ create table page(
 	constraint page_document foreign key(ID_document) references page(ID) on update cascade on delete restrict
 );
 
-create table metadata(
+create table document_metadata(
 	ID integer unsigned not null primary key auto_increment,
     author varchar(30),
     description text,
@@ -66,9 +66,38 @@ create table metadata(
     composition_period_from date,
     composition_period_to date,
     preservation_state enum('1','2','3','4','5'),
-    tags text,
+    #tags text,
     ID_document integer unsigned not null,
     constraint metadata_document foreign key(ID_document) references document(ID) on update cascade on delete restrict
+);
+
+create table tag(
+	ID integer unsigned not null primary key auto_increment,
+    name varchar(30) not null unique
+);
+
+create table tag_metadata(
+	ID integer unsigned not null primary key auto_increment,
+    ID_document_metadada integer unsigned not null,
+    ID_tag integer unsigned,
+    constraint tag_metadata_document_metadata foreign key (ID_document_metadada) references document_metadata(ID) on update cascade on delete cascade,
+    constraint tag_metadata_tag foreign key(ID_tag) references tag(ID) on update cascade on delete cascade
+);
+
+create table book_marks(
+	ID integer unsigned not null primary key auto_increment,
+    ID_user integer unsigned not null,
+    ID_page integer unsigned not null,
+    constraint book_marks_user foreign key (ID_user) references user(ID) on update cascade on delete cascade,
+    constraint book_marks_page foreign key(Id_page) references page(ID) on update cascade on delete cascade
+);
+
+create table personal_collection(
+	ID integer unsigned not null primary key auto_increment,
+    ID_user integer unsigned not null,
+    ID_document integer unsigned not null,
+    constraint personal_collection_user foreign key(ID_user) references user(ID) on update cascade on delete cascade,
+    constraint personal_Collection_document foreign key(Id_document) references document(ID) on update cascade on delete cascade
 );
 
 create table permission(
@@ -93,8 +122,6 @@ create table transcription_assigned(
     constraint transcription_assigned_transcriber_user foreign key(ID_transcriber_user) references user(ID) on update cascade,
     constraint transcription_assigned_page foreign key(ID_page) references page(ID) on update cascade on delete restrict
 );
-
-
 
 create table transcription_project_partecipant (
     ID integer unsigned not null primary key auto_increment,
