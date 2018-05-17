@@ -1,10 +1,9 @@
 package model;
 
 import java.util.LinkedList;
-
-import vo.UserRoles;
 import vo.UUIDUser;
 import vo.UUIDTranscriptionWorkProject;
+import vo.UUIDBookMark;
 import vo.UUIDScanningWorkProject;
 import vo.UserInformations;
 import vo.UserPermissions;
@@ -20,11 +19,10 @@ public class User {
 	private SessionDataHandler session;
 	private String username;
 	private UserInformations informations;
-	private UserRoles role;
 	private UserPermissions permissions;
-	private LinkedList<UUIDTranscriptionWorkProject> transcriptionProject;
-	private LinkedList<UUIDScanningWorkProject> digitalizationProject;
-	//TODO bhooooo???!!!   private LinkedList<UUID> bookMarks;
+	private LinkedList<UUIDTranscriptionWorkProject> transcriptionProjects;
+	private LinkedList<UUIDScanningWorkProject> scanningProjects;
+	private LinkedList<UUIDBookMark> bookMarks;
 	private Boolean active;
 	
 	/**
@@ -50,50 +48,68 @@ public class User {
 		return this.informations;
 	}
 	
-	public UserRoles getRole() {
-		return this.role;
-	}
-	
 	public UserPermissions getPermissions() {
 		return this.permissions;
 	}
 	
-	public getProject() {
-		return this.projects;
+	public LinkedList<UUIDTranscriptionWorkProject> getTranscriptionProjects() {
+		return this.transcriptionProjects;
 	}
 	
-	public getActive() {
+	public LinkedList<UUIDScanningWorkProject> getScanningrojects() {
+		return this.scanningProjects;
+	}
+	
+	public Boolean getActive() {
 		return this.active;
 	}
 	
-	public setId(UUID id) {
+	public LinkedList<UUIDBookMark> getBookMarks(){
+		return this.bookMarks;
+	}
+	
+	public void setId(UUIDUser id) {
 		this.id=id;
 	}
 	
-	public setUsername(String u) {
+	public void setUsername(String u) {
 		this.username=u;
 	}
 	
-	public setInformations(UserInformations ui) {
+	public void setInformations(UserInformations ui) {
 		this.informations=ui;
 	}
 	
-	//TODO è necessario inserire più permessi o ruoli per volta? importando una lista? 
-	public setRole(UserRoles r) {
-		this.role.addLast(r);
+	public void setPermissions(Boolean[] p) throws RuntimeException{
+		if(p.length != 11)
+			throw new RuntimeException("Numero di permessi incompatibili");
+		else {
+			this.permissions.updatePermission(p);
+		}
 	}
 	
-	public setPermissions(Boolean p) {
-		this.permissions.addLast(p);
+	public void setTranscriptionProject(UUIDTranscriptionWorkProject p) {
+		this.transcriptionProjects.addLast(p);
 	}
 	
-	public setProject(Project p) {
-		this.projects.addLast(p);
+	public void setScanningWorkProject(UUIDScanningWorkProject p) {
+		this.scanningProjects.addLast(p);
 	}
 	
-	public setActive(Boolean s) {
+	public void setActive(Boolean s) {
 		this.active=s;
 	}
+	
+	public void setBookMarks(UUIDBookMark bm) {
+		this.bookMarks.addLast(bm);
+	}
+	
+	public void setBookMarks(LinkedList<UUIDBookMark> bm) {
+		this.bookMarks.addAll(bm);
+	}
+	
+
+	
 	
 	
 }

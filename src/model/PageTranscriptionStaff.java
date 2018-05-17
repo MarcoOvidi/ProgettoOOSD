@@ -16,7 +16,7 @@ public class PageTranscriptionStaff {
 	
 	// metodi get e set
 	
-	public LinkedList<UUIDUSer> getTranscribers(){
+	public LinkedList<UUIDUser> getTranscribers(){
 		return this.transcribers;
 	}
 	
