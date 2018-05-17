@@ -105,11 +105,6 @@ create table permission(
     name varchar(50) not null unique
 );
 
-create table role(
-	ID integer unsigned not null primary key auto_increment,
-    name varchar(25) not null unique
-);
-
 create table document_collection(
 	ID integer unsigned not null primary key auto_increment,
     name varchar(50) not null unique
@@ -147,11 +142,5 @@ create table perm_authorization(
     constraint perm_authorization_permission foreign key(ID_permission) references permission(ID) on update cascade on delete set null
 );
 
-create table role_permission(
-	ID integer unsigned not null primary key auto_increment,
-    ID_role integer unsigned not null,
-    ID_permission integer unsigned,
-    constraint role_permission_role foreign key(ID_role) references role(ID) on update cascade on delete restrict,
-    constraint role_permission_permission foreign key(ID_permission) references permission(ID) on update cascade on delete set null
-);
+
 
