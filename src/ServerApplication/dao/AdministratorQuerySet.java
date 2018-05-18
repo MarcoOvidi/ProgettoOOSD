@@ -1,7 +1,9 @@
 package dao;
 
 public class AdministratorQuerySet {
-
+	
+	
+	//
 	public acceptUserRegistration() {
 		
 	}
