@@ -1,4 +1,4 @@
-package controller;
+package ServerApplication.controller;
 
 import java.util.HashMap;
 import vo.UUID;

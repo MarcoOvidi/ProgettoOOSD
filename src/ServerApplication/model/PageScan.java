@@ -1,6 +1,6 @@
-package model;
+package ServerApplication.model;
 
-import vo.Image;
+import ServerApplication.vo.Image;
 
 public class PageScan {
 	

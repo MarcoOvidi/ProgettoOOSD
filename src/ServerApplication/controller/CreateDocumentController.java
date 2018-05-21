@@ -1,4 +1,4 @@
-package controller;
+package ServerApplication.controller;
 
 import vo.DocumentMetadata;
 public class CreateDocumentController {

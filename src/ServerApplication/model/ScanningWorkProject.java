@@ -1,8 +1,8 @@
-package model;
+package ServerApplication.model;
 
 import java.util.LinkedList;
-import vo.UUIDUser;
-import vo.UUIDScanningWorkProject;
+import ServerApplication.vo.UUIDUser;
+import ServerApplication.vo.UUIDScanningWorkProject;
 
 public class ScanningWorkProject extends WorkProject {
 	
@@ -34,14 +34,14 @@ public class ScanningWorkProject extends WorkProject {
 	public void setCompleted(Boolean s) {
 		this.completed=s;
 	}
-	//TODO implementare con parametro diretto UUID e a multiplo inserimento
-	public void setDigitalizers(User u) {
-		this.digitalizers.addLast(u.getID());
+	//TODO implementare a multiplo inserimento
+	public void setDigitalizers(UUIDUser u) {
+		this.digitalizers.addLast(u);
 	}
 	
-	//TODO implementare con parametro diretto UUID e a multiplo inserimento
-	public void setRevisers(User u) {
-		this.revisers.addLast(u.getID());
+	
+	public void setRevisers(UUIDUser u) {
+		this.revisers.addLast(u);
 	}
 	
 	

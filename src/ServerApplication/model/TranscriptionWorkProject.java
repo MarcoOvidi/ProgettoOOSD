@@ -1,8 +1,8 @@
-package model;
+package ServerApplication.model;
 
-import vo.UUIDUser;
+import ServerApplication.vo.UUIDUser;
 import java.util.LinkedList;
-import vo.UUIDTranscriptionWorkProject;
+import ServerApplication.vo.UUIDTranscriptionWorkProject;
 
 
 
@@ -27,14 +27,14 @@ public class TranscriptionWorkProject extends WorkProject{
 		return this.revisers;
 	}
 	
-	//TODO implementare per inserimenti multipli o con parametro UUID
-	public void setTrascriber(User u) {
-		this.transcribers.addLast(u.getID());
+	//TODO implementare per inserimenti multipli 
+	public void setTrascriber(UUIDUser u) {
+		this.transcribers.addLast(u);
 	}
 	
 	//TODO implementare per inserimenti multipli o con parametro UUID
-	public void setRevisers(User u) {
-		this.revisers.addLast(u.getID());
+	public void setRevisers(UUIDUser u) {
+		this.revisers.addLast(u);
 	}
 	
 }

@@ -1,4 +1,4 @@
-package dao;
+package ServerApplication.dao;
 
 public class WorkSessionQuerySet {
 	

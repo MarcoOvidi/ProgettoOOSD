@@ -1,5 +1,5 @@
-package model;
-import vo.TEItext;
+package ServerApplication.model;
+import ServerApplication.vo.TEItext;
 
 
 public class PageTranscription {

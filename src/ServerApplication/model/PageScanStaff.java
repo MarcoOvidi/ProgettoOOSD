@@ -1,6 +1,6 @@
-package model;
+package ServerApplication.model;
 
-import vo.UUIDUser;
+import ServerApplication.vo.UUIDUser;
 public class PageScanStaff {
 	//variabili istanza
 	
@@ -23,12 +23,11 @@ public class PageScanStaff {
 		return this.reviser;
 	}
 	
-	//TODO conviene passare in input direttamente l'UUID?
-	public void setDigitalizer(User u) {
-		this.digitalizer=u.getID();
+	public void setDigitalizer(UUIDUser u) {
+		this.digitalizer=u;
 	}
 	
-	public void setReviser(User u) {
-		this.reviser=u.getID();
+	public void setReviser(UUIDUser u) {
+		this.reviser=u;
 	}
 }

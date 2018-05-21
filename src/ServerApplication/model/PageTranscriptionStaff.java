@@ -1,7 +1,7 @@
-package model;
+package ServerApplication.model;
 
 import java.util.LinkedList;
-import vo.UUIDUser;
+import ServerApplication.vo.UUIDUser;
 
 public class PageTranscriptionStaff {
 
@@ -24,12 +24,12 @@ public class PageTranscriptionStaff {
 		return this.reviser;
 	}
 	//TODO metodo che aggiunge una lista di utenti 
-	public void setTranscribers(User u) {
-		this.transcribers.add(u.getID());
+	public void setTranscribers(UUIDUser u) {
+		this.transcribers.add(u);
 	}
-	//TODO vedere se impleentare con parametro UUID
-	public void setReviser(User u) {
-		this.reviser=u.getID();
+	
+	public void setReviser(UUIDUser u) {
+		this.reviser=u;
 	}
 	
 	

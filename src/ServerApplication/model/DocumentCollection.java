@@ -1,9 +1,9 @@
-package model;
+package ServerApplication.model;
 
 import java.util.LinkedList;
-import vo.UUIDDocumentCollection;
-import vo.UUIDDocument;
-import controller.SessionDataHandler;
+import ServerApplication.vo.UUIDDocumentCollection;
+import ServerApplication.vo.UUIDDocument;
+import ServerApplication.controller.SessionDataHandler;
 
 public class DocumentCollection {
 	//variabili istanza

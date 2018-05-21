@@ -1,13 +1,13 @@
-package model;
+package ServerApplication.model;
 
 import java.util.LinkedList;
-import vo.UUIDUser;
-import vo.UUIDTranscriptionWorkProject;
-import vo.UUIDBookMark;
-import vo.UUIDScanningWorkProject;
-import vo.UserInformations;
-import vo.UserPermissions;
-import controller.SessionDataHandler;
+import ServerApplication.vo.UUIDUser;
+import ServerApplication.vo.UUIDTranscriptionWorkProject;
+import ServerApplication.vo.UUIDBookMark;
+import ServerApplication.vo.UUIDScanningWorkProject;
+import ServerApplication.vo.UserInformations;
+import ServerApplication.vo.UserPermissions;
+import ServerApplication.controller.SessionDataHandler;
 
 
 

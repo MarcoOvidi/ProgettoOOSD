@@ -1,4 +1,4 @@
-package controller;
+package ServerApplication.controller;
 
 public class ProfileController {
 
