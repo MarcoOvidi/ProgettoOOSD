@@ -1,7 +1,7 @@
 package ServerApplication.controller;
 
-import model.User;
-import model.Document;
+import ServerApplication.model.User;
+import ServerApplication.model.Document;
 
 public class PageScanController {
 	
@@ -9,19 +9,19 @@ public class PageScanController {
 	public PageScanController(User u, Document d) {
 	}
 	
-	public openWorkSession() {
+	public void openWorkSession() {
 		
 	}
 	
-	public saveDigitalizerModifications(/*modifications*/){
+	public void saveDigitalizerModifications(/*modifications*/){
 		
 	}
 	
-	public saveRevisorModifications(/*modifications+*/){
+	public void saveRevisorModifications(/*modifications+*/){
 	
 	}
 	
-	public closeWorkSession() {
+	public void closeWorkSession() {
 		
 	}
 	

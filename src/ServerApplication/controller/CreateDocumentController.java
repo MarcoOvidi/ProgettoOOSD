@@ -1,10 +1,10 @@
 package ServerApplication.controller;
 
-import vo.DocumentMetadata;
+import ServerApplication.vo.DocumentMetadata;
 public class CreateDocumentController {
 	
 	//costruttore
-	public CreateDocumentController(DocumentMetadata m) {
+	public void CreateDocumentController(DocumentMetadata m) {
 		
 	}
 

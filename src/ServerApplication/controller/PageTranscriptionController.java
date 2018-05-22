@@ -1,7 +1,7 @@
 package ServerApplication.controller;
 
-import model.User;
-import model.Document;
+import ServerApplication.model.User;
+import ServerApplication.model.Document;
 
 public class PageTranscriptionController {
 	
@@ -10,19 +10,19 @@ public class PageTranscriptionController {
 		
 	}
 	
-	public openWorkSession() {
+	public void openWorkSession() {
 		
 	}
 	
-	public closeWorkSession() {
+	public void closeWorkSession() {
 		
 	}
 	
-	public saveRevisorModifications(/*modifications+*/){
+	public void saveRevisorModifications(/*modifications+*/){
 		
 	}
 	
-	public saveTranscriberModifications(/*modifications+*/){
+	public void saveTranscriberModifications(/*modifications+*/){
 		
 	}
 	

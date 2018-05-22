@@ -2,11 +2,11 @@ package ServerApplication.controller;
 
 public class PageViewController {
 	
-	public loadDocument() {
+	public void loadDocument() {
 		
 	}
 	
-	public downloadReadableDocument() {
+	public void downloadReadableDocument() {
 		
 	}
 

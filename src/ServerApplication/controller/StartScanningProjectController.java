@@ -1,6 +1,6 @@
 package ServerApplication.controller;
 
-import model.Document;
+import ServerApplication.model.Document;
 
 public class StartScanningProjectController {
 

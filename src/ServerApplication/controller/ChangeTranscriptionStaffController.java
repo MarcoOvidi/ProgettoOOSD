@@ -1,17 +1,17 @@
 package ServerApplication.controller;
 
-import model.TranscriptionWorkProject;
-import model.User;
+import ServerApplication.model.TranscriptionWorkProject;
+import ServerApplication.model.User;
 
 public class ChangeTranscriptionStaffController {
 
 	//costruttore
 		//TODO non è più giusto che ricava in questo modo l'UUID dall'oggetto?
-		public ChangeTranscriptionStaffController(TranscriptionWorkProject tp) {
+		public void ChangeTranscriptionStaffController(TranscriptionWorkProject tp) {
 			
 		}
 		
-		public applyModifications(User u) {
+		public void applyModifications(User u) {
 			
 		}
 		

@@ -1,10 +1,11 @@
 package ServerApplication.controller;
 
-import vo.UUID;
+import ServerApplication.vo.UUIDDocument;
 
 public class PublicationController {
 	
-	public publishProject(UUID id) {
+	//TODO è giusto l'UUID del documeto ??
+	public void publishProject(UUIDDocument id) {
 		
 	}
 

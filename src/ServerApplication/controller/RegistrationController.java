@@ -2,7 +2,7 @@ package ServerApplication.controller;
 
 public class RegistrationController {
 	
-	public register() {
+	public void register() {
 		
 	}
 }

@@ -1,45 +1,57 @@
 package ServerApplication.controller;
 
 import java.util.HashMap;
-import vo.UUID;
-import model.DocumentCollection;
+import ServerApplication.vo.UUIDUser;
+import ServerApplication.vo.UUIDDocument;
+import ServerApplication.vo.UUIDDocumentCollection;
+import ServerApplication.vo.UUIDPage;
+import ServerApplication.vo.UUIDScanningWorkProject;
+import ServerApplication.vo.UUIDTranscriptionWorkProject;
+import ServerApplication.model.DocumentCollection;
+
 
 public class SessionDataHandler {
 	
 	//variabili istanza
 	
-	private static HashMap<UUID,Object> idMap;
+	
+	//TODO UUID di cosa?
+	//private static HashMap<UUID,Object> idMap;
 	
 	public SessionDataHandler(/*DB reference?*/) {
 		
 	}
 	
-	public adDocumentCollection(DocumentCollection col) {
+	public void addDocumentCollection(UUIDDocumentCollection id) {
 		
 	}
 	
-	public removeCollection(UUID id) {
+	public void removeCollection(UUIDDocumentCollection id) {
 		
 	}
 	
-	public getPage(UUID id) {
+	public void getPage(UUIDPage id) {
 		
 	}
 	
-	public getDocument(UUID id) {
+	public void getDocument(UUIDDocument id) {
 		
 	}
 	
-	public getUser(UUID id) {
+	public void getUser(UUIDUser id) {
 		
 	}
 	
-	public getCollection(UUID id) {
+	public void getCollection(UUIDDocumentCollection id) {
 		
 	}
 	
-	public getWorkProject(UUId id) {
+	public void getScanningWorkProject(UUIDScanningWorkProject id) {
 	
+	}
+	
+	public void getTranscriptionWorkProject(UUIDTranscriptionWorkProject id) {
+		
 	}
 
 }

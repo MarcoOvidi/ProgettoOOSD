@@ -2,11 +2,11 @@ package ServerApplication.controller;
 
 public class ProfileController {
 
-	public loadProfile() {
+	public void loadProfile() {
 		
 	}
 	
-	public saveModifications() {
+	public void saveModifications() {
 		
 	}
 }

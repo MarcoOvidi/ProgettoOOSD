@@ -1,15 +1,15 @@
 package ServerApplication.controller;
 
-import model.Document;
+import ServerApplication.model.Document;
 
 public class EditDocumentController {
 	
 	//TODO non è più corretto usare l'oggetto Document per prelevare il suo UUID?
-	public EditDocumentController(Document doc) {
+	public void EditDocumentController(Document doc) {
 		
 	}
 	
-	public editDocumentMetadata() {
+	public void editDocumentMetadata() {
 		
 	}
 	
