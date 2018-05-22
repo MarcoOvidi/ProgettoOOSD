@@ -1,16 +1,16 @@
-package ServerApplication.dao;
+package dao;
 
 public class PageViewQuerySet {
 	
-	public loadOpera() {
+	public void loadOpera() {
 		
 	}
 	
-	public loadBookmarksDocument() {
+	public void loadBookmarksDocument() {
 		
 	}
 	
-	public updateBookmarksDocument() {
+	public void updateBookmarksDocument() {
 		
 	}
 	

@@ -1,4 +1,4 @@
-package ServerApplication.model; 
+package model; 
 /**
  * 
  * @author Di Paolo, Ovidi, Venditti
@@ -6,8 +6,8 @@ package ServerApplication.model;
  *
  */
 
-import ServerApplication.vo.UUIDPage;
-import ServerApplication.controller.SessionDataHandler;
+import vo.UUIDPage;
+import controller.SessionDataHandler;
 
 
 public class Page {

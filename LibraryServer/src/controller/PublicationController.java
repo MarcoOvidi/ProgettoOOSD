@@ -1,6 +1,6 @@
-package ServerApplication.controller;
+package controller;
 
-import ServerApplication.vo.UUIDDocument;
+import vo.UUIDDocument;
 
 public class PublicationController {
 	

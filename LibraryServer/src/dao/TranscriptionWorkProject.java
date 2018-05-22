@@ -1,20 +1,20 @@
-package ServerApplication.dao;
+package dao;
 
 public class TranscriptionWorkProject {
 
-	public insertTranscriptionWorkProject() {
+	public void insertTranscriptionWorkProject() {
 		
 	}
 	
-	public loadTranscriptionWorkProject() {
+	public void loadTranscriptionWorkProject() {
 		
 	}
 	
-    public updateTranscriptionWorkProject() {
+    public void updateTranscriptionWorkProject() {
 		
 	}
     
-    public deleteTranscriptionWorkProject() {
+    public void deleteTranscriptionWorkProject() {
 		
 	}
 }

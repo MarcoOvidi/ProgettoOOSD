@@ -1,12 +1,12 @@
-package ServerApplication.dao;
+package dao;
 
 public class RevisoDigitalizationQuerySet {
 
-	public validated() {
+	public void validated() {
 		
 	}
 	
-	public revised() {
+	public void revised() {
 		
 	}
 }

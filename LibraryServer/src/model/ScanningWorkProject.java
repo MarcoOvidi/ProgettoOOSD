@@ -1,8 +1,8 @@
-package ServerApplication.model;
+package model;
 
 import java.util.LinkedList;
-import ServerApplication.vo.UUIDUser;
-import ServerApplication.vo.UUIDScanningWorkProject;
+import vo.UUIDUser;
+import vo.UUIDScanningWorkProject;
 
 public class ScanningWorkProject extends WorkProject {
 	

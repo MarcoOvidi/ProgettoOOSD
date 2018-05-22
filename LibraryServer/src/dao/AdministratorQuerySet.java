@@ -1,27 +1,27 @@
-package ServerApplication.dao;
+package dao;
 
 public class AdministratorQuerySet {
 	
 	
 	//
-	public acceptUserRegistration() {
+	public void acceptUserRegistration() {
 		
 	}
 	
-	public updateUSerRoles() {
+	public void updateUSerRoles() {
 		
 	}
 	
-	public loadRrequestsList() {
+	public void loadRrequestsList() {
 		
 	}
 	
 	//TODO mi spiegate la diff con quello sopra (Marco)... :-)
-	public loadRequest() {
+	public void loadRequest() {
 		
 	}
 	
-	public answerRequest() {
+	public void answerRequest() {
 		
 	}
 	

@@ -1,12 +1,12 @@
-package ServerApplication.dao;
+package dao;
 
 public class EditProfileQuerySet {
 	
-	public loadUserProfile() {
+	public void loadUserProfile() {
 		
 	}
 
-	public updateUserProfile() {
+	public void updateUserProfile() {
 		
 	}
 	
@@ -15,7 +15,7 @@ public class EditProfileQuerySet {
 	 *  lavori al massimo potremmo creare un tag disattivato
 	 */
 	
-	public deleteUserProfile() {
+	public void deleteUserProfile() {
 		
 	}
 	

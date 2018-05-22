@@ -1,4 +1,4 @@
-package ServerApplication.vo;
+package vo;
 
 //TODO verificare se astrarre la classe 
 public class UUID {

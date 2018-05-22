@@ -1,7 +1,7 @@
-package ServerApplication.model;
+package model;
 
-import ServerApplication.vo.UUIDUser;
-import ServerApplication.controller.SessionDataHandler;
+import vo.UUIDUser;
+import controller.SessionDataHandler;
 import java.util.Date;
 
 public class WorkProject {

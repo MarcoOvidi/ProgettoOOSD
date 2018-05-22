@@ -1,4 +1,4 @@
-package ServerApplication.controller;
+package controller;
 
 public class LoginController {
 	

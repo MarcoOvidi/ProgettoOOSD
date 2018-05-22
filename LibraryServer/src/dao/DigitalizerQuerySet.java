@@ -1,12 +1,12 @@
-package ServerApplication.dao;
+package dao;
 
 public class DigitalizerQuerySet {
 
-	public loadDocument() {
+	public void loadDocument() {
 		
 	}
 	
-	public updatePage() {
+	public void updatePage() {
 		
 	}
 }

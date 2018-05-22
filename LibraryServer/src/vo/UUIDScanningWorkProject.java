@@ -1,4 +1,4 @@
-package ServerApplication.vo;
+package vo;
 
 public class UUIDScanningWorkProject extends UUID {
 

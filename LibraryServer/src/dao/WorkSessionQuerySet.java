@@ -1,12 +1,12 @@
-package ServerApplication.dao;
+package dao;
 
 public class WorkSessionQuerySet {
 	
-	public startWorkSession() {
+	public void startWorkSession() {
 		
 	}
 	
-	publi closeWorkSession() {
+	public void closeWorkSession() {
 		
 	}
 }

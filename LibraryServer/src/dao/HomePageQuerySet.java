@@ -1,28 +1,28 @@
-package ServerApplication.dao;
+package dao;
 
 public class HomePageQuerySet {
 	
-	public loadNews() {
+	public void loadNews() {
 		
 	}
 	
-	public loadMyProjectsList() {
+	public void loadMyProjectsList() {
 		
 	}
 	
-	public loadMyCollectionList() {
+	public void loadMyCollectionList() {
 		
 	}
 	
-	public loadLibraryCollectionList() {
+	public void loadLibraryCollectionList() {
 		
 	}
 	
-	public loadCollection() {
+	public void loadCollection() {
 		
 	}
 	
-	public loadHomeInfo() {
+	public void loadHomeInfo() {
 		
 	}
 

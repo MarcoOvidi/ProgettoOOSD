@@ -1,4 +1,4 @@
-package ServerApplication.vo;
+package vo;
 
 import java.util.Date;
 

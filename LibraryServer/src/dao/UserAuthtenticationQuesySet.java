@@ -1,12 +1,12 @@
-package ServerApplication.dao;
+package dao;
 
 public class UserAuthtenticationQuesySet {
 	
-	public registration() {
+	public void registration() {
 		
 	}
 	
-	public login() {
+	public void login() {
 		
 	}
 

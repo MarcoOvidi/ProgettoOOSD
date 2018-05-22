@@ -1,24 +1,24 @@
-package ServerApplication.dao;
+package dao;
 
 public class DocumentQuerySet {
 
-	public insertDocument() {
+	public void insertDocument() {
 		
 	}
 	
-	public loadDocument() {
+	public void loadDocument() {
 		
 	}
 	
-	public updateDocument() {
+	public void updateDocument() {
 		
 	}
 	
-	public deleteDocument() {
+	public void deleteDocument() {
 		
 	}
 	
-	public downloadFileDocument() {
+	public void downloadFileDocument() {
 		
 	}
 	

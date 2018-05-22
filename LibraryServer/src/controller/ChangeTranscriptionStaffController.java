@@ -1,7 +1,7 @@
-package ServerApplication.controller;
+package controller;
 
-import ServerApplication.model.TranscriptionWorkProject;
-import ServerApplication.model.User;
+import model.TranscriptionWorkProject;
+import model.User;
 
 public class ChangeTranscriptionStaffController {
 

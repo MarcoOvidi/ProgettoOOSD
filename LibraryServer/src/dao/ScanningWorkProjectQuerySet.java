@@ -1,20 +1,20 @@
-package ServerApplication.dao;
+package dao;
 
 public class ScanningWorkProjectQuerySet {
 
-	public insertScanningWorkProject() {
+	public void insertScanningWorkProject() {
 		
 	}
 	
-	public loadScanningWorkProject() {
+	public void loadScanningWorkProject() {
 		
 	}
 	
-    public updateScanningWorkProject() {
+    public void updateScanningWorkProject() {
 		
 	}
     
-    public deleteScanningWorkProject() {
+    public void deleteScanningWorkProject() {
 		
 	}
 	

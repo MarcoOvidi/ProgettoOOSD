@@ -1,7 +1,7 @@
-package ServerApplication.controller;
+package controller;
 
-import ServerApplication.model.User;
-import ServerApplication.model.ScanningWorkProject;
+import model.User;
+import model.ScanningWorkProject;
 
 public class ChangeScanningStaffController {
 	

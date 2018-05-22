@@ -1,6 +1,6 @@
-package ServerApplication.controller;
+package controller;
 
-import ServerApplication.model.Document;
+import model.Document;
 
 public class EditDocumentController {
 	

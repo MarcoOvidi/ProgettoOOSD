@@ -1,16 +1,16 @@
-package ServerApplication.dao;
+package dao;
 
 public class RequestToAdminQuerySet {
 	
-	public sendRequestToAdmin() {
+	public void sendRequestToAdmin() {
 		
 	}
 	
-	public loadAllRequestToAdmin() {
+	public void loadAllRequestToAdmin() {
 		
 	}
 
-	public undoRequestToAdmin() {
+	public void undoRequestToAdmin() {
 		
 	}
 	

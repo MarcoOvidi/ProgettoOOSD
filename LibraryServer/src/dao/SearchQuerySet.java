@@ -1,8 +1,8 @@
-package ServerApplication.dao;
+package dao;
 
 public class SearchQuerySet {
 
-	public searchMatches() {
+	public void searchMatches() {
 		
 	}
 }

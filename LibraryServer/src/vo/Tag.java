@@ -1,4 +1,4 @@
-package ServerApplication.vo;
+package vo;
 
 public class Tag {
 	private String name;

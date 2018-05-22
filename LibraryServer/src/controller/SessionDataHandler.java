@@ -1,13 +1,13 @@
-package ServerApplication.controller;
+package controller;
 
 import java.util.HashMap;
-import ServerApplication.vo.UUIDUser;
-import ServerApplication.vo.UUIDDocument;
-import ServerApplication.vo.UUIDDocumentCollection;
-import ServerApplication.vo.UUIDPage;
-import ServerApplication.vo.UUIDScanningWorkProject;
-import ServerApplication.vo.UUIDTranscriptionWorkProject;
-import ServerApplication.model.DocumentCollection;
+import vo.UUIDUser;
+import vo.UUIDDocument;
+import vo.UUIDDocumentCollection;
+import vo.UUIDPage;
+import vo.UUIDScanningWorkProject;
+import vo.UUIDTranscriptionWorkProject;
+import model.DocumentCollection;
 
 
 public class SessionDataHandler {

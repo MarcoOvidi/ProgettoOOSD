@@ -1,7 +1,7 @@
-package ServerApplication.controller;
+package controller;
 
-import ServerApplication.model.User;
-import ServerApplication.model.Document;
+import model.User;
+import model.Document;
 
 public class PageTranscriptionController {
 	

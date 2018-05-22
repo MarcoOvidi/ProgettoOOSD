@@ -1,6 +1,6 @@
-package ServerApplication.controller;
+package controller;
 
-import ServerApplication.vo.DocumentMetadata;
+import vo.DocumentMetadata;
 public class CreateDocumentController {
 	
 	//costruttore

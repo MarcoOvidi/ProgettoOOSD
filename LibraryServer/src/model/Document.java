@@ -1,12 +1,12 @@
-package ServerApplication.model;
+package model;
 
 import java.util.LinkedList;
 
-import ServerApplication.controller.SessionDataHandler;
-import ServerApplication.vo.DocumentMetadata;
-import ServerApplication.vo.UUIDDocument;
-import ServerApplication.vo.UUIDScanningWorkProject;
-import ServerApplication.vo.UUIDTranscriptionWorkProject;
+import controller.SessionDataHandler;
+import vo.DocumentMetadata;
+import vo.UUIDDocument;
+import vo.UUIDScanningWorkProject;
+import vo.UUIDTranscriptionWorkProject;
 /**
  * 
  * @author Di Paolo, Ovidi, Venditti

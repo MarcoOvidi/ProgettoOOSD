@@ -1,8 +1,9 @@
-package ServerApplication.model;
+package model;
 
-import ServerApplication.vo.UUIDUser;
+import vo.UUIDUser;
+import vo.UUIDTranscriptionWorkProject;
 import java.util.LinkedList;
-import ServerApplication.vo.UUIDTranscriptionWorkProject;
+
 
 
 

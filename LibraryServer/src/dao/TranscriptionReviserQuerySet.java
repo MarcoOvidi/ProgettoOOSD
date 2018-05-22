@@ -1,16 +1,16 @@
-package ServerApplication.dao;
+package dao;
 
 public class TranscriptionReviserQuerySet {
 	
-	public completed() {
+	public void completed() {
 		
 	}
 	
-	public validated() {
+	public void validated() {
 		
 	}
 	
-	public revised() {
+	public void revised() {
 		
 	}
 

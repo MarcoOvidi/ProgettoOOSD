@@ -1,12 +1,12 @@
-package ServerApplication.dao;
+package dao;
 
 public class TranscriberQuerySet {
 
-	public loadTranscription() {
+	public void loadTranscription() {
 		
 	}
 	
-	public updateText() {
+	public void updateText() {
 		
 	}
 }

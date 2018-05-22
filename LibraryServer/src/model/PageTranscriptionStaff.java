@@ -1,7 +1,7 @@
-package ServerApplication.model;
+package model;
 
 import java.util.LinkedList;
-import ServerApplication.vo.UUIDUser;
+import vo.UUIDUser;
 
 public class PageTranscriptionStaff {
 
