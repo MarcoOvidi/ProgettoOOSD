@@ -1,4 +1,3 @@
-drop database biblioteca;
 create database biblioteca;
 use biblioteca;
 
@@ -6,7 +5,7 @@ use biblioteca;
 create table user (
 	ID integer unsigned not null primary key auto_increment,
     username varchar(25) not null,
-    passwd varchar(250) not null,
+    passworduser varchar(250) not null,
     status boolean not null default true,
     name varchar(25) not null,
     surname varchar(25) not null,
