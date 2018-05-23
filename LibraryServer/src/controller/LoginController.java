@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.UserAuthenticationQuerySet;
+
 /**
  * Servlet implementation class LoginController
  */
@@ -38,7 +40,7 @@ public class LoginController extends HttpServlet {
 		String psw=request.getParameter("password");
 	    usr.replaceAll("[^a-zA-Z0-9]","");
 		psw.replaceAll("[^a-zA-Z0-9]","");
-		/*UserAuthenticationQuerySet aut= new UserAuthenticationQuerySet();
+		UserAuthenticationQuerySet aut= new UserAuthenticationQuerySet();
 		String result;
 		try {
 			result=aut.login(usr, psw);
@@ -49,8 +51,7 @@ public class LoginController extends HttpServlet {
 		
 		HttpSession session=request.getSession();
 		session.setAttribute("id", result);
-		response.getWriter().append("Login");*/
-		/////
+		response.getWriter().append("Login");
 	}
 
 }
