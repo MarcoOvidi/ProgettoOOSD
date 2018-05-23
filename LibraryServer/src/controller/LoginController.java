@@ -50,7 +50,7 @@ public class LoginController extends HttpServlet {
 		HttpSession session=request.getSession();
 		session.setAttribute("id", result);
 		response.getWriter().append("Login");*/
-		///
+		/////
 	}
 
 }
