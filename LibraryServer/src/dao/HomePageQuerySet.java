@@ -21,7 +21,7 @@ public class HomePageQuerySet {
 
 	//seleziona le categorie di opere della biblioteca
 	public void loadLibraryCollectionList() {
-		
+		;;
 	}
 	
 	//seleziona le opere(miniature) di una determinata categoria
