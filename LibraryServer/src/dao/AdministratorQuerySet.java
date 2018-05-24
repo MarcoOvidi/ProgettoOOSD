@@ -3,24 +3,27 @@ package dao;
 public class AdministratorQuerySet {
 	
 	
-	//
+	//aggiorna il campo "attivo" di un utente
 	public void acceptUserRegistration() {
 		
 	}
 	
-	public void updateUSerRoles() {
+	//aggiorna i permessi degli utenti
+	public void updateUserRoles() {
 		
 	}
 	
+	//seleziona il campo oggetto di tutte le richieste inviate dagli utenti 
 	public void loadRrequestsList() {
 		
 	}
 	
-	//TODO mi spiegate la diff con quello sopra (Marco)... :-)
+	//seleziona tutti gli attributi di una richiesta
 	public void loadRequest() {
 		
 	}
 	
+	//aggiorna l'attributo answer di una richiesta
 	public void answerRequest() {
 		
 	}

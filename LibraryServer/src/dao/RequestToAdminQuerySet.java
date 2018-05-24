@@ -8,7 +8,7 @@ public class RequestToAdminQuerySet {
 		
 	}
 	
-	//seleziona tutte le richieste inviate all'amministrazione per consentire allo stesso di visualizzarle
+	//seleziona tutte le richieste inviate da un determinato utente all'amministratore
 	public void loadAllRequestToAdmin() {
 		
 	}
