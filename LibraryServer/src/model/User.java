@@ -25,13 +25,19 @@ public class User {
 	private LinkedList<UUIDBookMark> bookMarks;
 	private Boolean active;
 	
-	/**
-	 * Costruttore 
-	 * @param
-	 */
-	//TODO
-	public User() {
-		
+	//costruttore usato dalla query che recupera i soli dati anagrafici di un utente
+	
+	public User(UUIDUser id, String usern, UserInformations ui,Boolean status) {
+		this.id=id;
+		this.username=usern;
+		this.informations=ui;
+		this.active=status;
+	}
+	
+	public User(String usern, UserInformations ui,Boolean status) {
+		this.username=usern;
+		this.informations=ui;
+		this.active=status;
 	}
 	
 	//Metodi get e set

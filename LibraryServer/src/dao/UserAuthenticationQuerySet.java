@@ -19,7 +19,6 @@ public class UserAuthenticationQuerySet {
         con = DBConnection.getConnection();
 	}
 	
-	
 	public void registration() {
 		
 	}
@@ -46,5 +45,5 @@ public class UserAuthenticationQuerySet {
 			return null;
 		
 	}
-
 }
+
