@@ -20,8 +20,18 @@ public class UserPermissions {
 	private Boolean publishDocument;
 	
 	//costruttore
-	public UserPermissions() {
-		
+	public UserPermissions(Boolean a, Boolean b, Boolean c, Boolean d, Boolean e, Boolean f, Boolean g, Boolean h, Boolean i, Boolean l, Boolean m) {
+		this.download = a;
+		this.upload = b;
+		this.editMetadata = c;
+		this.reviewPage = d;
+		this.modifyTranscription = e;
+		this.requestTranscriptionTask = f;
+		this.reviewTranscription = g;
+		this.addNewProject = h;
+		this.assignDigitalizationTask = i;
+		this.assignTranscriptionTask = l;
+		this.publishDocument = m;
 	}
 	
 	//metodi set
