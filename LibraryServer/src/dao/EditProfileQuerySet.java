@@ -20,9 +20,10 @@ public class EditProfileQuerySet {
 	 * @param user un UUID dell'utente di cui si vogliono prelevare i dati dal database
 	 * @return User un oggetto utente  
 	 * @exception SQLException in caso di errori relativi al database
+	 * @exception NullPointerException se non vienete trovato l'utente passato come parametro nel db
 	 */
 	
-	public static User loadUserProfile(UUIDUser user) {
+	public static User loadUserProfile(UUIDUser user) throws NullPointerException{
 		//STEP 1 parametri di connessione   
 		// JDBC driver name and database URL
 		   final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
@@ -66,7 +67,8 @@ public class EditProfileQuerySet {
 		    	  UserInformations ui = new UserInformations(name,surname,regDate,em,pass);   
 		    	  //user creations
 		    	  usr = new User(user,username,ui,status);
-		      }  
+		      }
+		      else throw new NullPointerException();
 		      //STEP 6: Clean-up environment
 		      rs.close();
 		      stmt.close();
@@ -153,7 +155,7 @@ public class EditProfileQuerySet {
   			sql = "UPDATE user "
   				+ "SET username = " + "\"" + username + "\"" + ", password = " + "\"" + password + "\"" + ", status = " + status + ", name = " + "\"" + name 
   				+  "\"" + ", surname = " + "\"" + surname + "\"" + ", email = " + "\"" + em 
-  				+ "\"" + "WHERE ID = " + id;
+  				+ "\"" + "WHERE ID = " + id + ";";
   			
   			linesAffected = stmt.executeUpdate(sql);
   			
