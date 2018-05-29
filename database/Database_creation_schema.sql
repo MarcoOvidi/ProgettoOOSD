@@ -99,11 +99,6 @@ create table personal_collection(
     constraint personal_Collection_document foreign key(Id_document) references document(ID) on update cascade on delete cascade
 );
 
-create table permission(
-	ID integer unsigned not null primary key auto_increment,
-    name varchar(50) not null unique
-);
-
 create table document_collection(
 	ID integer unsigned not null primary key auto_increment,
     name varchar(50) not null unique
@@ -136,10 +131,32 @@ create table scanning_project_partecipant(
 create table perm_authorization(
 	ID integer unsigned not null primary key auto_increment,
     ID_user integer unsigned not null,
-	ID_permission integer unsigned ,
-	constraint perm_authorization_user foreign key(ID_user) references user(ID) on update cascade on delete restrict,
-    constraint perm_authorization_permission foreign key(ID_permission) references permission(ID) on update cascade on delete set null
+	download boolean default false not null,
+	upload boolean default false not null,
+	editMetadata boolean default false not null,
+	reviewPage boolean default false not null,
+	modifyTranscription boolean default false not null,
+	requestTranscriptionTask boolean default false not null,
+	reviewTranscription boolean default false not null,
+	addNewProject boolean default false not null,
+	assignDigitalizationTask boolean default false not null,
+	assignTranscriptionTask boolean default false not null,
+	publishDocument boolean default false not null,
+    constraint perm_authorization_user foreign key (ID_user) references user(ID) on update cascade on delete cascade
 );
+
+create table role_request (
+	ID integer unsigned not null primary key auto_increment,
+    ID_user integer unsigned not null,
+    ID_admin integer unsigned ,
+    requested_role varchar(30) not null,
+    message text not null,
+    answer_message text,
+    status boolean default null,
+    constraint role_request_user foreign key(ID_user) references user(ID) on update cascade on delete cascade,
+    constraint role_request_admin foreign key(ID_admin) references user(ID) on update cascade on delete set null
+);
+
 
 
 
