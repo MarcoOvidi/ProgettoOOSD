@@ -146,14 +146,14 @@ create table perm_authorization(
     constraint perm_authorization_user foreign key (ID_user) references user(ID) on update cascade on delete cascade
 );
 
-create table role_request (
+create table request (
 	ID integer unsigned not null primary key auto_increment,
     ID_user integer unsigned not null,
     ID_admin integer unsigned ,
-    requested_role varchar(30) not null,
+    object varchar(30) not null,
     message text not null,
     answer_message text,
-    status boolean default null,
+    status boolean default false,
     constraint role_request_user foreign key(ID_user) references user(ID) on update cascade on delete cascade,
     constraint role_request_admin foreign key(ID_admin) references user(ID) on update cascade on delete set null
 );
