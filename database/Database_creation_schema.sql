@@ -12,7 +12,6 @@ create table user (
     surname varchar(25) not null,
     registration_date date,
     email varchar(255) not null,
-    constraint utente_unico unique(name,surname),
     constraint email_unica unique(email)
     );
     
@@ -78,9 +77,9 @@ create table tag(
 
 create table tag_metadata(
     ID integer unsigned not null primary key auto_increment,
-    ID_document_metadada integer unsigned not null,
+    ID_document_metadata integer unsigned not null,
     ID_tag integer unsigned,
-    constraint tag_metadata_document_metadata foreign key (ID_document_metadada) references document_metadata(ID) on update cascade on delete cascade,
+    constraint tag_metadata_document_metadata foreign key (ID_document_metadata) references document_metadata(ID) on update cascade on delete cascade,
     constraint tag_metadata_tag foreign key(ID_tag) references tag(ID) on update cascade on delete cascade
 );
 
