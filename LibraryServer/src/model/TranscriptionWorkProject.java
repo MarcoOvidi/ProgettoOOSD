@@ -17,11 +17,7 @@ public class TranscriptionWorkProject extends WorkProject{
 	private Boolean completed;
 	
 	
-	//costruttore
-	public TranscriptionWorkProject(UUIDTranscriptionWorkProject id,String t) {
-		this.documentTitle=t;
-		this.id=id;
-	}
+	
 	
 	public TranscriptionWorkProject() {
 		super();

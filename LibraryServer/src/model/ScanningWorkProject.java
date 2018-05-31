@@ -19,10 +19,6 @@ public class ScanningWorkProject extends WorkProject {
 		super();
 	}
 	
-	public ScanningWorkProject(UUIDScanningWorkProject id,String t) {
-		this.documentTitle=t;
-		this.id=id;
-	}
 	
 	//metodi get e set
 	
@@ -51,19 +47,8 @@ public class ScanningWorkProject extends WorkProject {
 		this.revisers.addLast(u);
 	}
 
-	public String getDocumentTitle() {
-		return documentTitle;
-	}
 
-	public void setDocumentTitle(String documentTitle) {
-		this.documentTitle = documentTitle;
-	}
 
-	@Override
-	public String toString() {
-		return "ScanningWorkProject [digitalizers=" + digitalizers + ", revisers=" + revisers + ", completed="
-				+ completed + ", id=" + id + ", documentTitle=" + documentTitle + "]";
-	}
 	
 	
 	
