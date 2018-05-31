@@ -24,14 +24,15 @@ public class EditProfileQuerySet {
 	 */
 	
 	public static User loadUserProfile(UUIDUser user) throws NullPointerException{
-		//STEP 1 parametri di connessione   
-		// JDBC driver name and database URL
-		   final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-		   final String DB_URL = "jdbc:mysql://localhost/biblioteca";
+		//CONNESSIONE
+  	  	//STEP 1 parametri di connessione   
+  		// JDBC driver name and database URL
+  		final String JDBC_DRIVER = DBConnection.getJdbcDriver();
+  		final String DB_URL = DBConnection.getDbUrl();
 
-		   //  Database credentials
-		   final String USER = "bibliotecario";
-		   final String PASS = "libriantichi";
+  		//  Database credentials
+  		final String USER = DBConnection.getUser();
+  		final String PASS = DBConnection.getPassword();
 		   
 		   Connection conn = null;
 		   Statement stmt = null;
@@ -123,15 +124,15 @@ public class EditProfileQuerySet {
   	  	//converto la Mail in stringa per la query
   	  	String em = email.getEmail();
   	  	
-  	  	//CONNESSIONE
+  	//CONNESSIONE
   	  	//STEP 1 parametri di connessione   
   		// JDBC driver name and database URL
-  		final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-  		final String DB_URL = "jdbc:mysql://localhost/biblioteca";
+  		final String JDBC_DRIVER = DBConnection.getJdbcDriver();
+  		final String DB_URL = DBConnection.getDbUrl();
 
   		//  Database credentials
-  		final String USER = "bibliotecario";
-  		final String PASS = "libriantichi";
+  		final String USER = DBConnection.getUser();
+  		final String PASS = DBConnection.getPassword();
   			   
   		Connection conn = null;
   		Statement stmt = null;

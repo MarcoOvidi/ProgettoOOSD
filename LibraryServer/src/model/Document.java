@@ -16,6 +16,7 @@ import vo.UUIDTranscriptionWorkProject;
 
 public class Document {
 	//variabili istanza
+	private String title;
 	private UUIDDocument id;
 	private SessionDataHandler session;
 	private DocumentMetadata metadata;
@@ -72,6 +73,25 @@ public class Document {
 	public void setTranscriptionWorkProject(UUIDTranscriptionWorkProject twp) {
 		this.transcriptionWorkProject=twp;
 	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	@Override
+	public String toString() {
+		return "Document [title=" + title + ", id=" + id + ", session=" + session + ", metadata=" + metadata
+				+ ", pageList=" + pageList + ", scanningWorkProject=" + scanningWorkProject
+				+ ", transcriptionWorkProject=" + transcriptionWorkProject + "]";
+	}
+	
+	
+	
+	
 	
 	
 	

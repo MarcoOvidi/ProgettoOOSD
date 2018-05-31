@@ -1,11 +1,11 @@
-
+drop database biblioteca;
 create database biblioteca;
 use biblioteca;
 
 
 create table user (
 	ID integer unsigned not null primary key auto_increment,
-    username varchar(25) not null,
+    username varchar(25) not null unique,
     password varchar(250) not null,
     status boolean not null default true,
     name varchar(25) not null,
@@ -16,31 +16,31 @@ create table user (
     constraint email_unica unique(email)
     );
     
-create table transcription_project(
-	ID integer unsigned not null primary key auto_increment,
-    date date,
-    ID_coordinator integer unsigned not null,
-    constraint transcription_project foreign key(ID_coordinator) references user(ID) on update cascade on delete restrict
-);
-
-create table scanning_project(
-	ID integer unsigned not null primary key auto_increment,
-    date date,
-    ID_coordinator integer unsigned not null,
-    constraint scanning_project foreign key(ID_coordinator) references user(ID) on update cascade on delete restrict
-);
-
 create table document(
 	ID integer unsigned not null primary key auto_increment,
     title varchar(70),
     scanning_complete boolean default false,
-    transcription_complete boolean default false,
-    ID_transcription_project integer unsigned not null,
-    ID_scanning_project integer unsigned not null,
-    constraint document_transcription_project foreign key(ID_transcription_project) references transcription_project(ID) on update cascade on delete restrict,
-    constraint document_scanning_project foreign key(ID_scanning_project) references scanning_project(ID) on update cascade on delete restrict
+    transcription_complete boolean default false
 );
     
+create table transcription_project(
+	ID integer unsigned not null primary key auto_increment,
+	ID_coordinator integer unsigned not null,
+	ID_document integer unsigned not null unique,
+    date date,
+	constraint transcription_project_coordinator foreign key(ID_coordinator) references user(ID) on update cascade on delete restrict,
+    constraint transcription_project_document foreign key(ID_document) references document(ID) on update cascade on delete cascade
+);
+
+create table scanning_project(
+	ID integer unsigned not null primary key auto_increment,
+    ID_coordinator integer unsigned not null,
+    ID_document integer unsigned not null unique,
+    date date,
+    constraint scanning_project_coordinator foreign key(ID_coordinator) references user(ID) on update cascade on delete restrict,
+    constraint scanning_project_document foreign key(ID_document) references document(ID) on update cascade on delete cascade
+);
+
 create table page(
 	ID integer unsigned not null primary key auto_increment,
     number integer unsigned,
@@ -113,20 +113,36 @@ create table transcription_assigned(
     constraint transcription_assigned_page foreign key(ID_page) references page(ID) on update cascade on delete restrict
 );
 
-create table transcription_project_partecipant (
+create table transcription_project_transcriber_partecipant (
     ID integer unsigned not null primary key auto_increment,
     ID_transcription_project integer unsigned not null,
     ID_transcriber_user integer unsigned not null,
-    constraint transcription_project_partecipant_transcription_project foreign key (ID_transcription_project) references transcription_project (ID) on update cascade on delete restrict,
-    constraint transcription_project_partecipant_transcriber_user foreign key (ID_transcriber_user) references  user(ID) on update cascade on delete restrict 
+    constraint transcription_project_transcriber_partecipant_transcription_project foreign key (ID_transcription_project) references transcription_project (ID) on update cascade on delete restrict,
+    constraint transcription_project_transcriber_partecipant_transcriber_user foreign key (ID_transcriber_user) references  user(ID) on update cascade on delete restrict
 );
 
-create table scanning_project_partecipant(
+
+create table transcription_project_reviser_partecipant (
+    ID integer unsigned not null primary key auto_increment,
+    ID_transcription_project integer unsigned not null,
+    ID_reviser_user integer unsigned not null,
+    constraint transcription_project_reviser_partecipant_transcription_project foreign key (ID_transcription_project) references transcription_project (ID) on update cascade on delete restrict,
+    constraint transcription_project_reviser_partecipant_user foreign key (ID_reviser_user) references  user(ID) on update cascade on delete restrict
+);
+create table scanning_project_digitalizer_partecipant(
 	ID integer unsigned not null primary key auto_increment,
     ID_scanning_project integer unsigned not null,
     ID_digitalizer_user integer unsigned not null,
-	constraint scanning_project_partecipant_scanning_project foreign key(ID_scanning_project) references scanning_project(ID) on update cascade on delete restrict,
-    constraint scanning_project_partecipant_digitalizer_user foreign key(ID_digitalizer_user) references user(ID) on update cascade on delete restrict
+	constraint scanning_project_digitalizer_partecipant_scanning_project foreign key(ID_scanning_project) references scanning_project(ID) on update cascade on delete restrict,
+    constraint scanning_project_digitalizer_partecipant_user foreign key(ID_digitalizer_user) references user(ID) on update cascade on delete restrict
+);
+
+create table scanning_project_reviser_partecipant(
+	ID integer unsigned not null primary key auto_increment,
+    ID_scanning_project integer unsigned not null,
+    ID_reviser_user integer unsigned not null,
+	constraint scanning_project_reviser_partecipant_scanning_project foreign key(ID_scanning_project) references scanning_project(ID) on update cascade on delete restrict,
+    constraint scanning_project_reviser_partecipant_user foreign key(ID_reviser_user) references user(ID) on update cascade on delete restrict
 );
 
 create table perm_authorization(

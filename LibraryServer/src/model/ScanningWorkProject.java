@@ -3,6 +3,7 @@ package model;
 import java.util.LinkedList;
 import vo.UUIDUser;
 import vo.UUIDScanningWorkProject;
+import vo.UUIDTranscriptionWorkProject;
 
 public class ScanningWorkProject extends WorkProject {
 	
@@ -11,10 +12,16 @@ public class ScanningWorkProject extends WorkProject {
 	private LinkedList<UUIDUser> revisers;
 	private Boolean completed;
 	private UUIDScanningWorkProject id;
+	private String documentTitle;  //ho aggiunto questo campo perchè la query in HomePageQS che pesca tutti i prj e i loro nomi ha bisogno anche del titolo dell'opera
 	
 	//costruttore
 	public ScanningWorkProject() {
 		super();
+	}
+	
+	public ScanningWorkProject(UUIDScanningWorkProject id,String t) {
+		this.documentTitle=t;
+		this.id=id;
 	}
 	
 	//metodi get e set
@@ -43,6 +50,24 @@ public class ScanningWorkProject extends WorkProject {
 	public void setRevisers(UUIDUser u) {
 		this.revisers.addLast(u);
 	}
+
+	public String getDocumentTitle() {
+		return documentTitle;
+	}
+
+	public void setDocumentTitle(String documentTitle) {
+		this.documentTitle = documentTitle;
+	}
+
+	@Override
+	public String toString() {
+		return "ScanningWorkProject [digitalizers=" + digitalizers + ", revisers=" + revisers + ", completed="
+				+ completed + ", id=" + id + ", documentTitle=" + documentTitle + "]";
+	}
+	
+	
+	
+	
 	
 	
 }

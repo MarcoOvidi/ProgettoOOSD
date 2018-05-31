@@ -34,12 +34,12 @@ public class AdministratorQuerySet {
 		//CONNESSIONE
   	  	//STEP 1 parametri di connessione   
   		// JDBC driver name and database URL
-  		final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-  		final String DB_URL = "jdbc:mysql://localhost/biblioteca";
+  		final String JDBC_DRIVER = DBConnection.getJdbcDriver();
+  		final String DB_URL = DBConnection.getDbUrl();
 
   		//  Database credentials
-  		final String USER = "bibliotecario";
-  		final String PASS = "libriantichi";
+  		final String USER = DBConnection.getUser();
+  		final String PASS = DBConnection.getPassword();
   			   
   		Connection conn = null;
   		Statement stmt = null;
@@ -128,12 +128,12 @@ public class AdministratorQuerySet {
 		//CONNESSIONE
   	  	//STEP 1 parametri di connessione   
   		// JDBC driver name and database URL
-  		final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-  		final String DB_URL = "jdbc:mysql://localhost/biblioteca";
+  		final String JDBC_DRIVER = DBConnection.getJdbcDriver();
+  		final String DB_URL = DBConnection.getDbUrl();
 
   		//  Database credentials
-  		final String USER = "bibliotecario";
-  		final String PASS = "libriantichi";
+  		final String USER = DBConnection.getUser();
+  		final String PASS = DBConnection.getPassword();
   			   
   		Connection conn = null;
   		Statement stmt = null;
@@ -208,14 +208,15 @@ public class AdministratorQuerySet {
 	 */
 	
 	public static LinkedList<Request> loadRrequestsList(Boolean b) {
-		//STEP 1 parametri di connessione   
-		// JDBC driver name and database URL
-		final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-		final String DB_URL = "jdbc:mysql://localhost/biblioteca";
-		
-		//  Database credentials
-		final String USER = "bibliotecario";
-		final String PASS = "libriantichi";
+		//CONNESSIONE
+  	  	//STEP 1 parametri di connessione   
+  		// JDBC driver name and database URL
+  		final String JDBC_DRIVER = DBConnection.getJdbcDriver();
+  		final String DB_URL = DBConnection.getDbUrl();
+
+  		//  Database credentials
+  		final String USER = DBConnection.getUser();
+  		final String PASS = DBConnection.getPassword();
 		
 		Connection conn = null;
 		Statement stmt = null;
@@ -288,14 +289,15 @@ public class AdministratorQuerySet {
 	 */
 	
 	public static LinkedList<Request> loadRrequestsList() {
-		//STEP 1 parametri di connessione   
-		// JDBC driver name and database URL
-		final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-		final String DB_URL = "jdbc:mysql://localhost/biblioteca";
-		
-		//  Database credentials
-		final String USER = "bibliotecario";
-		final String PASS = "libriantichi";
+		//CONNESSIONE
+  	  	//STEP 1 parametri di connessione   
+  		// JDBC driver name and database URL
+  		final String JDBC_DRIVER = DBConnection.getJdbcDriver();
+  		final String DB_URL = DBConnection.getDbUrl();
+
+  		//  Database credentials
+  		final String USER = DBConnection.getUser();
+  		final String PASS = DBConnection.getPassword();
 		
 		Connection conn = null;
 		Statement stmt = null;
@@ -364,14 +366,15 @@ public class AdministratorQuerySet {
 	 * @throw NullPointerException in caso l'id parametro non sia presente nel db
 	 */
 	public static Request loadRequest(UUIDRequest id) throws NullPointerException {
-		//STEP 1 parametri di connessione   
-				// JDBC driver name and database URL
-				final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-				final String DB_URL = "jdbc:mysql://localhost/biblioteca";
-				
-				//  Database credentials
-				final String USER = "bibliotecario";
-				final String PASS = "libriantichi";
+		//CONNESSIONE
+  	  	//STEP 1 parametri di connessione   
+  		// JDBC driver name and database URL
+  		final String JDBC_DRIVER = DBConnection.getJdbcDriver();
+  		final String DB_URL = DBConnection.getDbUrl();
+
+  		//  Database credentials
+  		final String USER = DBConnection.getUser();
+  		final String PASS = DBConnection.getPassword();
 				
 				Connection conn = null;
 				Statement stmt = null;
@@ -449,12 +452,12 @@ public class AdministratorQuerySet {
 		//CONNESSIONE
   	  	//STEP 1 parametri di connessione   
   		// JDBC driver name and database URL
-  		final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-  		final String DB_URL = "jdbc:mysql://localhost/biblioteca";
+  		final String JDBC_DRIVER = DBConnection.getJdbcDriver();
+  		final String DB_URL = DBConnection.getDbUrl();
 
   		//  Database credentials
-  		final String USER = "bibliotecario";
-  		final String PASS = "libriantichi";
+  		final String USER = DBConnection.getUser();
+  		final String PASS = DBConnection.getPassword();
   			   
   		Connection conn = null;
   		Statement stmt = null;

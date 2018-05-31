@@ -26,11 +26,4 @@ public class DocumentQuerySet {
 	public void downloadFileDocument() {
 		
 	}
-	
-	
-	public static void main (String[] param) {
-		System.out.println("cavallo");
-	}
-	
-	
 }
