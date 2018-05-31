@@ -181,8 +181,13 @@ public class HomePageQuerySet {
 		
 	}
 	//TODO serve un metodo che recupera le singole pagine assegnate ?
-	// !!! questione dei segnalibri !!!
+	
+	// !!! questione dei segnalibri !!!  id documento, url immagine, nome del testo,
 	public void loadMyCollectionList() {
+		
+	}
+	
+	public void loadMyBookMarksList() {
 		
 	}
 
