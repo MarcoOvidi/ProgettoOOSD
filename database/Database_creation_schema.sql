@@ -71,17 +71,11 @@ create table document_metadata(
     constraint metadata_document foreign key(ID_document) references document(ID) on update cascade on delete restrict
 );
 
-create table tag(
-	ID integer unsigned not null primary key auto_increment,
-    name varchar(30) not null unique
-);
-
 create table tag_metadata(
 	ID integer unsigned not null primary key auto_increment,
     ID_document_metadada integer unsigned not null,
-    ID_tag integer unsigned,
-    constraint tag_metadata_document_metadata foreign key (ID_document_metadada) references document_metadata(ID) on update cascade on delete cascade,
-    constraint tag_metadata_tag foreign key(ID_tag) references tag(ID) on update cascade on delete cascade
+    tag varchar(30),
+    constraint tag_metadata_document_metadata foreign key (ID_document_metadada) references document_metadata(ID) on update cascade on delete cascade
 );
 
 create table book_marks(

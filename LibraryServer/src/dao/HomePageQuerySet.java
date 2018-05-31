@@ -210,7 +210,7 @@ public class HomePageQuerySet {
   			//STEP 4: Execute a query
   			stmt = conn.createStatement();
   			String sql;
-  			sql = "SELECT p.ID_document, p.image,d.title "
+  			sql = "SELECT p.ID_document as DocID, p.image PImage,d.title ad Title "
   				  + "FROM personal_collection as pc join page as p join document as d "
   				  + "on pc.ID_document=p.ID_document and pc.ID_document=d.ID "
   				  + "where pc.ID_user= " + usr.getValue() + "and p.number=1;"; 
@@ -222,7 +222,13 @@ public class HomePageQuerySet {
   			//Retrieve by column name
   			while(rs.next()) {
   				
-  				myColl
+  				String[] tupla = new String[3];
+  				
+  				tupla[0] = Integer.toString(rs.getInt("DocID"));
+  				tupla[1] = rs.getString("PImage");
+  				tupla[2] = rs.getString("Title");
+  				
+  				myColl.addLast(tupla);
   				
   			}  
   			//STEP 6: Clean-up environment
@@ -249,7 +255,7 @@ public class HomePageQuerySet {
   				se.printStackTrace();
   			}//end finally try	
   		}//end try	
-  		return swp;
+  		return myColl;
 		
 	}
 	
