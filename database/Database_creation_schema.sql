@@ -18,7 +18,7 @@ create table user (
     
 create table document(
     ID integer unsigned not null primary key auto_increment,
-    title varchar(70)
+    title varchar(70) unique
 );
     
 create table transcription_project(
@@ -67,7 +67,7 @@ create table document_metadata(
     composition_period_to date,
     preservation_state enum('1','2','3','4','5'),
     #tags text,
-    ID_document integer unsigned not null,
+    ID_document integer unsigned not null unique,
     constraint metadata_document foreign key(ID_document) references document(ID) on update cascade on delete restrict
 );
 
