@@ -96,7 +96,7 @@ public class AdministratorQuerySet {
 	 * @param id , UUIDUser dell'utente a cui devono essere cambiati i permessi
 	 * @param up , Oggetto UserPermission istanziato per avere una maschera permessi da impostare
 	 * 
-	 * @return Boolean 1 se l'inserimento è andato a buon fine , 0 altrimenti
+	 * @return Boolean true se l'inserimento è andato a buon fine , false altrimenti
 	 * @see vo.UUIDuser,vo.UserPermissions
 	 * 
 	 * @exception SQLException
@@ -148,8 +148,7 @@ public class AdministratorQuerySet {
   			//STEP 4: Execute a query
   			stmt = conn.createStatement();
   			String sql = "";
-  			if(up.getDownloadPerm()==true) {
-  				sql = "UPDATE perm_authorization "
+  			sql = "UPDATE perm_authorization "
   					+ "SET  download = " + download  
   					+ ", upload = " + upload  
   					+ ", editMetadata = " + editMetadata  
@@ -162,7 +161,7 @@ public class AdministratorQuerySet {
   					+ ", assignTranscriptionTask = " +assignTranscriptionTask
   					+ ", publishDocument = " + publishDocument 
   					+ " WHERE ID_user = " + id + ";";
-  			}
+  			
   			
   			linesAffected = stmt.executeUpdate(sql);
   			
@@ -447,7 +446,7 @@ public class AdministratorQuerySet {
 	 * @param answer Corpo del messaggio risposta
 	 * @return Boolean true se l'operazione è andata a buon fine , false altrimenti
 	 */
-	//TODO per me se un admin mand la risposta il booleanno status viene messo a true nel senso che è stata analizzata 
+	//TODO per me se un admin mand la risposta il booleanno status viene messo a true nel senso che la richiesta  è stata analizzata 
 	public static Boolean answerRequest(UUIDRequest id,String answer) {
 		//CONNESSIONE
   	  	//STEP 1 parametri di connessione   

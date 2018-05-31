@@ -18,9 +18,7 @@ create table user (
     
 create table document(
 	ID integer unsigned not null primary key auto_increment,
-    title varchar(70),
-    scanning_complete boolean default false,
-    transcription_complete boolean default false
+    title varchar(70)
 );
     
 create table transcription_project(
@@ -28,6 +26,7 @@ create table transcription_project(
 	ID_coordinator integer unsigned not null,
 	ID_document integer unsigned not null unique,
     date date,
+    transcription_complete boolean default false,
 	constraint transcription_project_coordinator foreign key(ID_coordinator) references user(ID) on update cascade on delete restrict,
     constraint transcription_project_document foreign key(ID_document) references document(ID) on update cascade on delete cascade
 );
@@ -37,6 +36,7 @@ create table scanning_project(
     ID_coordinator integer unsigned not null,
     ID_document integer unsigned not null unique,
     date date,
+	scanning_complete boolean default false,
     constraint scanning_project_coordinator foreign key(ID_coordinator) references user(ID) on update cascade on delete restrict,
     constraint scanning_project_document foreign key(ID_document) references document(ID) on update cascade on delete cascade
 );
@@ -87,9 +87,11 @@ create table tag_metadata(
 create table book_marks(
 	ID integer unsigned not null primary key auto_increment,
     ID_user integer unsigned not null,
+    ID_document integer unsigned not null,
     ID_page integer unsigned not null,
     constraint book_marks_user foreign key (ID_user) references user(ID) on update cascade on delete cascade,
-    constraint book_marks_page foreign key(Id_page) references page(ID) on update cascade on delete cascade
+    constraint book_marks_page foreign key(ID_page) references page(ID) on update cascade on delete cascade,
+    constraint book_marks_document foreign key(ID_document) references document(ID) on update cascade on delete cascade
 );
 
 create table personal_collection(
@@ -117,8 +119,8 @@ create table transcription_project_transcriber_partecipant (
     ID integer unsigned not null primary key auto_increment,
     ID_transcription_project integer unsigned not null,
     ID_transcriber_user integer unsigned not null,
-    constraint transcription_project_transcriber_partecipant_transcription_project foreign key (ID_transcription_project) references transcription_project (ID) on update cascade on delete restrict,
-    constraint transcription_project_transcriber_partecipant_transcriber_user foreign key (ID_transcriber_user) references  user(ID) on update cascade on delete restrict
+    constraint transcription_prj_transc_partecipant_transcription_project foreign key (ID_transcription_project) references transcription_project (ID) on update cascade on delete restrict,
+    constraint transcription_prj_transc_partecipant_transcriber_user foreign key (ID_transcriber_user) references  user(ID) on update cascade on delete restrict
 );
 
 
@@ -126,8 +128,8 @@ create table transcription_project_reviser_partecipant (
     ID integer unsigned not null primary key auto_increment,
     ID_transcription_project integer unsigned not null,
     ID_reviser_user integer unsigned not null,
-    constraint transcription_project_reviser_partecipant_transcription_project foreign key (ID_transcription_project) references transcription_project (ID) on update cascade on delete restrict,
-    constraint transcription_project_reviser_partecipant_user foreign key (ID_reviser_user) references  user(ID) on update cascade on delete restrict
+    constraint transcription_prj_rev_partecipant_transcription_project foreign key (ID_transcription_project) references transcription_project (ID) on update cascade on delete restrict,
+    constraint transcription_prj_rev_partecipant_user foreign key (ID_reviser_user) references  user(ID) on update cascade on delete restrict
 );
 create table scanning_project_digitalizer_partecipant(
 	ID integer unsigned not null primary key auto_increment,

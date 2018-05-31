@@ -12,7 +12,7 @@ public class ScanningWorkProject extends WorkProject {
 	private LinkedList<UUIDUser> revisers;
 	private Boolean completed;
 	private UUIDScanningWorkProject id;
-	private String documentTitle;  //ho aggiunto questo campo perchè la query in HomePageQS che pesca tutti i prj e i loro nomi ha bisogno anche del titolo dell'opera
+	
 	
 	//costruttore
 	public ScanningWorkProject() {

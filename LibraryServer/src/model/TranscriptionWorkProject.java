@@ -14,7 +14,8 @@ public class TranscriptionWorkProject extends WorkProject{
 	private LinkedList<UUIDUser> transcribers;
 	private LinkedList<UUIDUser> revisers;
 	private UUIDTranscriptionWorkProject id;
-	private String documentTitle;  //ho aggiunto questo campo perchè la query in HomePageQS che pesca tutti i prj e i loro nomi ha bisogno anche del titolo dell'opera
+	private Boolean completed;
+	
 	
 	//costruttore
 	public TranscriptionWorkProject(UUIDTranscriptionWorkProject id,String t) {
@@ -49,12 +50,13 @@ public class TranscriptionWorkProject extends WorkProject{
 		this.revisers.addLast(u);
 	}
 
-	@Override
-	public String toString() {
-		return "TranscriptionWorkProject [transcribers=" + transcribers + ", revisers=" + revisers + ", id=" + id
-				+ ", documentTitle=" + documentTitle + "]";
+	public void setComplete(Boolean com) {
+		this.completed=com;
 	}
 	
+	public Boolean getComplete() {
+		return this.completed;
+	}
 	
 	
 }
