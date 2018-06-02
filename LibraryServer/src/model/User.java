@@ -113,9 +113,11 @@ public class User {
 	public void setBookMarks(LinkedList<UUIDBookMark> bm) {
 		this.bookMarks.addAll(bm);
 	}
-	
 
-	
-	
-	
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", session=" + session + ", username=" + username + ", informations=" + informations
+				+ ", permissions=" + permissions + ", transcriptionProjects=" + transcriptionProjects
+				+ ", scanningProjects=" + scanningProjects + ", bookMarks=" + bookMarks + ", active=" + active + "]";
+	}	
 }

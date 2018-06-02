@@ -1,10 +1,32 @@
 package dao;
+import java.io.InputStream;
+import java.io.Reader;
+import java.math.BigDecimal;
+import java.net.URL;
+import java.sql.Array;
+import java.sql.Blob;
+import java.sql.Clob;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.NClob;
+import java.sql.ParameterMetaData;
+import java.sql.PreparedStatement;
+import java.sql.Ref;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.RowId;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.SQLWarning;
+import java.sql.SQLXML;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.LinkedList;
+
+import javax.naming.spi.DirStateFactory.Result;
+
 import vo.Request;
 import vo.UUIDRequest;
 import vo.UUIDUser;
@@ -23,72 +45,50 @@ public class AdministratorQuerySet {
 	 * 
 	 * @see vo.UUIDUser
 	 * 
-	 * @exception SQLException
+	 * @exception DatabaseException
 	 */
 	
-	public static Boolean acceptUserRegistration(UUIDUser user, Boolean b) {
-		Integer linesAffected = 0;
-		//recupero la chiave utente
-		Integer id = user.getValue();
+	public static Boolean modifyUserStatus(UUIDUser user, Boolean b) throws DatabaseException {
+		Connection con = null;
 		
-		//CONNESSIONE
-  	  	//STEP 1 parametri di connessione   
-  		// JDBC driver name and database URL
-  		final String JDBC_DRIVER = DBConnection.getJdbcDriver();
-  		final String DB_URL = DBConnection.getDbUrl();
-
-  		//  Database credentials
-  		final String USER = DBConnection.getUser();
-  		final String PASS = DBConnection.getPassword();
-  			   
-  		Connection conn = null;
-  		Statement stmt = null;
-  		
-  		try{
-  			//STEP 2: Register JDBC driver
-  			Class.forName(JDBC_DRIVER);
-
-  			//STEP 3: Open a connection
-  			conn = DriverManager.getConnection(DB_URL,USER,PASS);
-
-  			//STEP 4: Execute a query
-  			stmt = conn.createStatement();
-  			String sql;
-  			sql = "UPDATE user "
-  	  				+ "SET status = " + b + " WHERE ID = " + id + ";";
-  			
-  			linesAffected = stmt.executeUpdate(sql);
-  			
-   			
-  			//STEP 5: Clean-up environment
-  			stmt.close();
-  			conn.close();
-  		}catch(SQLException se){
-  			//Handle errors for JDBC
-  			se.printStackTrace();
-  		}catch(Exception e){
-  			//Handle errors for Class.forName
-  			e.printStackTrace();
-  		}finally{
-  			//finally block used to close resources
-  			try{
-  				if(stmt!=null)
-  					stmt.close();
-  			}catch(SQLException se2){
-  			}// nothing we can do
-  			try{
-  				if(conn!=null)
-  					conn.close();
-  			}catch(SQLException se){
-  				se.printStackTrace();
-  			}//end finally try
-  		}//end try
-  		
-  		if (linesAffected == 1)
-  			return true;
-  		else
-  			return false;
-  	}//end method
+		
+		try {
+			con = DBConnection.connect();
+		}catch(DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+		
+		PreparedStatement ps = null;
+		Integer result = null;
+		
+		try {
+			ps = con.prepareStatement("UPDATE user SET status = ? WHERE id=?");
+			ps.setBoolean(1, b);
+			ps.setInt(2, user.getValue());	
+			
+			result = ps.executeUpdate();
+			
+		}catch(SQLException e) {
+			throw new DatabaseException("Errore di esecuzione della query", e);
+		}finally {
+			try{
+				if(ps != null)
+					ps.close();
+				if(con!=null)
+					con.close();
+			}catch(SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+			
+			
+		}
+		
+		if(result == 1)
+			return true;
+		else
+			return false;
+	
+	}//end method
 		
 	
 	/* Aggiorna i permessi degli utenti
@@ -103,342 +103,169 @@ public class AdministratorQuerySet {
 	 * 
 	 */
 	
-	public static boolean updateUserPermissions(UUIDUser user,UserPermissions up) {
+	public static boolean updateUserPermissions(UUIDUser user,UserPermissions up) throws DatabaseException{
+			
+		Connection con = null;
 		
-		//recupero i dati necessari alla query dagli oggetti di input
-		Integer linesAffected = 0;
-		Integer id = user.getValue();
-		Boolean download = up.getDownloadPerm();
-		//uploader
-		Boolean upload = up.getUploadPerm();
-		Boolean editMetadata = up.getEditMetaDataPerm();
-		//digitalizationReviser
-		Boolean reviewPage = up.getReviewPagePerm();
-		//transcriber
-		Boolean modifyTranscription = up.getModifyTranscriptionPerm();
-		Boolean requestTranscriptionTask = up.getRequestTranscriptionTaskPerm();
-		//trasnscriptionReviser
-		Boolean reviewTranscription = up.getReviewTranscriptionPerm();
-		//coordinator
-		Boolean addNewProject = up.getAddNewProjectPerm();
-		Boolean assignDigitalizationTask = up.getAssignDigitalizationTaskPerm();
-		Boolean assignTranscriptionTask = up.getAssignTranscriptionTaskPerm();
-		Boolean publishDocument = up.getPublishDocumentPerm();
+		try{
+			con = DBConnection.connect();
+		}catch(DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+			
+		PreparedStatement ps = null;
+		Integer res = null;
 		
-		//CONNESSIONE
-  	  	//STEP 1 parametri di connessione   
-  		// JDBC driver name and database URL
-  		final String JDBC_DRIVER = DBConnection.getJdbcDriver();
-  		final String DB_URL = DBConnection.getDbUrl();
-
-  		//  Database credentials
-  		final String USER = DBConnection.getUser();
-  		final String PASS = DBConnection.getPassword();
-  			   
-  		Connection conn = null;
-  		Statement stmt = null;
-  		
-  		try{
-  			//STEP 2: Register JDBC driver
-  			Class.forName(JDBC_DRIVER);
-
-  			//STEP 3: Open a connection
-  			conn = DriverManager.getConnection(DB_URL,USER,PASS);
-
-  			//STEP 4: Execute a query
-  			stmt = conn.createStatement();
-  			String sql = "";
-  			sql = "UPDATE perm_authorization "
-  					+ "SET  download = " + download  
-  					+ ", upload = " + upload  
-  					+ ", editMetadata = " + editMetadata  
-  					+ ", reviewPage = " + reviewPage  
-  					+ ", modifyTranscription = " + modifyTranscription    
-  					+ ", requestTranscriptionTask = " + requestTranscriptionTask    
-  					+ ", reviewTranscription = " + reviewTranscription  
-  					+ ", addNewProject = " + addNewProject  
-  					+ ", assignDigitalizationTask = " + assignDigitalizationTask   
-  					+ ", assignTranscriptionTask = " +assignTranscriptionTask
-  					+ ", publishDocument = " + publishDocument 
-  					+ " WHERE ID_user = " + id + ";";
-  			
-  			
-  			linesAffected = stmt.executeUpdate(sql);
-  			
-   			
-  			//STEP 5: Clean-up environment
-  			stmt.close();
-  			conn.close();
-  		}catch(SQLException se){
-  			//Handle errors for JDBC
-  			se.printStackTrace();
-  		}catch(Exception e){
-  			//Handle errors for Class.forName
-  			e.printStackTrace();
-  		}finally{
-  			//finally block used to close resources
-  			try{
-  				if(stmt!=null)
-  					stmt.close();
-  			}catch(SQLException se2){
-  			}// nothing we can do
-  			try{
-  				if(conn!=null)
-  					conn.close();
-  			}catch(SQLException se){
-  				se.printStackTrace();
-  			}//end finally try
-  		}//end try
-  		
-  		if (linesAffected == 1)
-  			return true;
-  		else
-  			return false;
+		try {
+			ps = con.prepareStatement("UPDATE perm_authorization "
+					+ "SET  download = ?, upload = ?, editMetadata =  ?, "
+					+ "reviewPage =  ?, modifyTranscription =  ?, "
+					+ "requestTranscriptionTask =  ?, reviewTranscription =  ?, "
+					+ "addNewProject =  ?, assignDigitalizationTask = ?, "
+					+ "assignTranscriptionTask = ?, publishDocument =  ? "
+					+ "WHERE ID_user = ? ;");
+			ps.setBoolean(1, up.getDownloadPerm());
+			ps.setBoolean(2, up.getUploadPerm());
+			ps.setBoolean(3, up.getEditMetaDataPerm());
+			ps.setBoolean(4, up.getReviewPagePerm());
+			ps.setBoolean(5, up.getModifyTranscriptionPerm());
+			ps.setBoolean(6, up.getRequestTranscriptionTaskPerm());
+			ps.setBoolean(7, up.getReviewTranscriptionPerm());
+			ps.setBoolean(8, up.getAddNewProjectPerm());
+			ps.setBoolean(9, up.getAssignDigitalizationTaskPerm());
+			ps.setBoolean(10, up.getAssignTranscriptionTaskPerm());
+			ps.setBoolean(11, up.getPublishDocumentPerm());
+			ps.setInt(12, user.getValue());
+			
+			res = ps.executeUpdate();
+			
+			
+		}catch(SQLException e) {
+			throw new DatabaseException("Errore di esecuzione query", e);
+		}finally {
+			try {
+				if(ps != null)
+					ps.close();
+				if(con != null)
+					con.close();
+			}catch(SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errori sulle risorse", e));
+			}
+		}
 		
-		
-		
-		
+		return (res == 1);
 	}
 	
 	/* Seleziona il campo oggetto di tutte le richieste inviate dagli utenti 
 	 * 
-	 * @param b se "FALSE" mostra soltanto gli oggetti delle richieste pending, se "TRUE" viceversa
-	 * @return LinkedList<Request> con il solo UUIDRequest ed oggetto  
+	 * @param b se 0 mostra soltanto gli oggetti delle richieste pending, se 1 delle non pending, se 2 tutte
+	 * @return HashMap<Integer,String> l'intero(chiave) rappresenta l'UUIDRequest e la String l'oogetto della request  
 	 */
 	
-	public static LinkedList<Request> loadRrequestsList(Boolean b) {
-		//CONNESSIONE
-  	  	//STEP 1 parametri di connessione   
-  		// JDBC driver name and database URL
-  		final String JDBC_DRIVER = DBConnection.getJdbcDriver();
-  		final String DB_URL = DBConnection.getDbUrl();
-
-  		//  Database credentials
-  		final String USER = DBConnection.getUser();
-  		final String PASS = DBConnection.getPassword();
+	public static HashMap<Integer,String> loadRequestsList(int b) throws DatabaseException {
 		
-		Connection conn = null;
-		Statement stmt = null;
+		Connection con = null;
 		
-		//oggetti di ausilio
-		LinkedList<Request> req = new LinkedList<Request>();
+		try {
+			con = DBConnection.connect();
+		}catch(DatabaseException ex) {
+			throw new DatabaseException("Errore di connessione", ex);
+		}
 		
-		try{
-			//STEP 2: Register JDBC driver
-			Class.forName(JDBC_DRIVER);
+		PreparedStatement ps = null;
+		HashMap<Integer,String> req = new HashMap<Integer,String>();
+		ResultSet rs = null;
+		
+		try {
 			
-			//STEP 3: Open a connection
-			conn = DriverManager.getConnection(DB_URL,USER,PASS);
-			
-			//STEP 4: Execute a query
-			stmt = conn.createStatement();
-			String sql;
-			if(b) {
-				sql = "SELECT ID,object from request where status=true;";
+			if(b == 0) {
+				ps = con.prepareStatement("SELECT ID,object from request WHERE status=?;");
+				ps.setBoolean(1, false);
+			}else {
+				ps = con.prepareStatement("SELECT ID,object from request WHERE status=?;");
+				if(b ==1) {
+					ps.setBoolean(1, true);
+				}
+				else {
+					ps = con.prepareStatement("SELECT ID,object from request WHERE status=? or status=?;");
+					ps.setBoolean(1, false);
+					ps.setBoolean(2, true);
+				}
 			}
-			else {
-				sql = "SELECT ID,object from request where status=false;";
-			}
-			ResultSet rs = stmt.executeQuery(sql);
 			
-			//STEP 5: Extract data from result set
+			rs = ps.executeQuery();
 			
-			//Retrieve by column name
 			while(rs.next()) {
-				Integer ident = rs.getInt("ID");
-				String object = rs.getString("object");
-				
-				//object creation
-				UUIDRequest idr = new UUIDRequest(ident);
-				Request r = new Request(idr,object);  
-				req.addLast(r);
-			}  
-			//STEP 6: Clean-up environment
-			rs.close();
-			stmt.close();
-			conn.close();
-		}catch(SQLException se){
-			//Handle errors for JDBC
-			se.printStackTrace();
-		}catch(Exception e){
-			//Handle errors for Class.forName
-			e.printStackTrace();
-		}finally{
-			//finally block used to close resources
-			try{
-				if(stmt!=null)
-					stmt.close();
-			}catch(SQLException se2){
-			}// nothing we can do
-			try{
-				if(conn!=null)
-					conn.close();
-			}catch(SQLException se){
-				se.printStackTrace();
-			}//end finally try
-		}//end try
+				req.put(rs.getInt("ID"), rs.getString("object"));
+			}
+		}catch(SQLException e) {
+			throw new DatabaseException("Errore di esecuzione query", e);
+		}finally {
+			try {
+				if(rs != null)
+					rs.close();
+				if(ps != null)
+					ps.close();
+				if(con != null)
+					con.close();
+			}catch(SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+		}
 		
 		return req;
-			
+		
 	}
 	
-	/* Seleziona il campo oggetto di tutte le richieste inviate dagli utenti pending e non 
-	 * 
-	 * @return LinkedList<Request> con il solo UUIDRequest ed oggetto  
-	 */
-	
-	public static LinkedList<Request> loadRrequestsList() {
-		//CONNESSIONE
-  	  	//STEP 1 parametri di connessione   
-  		// JDBC driver name and database URL
-  		final String JDBC_DRIVER = DBConnection.getJdbcDriver();
-  		final String DB_URL = DBConnection.getDbUrl();
-
-  		//  Database credentials
-  		final String USER = DBConnection.getUser();
-  		final String PASS = DBConnection.getPassword();
-		
-		Connection conn = null;
-		Statement stmt = null;
-		
-		//oggetti di ausilio
-		LinkedList<Request> req = new LinkedList<Request>();
-		
-		try{
-			//STEP 2: Register JDBC driver
-			Class.forName(JDBC_DRIVER);
-			
-			//STEP 3: Open a connection
-			conn = DriverManager.getConnection(DB_URL,USER,PASS);
-			
-			//STEP 4: Execute a query
-			stmt = conn.createStatement();
-			String sql;
-			sql = "SELECT ID,object from request ";
-			
-			ResultSet rs = stmt.executeQuery(sql);
-			
-			//STEP 5: Extract data from result set
-			
-			//Retrieve by column name
-			while(rs.next()) {
-				Integer id = rs.getInt("ID");
-				String object = rs.getString("object");
-				
-				//object creation
-				UUIDRequest idr = new UUIDRequest(id);
-				Request r = new Request(idr,object);  
-				req.addLast(r);
-			}  
-			//STEP 6: Clean-up environment
-			rs.close();
-			stmt.close();
-			conn.close();
-		}catch(SQLException se){
-			//Handle errors for JDBC
-			se.printStackTrace();
-		}catch(Exception e){
-			//Handle errors for Class.forName
-			e.printStackTrace();
-		}finally{
-			//finally block used to close resources
-			try{
-				if(stmt!=null)
-					stmt.close();
-			}catch(SQLException se2){
-			}// nothing we can do
-			try{
-				if(conn!=null)
-					conn.close();
-			}catch(SQLException se){
-				se.printStackTrace();
-			}//end finally try
-		}//end try
-		
-		return req;
-			
-	}
 	
 	/* Seleziona tutti gli attributi di una richiesta
 	 * @param id UUIDRequest di una richiesta
 	 * @return Request un oggetto richiesta completo
 	 * @throw NullPointerException in caso l'id parametro non sia presente nel db
 	 */
-	public static Request loadRequest(UUIDRequest id) throws NullPointerException {
-		//CONNESSIONE
-  	  	//STEP 1 parametri di connessione   
-  		// JDBC driver name and database URL
-  		final String JDBC_DRIVER = DBConnection.getJdbcDriver();
-  		final String DB_URL = DBConnection.getDbUrl();
-
-  		//  Database credentials
-  		final String USER = DBConnection.getUser();
-  		final String PASS = DBConnection.getPassword();
-				
-				Connection conn = null;
-				Statement stmt = null;
-				
-				//oggetti di ausilio
-				Request req = null;
-				
-				try{
-					//STEP 2: Register JDBC driver
-					Class.forName(JDBC_DRIVER);
-					
-					//STEP 3: Open a connection
-					conn = DriverManager.getConnection(DB_URL,USER,PASS);
-					
-					//STEP 4: Execute a query
-					stmt = conn.createStatement();
-					String sql;
-					sql = "SELECT * from request where id=" + id.getValue() + ";";
-					
-					ResultSet rs = stmt.executeQuery(sql);
-					
-					//STEP 5: Extract data from result set
-					
-					//Retrieve by column name
-					if(rs.next()) {
-						UUIDUser user = new UUIDUser(rs.getInt("ID_user"));
-						UUIDUser admin = new UUIDUser(rs.getInt("ID_admin"));
-						Boolean status = rs.getBoolean("status");
-						String object = rs.getString("object");
-						String message = rs.getString("message");
-						String answer = rs.getString("answer_message");
-						
-						req = new Request(id,user,admin,status,object,message,answer);
-					}  
-					
-					//STEP 6: Clean-up environment
-					rs.close();
-					stmt.close();
-					conn.close();
-				}catch(SQLException se){
-					//Handle errors for JDBC
-					se.printStackTrace();
-				}catch(Exception e){
-					//Handle errors for Class.forName
-					e.printStackTrace();
-				}finally{
-					//finally block used to close resources
-					try{
-						if(stmt!=null)
-							stmt.close();
-					}catch(SQLException se2){
-					}// nothing we can do
-					try{
-						if(conn!=null)
-							conn.close();
-					}catch(SQLException se){
-						se.printStackTrace();
-					}//end finally try
-				}//end try
-				
-				if(req == null)
-					throw new NullPointerException();
-				else
-					return req;
+	public static Request loadRequest(UUIDRequest id) throws NullPointerException,DatabaseException {
 		
+		if(id == null)
+			throw new NullPointerException("Errore, id richiesta non valido");
+		
+		Connection con = null;
+		
+		try {
+			con = DBConnection.connect();
+		}catch(DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+		
+		PreparedStatement ps = null;
+		Request r = null;
+		ResultSet rs = null;
+		
+		try {
+			ps = con.prepareStatement("SELECT * from request WHERE id=?;");
+			ps.setInt(1, id.getValue());
+			
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				r = new Request(new UUIDRequest(rs.getInt("ID")), new UUIDUser(rs.getInt("ID_user")),
+						new UUIDUser(rs.getInt("ID_admin")), rs.getBoolean("status"), rs.getString("object"), 
+						rs.getString("Message"), rs.getString("answer_message"));
+			}
+		}catch(SQLException e) {
+			throw new DatabaseException("Errore di esecuzione della query", e);
+		}finally {
+			try {
+				if(rs != null)
+					rs.close();
+				if(ps != null)
+					ps.close();
+				if(con != null)
+					con.close();
+			}catch(SQLException ex) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", ex));
+			}
+		}
+		return r;
 	}
 	
 	/* Aggiorna l'attributo answer di una richiesta e imposta la request non pending
@@ -447,67 +274,42 @@ public class AdministratorQuerySet {
 	 * @return Boolean true se l'operazione è andata a buon fine , false altrimenti
 	 */
 	//TODO per me se un admin mand la risposta il booleanno status viene messo a true nel senso che la richiesta  è stata analizzata 
-	public static Boolean answerRequest(UUIDRequest id,String answer) {
-		//CONNESSIONE
-  	  	//STEP 1 parametri di connessione   
-  		// JDBC driver name and database URL
-  		final String JDBC_DRIVER = DBConnection.getJdbcDriver();
-  		final String DB_URL = DBConnection.getDbUrl();
-
-  		//  Database credentials
-  		final String USER = DBConnection.getUser();
-  		final String PASS = DBConnection.getPassword();
-  			   
-  		Connection conn = null;
-  		Statement stmt = null;
-  		
-  		Integer linesAffected =0;
-  		
-  		try{
-  			//STEP 2: Register JDBC driver
-  			Class.forName(JDBC_DRIVER);
-
-  			//STEP 3: Open a connection
-  			conn = DriverManager.getConnection(DB_URL,USER,PASS);
-
-  			//STEP 4: Execute a query
-  			stmt = conn.createStatement();
-  			String sql;
-  			sql = "UPDATE request "
-  				+ "SET answer_message = " + "\"" + answer + "\"" + " ,status = true " + "WHERE ID = " + id.getValue() + ";";
-  			
-  			linesAffected = stmt.executeUpdate(sql);
-  			
-   			
-  			//STEP 5: Clean-up environment
-  			stmt.close();
-  			conn.close();
-  		}catch(SQLException se){
-  			//Handle errors for JDBC
-  			se.printStackTrace();
-  		}catch(Exception e){
-  			//Handle errors for Class.forName
-  			e.printStackTrace();
-  		}finally{
-  			//finally block used to close resources
-  			try{
-  				if(stmt!=null)
-  					stmt.close();
-  			}catch(SQLException se2){
-  			}// nothing we can do
-  			try{
-  				if(conn!=null)
-  					conn.close();
-  			}catch(SQLException se){
-  				se.printStackTrace();
-  			}//end finally try
-  		}//end try
-  		
-  		if (linesAffected == 1)
-  			return true;
-  		else
-  			return false;
-  	}//end method
+	public static Boolean answerRequest(UUIDRequest id,String answer) throws DatabaseException{
+		Connection con = null;
+		
+		try{
+			con = DBConnection.connect();
+		}catch(DatabaseException ex) {
+			throw new DatabaseException("Errore di connessione", ex);
+		}
+		
+		PreparedStatement ps = null;
+		Integer result = null;
+		
+		try {
+			ps = con.prepareStatement("UPDATE request SET answer_message=? , status=true WHERE ID=?;");
+			ps.setString(1, answer);
+			ps.setInt(2, id.getValue());
+			
+			result = ps.executeUpdate();
+			
+			
+		}catch(SQLException e) {
+			throw new DatabaseException("Errore nella query", e);
+		}finally {
+			try {
+				if(ps != null)
+					ps.close();
+				if(con != null)
+					con.close();
+			}catch(SQLException ex) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", ex));
+			}
+		}
+		
+		return (result == 1);
+		
+	}//end method
 	
 		
 }
