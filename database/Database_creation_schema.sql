@@ -22,21 +22,21 @@ create table document(
     
 create table transcription_project(
     ID integer unsigned not null primary key auto_increment,
-    ID_coordinator integer unsigned not null,
+    ID_coordinator integer unsigned ,
     ID_document integer unsigned not null unique,
     date date,
     transcription_complete boolean default false,
-    constraint transcription_project_coordinator foreign key(ID_coordinator) references user(ID) on update cascade on delete restrict,
+    constraint transcription_project_coordinator foreign key(ID_coordinator) references user(ID) on update cascade on delete set null,
     constraint transcription_project_document foreign key(ID_document) references document(ID) on update cascade on delete cascade
 );
 
 create table scanning_project(
     ID integer unsigned not null primary key auto_increment,
-    ID_coordinator integer unsigned not null,
+    ID_coordinator integer unsigned ,
     ID_document integer unsigned not null unique,
     date date,
     scanning_complete boolean default false,
-    constraint scanning_project_coordinator foreign key(ID_coordinator) references user(ID) on update cascade on delete restrict,
+    constraint scanning_project_coordinator foreign key(ID_coordinator) references user(ID) on update cascade on delete set null,
     constraint scanning_project_document foreign key(ID_document) references document(ID) on update cascade on delete cascade
 );
 
@@ -118,8 +118,8 @@ create table transcription_project_transcriber_partecipant (
     ID integer unsigned not null primary key auto_increment,
     ID_transcription_project integer unsigned not null,
     ID_transcriber_user integer unsigned not null,
-    constraint transcription_prj_transc_partecipant_transcription_project foreign key (ID_transcription_project) references transcription_project (ID) on update cascade on delete restrict,
-    constraint transcription_prj_transc_partecipant_transcriber_user foreign key (ID_transcriber_user) references  user(ID) on update cascade on delete restrict
+    constraint transcription_prj_transc_partecipant_transcription_project foreign key (ID_transcription_project) references transcription_project (ID) on update cascade on delete cascade,
+    constraint transcription_prj_transc_partecipant_transcriber_user foreign key (ID_transcriber_user) references  user(ID) on update cascade on delete cascade
 );
 
 
@@ -127,23 +127,23 @@ create table transcription_project_reviser_partecipant (
     ID integer unsigned not null primary key auto_increment,
     ID_transcription_project integer unsigned not null,
     ID_reviser_user integer unsigned not null,
-    constraint transcription_prj_rev_partecipant_transcription_project foreign key (ID_transcription_project) references transcription_project (ID) on update cascade on delete restrict,
-    constraint transcription_prj_rev_partecipant_user foreign key (ID_reviser_user) references  user(ID) on update cascade on delete restrict
+    constraint transcription_prj_rev_partecipant_transcription_project foreign key (ID_transcription_project) references transcription_project (ID) on update cascade on delete cascade,
+    constraint transcription_prj_rev_partecipant_user foreign key (ID_reviser_user) references  user(ID) on update cascade on delete cascade
 );
 create table scanning_project_digitalizer_partecipant(
     ID integer unsigned not null primary key auto_increment,
     ID_scanning_project integer unsigned not null,
     ID_digitalizer_user integer unsigned not null,
-    constraint scanning_project_digitalizer_partecipant_scanning_project foreign key(ID_scanning_project) references scanning_project(ID) on update cascade on delete restrict,
-    constraint scanning_project_digitalizer_partecipant_user foreign key(ID_digitalizer_user) references user(ID) on update cascade on delete restrict
+    constraint scanning_project_digitalizer_partecipant_scanning_project foreign key(ID_scanning_project) references scanning_project(ID) on update cascade on delete cascade,
+    constraint scanning_project_digitalizer_partecipant_user foreign key(ID_digitalizer_user) references user(ID) on update cascade on delete cascade
 );
 
 create table scanning_project_reviser_partecipant(
     ID integer unsigned not null primary key auto_increment,
     ID_scanning_project integer unsigned not null,
     ID_reviser_user integer unsigned not null,
-    constraint scanning_project_reviser_partecipant_scanning_project foreign key(ID_scanning_project) references scanning_project(ID) on update cascade on delete restrict,
-    constraint scanning_project_reviser_partecipant_user foreign key(ID_reviser_user) references user(ID) on update cascade on delete restrict
+    constraint scanning_project_reviser_partecipant_scanning_project foreign key(ID_scanning_project) references scanning_project(ID) on update cascade on delete cascade,
+    constraint scanning_project_reviser_partecipant_user foreign key(ID_reviser_user) references user(ID) on update cascade on delete cascade
 );
 
 create table perm_authorization(

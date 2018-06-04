@@ -11,9 +11,13 @@ public class WorkProject {
 	private SessionDataHandler session;
 	private UUIDUser coordinator;
 	private Date publishingDate;
+	private Boolean completed;
 	
 	// costruttore
-	public WorkProject() {
+	public WorkProject(Date d,UUIDUser coord, Boolean b) {
+		this.publishingDate=d;
+		this.coordinator=coord;
+		this.completed=b;
 		
 	}
 	
@@ -46,4 +50,11 @@ public class WorkProject {
 		this.publishingDate=d;
 	}
 
+	@Override
+	public String toString() {
+		return "WorkProject [session=" + session + ", coordinator=" + coordinator + ", publishingDate=" + publishingDate
+				+ ", completed=" + completed + "]";
+	}
+	
+	
 }

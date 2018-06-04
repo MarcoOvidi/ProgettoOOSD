@@ -24,6 +24,13 @@ public class Request {
 		this.id = idr;
 		this.object = object;
 	}
+	
+	public Request (String object, String mes , UUIDUser usr) {
+		this.object = object;
+		this.message=mes;
+		this.user=usr;
+	}
+	
 
 	public UUIDRequest getId() {
 		return id;

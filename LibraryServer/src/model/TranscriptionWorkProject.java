@@ -3,6 +3,8 @@ package model;
 import vo.UUIDUser;
 import vo.UUIDDocument;
 import vo.UUIDTranscriptionWorkProject;
+
+import java.util.Date;
 import java.util.LinkedList;
 
 
@@ -14,18 +16,17 @@ public class TranscriptionWorkProject extends WorkProject{
 	private LinkedList<UUIDUser> transcribers;
 	private LinkedList<UUIDUser> revisers;
 	private UUIDTranscriptionWorkProject id;
-	private Boolean completed;
 	
 	
 	
-	
-	public TranscriptionWorkProject() {
-		super();
+	public TranscriptionWorkProject(Date d,UUIDUser coord,LinkedList<UUIDUser> tr, LinkedList<UUIDUser> rev, UUIDTranscriptionWorkProject id, Boolean b) {
+		super(d,coord,b);
+		this.transcribers=tr;
+		this.revisers=rev;
+		this.id=id;
 	}
 	
-	public TranscriptionWorkProject(Integer prjID) {
-		this.id= new UUIDTranscriptionWorkProject(prjID);
-	}
+	
 	
 	//metodi get e set
 	public LinkedList<UUIDUser> getTranscribers(){
@@ -46,13 +47,24 @@ public class TranscriptionWorkProject extends WorkProject{
 		this.revisers.addLast(u);
 	}
 
-	public void setComplete(Boolean com) {
-		this.completed=com;
+
+	
+	public UUIDTranscriptionWorkProject getUUID() {
+		return this.id;
 	}
 	
-	public Boolean getComplete() {
-		return this.completed;
+	public void setUUID(UUIDTranscriptionWorkProject id) {
+		this.id=id;
 	}
+
+
+
+	@Override
+	public String toString() {
+		return super.toString() + "TranscriptionWorkProject [transcribers=" + transcribers + ", revisers=" + revisers + ", id=" + id + "]";
+	}
+	
+	
 	
 	
 }

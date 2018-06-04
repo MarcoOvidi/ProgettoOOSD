@@ -6,4 +6,10 @@ public class UUIDUser extends UUID {
 		super(id);
 	}
 
+	@Override
+	public String toString() {
+		return super.toString();
+	}
+	
+	
 }

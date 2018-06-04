@@ -1,24 +1,71 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-
-import model.Document;
+import vo.UUIDDocument;
 
 public class DocumentQuerySet {
 	
 	/* Inserisce un nuovo documento
-	 * @param doc Un oggetto Documento
+	 * @param String Titolo dell'opera
 	 * @return Boolean: true se l'operazione è andata a buon fine , false altrimenti
 	 */
-	
-	public void insertDocument(Document doc) {
+	//TODO questo metodo carica solo il titolo del documento giusto ?
+	public static UUIDDocument insertDocument(String title) throws DatabaseException {
+		Connection con = null;
+		
+		try {
+			con = DBConnection.connect();
+		}catch(DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+		
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		UUIDDocument id = null;
+		
+		try {
+			con.setAutoCommit(false);
+			ps = con.prepareStatement("insert into document(title) value( ? );", new String[] {"ID"});
+			ps.setString(1,title);
+			ps.addBatch();
+			ps.executeBatch();
+			
+			rs = ps.getGeneratedKeys();
+			if(rs.next()) {
+				id = new UUIDDocument(rs.getInt(1));
+			}
+			
+			con.commit();
+			
+		}catch(SQLException e) {
+			try {
+				con.abort(null);
+				
+			}catch(SQLException f) {
+				DBConnection.logDatabaseException(new DatabaseException("Duplicato", f));
+			}
+		}finally {
+			try{
+				if(ps != null)
+					ps.close();
+				if(con!=null)
+					con.close();
+			}catch(SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+			
+			
+		}
+		
+		return id;
 	}
 	
 	//seleziona un documento
-	public void loadDocument() {
+	public static void loadDocument(UUIDDocument id) {
+		
 		
 	}
 	
