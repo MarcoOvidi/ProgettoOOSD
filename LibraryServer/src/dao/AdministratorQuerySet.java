@@ -34,7 +34,7 @@ import vo.UserPermissions;
 
 public class AdministratorQuerySet {
 	
-	
+	//completato e verificato
 	
 	/* Questo metodo cambia lo stato di un utente da attivo a inattivo e viceversa
 	 * 

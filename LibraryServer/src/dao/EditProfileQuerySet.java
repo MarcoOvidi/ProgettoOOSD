@@ -16,9 +16,7 @@ import java.lang.NullPointerException;
 
 public class EditProfileQuerySet {
 	
-	//seleziona tutti i campi anagrafici di un determinato utente
-	
-	/*
+	/*Seleziona tutti i campi anagrafici di un determinato utente
 	 * @param user un UUID dell'utente di cui si vogliono prelevare i dati dal database
 	 * @return User un oggetto utente  
 	 * @exception SQLException in caso di errori relativi al database
@@ -81,11 +79,7 @@ public class EditProfileQuerySet {
 	}
 
 	
-	//aggiorna tutti i campi di un determinato utente sovrascrivendoli con quelli passati dal controller
-	// toChange è l'utente al quale devo aggiornare le informazioni anagrafiche
-	// user toUpdate è un utente di input che contiene le modifiche da andare a fare sull'utente tiChange
-	
-	/*
+	/*aggiorna tutti i campi di un determinato utente sovrascrivendoli con quelli passati dal controller
 	 * @param toChange utente sul quale effettuare lo modifiche anagrafiche
 	 * @param toUpdate utente fittizio sul quale vengono riportate le informazioni da cambiare e quelle che persistono
 	 * @return Boolean 0 se l'operazione non ha effettuato modifiche all'utente toChange, 1 altrimenti
@@ -144,8 +138,6 @@ public class EditProfileQuerySet {
 	 *  lavori al massimo potremmo creare un tag disattivato
 	 */
 	
-	
-	//elimina il record di un determinato utente dalla tabella user
 	public void deleteUserProfile() {
 		
 	}

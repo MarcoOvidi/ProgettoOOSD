@@ -1,20 +1,33 @@
 package dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.TreeMap;
 
 import model.ScanningWorkProject;
 import model.TranscriptionWorkProject;
 import model.WorkProject;
+import vo.BookMark;
+import vo.DocumentMetadata;
 import vo.Request;
+import vo.Tag;
+import vo.UUIDDocument;
+import vo.UUIDPage;
 import vo.UUIDRequest;
 import vo.UUIDScanningWorkProject;
 import vo.UUIDTranscriptionWorkProject;
 import vo.UUIDUser;
+import vo.VagueDate;
 
 public class HomePageQuerySet {
 	
@@ -25,13 +38,15 @@ public class HomePageQuerySet {
 		
 	}
 	
-	//seleziona i progetti ai quali lavoro (ovvero progetti che non sono stati ancora pubblicati)
-	//id , nome document,
-	public static TreeMap<Integer,String> loadMyWorkProjectsList(UUIDUser user) {
+	/* seleziona i progetti ai quali lavoro (ovvero progetti che non sono stati ancora pubblicati)
+	 * @param UUIDUser utente di cui si devono reperire i progetti
+	 * @return HashMap<Integer,String> Mappa di Id progetti e titolo dell'opera associata
+	 */
+	public static HashMap<Integer,String> loadMyWorkProjectsList(UUIDUser user) throws DatabaseException {
 		
-		TreeMap<Integer,String> trPrj = null;
-		TreeMap<Integer,String> digPrj= null;
-		TreeMap<Integer,String> myPrj = new TreeMap<Integer,String>();
+		HashMap<Integer,String> trPrj = null;
+		HashMap<Integer,String> digPrj= null;
+		HashMap<Integer,String> myPrj = new HashMap<Integer,String>();
 		
 		trPrj = loadMyTranscriptionWorkProjectList(user);
 		digPrj = loadMyScanningWorkProjectList(user);
@@ -42,233 +57,351 @@ public class HomePageQuerySet {
 		
 	}
 	
-	public static TreeMap<Integer,String> loadMyTranscriptionWorkProjectList(UUIDUser usr){
-		//CONNESSIONE
-  	  	//STEP 1 parametri di connessione   
-  		// JDBC driver name and database URL
-  		final String JDBC_DRIVER = DBConnection.getJdbcDriver();
-  		final String DB_URL = DBConnection.getDbUrl();
-
-  		//  Database credentials
-  		final String USER = DBConnection.getUser();
-  		final String PASS = DBConnection.getPassword();
+	/* seleziona i progetti di trascrizione ai quali lavoro (ovvero progetti che non sono stati ancora pubblicati)
+	 * @param UUIDUser utente di cui si devono reperire i progetti di trascrizione
+	 * @return HashMap<Integer,String> Mappa di Id progetti di trascrizione e titolo dell'opera associata
+	 */
+	public static HashMap<Integer,String> loadMyTranscriptionWorkProjectList(UUIDUser usr) throws DatabaseException{
 		
-		Connection conn = null;
-		Statement stmt = null;
+		Connection con = null;
 		
-		//oggetti di ausilio
-		TreeMap<Integer,String> twp = new TreeMap<Integer,String>();
+		try {
+			con = DBConnection.connect();
+		}catch(DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
 		
-		try{
-			//STEP 2: Register JDBC driver
-			Class.forName(JDBC_DRIVER);
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		HashMap<Integer,String> twpl = new HashMap<Integer,String>();
+		
+		try {
+			ps = con.prepareStatement("SELECT tp.ID as ID_progetto, d.title as Title "
+					  + "FROM transcription_project as tp JOIN transcription_project_transcriber_partecipant as tptp "
+					  + "JOIN document as d "
+					  + "ON tp.ID=tptp.ID_transcription_project and tp.ID_document=d.ID "
+					  + "WHERE ID_transcriber_user=? ;"); 
+		
+			ps.setInt(1, usr.getValue());
 			
-			//STEP 3: Open a connection
-			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			rs = ps.executeQuery();
 			
-			//STEP 4: Execute a query
-			stmt = conn.createStatement();
-			String sql;
-			sql = "select tp.ID as ID_progetto, d.title as Title "
-				  + "from transcription_project as tp join transcription_project_transcriber_partecipant as tptp "
-				  + "join document as d "
-				  + "on tp.ID=tptp.ID_transcription_project and tp.ID_document=d.ID "
-				  + "where ID_transcriber_user= " + usr.getValue() + ";"; 
-			ResultSet rs = stmt.executeQuery(sql);
-			
-			//STEP 5: Extract data from result set
-			
-			//Retrieve by column name
 			while(rs.next()) {
-				twp.put(rs.getInt("ID_progetto"), rs.getString("Title"));
-			}  
-			//STEP 6: Clean-up environment
-			rs.close();
-			stmt.close();
-			conn.close();
-		}catch(SQLException se){
-			//Handle errors for JDBC
-			se.printStackTrace();
-		}catch(Exception e){
-			//Handle errors for Class.forName
-			e.printStackTrace();
-		}finally{
-			//finally block used to close resources
-			try{
-				if(stmt!=null)
-				stmt.close();
-			}catch(SQLException se2){
-			}// 	nothing we can do
-			try{	
-				if(conn!=null)
-					conn.close();
-			}catch(SQLException se){
-				se.printStackTrace();
-			}//end finally try	
-		}//end try	
-		return twp;
-		
-	}
-	
-	public static TreeMap<Integer,String> loadMyScanningWorkProjectList(UUIDUser usr){
-		//CONNESSIONE
-  	  	//STEP 1 parametri di connessione   
-  		// JDBC driver name and database URL
-  		final String JDBC_DRIVER = DBConnection.getJdbcDriver();
-  		final String DB_URL = DBConnection.getDbUrl();
-
-  		//  Database credentials
-  		final String USER = DBConnection.getUser();
-  		final String PASS = DBConnection.getPassword();
-				
-  		Connection conn = null;
-  		Statement stmt = null;
-  		
-  		//oggetti di ausilio
-  		TreeMap<Integer,String> swp = new TreeMap<Integer,String>();
-  		
-  		try{
-  			//STEP 2: Register JDBC driver
-  			Class.forName(JDBC_DRIVER);
-  			
-  			//STEP 3: Open a connection
-  			conn = DriverManager.getConnection(DB_URL,USER,PASS);
-  			
-  			//STEP 4: Execute a query
-  			stmt = conn.createStatement();
-  			String sql;
-  			sql = "select sp.ID as ID_progetto, d.title as Title "
-  					+ "from scanning_project as sp join scanning_project_digitalizer_partecipant as spdp "
-  					+ "join document as d "
-  					+ "on sp.ID=spdp.ID_scanning_project and sp.ID_document=d.ID "
-  					+ "where ID_digitalizer_user= " + usr.getValue() + ";"; 
-  			ResultSet rs = stmt.executeQuery(sql);
-						
-  			//STEP 5: Extract data from result set
-						
-  			//Retrieve by column name
-  			while(rs.next()) {
-  				
-  				swp.put(rs.getInt("ID_progetto"), "Title");
-  				
-  			}  
-  			//STEP 6: Clean-up environment
-  			rs.close();
-  			stmt.close();
-  			conn.close();
-  		}catch(SQLException se){
-  			//Handle errors for JDBC
-  			se.printStackTrace();
-  		}catch(Exception e){
-  			//Handle errors for Class.forName
-  			e.printStackTrace();
-  		}finally{
-  			//finally block used to close resources
-  			try{
-  				if(stmt!=null)
-  					stmt.close();
-						}catch(SQLException se2){
-						}//nothing we can do
-  			try{	
-  				if(conn!=null)
-  					conn.close();
-  			}catch(SQLException se){
-  				se.printStackTrace();
-  			}//end finally try	
-  		}//end try	
-  		return swp;
+				twpl.put(rs.getInt("ID_progetto"), rs.getString("Title"));
+			}
 			
+		}catch(SQLException e) {
+			throw new DatabaseException("Errore di esecuzione della query", e);
+		}finally {
+			try{
+				if(ps != null)
+					ps.close();
+				if(con!=null)
+					con.close();
+			}catch(SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+			
+			
+		}
 		
+		return twpl;	
 	}
-	//TODO serve un metodo che recupera le singole pagine assegnate ?
 	
-	// !!! questione dei segnalibri !!!  id documento, url immagine, nome del testo,
-	public LinkedList<String[]> loadMyCollectionList(UUIDUser usr) {
-		//CONNESSIONE
-  	  	//STEP 1 parametri di connessione   
-  		// JDBC driver name and database URL
-  		final String JDBC_DRIVER = DBConnection.getJdbcDriver();
-  		final String DB_URL = DBConnection.getDbUrl();
-
-  		//  Database credentials
-  		final String USER = DBConnection.getUser();
-  		final String PASS = DBConnection.getPassword();
+	/* seleziona i progetti di digitalizzazione ai quali lavoro (ovvero progetti che non sono stati ancora pubblicati)
+	 * @param UUIDUser utente di cui si devono reperire i progetti di digitalizzazione
+	 * @return HashMap<Integer,String> Mappa di Id progetti di digitalizzazione e titolo dell'opera associata
+	 */
+	public static HashMap<Integer,String> loadMyScanningWorkProjectList(UUIDUser usr) throws DatabaseException{
+		Connection con = null;
+		
+		try {
+			con = DBConnection.connect();
+		}catch(DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+		
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		HashMap<Integer,String> swpl = new HashMap<Integer,String>();
+		
+		try {
+			ps = con.prepareStatement("SELECT sp.ID as ID_progetto, d.title as Title "
+  					+ "FROM scanning_project as sp JOIN scanning_project_digitalizer_partecipant as spdp "
+  					+ "JOIN document as d "
+  					+ "ON sp.ID=spdp.ID_scanning_project AND sp.ID_document=d.ID "
+  					+ "WHERE ID_digitalizer_user=?;"); 
+			ps.setInt(1, usr.getValue());
+			
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				swpl.put(rs.getInt("ID_progetto"), rs.getString("Title"));
+			}
+			
+		}catch(SQLException e) {
+			throw new DatabaseException("Errore di esecuzione della query", e);
+		}finally {
+			try{
+				if(ps != null)
+					ps.close();
+				if(con!=null)
+					con.close();
+			}catch(SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+			
+			
+		}
+		
+		return swpl;
+  			
+	}
+	
+	/*Carica la lista dei Document preferiti di un utente
+	 * @param UUIdUser id dell'utente di cui si vuole caricare la Collection personale
+	 * @return HashMap<Integer,String[]> dove la chiave è l'Id del Document, String[0] il titolo dell'opera e String[1] è l'immagine della prima Page
+	 * @exception DatabaseException in caso di errori di connessione o esecuzione query nel DB
+	 */
+	public static HashMap<Integer,String[]> loadMyCollectionList(UUIDUser usr) throws DatabaseException {
+		Connection con = null;
+		
+		try {
+			con = DBConnection.connect();
+		}catch(DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+		
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		HashMap<Integer,String[]> pc = new HashMap<Integer,String[]>();
+		
+		try {
+			ps = con.prepareStatement("SELECT p.ID_document as DocID, p.image PImage,d.title ad Title "
+	  				  + "FROM personal_collection as pc JOIN page as p JOIN document as d "
+	  				  + "ON pc.ID_document=p.ID_document AND pc.ID_document=d.ID "
+	  				  + "WHERE pc.ID_user=? and p.number=1;"); 
+			ps.setInt(1, usr.getValue());
+			
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				String[] info = new String[2];
+				info[0] = rs.getString("Title");
+				info[1] = rs.getString("PImage");
+				pc.put(rs.getInt("DocID"), info);
+			}
+			
+		}catch(SQLException e) {
+			throw new DatabaseException("Errore di esecuzione della query", e);
+		}finally {
+			try{
+				if(ps != null)
+					ps.close();
+				if(con!=null)
+					con.close();
+			}catch(SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+			
+			
+		}
+		
+		return pc;
+  		 
+  	}
+	
+	/*Recupera i metadati di tutti i Document presenti nella collezione personale di un User
+	 * @param UUIDUser id dell'utente di cui carichiamo la PersonalDocumentCollection
+	 * @return HashMap<Integer,DocumentMetadata> dove la chiave è l'Id del Document e il valore il rispettivo DocumentMetadata
+	 * @exception DatabaseException in caso di mancata conessione o errori di query sul DB
+	 */
+	public static HashMap<Integer,DocumentMetadata> loadMyCollectionMetaData(UUIDUser usr) throws DatabaseException{
+		Connection con = null;
+		
+		try {
+			con = DBConnection.connect();
+		}catch(DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+		
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		HashMap<Integer,DocumentMetadata> dm = new HashMap<Integer,DocumentMetadata>();
+		
+		try {
+			ps = con.prepareStatement("SELECT dm.ID_document as ID, author as a, description as d,composition_date as cd, "
+					+ "composition_period_from as cpf, composition_period_to as cpt, preservation_state as ps "
+					+ "FROM personal_collection as pc join document_metadata as dm on pc.ID_document=dm.ID_document "
+					+ "WHERE pc.ID_user=?;");
+			ps.setInt(1, usr.getValue());
+			
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				Date comp = null;
+				Date cpf = null;
+				Date cpt = null;
 				
-  		Connection conn = null;
-  		Statement stmt = null;
-  		
-  		//oggetti di ausilio
-  		LinkedList<String[]> myColl = new LinkedList<String[]>();
-  		
-  		try{
-  			//STEP 2: Register JDBC driver
-  			Class.forName(JDBC_DRIVER);
-  			
-  			//STEP 3: Open a connection
-  			conn = DriverManager.getConnection(DB_URL,USER,PASS);
-  			
-  			//STEP 4: Execute a query
-  			stmt = conn.createStatement();
-  			String sql;
-  			sql = "SELECT p.ID_document as DocID, p.image PImage,d.title ad Title "
-  				  + "FROM personal_collection as pc join page as p join document as d "
-  				  + "on pc.ID_document=p.ID_document and pc.ID_document=d.ID "
-  				  + "where pc.ID_user= " + usr.getValue() + "and p.number=1;"; 
-  			
-  			ResultSet rs = stmt.executeQuery(sql);
-						
-  			//STEP 5: Extract data from result set
-						
-  			//Retrieve by column name
-  			while(rs.next()) {
-  				
-  				String[] tupla = new String[3];
-  				
-  				tupla[0] = Integer.toString(rs.getInt("DocID"));
-  				tupla[1] = rs.getString("PImage");
-  				tupla[2] = rs.getString("Title");
-  				
-  				myColl.addLast(tupla);
-  				
-  			}  
-  			//STEP 6: Clean-up environment
-  			rs.close();
-  			stmt.close();
-  			conn.close();
-  		}catch(SQLException se){
-  			//Handle errors for JDBC
-  			se.printStackTrace();
-  		}catch(Exception e){
-  			//Handle errors for Class.forName
-  			e.printStackTrace();
-  		}finally{
-  			//finally block used to close resources
-  			try{
-  				if(stmt!=null)
-  					stmt.close();
-						}catch(SQLException se2){
-						}//nothing we can do
-  			try{	
-  				if(conn!=null)
-  					conn.close();
-  			}catch(SQLException se){
-  				se.printStackTrace();
-  			}//end finally try	
-  		}//end try	
-  		return myColl;
+				if(rs.getDate("cd") != null) {
+					
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					String date = rs.getString("cd");
+					comp = sdf.parse(date);
+				}
+				
+				if(rs.getDate("cpf") != null) {
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					String date = rs.getString("cpf");
+					cpf = sdf.parse(date);
+				}
+				
+				if(rs.getDate("cpt") != null) {
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM_dd");
+					String date = rs.getString("cpt");
+					cpt = sdf.parse(date);
+				}
+				
+				dm.put(rs.getInt("ID"), new DocumentMetadata(rs.getString("a"), rs.getString("d"), comp, 
+						new VagueDate(cpf, cpt), rs.getInt("ps")));
+			}
+			
+			if(rs != null)
+				rs.close();
+			if(ps != null)
+				ps.close();
+			
+			ps = con.prepareStatement("SELECT t.name FROM document d JOIN document_metadata dm JOIN tag_metadata tm "
+					+ "JOIN tag t ON d.ID=dm.ID_document AND dm.ID=tm.ID_document_metadata AND tm.ID_tag=t.ID "
+					+ "WHERE d.id=?;");
+			
+			for(Map.Entry<Integer,DocumentMetadata> docM : dm.entrySet()) {
+				ps.setInt(1, docM.getKey());
+				rs = ps.executeQuery();
+				ArrayList<Tag> tag = new ArrayList<Tag>();
+				while(rs.next()) {
+					tag.add(new Tag(rs.getString("t.name")));
+				}
+				
+				DocumentMetadata dmp = docM.getValue();
+				dmp.setTags(tag);
+				docM.setValue(dmp);
+				
+				if(rs != null)
+					rs.close();
+			}
+			
+		}catch(SQLException e) {
+			throw new DatabaseException("Errore di esecuzione della query", e);
+		}catch(ParseException ex) {
+			throw new DatabaseException("Impossibile effettuare il parsing della data", ex);
+		}finally {
+			try{
+				if(ps != null)
+					ps.close();
+				if(con!=null)
+					con.close();
+			}catch(SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+			
+			
+		}
 		
+		return dm;
+  			
 	}
 	
-	public void loadMyCollectionMetaData() {
+	/* Recupera tutti i BookMarks di un utente
+	 * @param UUIDUser id dell'utente che vuole caricare i BookMarks
+	 * @return HashMap<Integer,BookMark> HashMap con chiave l'ID del BookMark e value un BookMark
+	 * @throw DatabaseException
+	 */
+	public static HashMap<Integer,BookMark> loadMyBookMarksList(UUIDUser usr) throws DatabaseException {
+		Connection con = null;
 		
-	}
-	
-	public void loadMyBookMarksList() {
+		try {
+			con = DBConnection.connect();
+		}catch(DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+		
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		HashMap<Integer,BookMark> bookM = new HashMap<Integer,BookMark>();
+		
+		try {
+			ps = con.prepareStatement("SELECT b.ID,b.ID_document,b.ID_page,p.image FROM book_marks as b JOIN page as p "
+					+ "ON b.ID_page=p.ID WHERE b.ID_user=?;");
+		
+			ps.setInt(1, usr.getValue());
+			
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				bookM.put(rs.getInt("b.ID") ,
+						new BookMark(usr, new UUIDDocument(rs.getInt("b.ID_document")), 
+								new UUIDPage(rs.getInt("b.ID_page"))));
+			}
+			
+		}catch(SQLException e) {
+			throw new DatabaseException("Errore di esecuzione della query", e);
+		}finally {
+			try{
+				if(ps != null)
+					ps.close();
+				if(con!=null)
+					con.close();
+			}catch(SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+			
+			
+		}
+		
+		return bookM;	
 		
 	}
 
 	//seleziona le categorie di opere della biblioteca
-	public void loadLibraryCollectionList() {
+	public static HashMap<Integer,String> loadLibraryCollectionList() throws DatabaseException, SQLException {
+		Connection con = null;
+		
+		try {
+			con = DBConnection.connect();
+		}catch(DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+		
+		Statement s = con.createStatement();
+		ResultSet rs = null;
+		HashMap<Integer,String> cat = new HashMap<Integer,String>();
+		
+		try {
+			rs = s.executeQuery("SELECT * FROM document_collection;");
+			
+			while(rs.next()) {
+				cat.put(rs.getInt("ID"), rs.getString("name"));
+				
+			}
+			
+		}catch(SQLException e) {
+			throw new DatabaseException("Errore di esecuzione della query", e);
+		}finally {
+			try{
+				if(con!=null)
+					con.close();
+			}catch(SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+			
+			
+		}
+		
+		return cat;	
+		
+		
 
 	}
 	

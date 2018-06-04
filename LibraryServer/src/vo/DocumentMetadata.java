@@ -6,23 +6,24 @@ import java.util.ArrayList;
 public class DocumentMetadata {
 	
 	//variabili istanza
-	private String title;
 	private String author;
 	private String description;
 	private Date composingDate;
-	private Date composingPeriod;
+	private VagueDate composingPeriod;
 	private Integer preservationState;
-	private ArrayList<Tag> tags;
+	private ArrayList<Tag> tags = new ArrayList<Tag>();
 	
 	//costruttore
-	public DocumentMetadata() {
-		
+	public DocumentMetadata(String auth, String descr,Date compDate,VagueDate period,Integer preserv) {
+		this.author=auth;
+		this.description=descr;
+		this.composingDate=compDate;
+		this.composingPeriod=period;
+		this.preservationState=preserv;
 	}
 	
 	//metodi get e set
-	public String getTitle() {
-		return this.title;
-	}
+	
 	
 	public String getAuthor() {
 		return this.author;
@@ -36,20 +37,13 @@ public class DocumentMetadata {
 		return this.composingDate;
 	}
 	
-	public Date getComposingPeriod() {
-		return this.composingPeriod;
-	}
-	
+
 	public Integer getPreservationState() {
 		return this.preservationState;
 	}
 	
 	public ArrayList<Tag> getTags(){
 		return this.tags;
-	}
-	
-	public void setTitle(String t) {
-		this.title=t;
 	}
 	
 	public void setAuthor(String a) {
@@ -64,7 +58,7 @@ public class DocumentMetadata {
 		this.composingDate=d;
 	}
 	
-	public void setComposingPeriod(Date d) {
+	public void setComposingPeriod(VagueDate d) {
 		this.composingPeriod=d;
 	}
 	//TODO ci serve un'eccezione per controllare il valore inserito...
@@ -72,8 +66,12 @@ public class DocumentMetadata {
 		this.preservationState=s;
 	}
 	//implementare inserimento con parametro una lista di tag
-	public boolean setTags(Tag t){
+	public boolean setTag(Tag t){
 		return this.tags.add(t);
+	}
+	
+	public boolean setTags(ArrayList<Tag> list) {
+		return this.tags.addAll(list);
 	}
 	
 	//metodi ausiliari
@@ -85,4 +83,13 @@ public class DocumentMetadata {
 	public boolean removeTag(Tag t) {
 		return this.tags.remove(t);
 	}
+
+	@Override
+	public String toString() {
+		return "DocumentMetadata [author=" + author + ", description=" + description + ", composingDate="
+				+ composingDate + ", composingPeriod=" + composingPeriod + ", preservationState=" + preservationState
+				+ ", tags=" + tags + "]";
+	}
+	
+	
 }
