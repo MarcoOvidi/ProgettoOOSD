@@ -15,12 +15,11 @@ public class ScanningWorkProject extends WorkProject {
 	private LinkedList<UUIDUser> revisers;
 	private UUIDScanningWorkProject id;
 	
-	public ScanningWorkProject(LinkedList<UUIDUser> dig, LinkedList<UUIDUser> rev,UUIDScanningWorkProject id,Date d,UUIDUser coord, Boolean b ) {
+	public ScanningWorkProject(Date d,UUIDUser coord,LinkedList<UUIDUser> dg, LinkedList<UUIDUser> rev, UUIDScanningWorkProject id, Boolean b) {
 		super(d,coord,b);
-		this.digitalizers=dig;
+		this.digitalizers=dg;
 		this.revisers=rev;
 		this.id=id;
-		
 	}
 	
 	

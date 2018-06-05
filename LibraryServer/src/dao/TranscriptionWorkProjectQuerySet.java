@@ -16,7 +16,7 @@ import model.TranscriptionWorkProject;
 import vo.UUIDTranscriptionWorkProject;
 
 public class TranscriptionWorkProjectQuerySet {
-
+	//TODO
 	public static void insertTranscriptionWorkProject() {
 		
 	}
@@ -129,7 +129,7 @@ public class TranscriptionWorkProjectQuerySet {
 	}
     
     //cancella un TranscriptionWorkProject con il relativo personale
-    public static Integer deleteTranscriptionWorkProject(UUIDTranscriptionWorkProject id) throws DatabaseException,NullPointerException {
+    public static Boolean deleteTranscriptionWorkProject(UUIDTranscriptionWorkProject id) throws DatabaseException,NullPointerException {
     	if (id == null)
 			throw new NullPointerException("Id non vallido");
 		
@@ -147,7 +147,7 @@ public class TranscriptionWorkProjectQuerySet {
 			ps = con.prepareStatement("DELETE FROM transcription_project WHERE ID=?;");
 			ps.setInt(1, id.getValue());
 			
-			return ps.executeUpdate();
+			return (ps.executeUpdate()==1);
 			
 		}catch(SQLException e) {
 			throw new DatabaseException("Errore di esecuzione query", e);

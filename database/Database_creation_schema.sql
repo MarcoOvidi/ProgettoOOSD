@@ -47,6 +47,7 @@ create table page(
     transcription text,
     image_convalidation boolean default null,
     transcription_convalidation boolean default null,
+    transcription_revised boolean default null,
     ID_transcription_reviser integer unsigned,
     ID_scanning_reviser integer unsigned,
     ID_digitalizer integer unsigned,
@@ -104,6 +105,14 @@ create table personal_collection(
 create table document_collection(
     ID integer unsigned not null primary key auto_increment,
     name varchar(50) not null unique
+);
+
+create table document_of_collection(
+	ID integer unsigned not null primary key auto_increment,
+	ID_document_collection integer unsigned not null,
+    ID_document integer unsigned not null,
+    constraint document_of_collection_document_collection foreign key(ID_document_collection) references document_collection(ID) on update cascade on delete cascade,
+    constraint document_of_collection_document foreign key(ID_document) references document(ID) on update cascade on delete cascade
 );
 
 create table transcription_assigned(

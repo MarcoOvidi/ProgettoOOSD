@@ -22,6 +22,7 @@ import vo.DocumentMetadata;
 import vo.Request;
 import vo.Tag;
 import vo.UUIDDocument;
+import vo.UUIDDocumentCollection;
 import vo.UUIDPage;
 import vo.UUIDRequest;
 import vo.UUIDScanningWorkProject;
@@ -405,8 +406,59 @@ public class HomePageQuerySet {
 
 	}
 	
-	//seleziona le opere(miniature) di una determinata categoria
-	public void loadCollection() {
+	/* Seleziona id,titolo e miniatura delle opere di una determinata categoria
+	 * @param UUIDDocumentCollection Id della Collezione di cui si vogliono caricare le opere
+	 * @return LinkedList<String[]> String[0] = Document ID, String[1] = Document title , String[2] = link Imange della prima pagina
+	 * @exception DatabaseException Per errori di connessione al DB o di esecuzione delle query
+	 */
+	public static LinkedList<String[]> loadCollection(UUIDDocumentCollection idc) throws DatabaseException {
+		Connection con = null;
+		
+		try {
+			con = DBConnection.connect();
+		}catch(DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+		
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		LinkedList<String[]> coll = new LinkedList<String[]>();
+		
+		try {
+			ps = con.prepareStatement("SELECT dc.ID as IDcollection,d.ID as IDdocument,d.title,p.image "
+					+ "FROM document_of_collection dc join document d join page p "
+					+ "ON dc.ID_document=d.ID and d.ID=p.ID_document "
+					+ "WHERE ID_document_collection = ? and p.number=1;"); 
+		
+			ps.setInt(1, idc.getValue());
+			
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				String[] info = new String[3];
+				info[0] = Integer.toString(rs.getInt("IDdocument"));
+				info[1] = rs.getString("d.title");
+				info[2] = rs.getString("p.image");
+				coll.add(info);
+			}
+			
+		}catch(SQLException e) {
+			throw new DatabaseException("Errore di esecuzione della query", e);
+		}finally {
+			try{
+				if(ps != null)
+					ps.close();
+				if(con!=null)
+					con.close();
+			}catch(SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+			
+			
+		}
+		
+		return coll;	
+		
 		
 	}
 	

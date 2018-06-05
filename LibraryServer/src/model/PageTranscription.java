@@ -7,22 +7,26 @@ public class PageTranscription {
 	//variabili istanza
 	
 	private TEItext text;
-	private Boolean complete;
 	private Boolean revised;
 	private Boolean validated;
 	private PageTranscriptionStaff staff;
 	
 	
 	//costruttore
-	public PageTranscription() {
-		
+	public PageTranscription(TEItext text, Boolean revised, Boolean validated,
+			PageTranscriptionStaff staff) {
+		super();
+		this.text = text;
+		this.revised = revised;
+		this.validated = validated;
+		this.staff = staff;
 	}
 	
 	//metodi get e set
-	public TEItext getText() {
-		return this.text;
-	}
-	
+		public TEItext getText() {
+			return this.text;
+		}
+
 	public boolean getComplete() {
 		return this.complete;
 	}
@@ -58,4 +62,12 @@ public class PageTranscription {
 	public void setStaff(PageTranscriptionStaff staff) {
 		this.staff=staff;
 	}
+
+	@Override
+	public String toString() {
+		return "PageTranscription [text=" + text + ", revised=" + revised + ", validated=" + validated + ", staff="
+				+ staff + "]";
+	}
+	
+	
 }
