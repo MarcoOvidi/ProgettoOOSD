@@ -21,11 +21,12 @@ public class ScanningWorkProjectQuerySet {
 		
 	}
 	
-	//seleziona uno ScanningWorkProject con il relativo personale
-	/* Seleziona un transcriptionWorkProject con il relativo personale
+	
+	/* Seleziona uno ScanningWorkProject con il relativo personale
 	 * @param UUIDTranscriptionProject id del progetto da caricare
 	 * @return TranscriptionWorkProject oggetto completo
 	 */
+	
 	public static ScanningWorkProject loadScanningWorkProject(UUIDScanningWorkProject id) throws DatabaseException, NullPointerException {
 		if (id == null)
 			throw new NullPointerException("Id non vallido");
@@ -122,7 +123,13 @@ public class ScanningWorkProjectQuerySet {
 	
 
 
-	//aggiorno il personale di uno scaannig project
+	/* Aggiungi un utente Digitalizzatore ad un progetto di Digitalizzazione
+	 * @param UUIDScanningWorkProject ID del progetto in cui si deve inserire l'utente
+	 * @param UUIDUser ID dell'utente da inserire
+	 * @return Boolean true se l'utente è stato inserito correttamente nel progetto di digitalizzazione
+	 * @throw DatabaseException in caso di errori di connessione ad DB o sulle query
+	 * @throws NullPointerException in caso i parametri di input siano nulli
+	 */
     public static Boolean insertDigitalizerUser(UUIDScanningWorkProject ids, UUIDUser id) throws DatabaseException,NullPointerException {
     	if(ids == null)
     		throw new NullPointerException("Id Progetto non valido");
@@ -163,6 +170,13 @@ public class ScanningWorkProjectQuerySet {
 		}
 	}
     
+    /* Aggiungi un utente Revisore ad un progetto di Digitalizzazione
+	 * @param UUIDScanningWorkProject ID del progetto in cui si deve inserire l'utente
+	 * @param UUIDUser ID dell'utente da inserire
+	 * @return Boolean true se l'utente è stato inserito correttamente nel progetto di digitalizzazione
+	 * @throw DatabaseException in caso di errori di connessione ad DB o sulle query
+	 * @throws NullPointerException in caso i parametri di input siano nulli
+	 */
     public static Boolean insertReviserUser(UUIDUser id,UUIDScanningWorkProject ids) throws DatabaseException,NullPointerException{
     	if(ids == null)
     		throw new NullPointerException("Id Progetto non valido");
@@ -204,6 +218,13 @@ public class ScanningWorkProjectQuerySet {
     	
     }
     
+    /* Rimuove un utente Digitalizzatore da un progetto di Digitalizzazione
+	 * @param UUIDScanningWorkProject ID del progetto in cui si deve inserire l'utente
+	 * @param UUIDUser ID dell'utente da inserire
+	 * @return Boolean true se l'utente è stato eliminato correttamente nel progetto di digitalizzazione
+	 * @throw DatabaseException in caso di errori di connessione ad DB o sulle query
+	 * @throws NullPointerException in caso i parametri di input siano nulli
+	 */
     public static Boolean removeDigitalizerUser(UUIDUser id, UUIDScanningWorkProject ids) throws DatabaseException,NullPointerException {
     	if(ids == null)
     		throw new NullPointerException("Id Progetto non valido");
@@ -243,7 +264,14 @@ public class ScanningWorkProjectQuerySet {
 			}
 		}
     }
-    
+
+    /* Rimuove un utente Revisore da un progetto di Digitalizzazione
+	 * @param UUIDScanningWorkProject ID del progetto in cui si deve inserire l'utente
+	 * @param UUIDUser ID dell'utente da inserire
+	 * @return Boolean true se l'utente è stato eliminato correttamente nel progetto di digitalizzazione
+	 * @throw DatabaseException in caso di errori di connessione ad DB o sulle query
+	 * @throws NullPointerException in caso i parametri di input siano nulli
+	 */
     public static Boolean removeReviserUser(UUIDUser id, UUIDScanningWorkProject ids) throws DatabaseException,NullPointerException {
     	if(ids == null)
     		throw new NullPointerException("Id Progetto non valido");
@@ -285,6 +313,14 @@ public class ScanningWorkProjectQuerySet {
     
     }
     
+
+    /* Inserisce una lista di utenti Digitalizzatori in un progetto di Digitalizzazione
+	 * @param UUIDScanningWorkProject ID del progetto in cui si devono inserire gli utenti
+	 * @param LinkedList<UUIDUser> ID degli utenti da inserire
+	 * @return Integer numero di Digitalizzatori correttamente inseriti nel progetto di digitalizzazione
+	 * @throw DatabaseException in caso di errori di connessione ad DB o sulle query
+	 * @throws NullPointerException in caso i parametri di input siano nulli
+	 */
     public static Integer insertDigitalizerUser(LinkedList<UUIDUser> idl, UUIDScanningWorkProject ids) throws DatabaseException,NullPointerException{
     	if(idl == null)
     		throw new NullPointerException("Lista di utenti non valida");
@@ -334,6 +370,13 @@ public class ScanningWorkProjectQuerySet {
 		}
     }
     
+    /* Inserisce una lista di utenti Revisori in un progetto di Digitalizzazione
+	 * @param UUIDScanningWorkProject ID del progetto in cui si devono inserire gli utenti
+	 * @param LinkedList<UUIDUser> ID degli utenti da inserire
+	 * @return Integer numero di Revisori correttamente inseriti nel progetto di digitalizzazione
+	 * @throw DatabaseException in caso di errori di connessione ad DB o sulle query
+	 * @throws NullPointerException in caso i parametri di input siano nulli
+	 */
     public static Integer insertReviserUser(LinkedList<UUIDUser> idl, UUIDScanningWorkProject ids) throws DatabaseException,NullPointerException{
     	if(idl == null)
     		throw new NullPointerException("Lista di utenti non valida");
@@ -383,7 +426,13 @@ public class ScanningWorkProjectQuerySet {
 		}
     }
     
-    
+    /* Rimuoveuna lista di utenti Digitalizzatori da un progetto di Digitalizzazione
+	 * @param UUIDScanningWorkProject ID del progetto da cui si devono eliminare gli utenti
+	 * @param LinkedList<UUIDUser> ID degli utenti da eliminare
+	 * @return Integer numero di Digitalizzatori correttamente rimossi dal progetto di digitalizzazione
+	 * @throw DatabaseException in caso di errori di connessione ad DB o sulle query
+	 * @throws NullPointerException in caso i parametri di input siano nulli
+	 */
     public static Integer removeDigitalizerUser(LinkedList<UUIDUser> idl, UUIDScanningWorkProject ids) throws DatabaseException,NullPointerException{
     	if(idl == null)
     		throw new NullPointerException("Lista di utenti non valida");
@@ -433,6 +482,13 @@ public class ScanningWorkProjectQuerySet {
 		}
     }
     
+    /* Rimuoveuna lista di utenti Revisori da un progetto di Digitalizzazione
+	 * @param UUIDScanningWorkProject ID del progetto da cui si devono eliminare gli utenti
+	 * @param LinkedList<UUIDUser> ID degli utenti da eliminare
+	 * @return Integer numero di Revisori correttamente rimossi dal progetto di digitalizzazione
+	 * @throw DatabaseException in caso di errori di connessione ad DB o sulle query
+	 * @throws NullPointerException in caso i parametri di input siano nulli
+	 */
     public static Integer removeReviserUser(LinkedList<UUIDUser> idl, UUIDScanningWorkProject ids) throws DatabaseException,NullPointerException{
     	if(idl == null)
     		throw new NullPointerException("Lista di utenti non valida");
@@ -483,7 +539,12 @@ public class ScanningWorkProjectQuerySet {
     }
     
     
-    //cancella un TranscriptionWorkProject con il relativo personale
+    /* Cancella un TranscriptionWorkProject con il relativo personale
+     * @param UUIDScanningWorkProject ID del progetto da eliminare
+     * @return Boolean true se il Progetto di Digitalizzazione è stato correttamente eliminato
+     * @throw DatabaseException in caso di errori di connessione al DB o di esecuzione di query
+     * @throw NullPointerException In caso il parametro di input sia null
+     */
     public static Boolean deleteScanningWorkProject(UUIDScanningWorkProject id) throws DatabaseException,NullPointerException {
     	if (id == null)
 			throw new NullPointerException("Id non vallido");
