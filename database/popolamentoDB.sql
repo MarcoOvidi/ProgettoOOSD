@@ -1,4 +1,6 @@
 
+
+
 INSERT INTO `user` (`ID`, `username`, `password`, `status`, `name`, `surname`, `registration_date`, `email`) VALUES (1, 'harold15', 'ba8bc6472c308799ffe7ecd93f869dfba78ace9a', 1, 'Thea', 'Dietrich', '2013-01-22', 'cleveland.keeling@example.com');
 INSERT INTO `user` (`ID`, `username`, `password`, `status`, `name`, `surname`, `registration_date`, `email`) VALUES (2, 'whowell', 'c37ff9060f2aa2d0865a68766d23cdd2226de1b3', 0, 'Elvera', 'Wunsch', '1977-06-08', 'orice@example.net');
 INSERT INTO `user` (`ID`, `username`, `password`, `status`, `name`, `surname`, `registration_date`, `email`) VALUES (3, 'brogahn', 'e408fa6c483066fe65146b07311af2b5409edf79', 1, 'Valentin', 'Fahey', '1982-01-04', 'feest.don@example.net');
@@ -59,7 +61,10 @@ INSERT INTO `user` (`ID`, `username`, `password`, `status`, `name`, `surname`, `
 INSERT INTO `user` (`ID`, `username`, `password`, `status`, `name`, `surname`, `registration_date`, `email`) VALUES (58, 'wolf.jesse', 'f06d1b1e5a0ff20e647090c85cb55d682afd4c6f', 1, 'Zander', 'Ratke', '2002-04-20', 'charlotte51@example.com');
 INSERT INTO `user` (`ID`, `username`, `password`, `status`, `name`, `surname`, `registration_date`, `email`) VALUES (59, 'schowalter.una', '7f50c5177c23b7df00e572f385a997dc414d2aa5', 1, 'Maureen', 'Bailey', '1976-11-24', 'sean45@example.net');
 INSERT INTO `user` (`ID`, `username`, `password`, `status`, `name`, `surname`, `registration_date`, `email`) VALUES (60, 'ugraham', 'd310ef97606d2b0a3b52a809dacf53f7ca1da48f', 0, 'Cedrick', 'Dare', '1981-11-15', 'christop21@example.com');
- 
+
+
+
+
 INSERT INTO `document` (`ID`, `title`) VALUES (70, 'a');
 INSERT INTO `document` (`ID`, `title`) VALUES (42, 'accusamus');
 INSERT INTO `document` (`ID`, `title`) VALUES (3, 'accusantium');
@@ -167,6 +172,7 @@ INSERT INTO `document_collection` (`ID`, `name`) VALUES (1, 'eius');
 INSERT INTO `document_collection` (`ID`, `name`) VALUES (2, 'inventore');
 INSERT INTO `document_collection` (`ID`, `name`) VALUES (4, 'repellat');
 INSERT INTO `document_collection` (`ID`, `name`) VALUES (3, 'voluptatum');
+
 
 INSERT INTO `document_metadata` (`ID`, `author`, `description`, `composition_date`, `composition_period_from`, `composition_period_to`, `preservation_state`, `ID_document`) VALUES (101, 'Miss Liza Wuckert DDS', 'Eius ipsa et et. Nesciunt repudiandae doloremque labore et quidem. Aliquid velit deleniti ut labore blanditiis reiciendis voluptatem voluptatem. Qui tempora consequatur et mollitia aut iste officiis.', '1975-01-02', '1942-04-03', '2010-11-30', '5', 54);
 INSERT INTO `document_metadata` (`ID`, `author`, `description`, `composition_date`, `composition_period_from`, `composition_period_to`, `preservation_state`, `ID_document`) VALUES (102, 'Deron Yost', 'Voluptas pariatur dicta consectetur similique nihil. Et maxime et ipsa repudiandae. Enim porro ex ducimus quibusdam.', '1972-03-02', '1988-08-07', '1984-11-11', '5', 44);
@@ -316,7 +322,6 @@ INSERT INTO `perm_authorization` (`ID`, `ID_user`, `download`, `upload`, `editMe
 INSERT INTO `perm_authorization` (`ID`, `ID_user`, `download`, `upload`, `editMetadata`, `reviewPage`, `modifyTranscription`, `requestTranscriptionTask`, `reviewTranscription`, `addNewProject`, `assignDigitalizationTask`, `assignTranscriptionTask`, `publishDocument`) VALUES (60, 16, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1);
 
 
-
 INSERT INTO `personal_collection` (`ID`, `ID_user`, `ID_document`) VALUES (1, 35, 64);
 INSERT INTO `personal_collection` (`ID`, `ID_user`, `ID_document`) VALUES (2, 20, 58);
 INSERT INTO `personal_collection` (`ID`, `ID_user`, `ID_document`) VALUES (3, 13, 69);
@@ -362,7 +367,6 @@ INSERT INTO `personal_collection` (`ID`, `ID_user`, `ID_document`) VALUES (42, 4
 INSERT INTO `personal_collection` (`ID`, `ID_user`, `ID_document`) VALUES (43, 36, 24);
 INSERT INTO `personal_collection` (`ID`, `ID_user`, `ID_document`) VALUES (44, 31, 16);
 INSERT INTO `personal_collection` (`ID`, `ID_user`, `ID_document`) VALUES (45, 17, 49);
-
 
 
 INSERT INTO `request` (`ID`, `ID_user`, `ID_admin`, `object`, `message`, `answer_message`, `status`) VALUES (1, 32, NULL, 'Ea sit ex quisquam.', 'Tenetur esse et qui qui impedit rerum. Id odio aut dolor impedit voluptas atque dolorem. Veniam qui facilis laborum iure.', NULL, 0);
@@ -489,7 +493,6 @@ INSERT INTO `scanning_project` (`ID`, `ID_coordinator`, `ID_document`, `date`, `
 INSERT INTO `scanning_project` (`ID`, `ID_coordinator`, `ID_document`, `date`, `scanning_complete`) VALUES (54, 49, 99, '1988-12-18', 1);
 INSERT INTO `scanning_project` (`ID`, `ID_coordinator`, `ID_document`, `date`, `scanning_complete`) VALUES (55, 15, 36, '1984-10-01', 0);
 INSERT INTO `scanning_project` (`ID`, `ID_coordinator`, `ID_document`, `date`, `scanning_complete`) VALUES (56, 34, 27, '1997-09-23', 0);
-
 
 
 INSERT INTO `scanning_project_digitalizer_partecipant` (`ID`, `ID_scanning_project`, `ID_digitalizer_user`) VALUES (1, 45, 48);
@@ -636,7 +639,6 @@ INSERT INTO `scanning_project_reviser_partecipant` (`ID`, `ID_scanning_project`,
 INSERT INTO `scanning_project_reviser_partecipant` (`ID`, `ID_scanning_project`, `ID_reviser_user`) VALUES (40, 32, 16);
 
 
-
 INSERT INTO `tag` (`ID`, `name`) VALUES (83, 'a');
 INSERT INTO `tag` (`ID`, `name`) VALUES (57, 'accusantium');
 INSERT INTO `tag` (`ID`, `name`) VALUES (90, 'aliquam');
@@ -739,7 +741,6 @@ INSERT INTO `tag` (`ID`, `name`) VALUES (29, 'voluptatem');
 INSERT INTO `tag` (`ID`, `name`) VALUES (1, 'voluptates');
 
 
-
 INSERT INTO `tag_metadata` (`ID`, `ID_document_metadata`, `ID_tag`) VALUES (1, 189, 46);
 INSERT INTO `tag_metadata` (`ID`, `ID_document_metadata`, `ID_tag`) VALUES (2, 114, 9);
 INSERT INTO `tag_metadata` (`ID`, `ID_document_metadata`, `ID_tag`) VALUES (3, 175, 93);
@@ -805,7 +806,6 @@ INSERT INTO `tag_metadata` (`ID`, `ID_document_metadata`, `ID_tag`) VALUES (62, 
 
 
 
-
 INSERT INTO `transcription_project` (`ID`, `ID_coordinator`, `ID_document`, `date`, `transcription_complete`) VALUES (41, 51, 50, '1985-06-07', 0);
 INSERT INTO `transcription_project` (`ID`, `ID_coordinator`, `ID_document`, `date`, `transcription_complete`) VALUES (42, 38, 61, '2001-06-07', 0);
 INSERT INTO `transcription_project` (`ID`, `ID_coordinator`, `ID_document`, `date`, `transcription_complete`) VALUES (43, 1, 25, '2002-04-07', 0);
@@ -843,9 +843,6 @@ INSERT INTO `transcription_project` (`ID`, `ID_coordinator`, `ID_document`, `dat
 INSERT INTO `transcription_project` (`ID`, `ID_coordinator`, `ID_document`, `date`, `transcription_complete`) VALUES (77, 22, 99, '2018-03-21', 1);
 INSERT INTO `transcription_project` (`ID`, `ID_coordinator`, `ID_document`, `date`, `transcription_complete`) VALUES (78, 26, 35, '1975-09-26', 1);
 
-
-
-
 INSERT INTO `transcription_project_reviser_partecipant` (`ID`, `ID_transcription_project`, `ID_reviser_user`) VALUES (1, 43, 29);
 INSERT INTO `transcription_project_reviser_partecipant` (`ID`, `ID_transcription_project`, `ID_reviser_user`) VALUES (2, 54, 28);
 INSERT INTO `transcription_project_reviser_partecipant` (`ID`, `ID_transcription_project`, `ID_reviser_user`) VALUES (3, 76, 44);
@@ -871,8 +868,6 @@ INSERT INTO `transcription_project_reviser_partecipant` (`ID`, `ID_transcription
 INSERT INTO `transcription_project_reviser_partecipant` (`ID`, `ID_transcription_project`, `ID_reviser_user`) VALUES (23, 71, 43);
 INSERT INTO `transcription_project_reviser_partecipant` (`ID`, `ID_transcription_project`, `ID_reviser_user`) VALUES (24, 76, 8);
 INSERT INTO `transcription_project_reviser_partecipant` (`ID`, `ID_transcription_project`, `ID_reviser_user`) VALUES (25, 43, 2);
-
-
 
 
 INSERT INTO `transcription_project_transcriber_partecipant` (`ID`, `ID_transcription_project`, `ID_transcriber_user`) VALUES (1, 73, 48);
@@ -915,5 +910,3 @@ INSERT INTO `transcription_project_transcriber_partecipant` (`ID`, `ID_transcrip
 INSERT INTO `transcription_project_transcriber_partecipant` (`ID`, `ID_transcription_project`, `ID_transcriber_user`) VALUES (38, 67, 39);
 INSERT INTO `transcription_project_transcriber_partecipant` (`ID`, `ID_transcription_project`, `ID_transcriber_user`) VALUES (39, 74, 21);
 INSERT INTO `transcription_project_transcriber_partecipant` (`ID`, `ID_transcription_project`, `ID_transcriber_user`) VALUES (40, 57, 59);
-
-

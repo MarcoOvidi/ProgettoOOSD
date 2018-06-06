@@ -127,6 +127,7 @@ create table transcription_project_transcriber_partecipant (
     ID integer unsigned not null primary key auto_increment,
     ID_transcription_project integer unsigned not null,
     ID_transcriber_user integer unsigned not null,
+    unique(ID_transcription_project,ID_transcriber_user),
     constraint transcription_prj_transc_partecipant_transcription_project foreign key (ID_transcription_project) references transcription_project (ID) on update cascade on delete cascade,
     constraint transcription_prj_transc_partecipant_transcriber_user foreign key (ID_transcriber_user) references  user(ID) on update cascade on delete cascade
 );
@@ -136,6 +137,7 @@ create table transcription_project_reviser_partecipant (
     ID integer unsigned not null primary key auto_increment,
     ID_transcription_project integer unsigned not null,
     ID_reviser_user integer unsigned not null,
+    unique (ID_transcription_project,ID_reviser_user),
     constraint transcription_prj_rev_partecipant_transcription_project foreign key (ID_transcription_project) references transcription_project (ID) on update cascade on delete cascade,
     constraint transcription_prj_rev_partecipant_user foreign key (ID_reviser_user) references  user(ID) on update cascade on delete cascade
 );
@@ -143,6 +145,7 @@ create table scanning_project_digitalizer_partecipant(
     ID integer unsigned not null primary key auto_increment,
     ID_scanning_project integer unsigned not null,
     ID_digitalizer_user integer unsigned not null,
+    unique(ID_scanning_project,ID_digitalizer_user),
     constraint scanning_project_digitalizer_partecipant_scanning_project foreign key(ID_scanning_project) references scanning_project(ID) on update cascade on delete cascade,
     constraint scanning_project_digitalizer_partecipant_user foreign key(ID_digitalizer_user) references user(ID) on update cascade on delete cascade
 );
@@ -150,7 +153,8 @@ create table scanning_project_digitalizer_partecipant(
 create table scanning_project_reviser_partecipant(
     ID integer unsigned not null primary key auto_increment,
     ID_scanning_project integer unsigned not null,
-    ID_reviser_user integer unsigned not null,
+    ID_reviser_user integer unsigned not null ,
+    unique(ID_scanning_project,ID_reviser_user),
     constraint scanning_project_reviser_partecipant_scanning_project foreign key(ID_scanning_project) references scanning_project(ID) on update cascade on delete cascade,
     constraint scanning_project_reviser_partecipant_user foreign key(ID_reviser_user) references user(ID) on update cascade on delete cascade
 );

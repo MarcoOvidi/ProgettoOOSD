@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.LinkedList;
 import model.ScanningWorkProject;
 import vo.UUIDScanningWorkProject;
@@ -121,10 +122,366 @@ public class ScanningWorkProjectQuerySet {
 	
 
 
-	//Aggiorna uno scanningWorkProject con il relativo personale
-    public void updateScanningWorkProject() {
+	//aggiorno il personale di uno scaannig project
+    public static Boolean insertDigitalizerUser(UUIDScanningWorkProject ids, UUIDUser id) throws DatabaseException,NullPointerException {
+    	if(ids == null)
+    		throw new NullPointerException("Id Progetto non valido");
+    	
+    	if (id == null)
+			throw new NullPointerException("Id non vallido");
 		
+		Connection con = null;
+		
+		try {
+			con = DBConnection.connect();
+		}catch(DatabaseException ex) {
+			throw new DatabaseException("Errore di connessione", ex);
+		}
+		
+		PreparedStatement ps = null;
+		
+		try {
+			ps = con.prepareStatement("INSERT INTO scanning_project_digitalizer_partecipant "
+					+ "(ID_scanning_project,ID_digitalizer_user) VALUE (?,?);");
+			ps.setInt(1, ids.getValue());
+			ps.setInt(2, id.getValue());
+			
+			return (ps.executeUpdate() == 1);
+			
+		}catch(SQLException e) {
+			throw new DatabaseException("Errore di esecuzione query", e);
+		}finally{
+	
+			try {
+				if(ps != null)
+					ps.close();
+				if(con != null)
+					con.close();
+			}catch(SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+		}
 	}
+    
+    public static Boolean insertReviserUser(UUIDUser id,UUIDScanningWorkProject ids) throws DatabaseException,NullPointerException{
+    	if(ids == null)
+    		throw new NullPointerException("Id Progetto non valido");
+    	
+    	if (id == null)
+			throw new NullPointerException("Id non vallido");
+		
+		Connection con = null;
+		
+		try {
+			con = DBConnection.connect();
+		}catch(DatabaseException ex) {
+			throw new DatabaseException("Errore di connessione", ex);
+		}
+		
+		PreparedStatement ps = null;
+		
+		try {
+			ps = con.prepareStatement("INSERT INTO scanning_project_reviser_partecipant "
+					+ "(ID_scanning_project,ID_reviser_user) VALUE (?,?);");
+			ps.setInt(1, ids.getValue());
+			ps.setInt(2, id.getValue());
+			
+			return (ps.executeUpdate() == 1);
+			
+		}catch(SQLException e) {
+			throw new DatabaseException("Errore di esecuzione query", e);
+		}finally{
+	
+			try {
+				if(ps != null)
+					ps.close();
+				if(con != null)
+					con.close();
+			}catch(SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+		}
+    	
+    }
+    
+    public static Boolean removeDigitalizerUser(UUIDUser id, UUIDScanningWorkProject ids) throws DatabaseException,NullPointerException {
+    	if(ids == null)
+    		throw new NullPointerException("Id Progetto non valido");
+    	
+    	if (id == null)
+			throw new NullPointerException("Id non vallido");
+		
+		Connection con = null;
+		
+		try {
+			con = DBConnection.connect();
+		}catch(DatabaseException ex) {
+			throw new DatabaseException("Errore di connessione", ex);
+		}
+		
+		PreparedStatement ps = null;
+		
+		try {
+			ps = con.prepareStatement("DELETE FROM scanning_project_digitalizer_partecipant "
+					+ "WHERE ID_scanning_project = ? AND ID_digitalizer_user =?;");
+			ps.setInt(1, ids.getValue());
+			ps.setInt(2, id.getValue());
+			
+			return (ps.executeUpdate() == 1);
+			
+		}catch(SQLException e) {
+			throw new DatabaseException("Errore di esecuzione query", e);
+		}finally{
+	
+			try {
+				if(ps != null)
+					ps.close();
+				if(con != null)
+					con.close();
+			}catch(SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+		}
+    }
+    
+    public static Boolean removeReviserUser(UUIDUser id, UUIDScanningWorkProject ids) throws DatabaseException,NullPointerException {
+    	if(ids == null)
+    		throw new NullPointerException("Id Progetto non valido");
+    	
+    	if (id == null)
+			throw new NullPointerException("Id non vallido");
+		
+		Connection con = null;
+		
+		try {
+			con = DBConnection.connect();
+		}catch(DatabaseException ex) {
+			throw new DatabaseException("Errore di connessione", ex);
+		}
+		
+		PreparedStatement ps = null;
+		
+		try {
+			ps = con.prepareStatement("DELETE FROM scanning_project_reviser_partecipant "
+					+ "WHERE ID_scanning_project = ? AND ID_reviser_user =?;");
+			ps.setInt(1, ids.getValue());
+			ps.setInt(2, id.getValue());
+			
+			return (ps.executeUpdate() == 1);
+			
+		}catch(SQLException e) {
+			throw new DatabaseException("Errore di esecuzione query", e);
+		}finally{
+	
+			try {
+				if(ps != null)
+					ps.close();
+				if(con != null)
+					con.close();
+			}catch(SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+		}
+    
+    }
+    
+    public static Integer insertDigitalizerUser(LinkedList<UUIDUser> idl, UUIDScanningWorkProject ids) throws DatabaseException,NullPointerException{
+    	if(idl == null)
+    		throw new NullPointerException("Lista di utenti non valida");
+		if(ids == null)
+			throw new NullPointerException("Id Progetto non valido");
+		Connection con = null;
+		
+		try {
+			con = DBConnection.connect();
+		}catch(DatabaseException ex) {
+			throw new DatabaseException("Errore di connessione", ex);
+		}
+		
+		PreparedStatement ps = null;
+		
+		Iterator<UUIDUser> itr = idl.iterator();
+		
+		Integer linesAffected = 0;
+		
+		try {
+			ps = con.prepareStatement("INSERT INTO scanning_project_digitalizer_partecipant(ID_scanning_project,ID_digitalizer_user) "
+					+ "VALUE (?,?);");
+			ps.setInt(1, ids.getValue());
+			
+			while(itr.hasNext()) {
+				Integer user = itr.next().getValue();
+				ps.setInt(2, user);
+				
+				linesAffected += ps.executeUpdate();
+			}
+			
+			return linesAffected;
+			
+			
+		}catch(SQLException e) {
+			throw new DatabaseException("Errore di esecuzione query", e);
+		}finally{
+	
+			try {
+				if(ps != null)
+					ps.close();
+				if(con != null)
+					con.close();
+			}catch(SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+		}
+    }
+    
+    public static Integer insertReviserUser(LinkedList<UUIDUser> idl, UUIDScanningWorkProject ids) throws DatabaseException,NullPointerException{
+    	if(idl == null)
+    		throw new NullPointerException("Lista di utenti non valida");
+		if(ids == null)
+			throw new NullPointerException("Id Progetto non valido");
+		Connection con = null;
+		
+		try {
+			con = DBConnection.connect();
+		}catch(DatabaseException ex) {
+			throw new DatabaseException("Errore di connessione", ex);
+		}
+		
+		PreparedStatement ps = null;
+		
+		Iterator<UUIDUser> itr = idl.iterator();
+		
+		Integer linesAffected = 0;
+		
+		try {
+			ps = con.prepareStatement("INSERT INTO scanning_project_reviser_partecipant(ID_scanning_project,ID_reviser_user) "
+					+ "VALUE (?,?);");
+			ps.setInt(1, ids.getValue());
+			
+			while(itr.hasNext()) {
+				Integer user = itr.next().getValue();
+				ps.setInt(2, user);
+				
+				linesAffected += ps.executeUpdate();
+			}
+			
+			return linesAffected;
+			
+			
+		}catch(SQLException e) {
+			throw new DatabaseException("Errore di esecuzione query", e);
+		}finally{
+	
+			try {
+				if(ps != null)
+					ps.close();
+				if(con != null)
+					con.close();
+			}catch(SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+		}
+    }
+    
+    
+    public static Integer removeDigitalizerUser(LinkedList<UUIDUser> idl, UUIDScanningWorkProject ids) throws DatabaseException,NullPointerException{
+    	if(idl == null)
+    		throw new NullPointerException("Lista di utenti non valida");
+		if(ids == null)
+			throw new NullPointerException("Id Progetto non valido");
+		Connection con = null;
+		
+		try {
+			con = DBConnection.connect();
+		}catch(DatabaseException ex) {
+			throw new DatabaseException("Errore di connessione", ex);
+		}
+		
+		PreparedStatement ps = null;
+		
+		Iterator<UUIDUser> itr = idl.iterator();
+		
+		Integer linesAffected = 0;
+		
+		try {
+			ps = con.prepareStatement("DELETE FROM scanning_project_digitalizer_partecipant "
+					+ "WHERE ID_scanning_project=? AND ID_digitalizer_user=?");
+			ps.setInt(1, ids.getValue());
+			
+			while(itr.hasNext()) {
+				Integer user = itr.next().getValue();
+				ps.setInt(2, user);
+				
+				linesAffected += ps.executeUpdate();
+			}
+			
+			return linesAffected;
+			
+			
+		}catch(SQLException e) {
+			throw new DatabaseException("Errore di esecuzione query", e);
+		}finally{
+	
+			try {
+				if(ps != null)
+					ps.close();
+				if(con != null)
+					con.close();
+			}catch(SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+		}
+    }
+    
+    public static Integer removeReviserUser(LinkedList<UUIDUser> idl, UUIDScanningWorkProject ids) throws DatabaseException,NullPointerException{
+    	if(idl == null)
+    		throw new NullPointerException("Lista di utenti non valida");
+		if(ids == null)
+			throw new NullPointerException("Id Progetto non valido");
+		Connection con = null;
+		
+		try {
+			con = DBConnection.connect();
+		}catch(DatabaseException ex) {
+			throw new DatabaseException("Errore di connessione", ex);
+		}
+		
+		PreparedStatement ps = null;
+		
+		Iterator<UUIDUser> itr = idl.iterator();
+		
+		Integer linesAffected = 0;
+		
+		try {
+			ps = con.prepareStatement("DELETE FROM scanning_project_reviser_partecipant "
+					+ "WHERE ID_scanning_project=? AND ID_reviser_user=?");
+			ps.setInt(1, ids.getValue());
+			
+			while(itr.hasNext()) {
+				Integer user = itr.next().getValue();
+				ps.setInt(2, user);
+				
+				linesAffected += ps.executeUpdate();
+			}
+			
+			return linesAffected;
+			
+			
+		}catch(SQLException e) {
+			throw new DatabaseException("Errore di esecuzione query", e);
+		}finally{
+	
+			try {
+				if(ps != null)
+					ps.close();
+				if(con != null)
+					con.close();
+			}catch(SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+		}
+    }
+    
     
     //cancella un TranscriptionWorkProject con il relativo personale
     public static Boolean deleteScanningWorkProject(UUIDScanningWorkProject id) throws DatabaseException,NullPointerException {
