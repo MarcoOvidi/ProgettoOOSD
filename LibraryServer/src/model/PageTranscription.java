@@ -27,9 +27,9 @@ public class PageTranscription {
 			return this.text;
 		}
 
-	public boolean getComplete() {
+	/*public boolean getComplete() {
 		return this.complete;
-	}
+	}*/
 	
 	public boolean getRevised() {
 		return this.revised;
@@ -47,9 +47,10 @@ public class PageTranscription {
 		this.text=txt;
 	}
 
-	public void setComplete(Boolean c) {
+	//FIXME si può eliminare tutto ciò che riguarda "complete"?
+	/*public void setComplete(Boolean c) {
 		this.complete=c;
-	}
+	}*/
 	
 	public void setRevised(Boolean r) {
 		this.revised=r;

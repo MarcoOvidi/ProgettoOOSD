@@ -43,6 +43,7 @@ public class LoginController extends HttpServlet {
 		UserAuthenticationQuerySet aut= new UserAuthenticationQuerySet();
 		String result;
 		try {
+			//FIXME vedete voi, ignoro completamente cosa sta accadendo qui.
 			result=aut.login(usr, psw);
 		} catch (SQLException e) {
 			response.getWriter().append("Errore");

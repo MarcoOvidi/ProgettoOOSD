@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import model.Document;
 import vo.UUIDDocument;
 
 public class DocumentQuerySet {
@@ -64,9 +66,10 @@ public class DocumentQuerySet {
 	}
 	
 	//seleziona un documento
-	public static void loadDocument(UUIDDocument id) {
-		
-		
+	//TODO
+	//FIXME urgente
+	public static Document loadDocument(UUIDDocument id) {
+		return null;		
 	}
 	
 	//aggiorna un documento
