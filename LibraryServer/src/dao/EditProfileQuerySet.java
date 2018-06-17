@@ -1,18 +1,14 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-
 import vo.UUIDUser;
 import vo.Email;
 import vo.UserInformations;
 import model.User;
 import java.util.Date;
-import java.lang.NullPointerException;
 
 public class EditProfileQuerySet {
 	

@@ -1,6 +1,5 @@
 package dao;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,21 +11,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.TreeMap;
-
-import model.ScanningWorkProject;
-import model.TranscriptionWorkProject;
-import model.WorkProject;
 import vo.BookMark;
 import vo.DocumentMetadata;
-import vo.Request;
 import vo.Tag;
 import vo.UUIDDocument;
 import vo.UUIDDocumentCollection;
 import vo.UUIDPage;
-import vo.UUIDRequest;
-import vo.UUIDScanningWorkProject;
-import vo.UUIDTranscriptionWorkProject;
 import vo.UUIDUser;
 import vo.VagueDate;
 

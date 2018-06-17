@@ -48,6 +48,7 @@ create table page(
     image_convalidation boolean default null,
     transcription_convalidation boolean default null,
     transcription_revised boolean default null,
+    transcription_completed boolean default null,
     ID_transcription_reviser integer unsigned,
     ID_scanning_reviser integer unsigned,
     ID_digitalizer integer unsigned,

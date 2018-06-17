@@ -11,7 +11,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import model.ScanningWorkProject;
 import vo.UUIDScanningWorkProject;
-import vo.UUIDTranscriptionWorkProject;
 import vo.UUIDUser;
 
 public class ScanningWorkProjectQuerySet {

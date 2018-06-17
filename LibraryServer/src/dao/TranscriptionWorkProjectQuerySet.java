@@ -7,14 +7,10 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
-
 import vo.UUIDUser;
-
 import model.TranscriptionWorkProject;
-import vo.UUIDScanningWorkProject;
 import vo.UUIDTranscriptionWorkProject;
 
 public class TranscriptionWorkProjectQuerySet {

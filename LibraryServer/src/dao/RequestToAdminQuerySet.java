@@ -4,14 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.LinkedList;
-
-import model.TranscriptionWorkProject;
 import vo.Request;
-import vo.UUIDDocument;
 import vo.UUIDRequest;
 import vo.UUIDUser;
 

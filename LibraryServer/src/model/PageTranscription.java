@@ -9,16 +9,18 @@ public class PageTranscription {
 	private TEItext text;
 	private Boolean revised;
 	private Boolean validated;
+	private Boolean completed;
 	private PageTranscriptionStaff staff;
 	
 	
 	//costruttore
-	public PageTranscription(TEItext text, Boolean revised, Boolean validated,
+	public PageTranscription(TEItext text, Boolean revised, Boolean validated,Boolean comp,
 			PageTranscriptionStaff staff) {
 		super();
 		this.text = text;
 		this.revised = revised;
 		this.validated = validated;
+		this.completed = comp;
 		this.staff = staff;
 	}
 	
@@ -27,9 +29,9 @@ public class PageTranscription {
 			return this.text;
 		}
 
-	/*public boolean getComplete() {
-		return this.complete;
-	}*/
+	public boolean getCompleted() {
+		return this.completed;
+	}
 	
 	public boolean getRevised() {
 		return this.revised;
@@ -47,10 +49,9 @@ public class PageTranscription {
 		this.text=txt;
 	}
 
-	//FIXME si può eliminare tutto ciò che riguarda "complete"?
-	/*public void setComplete(Boolean c) {
-		this.complete=c;
-	}*/
+	public void setCompleted(Boolean c) {
+		this.completed=c;
+	}
 	
 	public void setRevised(Boolean r) {
 		this.revised=r;
