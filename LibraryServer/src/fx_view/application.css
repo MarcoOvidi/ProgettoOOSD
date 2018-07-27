@@ -1,0 +1,171 @@
+.root {
+     -fx-background-color: #333;
+}
+
+Button,TextField, PasswordField{
+	-fx-background-color: transparent;
+	-fx-border-color:#aaa;
+	-fx-border-radius: 0px;
+	-fx-border-width: 0.0px 0.0px 2px 0.0px ;
+	-fx-text-fill:#aaa;	  
+}
+
+
+#news-row{
+	-fx-background-color:#202020;
+	-fx-padding:4px;
+	-fx-border-width:0px 0px 1px 0px;
+	-fx-border-color:#191919;
+	}
+#news-row1{
+	-fx-background-color:#222;
+	-fx-padding:4px;
+	-fx-border-width:0px 0px 0px 0px;
+	-fx-border-color:#191919;
+	}
+	
+#news-row>Label{
+	-fx-text-fill:#aaa;
+}	
+#news-row1>Label{
+	-fx-text-fill:#aaa;
+}	
+
+
+AnchorPane,HBox, VBox, FlowPane{-fx-background:#222; -fx-border-width:0.0px;}
+
+.scroll-pane {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.scroll-pane:focused {
+    -fx-background-insets: 0;
+}
+
+.scroll-pane .corner {
+    -fx-background-insets: 0;
+}
+
+#categories{
+	-fx-alignment:center;
+	-fx-padding:4px;
+	
+	}
+#categories>Label{
+	-fx-alignment: CENTER;
+    -fx-text-fill: #aaa;
+    -fx-font-weight: bold;
+	-fx-padding:4px;
+	-fx-border-width: 2px;
+	-fx-border-radius: 14px;
+	-fx-border-color: #191919;
+	-fx-background-color:#202020;
+	-fx-background-radius:14px;
+}
+
+Button:hover{
+	-fx-border-color:#e86e0a;
+	-fx-text-fill:#fff;	  
+
+}
+
+
+#topbar{
+-fx-background-color:#000;
+}
+
+
+
+.tab-pane
+{
+    -fx-tab-min-width:90px;
+}
+
+.tab{
+    -fx-background-insets: 0 1 0 1,0,0;
+    
+    -fx-pref-height: 50;
+}
+.tab-pane .tab
+{
+    -fx-background-color: #222;
+
+}
+
+.tab-pane .tab:selected
+{
+    -fx-background-color: #222;
+}
+
+.tab .tab-label { 
+    -fx-alignment: CENTER;
+    -fx-text-fill: #aaa;
+    -fx-font-size: 16px;
+
+    -fx-border-width: 0px 0px 2px 0px;
+}
+
+.tab:selected .tab-label { 
+    -fx-alignment: CENTER;
+    -fx-text-fill: #fff;
+    -fx-border-color:#e86e0a;
+    -fx-font-weight: bold;
+
+}
+	
+.tab-pane>*.tab-header-area>*.tab-header-background {
+     -fx-opacity: 0;
+}
+		
+
+.tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
+    -fx-border-color: #222;
+}
+
+
+#gotoprofile{
+	
+	
+}
+
+
+
+.scroll-pane {
+    -fx-background-color: #202020;
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-background-color:#202020;
+}
+
+.increment-button, .decrement-button {
+    -fx-background-color:#202020;
+    -fx-border-color: #202020;
+}
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color: #202020;
+    -fx-border-color: #202020;
+    -fx-background-radius: 0em;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #444;
+    -fx-background-radius: 5em;
+}
+
+.scroll-pane > .corner {
+    -fx-background-color: #202020;
+    
+}
+
+#project-miniature{
+	-fx-padding:0px 20px 0px 20px;
+	-fx-alignment:center;
+}
+
+
+
