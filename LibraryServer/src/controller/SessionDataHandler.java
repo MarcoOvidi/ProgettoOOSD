@@ -42,8 +42,8 @@ public class SessionDataHandler {
 	
 	public Page getPage(UUIDPage id) {
 		if (!mapPage.containsKey(id)) {
-			Page page;
-			page = PageQuerySet.loadPage(id);
+			Page page=null;
+			//page = PageQuerySet.loadPage(id);
 			return page;
 		}
 		else 
@@ -72,9 +72,9 @@ public class SessionDataHandler {
 	
 	public DocumentCollection getCollection(UUIDDocumentCollection id) {
 		if (!mapDocumentCollection.containsKey(id)) {
-			DocumentCollection docCol;
+			DocumentCollection docCol=null;
 			//FIXME quale classe del dao?
-			docCol = DocumentCollectionQuerySet.loadDocumentCollection(id);
+		//	docCol = DocumentCollectionQuerySet.loadDocumentCollection(id);
 			return docCol;
 		}
 		return mapDocumentCollection.get(id);

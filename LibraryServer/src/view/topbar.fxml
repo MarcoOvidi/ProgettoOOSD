@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+<AnchorPane prefHeight="27.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Topbar">
+   <children>
+      <HBox>
+         <children>
+                              <Button fx:id="homelink" mnemonicParsing="false" text="Home">
+               <HBox.margin>
+                  <Insets right="8.0" />
+               </HBox.margin></Button>
+                             	<Button fx:id="profilelink" mnemonicParsing="false" text="My Profile">
+               <HBox.margin>
+                  <Insets right="8.0" />
+               </HBox.margin></Button>
+                              <Button mnemonicParsing="false" text="Search Document">
+               <HBox.margin>
+                  <Insets right="8.0" />
+               </HBox.margin></Button>
+                              <Button mnemonicParsing="false" text="Contact Admin">
+               <HBox.margin>
+                  <Insets right="8.0" />
+               </HBox.margin></Button>
+            <Button fx:id="NewDocument" layoutX="273.0" layoutY="10.0" mnemonicParsing="false" text="New Document" />
+         </children>
+      </HBox>
+    <Button layoutX="1280.0" mnemonicParsing="false" text="Logout" />
+   </children>
+</AnchorPane>
