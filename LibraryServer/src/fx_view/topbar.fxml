@@ -9,11 +9,11 @@
    <children>
       <HBox>
          <children>
-                              <Button fx:id="homelink" mnemonicParsing="false" text="Home">
+                              <Button fx:id="homeLink" mnemonicParsing="false" text="Home">
                <HBox.margin>
                   <Insets right="8.0" />
                </HBox.margin></Button>
-                             	<Button fx:id="profilelink" mnemonicParsing="false" text="My Profile">
+                             	<Button fx:id="profileLink" mnemonicParsing="false" text="My Profile">
                <HBox.margin>
                   <Insets right="8.0" />
                </HBox.margin></Button>
@@ -25,7 +25,7 @@
                <HBox.margin>
                   <Insets right="8.0" />
                </HBox.margin></Button>
-            <Button fx:id="NewDocument" layoutX="273.0" layoutY="10.0" mnemonicParsing="false" text="New Document" />
+            <Button fx:id="newDocumentLink" layoutX="273.0" layoutY="10.0" mnemonicParsing="false" text="New Document" />
          </children>
       </HBox>
     <Button layoutX="1280.0" mnemonicParsing="false" text="Logout" />

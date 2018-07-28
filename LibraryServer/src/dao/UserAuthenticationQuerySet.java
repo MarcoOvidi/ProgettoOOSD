@@ -16,7 +16,7 @@ public class UserAuthenticationQuerySet {
 		
 	}
 	
-	public static boolean login(String usr, String psw) throws SQLException {
+	public static boolean login(String usr, String psw) throws SQLException, DatabaseException {
 		Connection con = null;
 		
 		try {
@@ -27,26 +27,23 @@ public class UserAuthenticationQuerySet {
 		
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		HashMap<Integer,String> twpl = new HashMap<Integer,String>();
 		
-		try {
-			
-			ps = con.prepareStatement("SELECT tp.ID as ID_progetto, d.title as Title "
-					  + "FROM transcription_project as tp JOIN transcription_project_transcriber_partecipant as tptp "
-					  + "JOIN document as d "
-					  + "ON tp.IsD=tptp.ID_transcription_project and tp.ID_document=d.ID "
-					  + "WHERE ID_transcriber_user=? ;"); 
+		try {			
+			ps = con.prepareStatement("SELECT id FROM user WHERE username=? AND passwd=?");
 		
-			ps.setInt(1, usr.getValue());
-			
+			ps.setString(1, usr);
+			ps.setString(2, psw);
 			rs = ps.executeQuery();
 			
-			while(rs.next()) {
-				twpl.put(rs.getInt("ID_progetto"), rs.getString("Title"));
-			}
+			if(rs.next()) 
+				return true;
+			else 
+				return false;
 			
 		}catch(SQLException e) {
-			throw new DatabaseException("Errore di esecuzione della query", e);
+			
+				throw new DatabaseException("Errore di esecuzione della query", e);
+			
 		}finally {
 			try{
 				if(ps != null)
@@ -58,14 +55,7 @@ public class UserAuthenticationQuerySet {
 			}
 			
 			
-		}
-		
-		
-		
-		
-		
-		
-		return false;
+		}			
 	}
 }
 

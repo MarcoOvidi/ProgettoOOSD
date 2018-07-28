@@ -11,7 +11,7 @@ public class ReadProperties {
 	public static Properties getConnectionProperties(){
 		Properties prop = null; 
 		try {
-			File file = new File("./dao/DBParameter.properties");
+			File file = new File("src/dao/DBParameter.properties");
 			FileInputStream inputStream = new FileInputStream(file);
 			prop = new Properties();
 			prop.load(inputStream);

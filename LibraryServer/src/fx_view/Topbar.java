@@ -8,10 +8,13 @@ import javafx.scene.input.MouseEvent;
 
 public class Topbar {
 	@FXML
-	private Button profilelink;
+	private Button profileLink;
 	
 	@FXML
-	private Button homelink;
+	private Button homeLink;
+	
+	@FXML
+	private Button newDocumentLink;
 	
 	
 	public void initialize() {
@@ -22,7 +25,7 @@ public class Topbar {
 	//inizializzo il bottone gotoprofile 
 	@FXML
 	public void initProfilelink() {
-		profilelink.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+		profileLink.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 			SceneController.loadScene("userProfile");
 			event.consume();
 	        });
@@ -30,11 +33,17 @@ public class Topbar {
 	
 	@FXML
 	public void initHomelink() {
-		homelink.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+		homeLink.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 			SceneController.loadScene("home");
 			event.consume();
 	        });
 	}
 	
-	
+	@FXML
+	public void newdocumentlink() {
+		newDocumentLink.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+			SceneController.loadScene("newDocumentScene");
+			event.consume();
+	        });
+	}
 }

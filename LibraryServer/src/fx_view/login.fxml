@@ -39,9 +39,9 @@
                   <PasswordField fx:id="password" layoutX="183.0" layoutY="187.0" prefHeight="26.0" prefWidth="150.0" text="Password" />
                   <Button fx:id="login" layoutX="183.0" layoutY="239.0" mnemonicParsing="false" onMouseClicked="#loginButtonPushed" prefHeight="26.0" prefWidth="150.0" text="Login" />
                   <Button cancelButton="true" layoutX="183.0" layoutY="288.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" text="Recupera Password" />
-                  <Label fx:id="message" layoutX="246.0" layoutY="332.0" prefHeight="17.0" prefWidth="24.0" textFill="#f70303" />
                </children>
             </AnchorPane>
+            <Label fx:id="message" layoutX="14.0" layoutY="746.0" prefHeight="17.0" prefWidth="277.0" textFill="#f70303" />
          </children>
       </AnchorPane>
    </center>
