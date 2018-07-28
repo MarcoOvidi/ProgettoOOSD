@@ -10,7 +10,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fx_view.Login">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fx_view.LoginScene">
    <bottom>
       <Pane prefHeight="21.0" prefWidth="800.0" BorderPane.alignment="CENTER">
          <children>
@@ -39,6 +39,7 @@
                   <PasswordField fx:id="password" layoutX="183.0" layoutY="187.0" prefHeight="26.0" prefWidth="150.0" text="Password" />
                   <Button fx:id="login" layoutX="183.0" layoutY="239.0" mnemonicParsing="false" onMouseClicked="#loginButtonPushed" prefHeight="26.0" prefWidth="150.0" text="Login" />
                   <Button cancelButton="true" layoutX="183.0" layoutY="288.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" text="Recupera Password" />
+                  <Label fx:id="message" layoutX="246.0" layoutY="332.0" prefHeight="17.0" prefWidth="24.0" textFill="#f70303" />
                </children>
             </AnchorPane>
          </children>
