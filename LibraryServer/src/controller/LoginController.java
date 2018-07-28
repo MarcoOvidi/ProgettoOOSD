@@ -24,7 +24,7 @@ public class LoginController{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			
-			e.printStackTrace();
+			e.printStackTrace();//
 		}
 		
 		lscene.displayMessage("Username o/e password non validi");

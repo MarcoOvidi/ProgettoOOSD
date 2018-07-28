@@ -34,7 +34,7 @@ public class UserAuthenticationQuerySet {
 			ps = con.prepareStatement("SELECT tp.ID as ID_progetto, d.title as Title "
 					  + "FROM transcription_project as tp JOIN transcription_project_transcriber_partecipant as tptp "
 					  + "JOIN document as d "
-					  + "ON tp.ID=tptp.ID_transcription_project and tp.ID_document=d.ID "
+					  + "ON tp.IsD=tptp.ID_transcription_project and tp.ID_document=d.ID "
 					  + "WHERE ID_transcriber_user=? ;"); 
 		
 			ps.setInt(1, usr.getValue());

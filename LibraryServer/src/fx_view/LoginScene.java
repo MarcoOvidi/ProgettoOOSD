@@ -46,6 +46,7 @@ public class LoginScene {
     	//String param="username="+user+"&"+"password="+pass;
     	
 		LoginController.login(this,usr,psw);
+		//
     	/*
     	ServletConnection scon= new ServletConnection(controllerUrl);
     	System.out.println(scon.sendPost(param));    	
