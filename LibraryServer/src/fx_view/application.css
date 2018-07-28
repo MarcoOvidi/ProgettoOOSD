@@ -3,12 +3,18 @@
 }
 
 Button,TextField, PasswordField{
-	-fx-background-color: transparent;
+	-fx-background-color: trasparent;
 	-fx-border-color:#aaa;
 	-fx-border-radius: 0px;
 	-fx-border-width: 0.0px 0.0px 2px 0.0px ;
 	-fx-text-fill:#aaa;	  
 }
+  .text-area .content{
+      -fx-background-color: transparent;
+      -fx-text-fill:#aaa;	  
+      -fx-highlight-fill: #aaa;
+       -fx-highlight-text-fill: #aaa; 
+  }
 
 
 #news-row{

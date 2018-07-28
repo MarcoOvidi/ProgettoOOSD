@@ -15,7 +15,7 @@ public class DocumentQuerySet {
 	 * @return Boolean: true se l'operazione è andata a buon fine , false altrimenti
 	 */
 	//TODO questo metodo carica solo il titolo del documento giusto ?
-	public static UUIDDocument insertDocument(String title) throws DatabaseException {
+	public static UUIDDocument insertDocument(String title, String author, String description, String composition_date, String composition_period_from, String composition_period_to, String preservation_state) throws DatabaseException {
 		Connection con = null;
 		
 		try {
@@ -32,12 +32,20 @@ public class DocumentQuerySet {
 			con.setAutoCommit(false);
 			ps = con.prepareStatement("insert into document(title) value( ? );", new String[] {"ID"});
 			ps.setString(1,title);
+		
 			ps.addBatch();
 			ps.executeBatch();
 			
 			rs = ps.getGeneratedKeys();
 			if(rs.next()) {
 				id = new UUIDDocument(rs.getInt(1));
+			
+			
+			
+			
+			
+			
+			
 			}
 			
 			con.commit();

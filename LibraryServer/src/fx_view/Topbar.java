@@ -18,13 +18,15 @@ public class Topbar {
 	
 	
 	public void initialize() {
-		initProfilelink();
-		initHomelink();
+		initProfileLink();
+		initHomeLink();
+		initNewDocumentLink();
+
 	}
 	
 	//inizializzo il bottone gotoprofile 
 	@FXML
-	public void initProfilelink() {
+	public void initProfileLink() {
 		profileLink.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 			SceneController.loadScene("userProfile");
 			event.consume();
@@ -32,7 +34,7 @@ public class Topbar {
 	}
 	
 	@FXML
-	public void initHomelink() {
+	public void initHomeLink() {
 		homeLink.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 			SceneController.loadScene("home");
 			event.consume();
@@ -40,9 +42,9 @@ public class Topbar {
 	}
 	
 	@FXML
-	public void newdocumentlink() {
+	public void initNewDocumentLink() {
 		newDocumentLink.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-			SceneController.loadScene("newDocumentScene");
+			SceneController.loadScene("newDocument");
 			event.consume();
 	        });
 	}
