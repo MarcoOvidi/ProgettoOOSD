@@ -1,8 +1,3 @@
-/okioki.class
-/oki/
-/app_view/
-/fx_view/
-/application.css
 /Home.class
 /Login.class
 /RootCss.class
@@ -10,12 +5,9 @@
 /SceneController.class
 /ShowDocument.class
 /Topbar.class
-/home.fxml
-/loadScan.class
-/loadScan.fxml
-/login.fxml
-/showDocument.fxml
-/topbar.fxml
-/userProfile.fxml
-/dao/
 /controller/
+/dao/
+/fx_view/
+/loadScan.class
+/model/
+/vo/

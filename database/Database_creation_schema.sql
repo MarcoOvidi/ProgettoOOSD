@@ -46,6 +46,7 @@ create table page(
     image varchar(255),
     transcription text,
     image_convalidation boolean default null,
+    image_revised boolean default null,
     transcription_convalidation boolean default null,
     transcription_revised boolean default null,
     transcription_completed boolean default null,

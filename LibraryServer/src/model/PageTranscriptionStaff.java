@@ -10,10 +10,13 @@ public class PageTranscriptionStaff {
 	private UUIDUser reviser;
 	
 	//costruttore
-	public PageTranscriptionStaff() {
-		
+	public PageTranscriptionStaff(LinkedList<UUIDUser> trans, UUIDUser rev) {
+		this.transcribers=trans;
+		this.reviser=rev;
 	}
-	
+	public PageTranscriptionStaff(LinkedList<UUIDUser> trans) {
+		this.transcribers=trans;
+	}
 	// metodi get e set
 	
 	public LinkedList<UUIDUser> getTranscribers(){
