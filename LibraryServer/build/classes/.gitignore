@@ -1,1 +1,17 @@
+<<<<<<< HEAD
 /fx_view/
+=======
+/Home.class
+/Login.class
+/RootCss.class
+/SceneController$1.class
+/SceneController.class
+/ShowDocument.class
+/Topbar.class
+/controller/
+/dao/
+/fx_view/
+/loadScan.class
+/model/
+/vo/
+>>>>>>> branch 'master' of https://github.com/MarcoOvidi/ProgettoOOSD.git

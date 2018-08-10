@@ -27,8 +27,14 @@ public class Document {
 	//TODO
 	//costruttore
 	
-	public Document() {
-		
+	public Document(String title, UUIDDocument id, DocumentMetadata dm, LinkedList<Page> pagel,
+			UUIDScanningWorkProject idsp, UUIDTranscriptionWorkProject idtp) {
+		this.title = title;
+		this.id = id;
+		this.metadata = dm;
+		this.pageList = pagel;
+		this.scanningWorkProject = idsp;
+		this.transcriptionWorkProject = idtp;
 	}
 	
 	//metodi get e set
@@ -61,8 +67,12 @@ public class Document {
 		this.metadata=m;
 	}
 	
-	//TODO setPageList con input una lista di pagine
-	public void setPageList(Page p) {
+	
+	public void setPageList(LinkedList<Page> page_list) {
+		this.pageList.addAll(page_list);
+	}
+	
+	public void setPage(Page p) {
 		this.pageList.addLast(p);
 	}
 	
@@ -80,6 +90,14 @@ public class Document {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	
+	public void setUUIDTranscriptionWorkProject(UUIDTranscriptionWorkProject id) {
+		this.transcriptionWorkProject=id;
+	}
+
+	public void setUUIDScanningWorkProject(UUIDScanningWorkProject id) {
+		this.scanningWorkProject=id;
 	}
 
 	@Override

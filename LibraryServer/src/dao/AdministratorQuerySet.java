@@ -11,9 +11,7 @@ import vo.UUIDRequest;
 import vo.UUIDUser;
 import vo.UserPermissions;
 
-public class AdministratorQuerySet {
-	
-	//completato e verificato
+public class AdministratorQuerySet {  //metodi completati solo da verificare
 	
 	/* Questo metodo cambia lo stato di un utente da attivo a inattivo e viceversa
 	 * 

@@ -11,8 +11,11 @@ public class PageScan {
 	private PageScanStaff staff;
 	
 	// costruttore
-	public PageScan() {
-		
+	public PageScan(Image img, Boolean val, Boolean rev, PageScanStaff staff) {
+		this.image=img;
+		this.validated=val;
+		this.revised=rev;
+		this.staff=staff;
 	}
 
 	// metodi get e set

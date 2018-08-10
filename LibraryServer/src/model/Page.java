@@ -7,6 +7,10 @@ package model;
  */
 
 import vo.UUIDPage;
+import vo.UUIDUser;
+
+import java.util.LinkedList;
+
 import controller.SessionDataHandler;
 
 
@@ -19,10 +23,11 @@ public class Page {
 	private PageScan scan;
 	private PageTranscription transcription;
 	
-	//costruttore
-	//TODO
-	public Page() {
-		
+	public Page(UUIDPage id, Integer page_num, PageScan page_scan, PageTranscription page_trans) {
+		this.id=id;
+		this.pageNumber=page_num;
+		this.scan=page_scan;
+		this.transcription=page_trans;
 	}
 	
 	
@@ -58,6 +63,10 @@ public class Page {
 	
 	public void setTranscription(PageTranscription pt) {
 		this.transcription=pt;
+	}
+	
+	public void setPageTranscription(LinkedList<UUIDUser> transcribers) {
+		transcription.setStaff(new PageTranscriptionStaff(transcribers));
 	}
 	
 }

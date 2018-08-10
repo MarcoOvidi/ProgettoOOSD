@@ -10,8 +10,9 @@ public class PageScanStaff {
 	
 	//costruttore
 	
-	public PageScanStaff() {
-		
+	public PageScanStaff(UUIDUser dig, UUIDUser rev) {
+		this.digitalizer=dig;
+		this.reviser=rev;
 	}
 	
 	//metodi get e set 
