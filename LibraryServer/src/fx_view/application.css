@@ -3,7 +3,7 @@
 }
 
 Button,TextField, PasswordField{
-	-fx-background-color: trasparent;
+	-fx-background-color: transparent;
 	-fx-border-color:#aaa;
 	-fx-border-radius: 0px;
 	-fx-border-width: 0.0px 0.0px 2px 0.0px ;

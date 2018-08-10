@@ -29,5 +29,6 @@
          </children>
       </HBox>
     <Button layoutX="1280.0" mnemonicParsing="false" text="Logout" />
+      <Button fx:id="loadScanLink" layoutX="574.0" mnemonicParsing="false" prefWidth="112.0" text="Load Scan" />
    </children>
 </AnchorPane>

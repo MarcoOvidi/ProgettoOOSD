@@ -16,12 +16,15 @@ public class Topbar {
 	@FXML
 	private Button newDocumentLink;
 	
+	@FXML
+	private Button loadScanLink;
+	
 	
 	public void initialize() {
 		initProfileLink();
 		initHomeLink();
 		initNewDocumentLink();
-
+		initLoadScanLink();
 	}
 	
 	//inizializzo il bottone gotoprofile 
@@ -48,4 +51,13 @@ public class Topbar {
 			event.consume();
 	        });
 	}
+	
+	@FXML
+	public void initLoadScanLink() {
+		newDocumentLink.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+			SceneController.loadScene("loadScan");
+			event.consume();
+	        });
+	}
+	
 }
