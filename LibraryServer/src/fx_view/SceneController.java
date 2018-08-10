@@ -18,8 +18,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-
-
 public class SceneController extends Application {
 	
 	private static Scene scene;
@@ -39,8 +37,6 @@ public class SceneController extends Application {
 		launch(args);
 	}
  
-
-	
 	public static void loadScene(String name) {
 		try {
 			BorderPane root = (BorderPane)FXMLLoader.load(new Object(){}.getClass().getResource("/fx_view/"+name+".fxml"));

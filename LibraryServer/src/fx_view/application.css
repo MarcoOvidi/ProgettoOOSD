@@ -16,7 +16,6 @@ Button,TextField, PasswordField{
        -fx-highlight-text-fill: #aaa; 
   }
 
-
 #news-row{
 	-fx-background-color:#202020;
 	-fx-padding:4px;
