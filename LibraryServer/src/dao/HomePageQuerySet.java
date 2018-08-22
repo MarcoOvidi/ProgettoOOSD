@@ -25,7 +25,7 @@ public class HomePageQuerySet {
 	
 	
 	//seleziona i 10 progetti pubblicati più di recente tra digitalizzazioni e trascrizioni di opere
-	public void loadNewst() {
+	public void loadNews() {
 		
 	}
 	

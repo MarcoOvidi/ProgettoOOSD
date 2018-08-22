@@ -11,13 +11,97 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import vo.UUIDUser;
 import model.TranscriptionWorkProject;
+import vo.UUIDDocument;
 import vo.UUIDTranscriptionWorkProject;
 
 public class TranscriptionWorkProjectQuerySet {
 	//TODO
-	public static void insertTranscriptionWorkProject() {
-		
-	}
+	public static UUIDTranscriptionWorkProject insertTranscriptionWorkProject(LinkedList<UUIDUser> transcribers , 
+			LinkedList<UUIDUser> revisers, UUIDUser coordinator, Boolean completed, UUIDDocument doc) throws DatabaseException {
+			Connection con = null;
+			
+			try {
+				con = DBConnection.connect();
+			}catch(DatabaseException e) {
+				throw new DatabaseException("Errore di connessione", e);
+			}
+			
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+			UUIDTranscriptionWorkProject id = null;
+			
+			try {
+				con.setAutoCommit(false);
+				ps = con.prepareStatement("insert into transcription_project(ID_coordinator, ID_document,transcription_complete) values (?,?,?);", new String[] {"ID"});
+				ps.setInt(1, coordinator.getValue());
+				ps.setInt(2, doc.getValue());
+				ps.setBoolean(3, completed);
+			
+				ps.addBatch();
+				ps.executeBatch();
+				
+				rs = ps.getGeneratedKeys();
+				if(rs.next()) {
+					id = new UUIDTranscriptionWorkProject(rs.getInt(1));
+				}
+				con.commit();
+				con.setAutoCommit(true);
+				
+				if (rs != null)
+					rs.close();
+				if(ps != null)
+					ps.close();
+				
+				Iterator<UUIDUser> itr = transcribers.iterator();
+				
+				while(itr.hasNext()) {
+					UUIDUser usr = itr.next();
+					ps = con.prepareStatement("insert into "
+							+ "transcription_project_transcriber_partecipant(ID_transcription_project, ID_transcriber_user) "
+							+ "values (?,?);");
+					ps.setInt(1, id.getValue());
+					ps.setInt(2, usr.getValue());
+					rs = ps.executeQuery();
+				}
+				
+				if(rs != null)
+					rs.close();
+				if(ps != null)
+					ps.close();
+				
+				itr = revisers.iterator();
+				
+				while(itr.hasNext()) {
+					UUIDUser usr = itr.next();
+					ps = con.prepareStatement("insert into "
+							+ "transcription_project_reviser_partecipant(ID_transcription_project, ID_reviser_user) "
+							+ "values (?,?);");
+					ps.setInt(1, id.getValue());
+					ps.setInt(2, usr.getValue());
+				
+				}
+				
+			}catch(SQLException e) {
+				try {
+					con.abort(null);	
+				}catch(SQLException f) {
+					DBConnection.logDatabaseException(new DatabaseException("Duplicato", f));
+				}
+			}finally {
+				try{
+					if(ps != null)
+						ps.close();
+					if(con!=null)
+						con.close();
+				}catch(SQLException e) {
+					DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+				}
+				
+				
+			}
+			
+			return id;
+		}
 	
 	/* Seleziona un transcriptionWorkProject con il relativo personale
 	 * @param UUIDTranscriptionProject id del progetto da caricare

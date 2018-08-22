@@ -10,14 +10,99 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import model.ScanningWorkProject;
+import vo.UUIDDocument;
 import vo.UUIDScanningWorkProject;
 import vo.UUIDUser;
 
 public class ScanningWorkProjectQuerySet {
 	
 	//iscerisce un nuovo ScanningWorkProject nel DB con il relativo personale
-	public void insertScanningWorkProject() {
+	public static UUIDScanningWorkProject insertScanningWorkProject(UUIDUser coordinator, Boolean completed , LinkedList<UUIDUser> digitalizers , 
+			LinkedList<UUIDUser> revisers, UUIDDocument ID_doc) throws DatabaseException {
 		
+		Connection con = null;
+		
+		try {
+			con = DBConnection.connect();
+		}catch(DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+		
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		UUIDScanningWorkProject id = null;
+		
+		try {
+			con.setAutoCommit(false);
+			ps = con.prepareStatement("insert into scanning_project(ID_coordinator, ID_document,scanning_complete) values (?,?,?);", new String[] {"ID"});
+			ps.setInt(1, coordinator.getValue());
+			ps.setInt(2, ID_doc.getValue());
+			ps.setBoolean(3, completed);
+		
+			ps.addBatch();
+			ps.executeBatch();
+			
+			rs = ps.getGeneratedKeys();
+			if(rs.next()) {
+				id = new UUIDScanningWorkProject(rs.getInt(1));
+			}
+			con.commit();
+			con.setAutoCommit(true);
+			
+			if (rs != null)
+				rs.close();
+			if(ps != null)
+				ps.close();
+			
+			Iterator<UUIDUser> itr = digitalizers.iterator();
+			
+			while(itr.hasNext()) {
+				UUIDUser usr = itr.next();
+				ps = con.prepareStatement("insert into "
+						+ "scanning_project_digitalizer_partecipant(ID_scanning_project, ID_digitalizer_user) "
+						+ "values (?,?);");
+				ps.setInt(1, id.getValue());
+				ps.setInt(2, usr.getValue());
+				rs = ps.executeQuery();
+			}
+			
+			if(rs != null)
+				rs.close();
+			if(ps != null)
+				ps.close();
+			
+			itr = revisers.iterator();
+			
+			while(itr.hasNext()) {
+				UUIDUser usr = itr.next();
+				ps = con.prepareStatement("insert into "
+						+ "scanning_project_reviser_partecipant(ID_scanning_project, ID_reviser_user) "
+						+ "values (?,?);");
+				ps.setInt(1, id.getValue());
+				ps.setInt(2, usr.getValue());
+			
+			}
+			
+		}catch(SQLException e) {
+			try {
+				con.abort(null);	
+			}catch(SQLException f) {
+				DBConnection.logDatabaseException(new DatabaseException("Duplicato", f));
+			}
+		}finally {
+			try{
+				if(ps != null)
+					ps.close();
+				if(con!=null)
+					con.close();
+			}catch(SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+			
+			
+		}
+		
+		return id;
 	}
 	
 	

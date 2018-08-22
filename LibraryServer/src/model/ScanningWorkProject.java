@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.LinkedList;
 import vo.UUIDUser;
 import vo.UUIDScanningWorkProject;
-import vo.UUIDTranscriptionWorkProject;
 
 public class ScanningWorkProject extends WorkProject {
 	

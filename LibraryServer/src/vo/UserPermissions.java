@@ -2,22 +2,22 @@ package vo;
 
 public class UserPermissions {
 	//generic user
-	private Boolean download;
+	private Boolean download; // like 1
 	//uploader
-	private Boolean upload;
-	private Boolean editMetadata;
+	private Boolean upload;  //like 2
+	private Boolean editMetadata; //like 3
 	//digitalizationReviser
-	private Boolean reviewPage;
+	private Boolean reviewPage;  //like 4
 	//transcriber
-	private Boolean modifyTranscription;
-	private Boolean requestTranscriptionTask;
+	private Boolean modifyTranscription;  //like 5
+	private Boolean requestTranscriptionTask; //like 6
 	//trasnscriptionReviser
-	private Boolean reviewTranscription;
+	private Boolean reviewTranscription; //like 7
 	//coordinator
-	private Boolean addNewProject;
-	private Boolean assignDigitalizationTask;
-	private Boolean assignTranscriptionTask;
-	private Boolean publishDocument;
+	private Boolean addNewProject; //like 8
+	private Boolean assignDigitalizationTask; //like 9
+	private Boolean assignTranscriptionTask; //like 10
+	private Boolean publishDocument; //like 11
 	
 	//costruttore
 	public UserPermissions(Boolean a, Boolean b, Boolean c, Boolean d, Boolean e, Boolean f, Boolean g, Boolean h, Boolean i, Boolean l, Boolean m) {
