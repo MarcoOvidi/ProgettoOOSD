@@ -29,6 +29,8 @@ public class loadScan {
 	
 	@FXML
 	public void initialize(){
+
+		
 		filechooser.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 			FileChooser fileChooser = new FileChooser();
 	        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("*.png","*.jpg");
