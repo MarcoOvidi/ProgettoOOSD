@@ -68,5 +68,14 @@ public class Page {
 	public void setPageTranscription(LinkedList<UUIDUser> transcribers) {
 		transcription.setStaff(new PageTranscriptionStaff(transcribers));
 	}
+
+
+	@Override
+	public String toString() {
+		return "Page [id=" + id + ", session=" + session + ", pageNumber=" + pageNumber + ", scan=" + scan
+				+ ", transcription=" + transcription + "]";
+	}
+	
+	
 	
 }

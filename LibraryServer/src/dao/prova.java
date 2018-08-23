@@ -1,6 +1,7 @@
 package dao;
 
 import vo.BookMark;
+import vo.Image;
 import vo.UUIDDocument;
 import vo.UUIDPage;
 import vo.UUIDRequest;
@@ -14,7 +15,7 @@ public class prova {
 		
 		try{
 			
-			System.out.println(AdministratorQuerySet.answerRequest(new UUIDRequest(1), "vaffanculoooo"));
+			DigitalizerQuerySet.updatePage(new UUIDPage(1), new Image("http:jfkrjfkrjfkrj"));
 		}catch(Exception e){
 			System.out.println(e);
 		}

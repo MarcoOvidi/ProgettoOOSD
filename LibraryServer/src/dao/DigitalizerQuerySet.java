@@ -11,11 +11,8 @@ import vo.Image;
 import vo.UUIDDocument;
 import vo.UUIDPage;
 
-public class DigitalizerQuerySet { //DA COMPLETARE
+public class DigitalizerQuerySet { //COMPLETATA E VERIFICATA DEF
 	
-	//FIXME metodo troppo grande e ridondante perchè già presente in DocumentQuerySet , 
-	//secondo me il digitalizer ha bisogno solo delle pages ed in particolare di vedere o 
-	//meno se le immagini sono scannerizzate e/o validate quindi ho deciso di sistemarlo in questo modo
 	/**
 	 * 
 	 * @param id id UUIDDocument dell'opera di cui si vogliono visualizzare le pagine scansionate e il loro stato nel processo di validazione
@@ -25,7 +22,7 @@ public class DigitalizerQuerySet { //DA COMPLETARE
 	 * @throws DatabaseException
 	 * @see UUIDDocument
 	 */
-	public LinkedList<Page> loadDocument(UUIDDocument id,Boolean revision,Boolean validation) throws DatabaseException{
+	public static LinkedList<Page> loadDocument(UUIDDocument id,Boolean revision,Boolean validation) throws DatabaseException{
 		Connection con = null;
 		
 		try {
@@ -74,8 +71,15 @@ public class DigitalizerQuerySet { //DA COMPLETARE
 		return pages;
 	}
 	
-	
-	public void updatePage(UUIDPage id,Image img) throws DatabaseException {
+	/**
+	 * 
+	 * @param id UUIDPage: id della pagina di cui si vuole aggiornare la scansione  
+	 * @param img Image: path della scansione
+	 * @throws DatabaseException
+	 * @see vo.UUIDPage
+	 * @see vo.Image
+	 */
+	public static void updatePage(UUIDPage id,Image img) throws DatabaseException {
 		Connection con = null;
 		
 		try {
@@ -107,12 +111,4 @@ public class DigitalizerQuerySet { //DA COMPLETARE
 			
 		}
 	}
-
-
-
-
-
-
-
-
 }
