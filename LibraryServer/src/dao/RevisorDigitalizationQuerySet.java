@@ -79,7 +79,4 @@ public class RevisorDigitalizationQuerySet {
 			}
 		}
 	}
-	
-		//FIXME una volta che un revisore valida o invalida una scansione in automatico si mette il flag di revisione
-	
 }
