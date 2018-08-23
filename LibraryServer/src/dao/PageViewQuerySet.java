@@ -14,6 +14,7 @@ import vo.UUIDUser;
 
 public class PageViewQuerySet {
 	
+	//FIXME altro metodo ridondante?
 	//seleziona tutte le informazioni dell'opera, tutte le pagine, tutte le scansioni
 	public void loadOpera() {
 		

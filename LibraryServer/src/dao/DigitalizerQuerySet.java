@@ -5,32 +5,107 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
-import model.Document;
 import model.Page;
 import model.PageScan;
-import model.PageScanStaff;
-import model.PageTranscription;
-import model.PageTranscriptionStaff;
-import vo.DocumentMetadata;
 import vo.Image;
-import vo.TEItext;
 import vo.UUIDDocument;
 import vo.UUIDPage;
-import vo.UUIDScanningWorkProject;
-import vo.UUIDTranscriptionWorkProject;
-import vo.UUIDUser;
-import vo.VagueDate;
 
 public class DigitalizerQuerySet { //DA COMPLETARE
 	
-	//FIXME metodo troppo grande e ridondtante perchè già presente in DocumentQuerySet , secondo me il digitalizer ha bisogno solo delle pagges ed in particolare di vedere o meno se le immagini sono scannerizzate e/o validate 
-	public Document loadDocument(UUIDDocument id){
-	return null;
+	//FIXME metodo troppo grande e ridondante perchè già presente in DocumentQuerySet , 
+	//secondo me il digitalizer ha bisogno solo delle pages ed in particolare di vedere o 
+	//meno se le immagini sono scannerizzate e/o validate quindi ho deciso di sistemarlo in questo modo
+	/**
+	 * 
+	 * @param id id UUIDDocument dell'opera di cui si vogliono visualizzare le pagine scansionate e il loro stato nel processo di validazione
+	 * @param revision TRUE: mostra solo le pagine revisionate FALSE altrimenti
+	 * @param validation TRUE: mostra le pagine validate FALSE altrimenti
+	 * @return LinkedList<Page> Elenco di pagine
+	 * @throws DatabaseException
+	 * @see UUIDDocument
+	 */
+	public LinkedList<Page> loadDocument(UUIDDocument id,Boolean revision,Boolean validation) throws DatabaseException{
+		Connection con = null;
+		
+		try {
+			con = DBConnection.connect();
+		}catch(DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+		
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		LinkedList<Page> pages = new LinkedList<Page>();
+		
+		try {
+			ps = con.prepareStatement("select ID,number,image,image_revised,"
+					+ "image_convalidation from page WHERE image_convalidation=? "
+					+ "AND image_revised=? AND ID_document=?");
+			ps.setBoolean(1, validation);
+			ps.setBoolean(2, revision);
+			ps.setInt(3, id.getValue());
+			
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				pages.add(new Page(new UUIDPage(rs.getInt("ID")), rs.getInt("number"), 
+						new PageScan(new Image(rs.getString("image")), 
+								rs.getBoolean("image_convalidation"), 
+								rs.getBoolean("image_revised"), null), null));
+			}
+			
+		}catch(SQLException e) {
+			throw new DatabaseException("Errore di esecuzione della query", e);
+		}finally {
+			try{
+				if(rs != null)
+					rs.close();
+				if(ps != null)
+					ps.close();
+				if(con!=null)
+					con.close();
+			}catch(SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+			
+			
+		}
+		return pages;
 	}
 	
 	
-	public void updatePage(UUIDPage id,Image img) {
+	public void updatePage(UUIDPage id,Image img) throws DatabaseException {
+		Connection con = null;
 		
+		try {
+			con = DBConnection.connect();
+		}catch(DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+		
+		PreparedStatement ps = null;
+		
+		try {
+			ps = con.prepareStatement("UPDATE page SET image=? WHERE ID=?");
+			ps.setString(1, img.getUrl());
+			ps.setInt(2, id.getValue());
+			
+			ps.executeUpdate();
+		}catch(SQLException e) {
+			throw new DatabaseException("Errore di esecuzione della query", e);
+		}finally {
+			try{
+				if(ps != null)
+					ps.close();
+				if(con!=null)
+					con.close();
+			}catch(SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+			
+			
+		}
 	}
 
 
