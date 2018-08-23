@@ -11,12 +11,12 @@ import vo.UUIDRequest;
 import vo.UUIDUser;
 import vo.UserPermissions;
 
-public class AdministratorQuerySet {  //metodi completati solo da verificare
+public class AdministratorQuerySet {  //tutto ok 
 	
-	/* Questo metodo cambia lo stato di un utente da attivo a inattivo e viceversa
+	/** Questo metodo cambia lo stato di un utente da attivo a inattivo e viceversa
 	 * 
 	 * @param user Utente su cui fare l'aggiornamento di stato
-	 * @param b boolean true se l'utente deve risultare attivo , false altrimenti
+	 * @param status boolean true se l'utente deve risultare attivo , false altrimenti
 	 * 
 	 * @return Boolean 1 se la modifica è stata effettuata, 0 altrimenti
 	 * 
@@ -24,8 +24,7 @@ public class AdministratorQuerySet {  //metodi completati solo da verificare
 	 * 
 	 * @exception DatabaseException
 	 */
-	
-	public static Boolean modifyUserStatus(UUIDUser user, Boolean b) throws DatabaseException {
+	public static Boolean modifyUserStatus(UUIDUser user, Boolean status) throws DatabaseException {
 		Connection con = null;
 		
 		
@@ -40,7 +39,7 @@ public class AdministratorQuerySet {  //metodi completati solo da verificare
 		
 		try {
 			ps = con.prepareStatement("UPDATE user SET status = ? WHERE id=?");
-			ps.setBoolean(1, b);
+			ps.setBoolean(1, status);
 			ps.setInt(2, user.getValue());	
 			
 			result = ps.executeUpdate();
@@ -65,10 +64,9 @@ public class AdministratorQuerySet {  //metodi completati solo da verificare
 		else
 			return false;
 	
-	}//end method
-		
+	}
 	
-	/* Aggiorna i permessi degli utenti
+	/** Aggiorna i permessi degli utenti
 	 * 
 	 * @param id , UUIDUser dell'utente a cui devono essere cambiati i permessi
 	 * @param up , Oggetto UserPermission istanziato per avere una maschera permessi da impostare
@@ -79,7 +77,6 @@ public class AdministratorQuerySet {  //metodi completati solo da verificare
 	 * @exception SQLException
 	 * 
 	 */
-	
 	public static boolean updateUserPermissions(UUIDUser user,UserPermissions up) throws DatabaseException{
 			
 		Connection con = null;
@@ -133,12 +130,11 @@ public class AdministratorQuerySet {  //metodi completati solo da verificare
 		return (res == 1);
 	}
 	
-	/* Seleziona il campo oggetto di tutte le richieste inviate dagli utenti 
+	/** Seleziona il campo oggetto di tutte le richieste inviate dagli utenti 
 	 * 
 	 * @param b se 0 mostra soltanto gli oggetti delle richieste pending, se 1 delle non pending, se 2 tutte
 	 * @return HashMap<Integer,String> l'intero(chiave) rappresenta l'UUIDRequest e la String l'oogetto della request  
 	 */
-	
 	public static HashMap<Integer,String> loadRequestsList(int b) throws DatabaseException {
 		
 		Connection con = null;
@@ -195,10 +191,11 @@ public class AdministratorQuerySet {  //metodi completati solo da verificare
 	}
 	
 	
-	/* Seleziona tutti gli attributi di una richiesta
+	/** Seleziona tutti gli attributi di una richiesta
 	 * @param id UUIDRequest di una richiesta
 	 * @return Request un oggetto richiesta completo
-	 * @throw NullPointerException in caso l'id parametro non sia presente nel db
+	 * @throws NullPointerException In caso l'id parametro non sia presente nel db
+	 * @see vo.UUIDRequest
 	 */
 	public static Request loadRequest(UUIDRequest id) throws NullPointerException,DatabaseException {
 		
@@ -245,12 +242,12 @@ public class AdministratorQuerySet {  //metodi completati solo da verificare
 		return r;
 	}
 	
-	/* Aggiorna l'attributo answer di una richiesta e imposta la request non pending
+	/** Aggiorna l'attributo answer di una richiesta e imposta la request non pending
 	 * @param id UUIDRequest della richiesta a cui rispondere
 	 * @param answer Corpo del messaggio risposta
 	 * @return Boolean true se l'operazione è andata a buon fine , false altrimenti
-	 */
-	//TODO per me se un admin mand la risposta il booleanno status viene messo a true nel senso che la richiesta  è stata analizzata 
+	 * @see vo.UUIDRequest
+	 */ 
 	public static Boolean answerRequest(UUIDRequest id,String answer) throws DatabaseException{
 		Connection con = null;
 		
@@ -286,9 +283,7 @@ public class AdministratorQuerySet {  //metodi completati solo da verificare
 		
 		return (result == 1);
 		
-	}//end method
-	
-		
+	}
 }
 	
 	
