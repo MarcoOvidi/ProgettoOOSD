@@ -57,7 +57,7 @@ create table page(
     constraint page_transcription_reviser_user foreign key (ID_transcription_reviser) references user(ID) on update cascade on delete restrict,
     constraint page_scanning_reviser_user foreign key(ID_scanning_reviser) references user(ID) on update cascade on delete restrict,
     constraint page_ditigalizer_user foreign key(ID_digitalizer) references user(ID) on update cascade on delete restrict,
-    constraint page_document foreign key(ID_document) references page(ID) on update cascade on delete restrict
+    constraint page_document foreign key(ID_document) references page(ID) on update cascade on delete cascade
 );
 
 create table document_metadata(
@@ -101,7 +101,7 @@ create table personal_collection(
     ID_user integer unsigned not null,
     ID_document integer unsigned not null,
     constraint personal_collection_user foreign key(ID_user) references user(ID) on update cascade on delete cascade,
-    constraint personal_Collection_document foreign key(Id_document) references document(ID) on update cascade on delete cascade
+    constraint personal_Collection_document foreign key(ID_document) references document(ID) on update cascade on delete cascade
 );
 
 create table document_collection(
@@ -122,7 +122,7 @@ create table transcription_assigned(
     ID_transcriber_user integer unsigned ,
     ID_page integer unsigned not null,
     constraint transcription_assigned_transcriber_user foreign key(ID_transcriber_user) references user(ID) on update cascade,
-    constraint transcription_assigned_page foreign key(ID_page) references page(ID) on update cascade on delete restrict
+    constraint transcription_assigned_page foreign key(ID_page) references page(ID) on update cascade on delete cascade
 );
 
 create table transcription_project_transcriber_partecipant (
@@ -190,6 +190,20 @@ create table request (
     constraint role_request_admin foreign key(ID_admin) references user(ID) on update cascade on delete set null
 );
 
+
+delimiter $$
+
+create trigger permissions_creation after insert on user for each row 
+begin 
+
+INSERT into perm_authorization(ID_user,download,upload,editMetadata,reviewPage,
+modifyTranscription,requestTranscriptionTask,reviewTranscription,
+addNewProject,assignDigializationTask,assignTranscriptionTask,
+publishDocument) value(new.ID,0,0,0,0,0,0,0,0,0,0,0);
+
+end$$
+
+delimiter ; 
 
 
 
