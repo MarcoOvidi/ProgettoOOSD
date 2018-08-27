@@ -81,7 +81,7 @@ public class DocumentQuerySet {
 	}
 	
 	
-	public Document loadDocument(UUIDDocument id) throws DatabaseException {
+	public static Document loadDocument(UUIDDocument id) throws DatabaseException {
 		Connection con = null;
 		
 		try {

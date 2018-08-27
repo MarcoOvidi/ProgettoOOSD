@@ -16,7 +16,7 @@ import model.TranscriptionWorkProject;
 import dao.*;
 
 //FIXME verificare metodi e classi mancanti nel dao (o da rinominare), sia qui che lì
-public class SessionDataHandler {
+public final class SessionDataHandler {
 		//variabili istanza
 	//HashMap<UUID, Object> map;
 	HashMap<UUIDUser, User> mapUser;
@@ -27,9 +27,13 @@ public class SessionDataHandler {
 	HashMap<UUIDTranscriptionWorkProject, TranscriptionWorkProject> mapTranscriptionWorkProject;
 	
 	//TODO error handling
+	private static SessionDataHandler instance = new SessionDataHandler();
 	
-	public SessionDataHandler(/*DB reference?*/) {
-		
+	private SessionDataHandler() {		
+	}
+	
+	public static final SessionDataHandler GetInstance () {
+		return instance;
 	}
 	
 	public void addDocumentCollection(UUIDDocumentCollection id) {
