@@ -65,7 +65,7 @@ public class UserAuthenticationQuerySet { //COMPLETATA E TUTTA FUNZIONANTE
 	 * 
 	 * @param usr Username dell'utente che vuole effettuare il login
 	 * @param psw Password dell'utente
-	 * @return True se c'è un matching nel DataBase
+	 * @return UUID dell'utente se c'è un matching nel DataBase
 	 * @throws SQLException
 	 * @throws DatabaseException
 	 */

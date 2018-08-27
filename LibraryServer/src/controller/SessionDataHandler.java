@@ -54,7 +54,8 @@ public final class SessionDataHandler {
 		return mapPage.get(id);
 	}
 	
-	public Document getDocument(UUIDDocument id) {
+	//TODO gestione errori (qui o dove?)
+	public Document getDocument(UUIDDocument id) throws DatabaseException {
 		if (!mapDocument.containsKey(id)) {
 			Document doc;
 			doc = DocumentQuerySet.loadDocument(id);
