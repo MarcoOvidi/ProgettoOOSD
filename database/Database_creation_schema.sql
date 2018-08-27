@@ -198,7 +198,7 @@ begin
 
 INSERT into perm_authorization(ID_user,download,upload,editMetadata,reviewPage,
 modifyTranscription,requestTranscriptionTask,reviewTranscription,
-addNewProject,assignDigializationTask,assignTranscriptionTask,
+addNewProject,assignDigitalizationTask,assignTranscriptionTask,
 publishDocument) value(new.ID,0,0,0,0,0,0,0,0,0,0,0);
 
 end$$
