@@ -29,7 +29,7 @@ public class SceneController extends Application {
 		stage=primaryStage;
 		//scene = new Scene(root,1400,800);
 		
-		loadScene("showDocument");
+		loadScene("login");
 		
 	}
 	

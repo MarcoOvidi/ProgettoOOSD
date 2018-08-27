@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import dao.DatabaseException;
 import dao.UserAuthenticationQuerySet;
 import fx_view.SceneController;
+import vo.UUIDUser;
 
 
 public class LoginController{
@@ -20,7 +21,8 @@ public class LoginController{
 		 try {
 			
 			 try {
-				if(UserAuthenticationQuerySet.login(usr, psw))
+				Object uuidusr=UserAuthenticationQuerySet.login(usr, psw);
+				if(uuidusr instanceof UUIDUser)
 				SceneController.loadScene("home");
 				else
 				{
