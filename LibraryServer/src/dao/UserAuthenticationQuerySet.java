@@ -82,7 +82,7 @@ public class UserAuthenticationQuerySet { //COMPLETATA E TUTTA FUNZIONANTE
 		ResultSet rs = null;
 		
 		try {			
-			ps = con.prepareStatement("SELECT id FROM user WHERE username=? AND passwd=?");
+			ps = con.prepareStatement("SELECT id FROM user WHERE username=? AND password=?");
 		
 			ps.setString(1, usr);
 			ps.setString(2, psw);
