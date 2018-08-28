@@ -23,7 +23,8 @@ public class LoginController{
 			 try {
 				Object uuiduser=UserAuthenticationQuerySet.login(usr, psw);
 				if(uuiduser instanceof UUIDUser) {
-				SceneController.loadScene("home");
+				SceneController.loadScene("home"); 
+				//aaa
 				}
 				else
 				{
