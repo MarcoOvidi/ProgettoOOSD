@@ -7,3 +7,5 @@ public class UserID {
 	public static UUIDUser getId(){return id;}
 	public static void setId(UUIDUser uid) {id=uid;}
 }
+
+//
