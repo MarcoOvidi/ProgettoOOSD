@@ -51,6 +51,11 @@ public class Document {
 		return this.pageList;
 	}
 	
+	public int getPagesNumber()
+	{
+		return this.pageList.size();
+	}
+	
 	public UUIDScanningWorkProject getScanningWorkProject() {
 		return this.scanningWorkProject;
 	}

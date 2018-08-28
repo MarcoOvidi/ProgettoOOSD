@@ -22,7 +22,6 @@ public final class SessionDataHandler {
 	HashMap<UUIDUser, User> mapUser;
 	HashMap<UUIDDocument, Document> mapDocument;
 	HashMap<UUIDDocumentCollection, DocumentCollection> mapDocumentCollection;
-	HashMap<UUIDPage, Page> mapPage;
 	HashMap<UUIDScanningWorkProject, ScanningWorkProject> mapScanningWorkProject;
 	HashMap<UUIDTranscriptionWorkProject, TranscriptionWorkProject> mapTranscriptionWorkProject;
 	
@@ -36,6 +35,14 @@ public final class SessionDataHandler {
 		return instance;
 	}
 	
+	/**
+	 * Restituisce il numero di documenti in memoria
+	 * @return
+	 */
+	public int numberOfDocuments () {
+		return mapDocument.size();
+	}
+	
 	public void addDocumentCollection(UUIDDocumentCollection id) {
 		
 	}
@@ -43,18 +50,7 @@ public final class SessionDataHandler {
 	public void removeCollection(UUIDDocumentCollection id) {
 		
 	}
-	
-	public Page getPage(UUIDPage id) {
-		if (!mapPage.containsKey(id)) {
-			Page page=null;
-			//page = PageQuerySet.loadPage(id);
-			return page;
-		}
-		else 
-		return mapPage.get(id);
-	}
-	
-	//TODO gestione errori (qui o dove?)
+		
 	public Document getDocument(UUIDDocument id) throws DatabaseException {
 		if (!mapDocument.containsKey(id)) {
 			Document doc;
@@ -65,7 +61,6 @@ public final class SessionDataHandler {
 			return mapDocument.get(id);
 	}
 	
-	//FIXME dove verrà gestita l'eccezione?
 	public User getUser(UUIDUser id) throws DatabaseException {
 		if (!mapUser.containsKey(id)) {
 			//TODO il nome della classe non è affatto chiaro qui 
@@ -85,7 +80,6 @@ public final class SessionDataHandler {
 		return mapDocumentCollection.get(id);
 	}
 	
-	//TODO gestione eccezioni
 	public ScanningWorkProject getScanningWorkProject(UUIDScanningWorkProject id) throws NullPointerException, DatabaseException {
 		if (!mapScanningWorkProject.containsKey(id)) {
 			ScanningWorkProject swp;
@@ -95,7 +89,6 @@ public final class SessionDataHandler {
 		return mapScanningWorkProject.get(id);
 	}
 	
-	//TODO gestione eccezioni
 	public TranscriptionWorkProject getTranscriptionWorkProject(UUIDTranscriptionWorkProject id) throws NullPointerException, DatabaseException {
 		if (!mapTranscriptionWorkProject.containsKey(id)) {
 			TranscriptionWorkProject twp;
