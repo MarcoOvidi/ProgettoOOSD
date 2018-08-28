@@ -13,7 +13,7 @@ import dao.DatabaseException;
 import dao.UserAuthenticationQuerySet;
 import fx_view.SceneController;
 import vo.UUIDUser;
-
+import fx_view.UserID;
 
 public class LoginController{
 	public static void login(LoginScene lscene, String usr, String psw) {
@@ -23,6 +23,7 @@ public class LoginController{
 			 try {
 				Object uuiduser=UserAuthenticationQuerySet.login(usr, psw);
 				if(uuiduser instanceof UUIDUser) {
+				UserID.setId(((UUIDUser) uuiduser).getValue());
 				SceneController.loadScene("home"); 
 				//aaa
 				}
