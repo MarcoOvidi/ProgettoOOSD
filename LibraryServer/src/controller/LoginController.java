@@ -21,9 +21,10 @@ public class LoginController{
 		 try {
 			
 			 try {
-				Object uuidusr=UserAuthenticationQuerySet.login(usr, psw);
-				if(uuidusr instanceof UUIDUser)
+				Object uuiduser=UserAuthenticationQuerySet.login(usr, psw);
+				if(uuiduser instanceof UUIDUser) {
 				SceneController.loadScene("home");
+				}
 				else
 				{
 					lscene.displayMessage("Username o/e password non validi");
