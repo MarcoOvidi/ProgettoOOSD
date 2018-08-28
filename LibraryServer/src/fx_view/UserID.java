@@ -1,7 +1,9 @@
 package fx_view;
 
+import vo.UUIDUser;
+
 public class UserID {
-	private static int id;
-	public static int getId(){return id;}
-	public static void setId(int uid) {id=uid;}
+	private static UUIDUser id;
+	public static UUIDUser getId(){return id;}
+	public static void setId(UUIDUser uid) {id=uid;}
 }
