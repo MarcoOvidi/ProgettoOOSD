@@ -31,7 +31,7 @@ public final class SessionDataHandler {
 	private SessionDataHandler() {		
 	}
 	
-	public static final SessionDataHandler GetInstance () {
+	public static final SessionDataHandler getInstance() {
 		return instance;
 	}
 	
@@ -97,5 +97,4 @@ public final class SessionDataHandler {
 		}
 		return mapTranscriptionWorkProject.get(id);
 	}
-
 }

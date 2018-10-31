@@ -3,10 +3,12 @@ package controller;
 import java.sql.SQLException;
 
 import dao.DatabaseException;
+import dao.EditProfileQuerySet;
 import dao.UserAuthenticationQuerySet;
 import fx_view.LoginScene;
 import fx_view.SceneController;
 import fx_view.UserID;
+import model.User;
 import vo.UUIDUser;
 
 public class LoginController {
@@ -22,15 +24,16 @@ public class LoginController {
 		lscene.displayMessage("Verifico identit�...");
 
 		try {
-			UUIDUser id = loginDB(usr, psw);
+			UUIDUser id = loginDB(usr, psw);			
 			if (id != null) {
 				SceneController.loadScene("home");
 				UserID.setId(id);				
+				User user = EditProfileQuerySet.loadUserProfile(id);
+				LocalSession.setLocalUser(user);
 			} else {
 				lscene.displayMessage("Username o/e password non validi");
 			}
 		} catch (DatabaseException e) {
-			// TODO Auto-generated catch block
 			lscene.displayMessage("Ops qualcosa � andato storto");
 			throw e;
 		}
