@@ -18,7 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-public class loadScan {
+public class LoadScan {
 	
 	@FXML
 	private Button filechooser;

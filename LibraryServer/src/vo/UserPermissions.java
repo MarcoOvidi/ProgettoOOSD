@@ -34,6 +34,20 @@ public class UserPermissions {
 		this.publishDocument = m;
 	}
 	
+	public UserPermissions() {
+		this.download =
+		this.upload =
+		this.editMetadata =
+		this.reviewPage =
+		this.modifyTranscription =
+		this.requestTranscriptionTask =
+		this.reviewTranscription =
+		this.addNewProject =
+		this.assignDigitalizationTask =
+		this.assignTranscriptionTask =
+		this.publishDocument = true;
+	}
+	
 	//metodi set
 	public void setDownloadPerm(Boolean b) {
 		this.download=b;

@@ -7,6 +7,7 @@ import dao.EditProfileQuerySet;
 import dao.UserAuthenticationQuerySet;
 import fx_view.LoginScene;
 import fx_view.SceneController;
+import fx_view.Topbar;
 import fx_view.UserID;
 import model.User;
 import vo.UUIDUser;
@@ -24,12 +25,15 @@ public class LoginController {
 		lscene.displayMessage("Verifico identit�...");
 
 		try {
-			UUIDUser id = loginDB(usr, psw);			
+			UUIDUser id = loginDB(usr, psw);
+			lscene.displayMessage("Connected. Loading user...");
 			if (id != null) {
-				SceneController.loadScene("home");
 				UserID.setId(id);				
 				User user = EditProfileQuerySet.loadUserProfile(id);
-				LocalSession.setLocalUser(user);
+				//LocalSession.setLocalUser(user);
+				LocalSession.getInstance().setLocalUser(user);
+				lscene.displayMessage("Done. Loading scene");
+				SceneController.loadScene("home");		
 			} else {
 				lscene.displayMessage("Username o/e password non validi");
 			}

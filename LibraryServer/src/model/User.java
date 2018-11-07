@@ -26,18 +26,30 @@ public class User {
 	private Boolean active;
 	
 	//costruttore usato dalla query che recupera i soli dati anagrafici di un utente
+
+	public User(UUIDUser id, String usern, UserInformations ui,Boolean status, UserPermissions perm) {
+		this.id=id;
+		this.username=usern;
+		this.informations=ui;
+		this.active=status;
+		this.permissions = perm;
+	}
 	
 	public User(UUIDUser id, String usern, UserInformations ui,Boolean status) {
 		this.id=id;
 		this.username=usern;
 		this.informations=ui;
 		this.active=status;
+		
+		this.permissions = new UserPermissions();
 	}
 	
 	public User(String usern, UserInformations ui,Boolean status) {
 		this.username=usern;
 		this.informations=ui;
 		this.active=status;
+		
+		this.permissions = new UserPermissions();
 	}
 	
 	//Metodi get e set
@@ -116,7 +128,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", session=" + session + ", username=" + username + ", informations=" + informations
+		return "User [id=" + id + ", username=" + username + ", informations=" + informations
 				+ ", permissions=" + permissions + ", transcriptionProjects=" + transcriptionProjects
 				+ ", scanningProjects=" + scanningProjects + ", bookMarks=" + bookMarks + ", active=" + active + "]";
 	}	

@@ -1,5 +1,6 @@
 .root {
      -fx-background-color: #333;
+     /*-fx-background-radius: 10;*/
 }
 
 Button,TextField, PasswordField{

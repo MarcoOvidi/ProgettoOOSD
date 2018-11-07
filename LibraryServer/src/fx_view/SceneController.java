@@ -29,7 +29,7 @@ public class SceneController extends Application {
 		stage=primaryStage;
 		//scene = new Scene(root,1400,800);
 		
-		loadScene("home");
+		loadScene("login");
 		
 	}
 	
@@ -46,6 +46,7 @@ public class SceneController extends Application {
 
 			scene.setRoot(root);
 			stage.setScene(scene);
+
 			//scene.getStylesheets().add(new Object().getClass().getResource("home.css").toExternalForm());
 			stage.setResizable(false);
 			//stage.initStyle(StageStyle.UNDECORATED);
