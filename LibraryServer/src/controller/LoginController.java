@@ -7,7 +7,6 @@ import dao.EditProfileQuerySet;
 import dao.UserAuthenticationQuerySet;
 import fx_view.LoginScene;
 import fx_view.SceneController;
-import fx_view.Topbar;
 import fx_view.UserID;
 import model.User;
 import vo.UUIDUser;
@@ -22,7 +21,7 @@ public class LoginController {
 	 * @return 
 	 */
 	public static void login(LoginScene lscene, String usr, String psw) throws DatabaseException {
-		lscene.displayMessage("Verifico identit�...");
+		lscene.displayMessage("Verifico identità...");
 
 		try {
 			UUIDUser id = loginDB(usr, psw);
@@ -30,8 +29,9 @@ public class LoginController {
 			if (id != null) {
 				UserID.setId(id);				
 				User user = EditProfileQuerySet.loadUserProfile(id);
+				LocalSession.getInstance();
 				//LocalSession.setLocalUser(user);
-				LocalSession.getInstance().setLocalUser(user);
+				LocalSession.setLocalUser(user);
 				lscene.displayMessage("Done. Loading scene");
 				SceneController.loadScene("home");		
 			} else {

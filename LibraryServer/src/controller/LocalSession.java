@@ -1,10 +1,7 @@
 package controller;
 
-import java.io.Console;
-import java.security.Permissions;
 import java.util.ArrayList;
 import java.util.List;
-
 import model.User;
 import vo.UserPermissions;
 
@@ -16,6 +13,7 @@ public final class LocalSession {
 	private static LocalSession instance = new LocalSession();
 
 	private LocalSession() {
+	
 	}
 
 	public static final LocalSession getInstance() {

@@ -50,8 +50,7 @@ public class EditProfileQuerySet {
 		    	  Email em = new Email(email);
 		    	  UserInformations ui = new UserInformations(name,surname,regDate,em,pass);   
 		    	  //user creations
-		    	  usr = new User(user,username,ui,status);
-
+		    	  usr = new User(user,username,ui,status,UserAuthenticationQuerySet.getUSerPermission(user));
 			}
 			
 		}catch(SQLException e) {

@@ -7,9 +7,6 @@ import vo.UUIDBookMark;
 import vo.UUIDScanningWorkProject;
 import vo.UserInformations;
 import vo.UserPermissions;
-import controller.SessionDataHandler;
-
-
 
 public class User {
 
@@ -40,7 +37,6 @@ public class User {
 		this.username=usern;
 		this.informations=ui;
 		this.active=status;
-		
 		this.permissions = new UserPermissions();
 	}
 	
@@ -104,6 +100,10 @@ public class User {
 		else {
 			this.permissions.updatePermission(p);
 		}
+	}
+	
+	public void setPermissions(UserPermissions usrPerm) {
+		this.permissions = usrPerm;
 	}
 	
 	public void setTranscriptionProject(UUIDTranscriptionWorkProject p) {

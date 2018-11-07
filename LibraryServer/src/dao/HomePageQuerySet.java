@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+
 import vo.BookMark;
 import vo.DocumentMetadata;
 import vo.Tag;
@@ -24,12 +25,115 @@ public class HomePageQuerySet {
 	
 	
 	
-	//seleziona i 10 progetti pubblicati più di recente tra digitalizzazioni e trascrizioni di opere
-	public void loadNews() {
+	/**
+	 * Ritorna le ultime n Trascrizioni completate
+	 * @param newsNumber
+	 * @return
+	 * @throws DatabaseException
+	 */
+	public static HashMap<UUIDDocument, String> loadTranscriptionNews(int newsNumber) throws DatabaseException {
+
+		Connection con = null;
 		
+		try {
+			con = DBConnection.connect();
+		}catch(DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+		
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		HashMap<UUIDDocument, String> news = new HashMap<>();
+		
+		try {
+			ps = con.prepareStatement("SELECT ID_document as doc,title "
+					+ "FROM transcription_project AS tp JOIN document AS d "
+					+ "ON tp.ID_document=d.ID"
+					+ "ORDER BY date DESC"
+					+ "LIMIT ?"); 
+			
+			ps.setInt(1, newsNumber);
+			
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				news.put(new UUIDDocument(rs.getInt("doc")), rs.getString("title"));
+			}
+			
+			return news;
+			
+		}catch(SQLException e) {
+			throw new DatabaseException("Errore di esecuzione della query", e);
+		}finally {
+			try{
+				if(ps != null)
+					ps.close();
+				if(con!=null)
+					con.close();
+			}catch(SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+			
+			
+		}	
 	}
 	
-	/* seleziona i progetti ai quali lavoro (ovvero progetti che non sono stati ancora pubblicati)
+	/**
+	 * Ritorna le ultime n opere scansionate
+	 * @param newsNumber
+	 * @return
+	 * @throws DatabaseException
+	 */
+	public static HashMap<UUIDDocument, String> loadScanningNews(int newsNumber) throws DatabaseException {
+
+		Connection con = null;
+		
+		try {
+			con = DBConnection.connect();
+		}catch(DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+		
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		HashMap<UUIDDocument, String> news = new HashMap<>();
+		
+		try {
+			ps = con.prepareStatement("SELECT ID_document as doc,title "
+					+ "FROM scanning_project AS sp JOIN document AS d "
+					+ "ON sp.ID_document=d.ID"
+					+ "WHERE sp.scanning_complete=1"
+					+ "ORDER BY date DESC"
+					+ "LIMIT ?"); 
+			
+			ps.setInt(1, newsNumber);
+			
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				news.put(new UUIDDocument(rs.getInt("doc")), rs.getString("title"));
+			}
+			
+			return news;
+			
+		}catch(SQLException e) {
+			throw new DatabaseException("Errore di esecuzione della query", e);
+		}finally {
+			try{
+				if(ps != null)
+					ps.close();
+				if(con!=null)
+					con.close();
+			}catch(SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+			
+			
+		}	
+	}
+
+	
+	/** seleziona i progetti ai quali lavoro (ovvero progetti che non sono stati ancora pubblicati)
 	 * @param UUIDUser utente di cui si devono reperire i progetti
 	 * @return HashMap<Integer,String> Mappa di Id progetti e titolo dell'opera associata
 	 */
@@ -48,7 +152,7 @@ public class HomePageQuerySet {
 		
 	}
 	
-	/* seleziona i progetti di trascrizione ai quali lavoro (ovvero progetti che non sono stati ancora pubblicati)
+	/** seleziona i progetti di trascrizione ai quali lavoro (ovvero progetti che non sono stati ancora pubblicati)
 	 * @param UUIDUser utente di cui si devono reperire i progetti di trascrizione
 	 * @return HashMap<Integer,String> Mappa di Id progetti di trascrizione e titolo dell'opera associata
 	 */
@@ -99,7 +203,7 @@ public class HomePageQuerySet {
 		return twpl;	
 	}
 	
-	/* seleziona i progetti di digitalizzazione ai quali lavoro (ovvero progetti che non sono stati ancora pubblicati)
+	/** seleziona i progetti di digitalizzazione ai quali lavoro (ovvero progetti che non sono stati ancora pubblicati)
 	 * @param UUIDUser utente di cui si devono reperire i progetti di digitalizzazione
 	 * @return HashMap<Integer,String> Mappa di Id progetti di digitalizzazione e titolo dell'opera associata
 	 */
@@ -149,7 +253,8 @@ public class HomePageQuerySet {
   			
 	}
 	
-	/*Carica la lista dei Document preferiti di un utente
+	/**
+	 * Carica la lista dei Document preferiti di un utente
 	 * @param UUIdUser id dell'utente di cui si vuole caricare la Collection personale
 	 * @return HashMap<Integer,String[]> dove la chiave è l'Id del Document, String[0] il titolo dell'opera e String[1] è l'immagine della prima Page
 	 * @exception DatabaseException in caso di errori di connessione o esecuzione query nel DB
@@ -203,7 +308,8 @@ public class HomePageQuerySet {
   		 
   	}
 	
-	/*Recupera i metadati di tutti i Document presenti nella collezione personale di un User
+	/**
+	 * Recupera i metadati di tutti i Document presenti nella collezione personale di un User
 	 * @param UUIDUser id dell'utente di cui carichiamo la PersonalDocumentCollection
 	 * @return HashMap<Integer,DocumentMetadata> dove la chiave è l'Id del Document e il valore il rispettivo DocumentMetadata
 	 * @exception DatabaseException in caso di mancata conessione o errori di query sul DB
@@ -304,7 +410,8 @@ public class HomePageQuerySet {
   			
 	}
 	
-	/* Recupera tutti i BookMarks di un utente
+	/**
+	 *  Recupera tutti i BookMarks di un utente
 	 * @param UUIDUser id dell'utente che vuole caricare i BookMarks
 	 * @return HashMap<Integer,BookMark> HashMap con chiave l'ID del BookMark e value un BookMark
 	 * @throw DatabaseException
@@ -396,7 +503,8 @@ public class HomePageQuerySet {
 
 	}
 	
-	/* Seleziona id,titolo e miniatura delle opere di una determinata categoria
+	/**
+	 *  Seleziona id,titolo e miniatura delle opere di una determinata categoria
 	 * @param UUIDDocumentCollection Id della Collezione di cui si vogliono caricare le opere
 	 * @return LinkedList<String[]> String[0] = Document ID, String[1] = Document title , String[2] = link Imange della prima pagina
 	 * @exception DatabaseException Per errori di connessione al DB o di esecuzione delle query

@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import vo.UUIDUser;
+import vo.UserPermissions;
 
 public class UserAuthenticationQuerySet { //COMPLETATA E TUTTA FUNZIONANTE
 	
@@ -110,6 +111,64 @@ public class UserAuthenticationQuerySet { //COMPLETATA E TUTTA FUNZIONANTE
 			
 		}			
 	}
+	
+	public static UserPermissions getUSerPermission(UUIDUser usr) throws DatabaseException {
+		Connection con = null;
+		
+		try {
+			con = DBConnection.connect();
+		}catch(DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+		
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		UserPermissions usrPerm = null;
+		
+		try {			
+			ps = con.prepareStatement("SELECT * FROM perm_authorization WHERE ID_user=?");
+		
+			ps.setInt(1, usr.getValue());
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				usrPerm = new UserPermissions(rs.getBoolean("download"),
+						rs.getBoolean("upload"), 
+						rs.getBoolean("editMetadata"), 
+						rs.getBoolean("reviewPage"), 
+						rs.getBoolean("modifyTranscription"), 
+						rs.getBoolean("requestTranscriptionTask"), 
+						rs.getBoolean("reviewTranscription"), 
+						rs.getBoolean("addNewProject"), 
+						rs.getBoolean("assignDigitalizationTask"), 
+						rs.getBoolean("assignTranscriptionTask"), 
+						rs.getBoolean("publishDocument"));
+				return usrPerm;
+			}else {
+				return usrPerm;
+			}
+			
+		}catch(SQLException e) {
+			
+				throw new DatabaseException("Errore di esecuzione della query", e);
+			
+		}finally {
+			try{
+				if(rs != null)
+					rs.close();
+				if(ps != null)
+					ps.close();
+				if(con!=null)
+					con.close();
+			}catch(SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+			
+			
+		}			
+	}
+	
+	
 	/**
 	 * 
 	 * @param permNumb Numero del permesso @see file allegato
@@ -190,4 +249,4 @@ public class UserAuthenticationQuerySet { //COMPLETATA E TUTTA FUNZIONANTE
 				}
 			}		
 		}
-	}
+}
