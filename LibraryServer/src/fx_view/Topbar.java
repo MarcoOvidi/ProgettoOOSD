@@ -5,8 +5,6 @@ import java.util.TreeMap;
 
 import controller.LocalSession;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -24,6 +22,9 @@ public class Topbar {
 
 	@FXML
 	private HBox container;
+	
+	@FXML
+	private Button logout;
 
 	private static TreeMap<String, String> map = new TreeMap<String, String>();
 
@@ -45,16 +46,26 @@ public class Topbar {
 		for (String str : buttons) {
 			initButtonLink(str, map.get(str));
 		}
+		
+		initLogoutLink();
 
 	}
 
 	// inizializzo il bottone gotoprofile
-	@FXML
 	public void initButtonLink(String label, String link) {
 		Button button = new Button(label);
 		container.getChildren().add(button);
 		button.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 			SceneController.loadScene(link);
+			event.consume();
+		});
+	}
+	
+	// inizializzo il bottone gotoprofile
+	public void initLogoutLink() {
+		logout.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+			SceneController.loadScene("login");
+			//LoginController.logout();
 			event.consume();
 		});
 	}
