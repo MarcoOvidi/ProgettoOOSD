@@ -47,7 +47,7 @@ public class Topbar {
 			initButtonLink(str, map.get(str));
 		}
 		
-		initLogoutLink();
+		///initLogoutLink();
 
 	}
 

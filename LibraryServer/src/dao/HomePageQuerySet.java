@@ -25,13 +25,13 @@ import vo.VagueDate;
 public class HomePageQuerySet {
 
 	public static HashMap<UUIDDocument, String> loadNews(int newsNumb) throws DatabaseException {
-		/*HashMap<UUIDDocument, String> trNews = loadTranscriptionNews(newsNumb / 2);
+		HashMap<UUIDDocument, String> trNews = loadTranscriptionNews(newsNumb / 2);
 		HashMap<UUIDDocument, String> scNews = loadScanningNews(newsNumb / 2);
 
 		trNews.putAll(scNews);
 
-		return trNews;*/
-		return loadScanningNews(newsNumb);
+		return trNews;
+		
 	}
 
 	/**
@@ -56,14 +56,10 @@ public class HomePageQuerySet {
 		HashMap<UUIDDocument, String> news = new HashMap<>();
 
 		try {
-			ps = con.prepareStatement(
-					"SELECT ID_document as doc,title " + 
-					"FROM transcription_project AS tp JOIN document AS d " +
-					"ON tp.ID_document=d.ID" +
-					"ORDER BY date DESC" +
-					"LIMIT ?");
+			ps = con.prepareStatement("SELECT ID_document as doc, title FROM transcription_project AS tp JOIN document AS d ON tp.ID_document=d.ID ORDER BY date DESC LIMIT ?;");
 
 			ps.setInt(1, newsNumber);
+		
 
 			rs = ps.executeQuery();
 
@@ -74,7 +70,7 @@ public class HomePageQuerySet {
 			return news;
 
 		} catch (SQLException e) {
-			throw new DatabaseException("Errore di esecuzione della query", e);
+			throw new DatabaseException("Errore di esecuzione della query" + e.getMessage(), e);
 		} finally {
 			try {
 				if (ps != null)
@@ -111,8 +107,8 @@ public class HomePageQuerySet {
 
 		try {
 			ps = con.prepareStatement("SELECT ID_document as doc,title "
-					+ "FROM scanning_project AS sp JOIN document AS d " + "ON sp.ID_document=d.ID"
-					+ "WHERE sp.scanning_complete=1" + "ORDER BY date DESC" + "LIMIT ?");
+					+ " FROM scanning_project AS sp JOIN document AS d " + " ON sp.ID_document=d.ID "
+					+ " WHERE sp.scanning_complete=1 " + " ORDER BY date DESC " + " LIMIT ?");
 
 			ps.setInt(1, newsNumber);
 
