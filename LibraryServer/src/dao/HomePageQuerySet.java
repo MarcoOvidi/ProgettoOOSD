@@ -56,7 +56,7 @@ public class HomePageQuerySet {
 		HashMap<UUIDDocument, String> news = new HashMap<>();
 
 		try {
-			ps = con.prepareStatement("SELECT ID_document as doc, title FROM transcription_project AS tp JOIN document AS d ON tp.ID_document=d.ID ORDER BY date DESC LIMIT ?;");
+			ps = con.prepareStatement("SELECT ID_document as doc, title , date FROM transcription_project AS tp JOIN document AS d ON tp.ID_document=d.ID ORDER BY date DESC LIMIT ?;");
 
 			ps.setInt(1, newsNumber);
 		
@@ -64,7 +64,7 @@ public class HomePageQuerySet {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				news.put(new UUIDDocument(rs.getInt("doc")), rs.getString("title"));
+				news.put(new UUIDDocument(rs.getInt("doc")), rs.getString("title") + " " + rs.getDate("date") );
 			}
 
 			return news;
@@ -106,7 +106,7 @@ public class HomePageQuerySet {
 		HashMap<UUIDDocument, String> news = new HashMap<>();
 
 		try {
-			ps = con.prepareStatement("SELECT ID_document as doc,title "
+			ps = con.prepareStatement("SELECT ID_document as doc,title, date  "
 					+ " FROM scanning_project AS sp JOIN document AS d " + " ON sp.ID_document=d.ID "
 					+ " WHERE sp.scanning_complete=1 " + " ORDER BY date DESC " + " LIMIT ?");
 
@@ -115,7 +115,7 @@ public class HomePageQuerySet {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				news.put(new UUIDDocument(rs.getInt("doc")), rs.getString("title"));
+				news.put(new UUIDDocument(rs.getInt("doc")), rs.getString("title") + " " + rs.getDate("date"));
 			}
 
 			return news;

@@ -1,6 +1,8 @@
 package fx_view;
 
+import java.awt.Font;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -37,7 +39,7 @@ public class Home {
 	private VBox collections;
 
 	@FXML
-	public void initialize() throws DatabaseException {
+	public void initialize() throws DatabaseException, ParseException {
 		loadNews();
 		loadCollections();
 		loadMyProjects();
@@ -88,24 +90,26 @@ public class Home {
 	}
 
 	@FXML
-	public void loadNews() throws DatabaseException {
+	public void loadNews() throws DatabaseException, ParseException {
 		// List<String> newsList = Arrays.asList("Hello", "World!", "How", "Are", "You",
 		// "World!", "How", "Are", "You", "World!", "How", "Are", "You", "World!",
 		// "How", "Are", "You");
 		try {
 			HomePageController.loadNews();
-			HashMap<UUIDDocument, String> newsMap = HomePageController.getNews();
+			HashMap<UUIDDocument, String[]> newsMap = HomePageController.getNews();
 			int c = 0;
 
-			for (String text : newsMap.values()) {
-				Label label = new Label(text);
+			for (String[] text : newsMap.values()) {
+				
+				Label title = new Label(text[0] + "               ( " + text[1] + " giorni fa)");				
+				
 				HBox row = new HBox();
 
 				if (c % 2 == 0)
 					row.setId("news-row");
 				else
 					row.setId("news-row1");
-				row.getChildren().add(label);
+				row.getChildren().add(title);
 				news.getChildren().add(row);
 				c++;
 			}
