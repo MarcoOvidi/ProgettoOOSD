@@ -57,7 +57,7 @@ create table page(
     constraint page_transcription_reviser_user foreign key (ID_transcription_reviser) references user(ID) on update cascade on delete restrict,
     constraint page_scanning_reviser_user foreign key(ID_scanning_reviser) references user(ID) on update cascade on delete restrict,
     constraint page_ditigalizer_user foreign key(ID_digitalizer) references user(ID) on update cascade on delete restrict,
-    constraint page_document foreign key(ID_document) references page(ID) on update cascade on delete cascade
+    constraint page_document foreign key(ID_document) references document(ID) on update cascade on delete cascade
 );
 
 create table document_metadata(

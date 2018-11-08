@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.LinkedList;
 
 import model.Document;
@@ -29,7 +30,7 @@ public class DocumentQuerySet {
 	 * @return Boolean: true se l'operazione è andata a buon fine , false altrimenti
 	 */
 	//TODO questo metodo carica solo il titolo del documento giusto ?
-	public static UUIDDocument insertDocument(String title, String author, String description, String composition_date, String composition_period_from, String composition_period_to, String preservation_state) throws DatabaseException {
+	public static UUIDDocument insertDocument(String title, String author, String description, String composition_date, String composition_period_from, String composition_period_to, String preservation_state) throws DatabaseException, ParseException {
 		Connection con = null;
 		
 		try {
@@ -38,46 +39,133 @@ public class DocumentQuerySet {
 			throw new DatabaseException("Errore di connessione", e);
 		}
 		
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		UUIDDocument id = null;
+		if(composition_date != null && (composition_period_from !=null || composition_period_to != null)) {
+			throw new DatabaseException("Errore inserire la data certa o un periodo");
+		}else if(composition_period_from != null && composition_period_to != null && composition_date != null)
+			throw new DatabaseException("Errore inserire data certa o un periodo");
+		else if(composition_date == null &&(composition_period_from == null || composition_period_to == null))
+			throw new DatabaseException("Inserire entrambe le dati per il periodo");
+		else if(composition_date != null){
+			if(composition_date.length()>4)
+				throw new RuntimeException("Errore inserire anno nel formatto YYYY");
+			
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+			UUIDDocument id = null;
 		
-		try {
-			con.setAutoCommit(false);
-			ps = con.prepareStatement("insert into document(title) value( ? );", new String[] {"ID"});
-			ps.setString(1,title);
 		
-			ps.addBatch();
-			ps.executeBatch();
-			
-			rs = ps.getGeneratedKeys();
-			if(rs.next()) {
-				id = new UUIDDocument(rs.getInt(1));			
-			}
-			
-			con.commit();
-			
-		}catch(SQLException e) {
 			try {
-				con.abort(null);
-				
-			}catch(SQLException f) {
-				DBConnection.logDatabaseException(new DatabaseException("Duplicato", f));
-			}
-		}finally {
-			try{
-				if(ps != null)
-					ps.close();
-				if(con!=null)
-					con.close();
-			}catch(SQLException e) {
-				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
-			}
-			
-			
-		}
+				con.setAutoCommit(false);
+				ps = con.prepareStatement("insert into document(title) value( ? );", new String[] {"ID"});
+				ps.setString(1,title);
 		
+				ps.addBatch();
+				ps.executeBatch();
+			
+				rs = ps.getGeneratedKeys();
+				if(rs.next()) {
+					id = new UUIDDocument(rs.getInt(1));			
+				}
+			
+				con.commit();
+				
+				con.setAutoCommit(true);
+				
+				ps.close();
+				
+				ps = con.prepareStatement("insert into document_metadata(author,description,"
+						+ "composition_date,preservation_state,ID_document) values(?,?,?,?,?);");
+				
+				ps.setString(1, author);
+				ps.setString(2, description);
+				ps.setInt(3, Integer.parseInt(composition_date));
+				ps.setInt(4,Integer.parseInt(preservation_state));
+				ps.setInt(5,id.getValue());
+				
+				ps.executeUpdate();
+		
+			}catch(SQLException e) {
+				try {
+					con.abort(null);
+				}catch(SQLException f) {
+					DBConnection.logDatabaseException(new DatabaseException("Duplicato", f));
+				}
+			}finally {
+				try{
+					if(rs != null)
+						rs.close();
+					if(ps != null)
+						ps.close();
+					if(con!=null)
+						con.close();
+				}catch(SQLException e) {
+					DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+				}
+			}
 		return id;
+		}else {
+			if(composition_period_from.length()>4 || composition_period_to.length()>4 )
+				throw new RuntimeException("Errore inserire anno nel formatto YYYY");
+			if(Integer.parseInt(composition_period_from) > Integer.parseInt(composition_period_to))
+				throw new RuntimeException("La data di fine periodo non può precedere quella di inizio");
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+			UUIDDocument id = null;
+		
+		
+			try {
+				con.setAutoCommit(false);
+				
+				ps = con.prepareStatement("insert into document(title) value( ? );", new String[] {"ID"});
+				ps.setString(1,title);
+		
+				ps.addBatch();
+				ps.executeBatch();
+			
+				rs = ps.getGeneratedKeys();
+				if(rs.next()) {
+					id = new UUIDDocument(rs.getInt(1));			
+				}
+			
+				con.commit();
+				
+				con.setAutoCommit(true);
+			
+				ps.close();
+				
+				ps = con.prepareStatement("insert into document_metadata(author,description,"
+						+ "composition_period_from,composition_period_to,preservation_state,ID_document) "
+						+ "values(?,?,?,?,?,?);");
+				
+				ps.setString(1, author);
+				ps.setString(2, description);
+				ps.setInt(3, Integer.parseInt(composition_period_from));
+				ps.setInt(4, Integer.parseInt(composition_period_to));
+				ps.setInt(5,Integer.parseInt(preservation_state));
+				ps.setInt(6,id.getValue());
+				
+				ps.executeUpdate();
+
+			}catch(SQLException e) {
+				try {
+					con.abort(null);
+				}catch(SQLException f) {
+					DBConnection.logDatabaseException(new DatabaseException("Duplicato", f));
+				}
+			}finally {
+				try{
+					if(rs != null)
+						rs.close();
+					if(ps != null)
+						ps.close();
+					if(con!=null)
+						con.close();
+				}catch(SQLException e) {
+					DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+				}
+			}
+		return id;
+		}
 	}
 	
 	
@@ -221,4 +309,5 @@ public class DocumentQuerySet {
 	public void downloadFileDocument() {
 		
 	}
+	
 }

@@ -1,5 +1,6 @@
 package controller;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -11,17 +12,63 @@ import java.util.Map.Entry;
 
 import dao.DatabaseException;
 import dao.HomePageQuerySet;
+import vo.UUIDBookMark;
 import vo.UUIDDocument;
+import vo.UUIDDocumentCollection;
+import vo.UUIDScanningWorkProject;
+import vo.UUIDTranscriptionWorkProject;
 
 public class HomePageController {
 	
 	private static HashMap<UUIDDocument,String[]> news = new HashMap<UUIDDocument,String[]>();
-	
+	private static HashMap<UUIDDocumentCollection, String>  categories = new HashMap<UUIDDocumentCollection,String>();
+	private static HashMap<UUIDBookMark,String[]> myCollection = new HashMap<UUIDBookMark,String[]>();
+	private static HashMap<UUIDTranscriptionWorkProject, String> myTPrj = new HashMap<UUIDTranscriptionWorkProject,String>();
+	private static HashMap<UUIDScanningWorkProject, String> mySPrj = new HashMap<UUIDScanningWorkProject,String>();
 	
 	public void loadHomePage() {
 		
 	}
 		
+	public static void loadCategories() {
+		try {
+			categories = HomePageQuerySet.loadLibraryCollectionList();
+		} catch (DatabaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void loadMyCollection() {
+		try {
+			myCollection = HomePageQuerySet.loadMyCollectionList(LocalSession.getLocalUser().getID());
+		} catch (DatabaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			e.getMessage();
+		}
+	}
+
+	public static void loadMyTranscriptionProjects() {
+		try {
+			setMyTPrj(HomePageQuerySet.loadMyTranscriptionWorkProjectList(LocalSession.getLocalUser().getID()));
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+			e.getMessage();
+		}
+	}
+	
+	public static void loadMyScanningProjects() {
+		try {
+			setMySPrj(HomePageQuerySet.loadMyScanningWorkProjectList(LocalSession.getLocalUser().getID()));
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+			e.getMessage();
+		}
+	}
 	
 	@SuppressWarnings("deprecation")
 	public static void loadNews() throws DatabaseException, ParseException {
@@ -62,9 +109,31 @@ public class HomePageController {
 		return news;
 	}
 
-
+	public static HashMap<UUIDDocumentCollection, String> getCategories(){
+		return categories;
+	}
+	
+	public static HashMap<UUIDBookMark, String[]> getMyCollection(){
+		return myCollection;
+	}
 	public static void setNews(HashMap<UUIDDocument,String[]> news) {
 		HomePageController.news = news;
+	}
+
+	public static HashMap<UUIDTranscriptionWorkProject, String> getMyTPrj() {
+		return myTPrj;
+	}
+
+	public static void setMyTPrj(HashMap<UUIDTranscriptionWorkProject, String> myTPrj) {
+		HomePageController.myTPrj = myTPrj;
+	}
+
+	public static HashMap<UUIDScanningWorkProject, String> getMySPrj() {
+		return mySPrj;
+	}
+
+	public static void setMySPrj(HashMap<UUIDScanningWorkProject, String> mySPrj) {
+		HomePageController.mySPrj = mySPrj;
 	}	
 	
 	//TODO load menu buttons (checking permissions)

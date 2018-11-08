@@ -16,9 +16,12 @@ import java.util.Map;
 import vo.BookMark;
 import vo.DocumentMetadata;
 import vo.Tag;
+import vo.UUIDBookMark;
 import vo.UUIDDocument;
 import vo.UUIDDocumentCollection;
 import vo.UUIDPage;
+import vo.UUIDScanningWorkProject;
+import vo.UUIDTranscriptionWorkProject;
 import vo.UUIDUser;
 import vo.VagueDate;
 
@@ -135,29 +138,7 @@ public class HomePageQuerySet {
 		}
 	}
 
-	/**
-	 * seleziona i progetti ai quali lavoro (ovvero progetti che non sono stati
-	 * ancora pubblicati)
-	 * 
-	 * @param UUIDUser
-	 *            utente di cui si devono reperire i progetti
-	 * @return HashMap<Integer,String> Mappa di Id progetti e titolo dell'opera
-	 *         associata
-	 */
-	public static HashMap<Integer, String> loadMyWorkProjectsList(UUIDUser user) throws DatabaseException {
-
-		HashMap<Integer, String> trPrj = null;
-		HashMap<Integer, String> digPrj = null;
-		HashMap<Integer, String> myPrj = new HashMap<Integer, String>();
-
-		trPrj = loadMyTranscriptionWorkProjectList(user);
-		digPrj = loadMyScanningWorkProjectList(user);
-
-		myPrj.putAll(trPrj);
-		myPrj.putAll(digPrj);
-		return myPrj;
-
-	}
+	
 
 	/**
 	 * seleziona i progetti di trascrizione ai quali lavoro (ovvero progetti che non
@@ -168,7 +149,7 @@ public class HomePageQuerySet {
 	 * @return HashMap<Integer,String> Mappa di Id progetti di trascrizione e titolo
 	 *         dell'opera associata
 	 */
-	public static HashMap<Integer, String> loadMyTranscriptionWorkProjectList(UUIDUser usr) throws DatabaseException {
+	public static HashMap<UUIDTranscriptionWorkProject, String> loadMyTranscriptionWorkProjectList(UUIDUser usr) throws DatabaseException {
 
 		Connection con = null;
 
@@ -180,7 +161,7 @@ public class HomePageQuerySet {
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		HashMap<Integer, String> twpl = new HashMap<Integer, String>();
+		HashMap<UUIDTranscriptionWorkProject, String> twpl = new HashMap<UUIDTranscriptionWorkProject, String>();
 
 		try {
 			ps = con.prepareStatement("SELECT tp.ID as ID_progetto, d.title as Title "
@@ -193,7 +174,7 @@ public class HomePageQuerySet {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				twpl.put(rs.getInt("ID_progetto"), rs.getString("Title"));
+				twpl.put(new UUIDTranscriptionWorkProject(rs.getInt("ID_progetto")), rs.getString("Title"));
 			}
 
 		} catch (SQLException e) {
@@ -222,7 +203,7 @@ public class HomePageQuerySet {
 	 * @return HashMap<Integer,String> Mappa di Id progetti di digitalizzazione e
 	 *         titolo dell'opera associata
 	 */
-	public static HashMap<Integer, String> loadMyScanningWorkProjectList(UUIDUser usr) throws DatabaseException {
+	public static HashMap<UUIDScanningWorkProject, String> loadMyScanningWorkProjectList(UUIDUser usr) throws DatabaseException {
 		Connection con = null;
 
 		try {
@@ -233,7 +214,7 @@ public class HomePageQuerySet {
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		HashMap<Integer, String> swpl = new HashMap<Integer, String>();
+		HashMap<UUIDScanningWorkProject, String> swpl = new HashMap<UUIDScanningWorkProject, String>();
 
 		try {
 			ps = con.prepareStatement("SELECT sp.ID as ID_progetto, d.title as Title "
@@ -245,7 +226,7 @@ public class HomePageQuerySet {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				swpl.put(rs.getInt("ID_progetto"), rs.getString("Title"));
+				swpl.put(new UUIDScanningWorkProject(rs.getInt("ID_progetto")), rs.getString("Title"));
 			}
 
 		} catch (SQLException e) {
@@ -277,7 +258,7 @@ public class HomePageQuerySet {
 	 * @exception DatabaseException
 	 *                in caso di errori di connessione o esecuzione query nel DB
 	 */
-	public static HashMap<Integer, String[]> loadMyCollectionList(UUIDUser usr) throws DatabaseException {
+	public static HashMap<UUIDBookMark, String[]> loadMyCollectionList(UUIDUser usr) throws DatabaseException {
 		Connection con = null;
 
 		try {
@@ -289,10 +270,10 @@ public class HomePageQuerySet {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		HashMap<Integer, String[]> pc = new HashMap<Integer, String[]>();
+		HashMap<UUIDBookMark, String[]> pc = new HashMap<UUIDBookMark, String[]>();
 
 		try {
-			ps = con.prepareStatement("SELECT p.ID_document as DocID, p.image PImage,d.title ad Title "
+			ps = con.prepareStatement("SELECT p.ID_document as DocID, p.image PImage, d.title as Title "
 					+ "FROM personal_collection as pc JOIN page as p JOIN document as d "
 					+ "ON pc.ID_document=p.ID_document AND pc.ID_document=d.ID "
 					+ "WHERE pc.ID_user=? and p.number=1;");
@@ -304,7 +285,7 @@ public class HomePageQuerySet {
 				String[] info = new String[2];
 				info[0] = rs.getString("Title");
 				info[1] = rs.getString("PImage");
-				pc.put(rs.getInt("DocID"), info);
+				pc.put(new UUIDBookMark(rs.getInt("DocID")), info);
 			}
 
 		} catch (SQLException e) {
@@ -485,8 +466,13 @@ public class HomePageQuerySet {
 
 	}
 
-	// seleziona le categorie di opere della biblioteca
-	public static HashMap<Integer, String> loadLibraryCollectionList() throws DatabaseException, SQLException {
+	/**
+	 * seleziona le categorie di opere della biblioteca
+	 * @return
+	 * @throws DatabaseException
+	 * @throws SQLException
+	 */
+	public static HashMap<UUIDDocumentCollection, String> loadLibraryCollectionList() throws DatabaseException, SQLException {
 		Connection con = null;
 
 		try {
@@ -497,13 +483,13 @@ public class HomePageQuerySet {
 
 		Statement s = con.createStatement();
 		ResultSet rs = null;
-		HashMap<Integer, String> cat = new HashMap<Integer, String>();
+		HashMap<UUIDDocumentCollection, String> cat = new HashMap<UUIDDocumentCollection,String>();
 
 		try {
 			rs = s.executeQuery("SELECT * FROM document_collection;");
 
 			while (rs.next()) {
-				cat.put(rs.getInt("ID"), rs.getString("name"));
+				cat.put(new UUIDDocumentCollection(rs.getInt("ID")), rs.getString("name"));
 
 			}
 

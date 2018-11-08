@@ -1,15 +1,14 @@
 package model;
 
 import java.util.LinkedList;
-import vo.UUIDDocumentCollection;
+
 import vo.UUIDDocument;
-import controller.SessionDataHandler;
+import vo.UUIDDocumentCollection;
 
 public class DocumentCollection {
 	//variabili istanza
 	
 	private UUIDDocumentCollection id;
-	private SessionDataHandler session;
 	private String name;
 	private LinkedList<UUIDDocument> documents;
 	

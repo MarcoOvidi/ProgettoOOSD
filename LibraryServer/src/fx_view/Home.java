@@ -1,9 +1,7 @@
 package fx_view;
 
 import java.text.ParseException;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 import controller.HomePageController;
 import dao.DatabaseException;
@@ -22,8 +20,10 @@ public class Home {
 	private AnchorPane topbar;
 
 	@FXML
-	private HBox myProjects;
+	private HBox sProjects;
 
+	@FXML
+	private HBox tProjects;
 	@FXML
 	private HBox bookmarks;
 
@@ -37,20 +37,18 @@ public class Home {
 	public void initialize() throws DatabaseException, ParseException {
 		loadNews();
 		loadCollections();
-		loadMyProjects();
+		loadScanningProjects();
+		loadTranscriptionProjects();
 		loadBookmarks();
-
 	}
 
 	@FXML
-	public void loadMyProjects() {
-		List<String> newsList = Arrays.asList("Categoria1", "Categoria2", "Categoria3", "Categoria4", "Categoria5",
-				"Categoria6", "Categoria7", "Categoria8", "Categoria9", "Categoria10");
+	public void loadScanningProjects() {
+		HomePageController.loadMyScanningProjects();
+		
 		Image pageIcon = new Image(
 				"http://www.clker.com/cliparts/3/6/2/6/1348002494474708155New%20Page%20Icon.svg.med.png");
-		int c = 0;
-
-		for (String text : newsList) {
+		for (String text : HomePageController.getMySPrj().values()) {
 			ImageView miniature = new ImageView(pageIcon);
 			Label label = new Label(text);
 			VBox elem = new VBox();
@@ -60,27 +58,48 @@ public class Home {
 			elem.setId("project-miniature");
 			elem.getChildren().add(miniature);
 			elem.getChildren().add(label);
-			myProjects.getChildren().add(elem);
-			c++;
+			sProjects.getChildren().add(elem);
+		}
+	}
+	
+	@FXML
+	public void loadTranscriptionProjects() {
+		HomePageController.loadMyTranscriptionProjects();
+		
+		Image pageIcon = new Image(
+				"http://www.clker.com/cliparts/3/6/2/6/1348002494474708155New%20Page%20Icon.svg.med.png");
+		for (String text : HomePageController.getMyTPrj().values()) {
+			ImageView miniature = new ImageView(pageIcon);
+			Label label = new Label(text);
+			VBox elem = new VBox();
+
+			miniature.setFitWidth(100);
+			miniature.setFitHeight(140);
+			elem.setId("project-miniature");
+			elem.getChildren().add(miniature);
+			elem.getChildren().add(label);
+			tProjects.getChildren().add(elem);
 		}
 	}
 
 	@FXML
 	public void loadBookmarks() {
-		List<String> newsList = Arrays.asList("Categoria1", "Categoria2", "Categoria3", "Categoria4", "Categoria5",
-				"Categoria6", "Categoria7", "Categoria8", "Categoria9", "Categoria10");
+		HomePageController.loadMyCollection();
+
+		// TODO prendere la vera immagine dal String[] appena disponibili
 		Image pageIcon = new Image("https://images-fe.ssl-images-amazon.com/images/I/41s%2BjktVLxL.png");
 
-		for (String text : newsList) {
-			ImageView miniature = new ImageView(pageIcon);
-			Label label = new Label(text);
-			HBox elem = new HBox();
+		for (String[] entry : HomePageController.getMyCollection().values()) {
+			ImageView miniature = new ImageView(pageIcon); // cambiare con entry[0]
+			Label label = new Label(entry[0]);
+			VBox elem = new VBox();
 
-			miniature.setFitWidth(120);
+			miniature.setFitWidth(100);
 			miniature.setFitHeight(140);
-			elem.setId("bookmark");
+			elem.setId("project-miniature");
 			elem.getChildren().add(miniature);
-			bookmarks.getChildren().add(miniature);
+			elem.getChildren().add(label);
+			bookmarks.getChildren().add(elem);
 		}
 	}
 
@@ -95,9 +114,9 @@ public class Home {
 			int c = 0;
 
 			for (String[] text : newsMap.values()) {
-				
-				Label title = new Label(text[0] + "               ( " + text[1] + " giorni fa) " + text[2]);				
-				
+
+				Label title = new Label(text[0] + "               ( " + text[1] + " giorni fa) " + text[2]);
+
 				HBox row = new HBox();
 
 				if (c % 2 == 0)
@@ -111,17 +130,16 @@ public class Home {
 		} catch (DatabaseException e) {
 			Label label = new Label(e.getMessage());
 			news.getChildren().add(label);
-				
+
 		}
 	}
 
 	@FXML
 	public void loadCollections() {
-		List<String> newsList = Arrays.asList("Categoria1", "Categoria2", "Categoria3", "Categoria4", "Categoria5",
-				"Categoria6", "Categoria7", "Categoria8", "Categoria9", "Categoria10");
+		HomePageController.loadCategories();
 
-		for (String text : newsList) {
-			Label label = new Label(text);
+		for (String title : HomePageController.getCategories().values()) {
+			Label label = new Label(title);
 			HBox row = new HBox();
 
 			row.setId("categories");
