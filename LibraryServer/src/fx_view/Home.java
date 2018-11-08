@@ -1,7 +1,5 @@
 package fx_view;
 
-import java.awt.Font;
-import java.io.IOException;
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -10,15 +8,12 @@ import java.util.List;
 import controller.HomePageController;
 import dao.DatabaseException;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import vo.UUIDDocument;
 
 public class Home {
@@ -101,7 +96,7 @@ public class Home {
 
 			for (String[] text : newsMap.values()) {
 				
-				Label title = new Label(text[0] + "               ( " + text[1] + " giorni fa)");				
+				Label title = new Label(text[0] + "               ( " + text[1] + " giorni fa) " + text[2]);				
 				
 				HBox row = new HBox();
 

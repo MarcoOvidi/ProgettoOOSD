@@ -50,7 +50,7 @@ public class HomePageController {
 			long diffTime = endTime - startTime;
 			long diffDays = diffTime / (1000 * 60 * 60 * 24);
 			
-			String[] titAgo = {entry.getValue().substring(0, entry.getValue().length()-11),Long.toString(diffDays)};
+			String[] titAgo = {entry.getValue().substring(0, entry.getValue().length()-14),Long.toString(diffDays),entry.getValue().substring(entry.getValue().length()-13,entry.getValue().length()-11)};
 			
 			news.put(entry.getKey(), titAgo);
 		}

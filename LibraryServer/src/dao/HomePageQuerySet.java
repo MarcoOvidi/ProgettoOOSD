@@ -64,7 +64,7 @@ public class HomePageQuerySet {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				news.put(new UUIDDocument(rs.getInt("doc")), rs.getString("title") + " " + rs.getDate("date") );
+				news.put(new UUIDDocument(rs.getInt("doc")), rs.getString("title") + " tn " + rs.getDate("date") );
 			}
 
 			return news;
@@ -115,7 +115,7 @@ public class HomePageQuerySet {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				news.put(new UUIDDocument(rs.getInt("doc")), rs.getString("title") + " " + rs.getDate("date"));
+				news.put(new UUIDDocument(rs.getInt("doc")), rs.getString("title") + " sn " + rs.getDate("date"));
 			}
 
 			return news;
