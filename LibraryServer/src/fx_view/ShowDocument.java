@@ -1,24 +1,23 @@
 package fx_view;
 
 
-import java.beans.EventHandler;
+import java.util.LinkedList;
 
+import controller.LocalSession;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
+import model.Page;
 
 public class ShowDocument {
+	private static int currentPage;
 	
 	@FXML
 	private VBox pageList;
@@ -53,9 +52,11 @@ public class ShowDocument {
 	
 
 	public void loadPageList(){
-        Image pageIcon=new Image("http://www.clker.com/cliparts/3/6/2/6/1348002494474708155New%20Page%20Icon.svg.med.png");
-        //Carico le miniature nella pageList
-	    for(int i=1; i<=100; i++) {
+        LinkedList<Page> pages = LocalSession.getOpenedDocumet().getPageList();
+        System.out.println("1");
+	   
+        for(Page page : pages) {
+        	Image pageIcon = new Image(page.getScan().getImage().getUrl());
 			VBox hbox= new VBox();
 			hbox.setAlignment(Pos.CENTER);
 			hbox.setPadding(new Insets(20));
@@ -69,13 +70,13 @@ public class ShowDocument {
 			miniature.setFitWidth(100);
 			miniature.setFitHeight(140);
 			hbox.getChildren().add(miniature);
-			hbox.getChildren().add(new Label(""+i));
+			hbox.getChildren().add(new Label(page.getPageNumber().toString()));
 			pageList.getChildren().add(hbox);
 			hbox.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 				Node nodeOut = hbox.getChildren().get(1);
 		        if(nodeOut instanceof Label){
-		        			String p=((Label) nodeOut).getText();
-		    				loadPage(p);
+		        			currentPage=Integer.parseInt(((Label) nodeOut).getText());
+		    				loadPage();
 		    				System.out.println(scanListScroll.getViewportBounds().getHeight());
 		           }
 		        else {System.out.println("Not");}
@@ -87,14 +88,13 @@ public class ShowDocument {
 	}
 
 
-
 	@FXML
-	public void loadPage(String p) {
-		if(p instanceof String) {
+	public void loadPage() {
+		/*if(p instanceof String) {
 			Double page=Double.parseDouble(p);
 			scanList.getChildren().add(null);
 		//scanListScroll.setVvalue((page-1)*0.0101010101010);
-		}
+		}*/
 	}
 	
 	

@@ -1,9 +1,19 @@
 package vo;
 
-public class BookMark {
+public class BookMark implements Comparable<BookMark> {
 	UUIDUser uid ;
 	UUIDDocument did;
 	UUIDPage pid;
+	
+	@Override
+	public int compareTo (Object obj) {
+		if (obj == null)
+			throw new RuntimeException("Null Object");
+		if (!(obj instanceof BookMark))
+			throw new RuntimeException("Not a BookMark");
+		if this.UUID 
+		
+	}
 	
 	public BookMark(UUIDUser uid, UUIDDocument did, UUIDPage pid) {
 		super();

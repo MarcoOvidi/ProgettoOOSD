@@ -1,15 +1,13 @@
 package vo;
 
-import java.util.Date;
-
 public class VagueDate {
 	
 	//variabili istanza
 	
-	private Date from;
-	private Date to;
+	private Integer from;
+	private Integer to;
 	
-	public VagueDate(Date from, Date to) {
+	public VagueDate(Integer from, Integer to) {
 		this.from=from;
 		this.to= to;
 	}

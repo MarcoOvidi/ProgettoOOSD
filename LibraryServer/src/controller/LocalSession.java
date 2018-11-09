@@ -2,12 +2,23 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import model.Document;
 import model.User;
 import vo.UserPermissions;
 
 public final class LocalSession {
 	static User localUser;
 	static ArrayList<String> topBarButtons = new ArrayList<String>();
+	static Document openedDocumet = null;
+	
+	public static Document getOpenedDocumet() {
+		return openedDocumet;
+	}
+
+	public static void setOpenedDocumet(Document openedDocumet) {
+		LocalSession.openedDocumet = openedDocumet;
+	}
 
 	// TODO error handling
 	private static LocalSession instance = new LocalSession();

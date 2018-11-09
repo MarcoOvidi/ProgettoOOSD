@@ -13,7 +13,6 @@ import java.util.Map.Entry;
 import dao.DatabaseException;
 import dao.HomePageQuerySet;
 import dao.UserAuthenticationQuerySet;
-import vo.UUIDBookMark;
 import vo.UUIDDocument;
 import vo.UUIDDocumentCollection;
 import vo.UUIDScanningWorkProject;
@@ -23,7 +22,7 @@ public class HomePageController {
 	
 	private static HashMap<UUIDDocument,String[]> news = new HashMap<UUIDDocument,String[]>();
 	private static HashMap<UUIDDocumentCollection, String>  categories = new HashMap<UUIDDocumentCollection,String>();
-	private static HashMap<UUIDBookMark,String[]> myCollection = new HashMap<UUIDBookMark,String[]>();
+	private static HashMap<UUIDDocument,String[]> myCollection = new HashMap<UUIDDocument,String[]>();
 	private static HashMap<UUIDTranscriptionWorkProject, String> myTPrj = new HashMap<UUIDTranscriptionWorkProject,String>();
 	private static HashMap<UUIDScanningWorkProject, String> mySPrj = new HashMap<UUIDScanningWorkProject,String>();
 	
@@ -114,7 +113,7 @@ public class HomePageController {
 		return categories;
 	}
 	
-	public static HashMap<UUIDBookMark, String[]> getMyCollection(){
+	public static HashMap<UUIDDocument, String[]> getMyCollection(){
 		return myCollection;
 	}
 	public static void setNews(HashMap<UUIDDocument,String[]> news) {

@@ -16,7 +16,6 @@ import java.util.Map;
 import vo.BookMark;
 import vo.DocumentMetadata;
 import vo.Tag;
-import vo.UUIDBookMark;
 import vo.UUIDDocument;
 import vo.UUIDDocumentCollection;
 import vo.UUIDPage;
@@ -258,7 +257,7 @@ public class HomePageQuerySet {
 	 * @exception DatabaseException
 	 *                in caso di errori di connessione o esecuzione query nel DB
 	 */
-	public static HashMap<UUIDBookMark, String[]> loadMyCollectionList(UUIDUser usr) throws DatabaseException {
+	public static HashMap<UUIDDocument, String[]> loadMyCollectionList(UUIDUser usr) throws DatabaseException {
 		Connection con = null;
 
 		try {
@@ -270,7 +269,7 @@ public class HomePageQuerySet {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		HashMap<UUIDBookMark, String[]> pc = new HashMap<UUIDBookMark, String[]>();
+		HashMap<UUIDDocument, String[]> pc = new HashMap<UUIDDocument, String[]>();
 
 		try {
 			ps = con.prepareStatement("SELECT p.ID_document as DocID, p.image PImage, d.title as Title "
@@ -285,7 +284,7 @@ public class HomePageQuerySet {
 				String[] info = new String[2];
 				info[0] = rs.getString("Title");
 				info[1] = rs.getString("PImage");
-				pc.put(new UUIDBookMark(rs.getInt("DocID")), info);
+				pc.put(new UUIDDocument(rs.getInt("DocID")), info);
 			}
 
 		} catch (SQLException e) {

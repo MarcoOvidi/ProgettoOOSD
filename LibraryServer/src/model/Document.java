@@ -20,7 +20,7 @@ public class Document {
 	private UUIDDocument id;
 	private SessionDataHandler session;
 	private DocumentMetadata metadata;
-	private LinkedList<Page> pageList;
+	private LinkedList<Page> pageList ;
 	private UUIDScanningWorkProject scanningWorkProject;
 	private UUIDTranscriptionWorkProject transcriptionWorkProject;
 	
@@ -37,6 +37,14 @@ public class Document {
 		this.transcriptionWorkProject = idtp;
 	}
 	
+	public Document() {
+		this.title = null;
+		this.id = null;
+		this.metadata = null;
+		this.pageList = null;
+		this.scanningWorkProject = null;
+		this.transcriptionWorkProject = null;
+	}
 	//metodi get e set
 	
 	public UUIDDocument getUUID() {
@@ -73,14 +81,18 @@ public class Document {
 	}
 	
 	
-	public void setPageList(LinkedList<Page> page_list) {
+	public void addPageList(LinkedList<Page> page_list) {
 		this.pageList.addAll(page_list);
 	}
 	
-	public void setPage(Page p) {
-		this.pageList.addLast(p);
+	public void addPage(Page p) {
+		this.pageList.add(p);
 	}
 	
+	public void setPageList(LinkedList<Page> page_list) {
+		this.pageList=page_list;
+	}
+		
 	public void setScanningProject(UUIDScanningWorkProject swp) {
 		this.scanningWorkProject=swp;
 	}

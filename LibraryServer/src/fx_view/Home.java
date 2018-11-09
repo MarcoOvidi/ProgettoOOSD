@@ -2,14 +2,17 @@ package fx_view;
 
 import java.text.ParseException;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import controller.HomePageController;
+import controller.PageViewController;
 import dao.DatabaseException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -25,7 +28,7 @@ public class Home {
 
 	@FXML
 	private HBox tProjects;
-	
+
 	@FXML
 	private HBox bookmarks;
 
@@ -34,10 +37,10 @@ public class Home {
 
 	@FXML
 	private VBox collections;
-	
+
 	@FXML
 	private Tab transcriptionTab;
-	
+
 	@FXML
 	private Tab scanningTab;
 
@@ -52,13 +55,12 @@ public class Home {
 
 	@FXML
 	public void loadScanningProjects() {
-		
+
 		if (HomePageController.checkIsDigitalizer()) {
 
 			HomePageController.loadMyScanningProjects();
 
-			Image pageIcon = new Image(
-					"http://www.clker.com/cliparts/3/6/2/6/1348002494474708155New%20Page%20Icon.svg.med.png");
+			Image pageIcon = new Image("images/blank.png");
 			for (String text : HomePageController.getMySPrj().values()) {
 				ImageView miniature = new ImageView(pageIcon);
 				Label label = new Label(text);
@@ -71,7 +73,7 @@ public class Home {
 				elem.getChildren().add(label);
 				sProjects.getChildren().add(elem);
 			}
-		}else {
+		} else {
 			scanningTab.setDisable(true);
 		}
 	}
@@ -82,8 +84,7 @@ public class Home {
 
 			HomePageController.loadMyTranscriptionProjects();
 
-			Image pageIcon = new Image(
-					"http://www.clker.com/cliparts/3/6/2/6/1348002494474708155New%20Page%20Icon.svg.med.png");
+			Image pageIcon = new Image("images/blank.png");
 			for (String text : HomePageController.getMyTPrj().values()) {
 				ImageView miniature = new ImageView(pageIcon);
 				Label label = new Label(text);
@@ -96,7 +97,7 @@ public class Home {
 				elem.getChildren().add(label);
 				tProjects.getChildren().add(elem);
 			}
-		}else {
+		} else {
 			transcriptionTab.setDisable(true);
 		}
 	}
@@ -106,11 +107,11 @@ public class Home {
 		HomePageController.loadMyCollection();
 
 		// TODO prendere la vera immagine dal String[] appena disponibili
-		Image pageIcon = new Image("https://images-fe.ssl-images-amazon.com/images/I/41s%2BjktVLxL.png");
+		Image pageIcon = new Image("images/libricino.png");
 
-		for (String[] entry : HomePageController.getMyCollection().values()) {
+		for (Entry<UUIDDocument, String[]> entry : HomePageController.getMyCollection().entrySet()) {
 			ImageView miniature = new ImageView(pageIcon); // cambiare con entry[0]
-			Label label = new Label(entry[0]);
+			Label label = new Label(entry.getValue()[0]);
 			VBox elem = new VBox();
 
 			miniature.setFitWidth(100);
@@ -118,8 +119,18 @@ public class Home {
 			elem.setId("project-miniature");
 			elem.getChildren().add(miniature);
 			elem.getChildren().add(label);
+
+			elem.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+
+				PageViewController.showDocument(entry.getKey());
+				
+
+				event.consume();
+			});
+
 			bookmarks.getChildren().add(elem);
 		}
+
 	}
 
 	@FXML

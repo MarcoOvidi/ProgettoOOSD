@@ -1,6 +1,5 @@
 package vo;
 
-import java.util.Date;
 import java.util.ArrayList;
 
 public class DocumentMetadata {
@@ -8,13 +7,13 @@ public class DocumentMetadata {
 	//variabili istanza
 	private String author;
 	private String description;
-	private Date composingDate;
+	private Integer composingDate;
 	private VagueDate composingPeriod;
 	private Integer preservationState;
 	private ArrayList<Tag> tags = new ArrayList<Tag>();
 	
 	//costruttore
-	public DocumentMetadata(String auth, String descr,Date compDate,VagueDate period,Integer preserv) {
+	public DocumentMetadata(String auth, String descr,Integer compDate,VagueDate period,Integer preserv) {
 		this.author=auth;
 		this.description=descr;
 		this.composingDate=compDate;
@@ -33,7 +32,7 @@ public class DocumentMetadata {
 		return this.description;
 	}
 	
-	public Date getComposingDate() {
+	public Integer getComposingDate() {
 		return this.composingDate;
 	}
 	
@@ -54,7 +53,7 @@ public class DocumentMetadata {
 		this.description=d;
 	}
 	
-	public void setComposingDate(Date d) {
+	public void setComposingDate(Integer d) {
 		this.composingDate=d;
 	}
 	
