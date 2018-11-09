@@ -7,6 +7,7 @@ import controller.HomePageController;
 import dao.DatabaseException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -24,6 +25,7 @@ public class Home {
 
 	@FXML
 	private HBox tProjects;
+	
 	@FXML
 	private HBox bookmarks;
 
@@ -32,6 +34,12 @@ public class Home {
 
 	@FXML
 	private VBox collections;
+	
+	@FXML
+	private Tab transcriptionTab;
+	
+	@FXML
+	private Tab scanningTab;
 
 	@FXML
 	public void initialize() throws DatabaseException, ParseException {
@@ -44,41 +52,52 @@ public class Home {
 
 	@FXML
 	public void loadScanningProjects() {
-		HomePageController.loadMyScanningProjects();
 		
-		Image pageIcon = new Image(
-				"http://www.clker.com/cliparts/3/6/2/6/1348002494474708155New%20Page%20Icon.svg.med.png");
-		for (String text : HomePageController.getMySPrj().values()) {
-			ImageView miniature = new ImageView(pageIcon);
-			Label label = new Label(text);
-			VBox elem = new VBox();
+		if (HomePageController.checkIsDigitalizer()) {
 
-			miniature.setFitWidth(100);
-			miniature.setFitHeight(140);
-			elem.setId("project-miniature");
-			elem.getChildren().add(miniature);
-			elem.getChildren().add(label);
-			sProjects.getChildren().add(elem);
+			HomePageController.loadMyScanningProjects();
+
+			Image pageIcon = new Image(
+					"http://www.clker.com/cliparts/3/6/2/6/1348002494474708155New%20Page%20Icon.svg.med.png");
+			for (String text : HomePageController.getMySPrj().values()) {
+				ImageView miniature = new ImageView(pageIcon);
+				Label label = new Label(text);
+				VBox elem = new VBox();
+
+				miniature.setFitWidth(100);
+				miniature.setFitHeight(140);
+				elem.setId("project-miniature");
+				elem.getChildren().add(miniature);
+				elem.getChildren().add(label);
+				sProjects.getChildren().add(elem);
+			}
+		}else {
+			scanningTab.setDisable(true);
 		}
 	}
-	
+
 	@FXML
 	public void loadTranscriptionProjects() {
-		HomePageController.loadMyTranscriptionProjects();
-		
-		Image pageIcon = new Image(
-				"http://www.clker.com/cliparts/3/6/2/6/1348002494474708155New%20Page%20Icon.svg.med.png");
-		for (String text : HomePageController.getMyTPrj().values()) {
-			ImageView miniature = new ImageView(pageIcon);
-			Label label = new Label(text);
-			VBox elem = new VBox();
+		if (HomePageController.checkIsTranscriber()) {
 
-			miniature.setFitWidth(100);
-			miniature.setFitHeight(140);
-			elem.setId("project-miniature");
-			elem.getChildren().add(miniature);
-			elem.getChildren().add(label);
-			tProjects.getChildren().add(elem);
+			HomePageController.loadMyTranscriptionProjects();
+
+			Image pageIcon = new Image(
+					"http://www.clker.com/cliparts/3/6/2/6/1348002494474708155New%20Page%20Icon.svg.med.png");
+			for (String text : HomePageController.getMyTPrj().values()) {
+				ImageView miniature = new ImageView(pageIcon);
+				Label label = new Label(text);
+				VBox elem = new VBox();
+
+				miniature.setFitWidth(100);
+				miniature.setFitHeight(140);
+				elem.setId("project-miniature");
+				elem.getChildren().add(miniature);
+				elem.getChildren().add(label);
+				tProjects.getChildren().add(elem);
+			}
+		}else {
+			transcriptionTab.setDisable(true);
 		}
 	}
 

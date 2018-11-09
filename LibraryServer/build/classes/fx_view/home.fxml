@@ -26,7 +26,20 @@
             </AnchorPane>
             <TabPane layoutX="14.0" layoutY="441.0" prefHeight="346.0" prefWidth="977.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
-                <Tab text="Scanning Project">
+                <Tab text="Bookmarks">
+                  <content>
+                        <ScrollPane>
+                           <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="244.0" prefWidth="483.0">
+                                 <children>
+                                    <HBox fx:id="bookmarks" layoutX="22.0" layoutY="31.0" prefHeight="100.0" prefWidth="200.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </ScrollPane>
+                  </content>
+                </Tab>
+                <Tab fx:id="scanningTab" text="Scanning Project">
                   <content>
                         <ScrollPane prefHeight="318.0" prefWidth="978.0">
                            <content>
@@ -39,26 +52,13 @@
                         </ScrollPane>
                   </content>
                 </Tab>
-                <Tab text="Transcription Projects">
+                <Tab fx:id="transcriptionTab" text="Transcription Projects">
                   <content>
                         <ScrollPane prefHeight="318.0" prefWidth="978.0">
                            <content>
                               <AnchorPane prefHeight="223.0" prefWidth="557.0">
                                  <children>
                                     <HBox fx:id="tProjects" layoutX="14.0" layoutY="14.0" prefHeight="162.0" prefWidth="406.0" />
-                                 </children>
-                              </AnchorPane>
-                           </content>
-                        </ScrollPane>
-                  </content>
-                </Tab>
-                <Tab text="Bookmarks">
-                  <content>
-                        <ScrollPane>
-                           <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="244.0" prefWidth="483.0">
-                                 <children>
-                                    <HBox fx:id="bookmarks" layoutX="22.0" layoutY="31.0" prefHeight="100.0" prefWidth="200.0" />
                                  </children>
                               </AnchorPane>
                            </content>

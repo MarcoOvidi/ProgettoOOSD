@@ -12,6 +12,7 @@ import java.util.Map.Entry;
 
 import dao.DatabaseException;
 import dao.HomePageQuerySet;
+import dao.UserAuthenticationQuerySet;
 import vo.UUIDBookMark;
 import vo.UUIDDocument;
 import vo.UUIDDocumentCollection;
@@ -136,5 +137,42 @@ public class HomePageController {
 		HomePageController.mySPrj = mySPrj;
 	}	
 	
+	public static boolean checkIsDigitalizer() {
+		//2 upload
+		
+		Boolean perm = false;
+		try {
+		
+			perm = UserAuthenticationQuerySet.permissionsControl(2, LocalSession.getLocalUser().getID());
+		
+		}catch(DatabaseException e) {
+			e.getMessage();
+			e.printStackTrace();
+		}catch(Exception e) {
+			e.getMessage();
+			e.printStackTrace();
+		}
+		
+		return perm;
+	}
+	
+	public static boolean checkIsTranscriber() {
+		//2 upload
+		
+		Boolean perm = false;
+		try {
+		
+			perm = UserAuthenticationQuerySet.permissionsControl(5, LocalSession.getLocalUser().getID());
+		
+		}catch(DatabaseException e) {
+			e.getMessage();
+			e.printStackTrace();
+		}catch(Exception e) {
+			e.getMessage();
+			e.printStackTrace();
+		}
+		
+		return perm;
+	}
 	//TODO load menu buttons (checking permissions)
 }

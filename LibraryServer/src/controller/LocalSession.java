@@ -42,9 +42,11 @@ public final class LocalSession {
 			topBarButtons.add("Transcription");
 		if (permissions.getReviewPagePerm() || permissions.getReviewPagePerm())
 			topBarButtons.add("Review");
-
+		
 		}
 	}
+	
+	
 
 	public static void setLocalUser(User lUser) {
 		localUser = lUser;
