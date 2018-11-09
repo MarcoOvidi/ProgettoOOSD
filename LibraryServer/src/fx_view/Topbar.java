@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.TreeMap;
 
 import controller.LocalSession;
+import controller.LoginController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
@@ -38,7 +39,6 @@ public class Topbar {
 	}
 
 	public void initialize() {
-
 		
 		container.setSpacing(5);
 		List<String> buttons = LocalSession.getTopBarButtons();
@@ -47,7 +47,7 @@ public class Topbar {
 			initButtonLink(str, map.get(str));
 		}
 		
-		///initLogoutLink();
+		initLogoutLink();
 
 	}
 
@@ -63,9 +63,12 @@ public class Topbar {
 	
 	// inizializzo il bottone gotoprofile
 	public void initLogoutLink() {
+		
 		logout.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-			SceneController.loadScene("login");
-			//LoginController.logout();
+		
+			
+			//SceneController.loadScene("login");
+			LoginController.logout();
 			event.consume();
 		});
 	}

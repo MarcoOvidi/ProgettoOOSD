@@ -26,9 +26,9 @@
                </HBox.margin></Button>
          </children>
       
-      -->
+      !-->
       </HBox>
-    <Button id="logout" layoutX="1280.0" mnemonicParsing="false" text="Logout" />
+    <Button fx:id="logout" layoutX="1280.0" mnemonicParsing="false" text="Logout" />
 
    </children>
 </AnchorPane>

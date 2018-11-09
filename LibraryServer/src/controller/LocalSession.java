@@ -13,7 +13,7 @@ public final class LocalSession {
 	private static LocalSession instance = new LocalSession();
 
 	private LocalSession() {
-	
+
 	}
 
 	public static final LocalSession getInstance() {
@@ -32,21 +32,19 @@ public final class LocalSession {
 		 */
 		topBarButtons.add("Home");
 		topBarButtons.add("My Profile");
-		
+
 		if (permissions.getPublishDocumentPerm() || permissions.getAssignDigitalizationTaskPerm()
 				|| permissions.getAssignTranscriptionTaskPerm() || permissions.getEditMetaDataPerm()) {
 			topBarButtons.add("Manage Projects");
-		if (permissions.getUploadPerm())
-			topBarButtons.add("Upload");
-		if (permissions.getModifyTranscriptionPerm())
-			topBarButtons.add("Transcription");
-		if (permissions.getReviewPagePerm() || permissions.getReviewPagePerm())
-			topBarButtons.add("Review");
-		
+			if (permissions.getUploadPerm())
+				topBarButtons.add("Upload");
+			if (permissions.getModifyTranscriptionPerm())
+				topBarButtons.add("Transcription");
+			if (permissions.getReviewPagePerm() || permissions.getReviewPagePerm())
+				topBarButtons.add("Review");
+
 		}
 	}
-	
-	
 
 	public static void setLocalUser(User lUser) {
 		localUser = lUser;
@@ -55,6 +53,11 @@ public final class LocalSession {
 
 	public static List<String> getTopBarButtons() {
 		return topBarButtons;
+	}
+
+	public static void clear() {
+		localUser = null;
+		topBarButtons = new ArrayList<String>();
 	}
 
 }

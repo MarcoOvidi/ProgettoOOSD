@@ -58,6 +58,7 @@ public class LoginController {
 	
 	public static void logout () {
 		//TODO ask for confirmation
+		LocalSession.clear();
 		SceneController.loadScene("login");
 	}
 }
