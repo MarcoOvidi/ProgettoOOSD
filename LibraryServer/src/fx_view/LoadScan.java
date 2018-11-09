@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -26,6 +27,11 @@ public class LoadScan {
 	@FXML
 	private VBox scanList;
 	
+	@FXML
+	private ChoiceBox documentList;
+	
+	@FXML
+	private Button loadDocumentButton;
 	
 	@FXML
 	public void initialize(){
