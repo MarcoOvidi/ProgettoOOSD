@@ -135,7 +135,11 @@ Button:hover{
 	
 }
 
+#scrollPage{
+	-fx-border-width:0px 1px 0px 0px;
+	-fx-border-color:#191919;
 
+}
 
 .scroll-pane {
     -fx-background-color: #202020;

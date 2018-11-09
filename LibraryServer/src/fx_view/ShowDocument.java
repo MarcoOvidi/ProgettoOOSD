@@ -67,8 +67,8 @@ public class ShowDocument {
 		           }
 		        });
 			ImageView miniature = new ImageView(pageIcon);
-			miniature.setFitWidth(100);
-			miniature.setFitHeight(140);
+			miniature.setFitWidth(90);
+			miniature.setFitHeight(130);
 			hbox.getChildren().add(miniature);
 			hbox.getChildren().add(new Label(page.getPageNumber().toString()));
 			pageList.getChildren().add(hbox);

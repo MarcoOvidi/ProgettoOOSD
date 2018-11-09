@@ -33,7 +33,7 @@ public class HomePageQuerySet {
 		trNews.putAll(scNews);
 
 		return trNews;
-		
+
 	}
 
 	/**
@@ -58,15 +58,15 @@ public class HomePageQuerySet {
 		HashMap<UUIDDocument, String> news = new HashMap<>();
 
 		try {
-			ps = con.prepareStatement("SELECT ID_document as doc, title , date FROM transcription_project AS tp JOIN document AS d ON tp.ID_document=d.ID ORDER BY date DESC LIMIT ?;");
+			ps = con.prepareStatement(
+					"SELECT ID_document as doc, title , date FROM transcription_project AS tp JOIN document AS d ON tp.ID_document=d.ID ORDER BY date DESC LIMIT ?;");
 
 			ps.setInt(1, newsNumber);
-		
 
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				news.put(new UUIDDocument(rs.getInt("doc")), rs.getString("title") + " tn " + rs.getDate("date") );
+				news.put(new UUIDDocument(rs.getInt("doc")), rs.getString("title") + " tn " + rs.getDate("date"));
 			}
 
 			return news;
@@ -137,18 +137,16 @@ public class HomePageQuerySet {
 		}
 	}
 
-	
-
 	/**
 	 * seleziona i progetti di trascrizione ai quali lavoro (ovvero progetti che non
 	 * sono stati ancora pubblicati)
 	 * 
-	 * @param UUIDUser
-	 *            utente di cui si devono reperire i progetti di trascrizione
+	 * @param UUIDUser utente di cui si devono reperire i progetti di trascrizione
 	 * @return HashMap<Integer,String> Mappa di Id progetti di trascrizione e titolo
 	 *         dell'opera associata
 	 */
-	public static HashMap<UUIDTranscriptionWorkProject, String> loadMyTranscriptionWorkProjectList(UUIDUser usr) throws DatabaseException {
+	public static HashMap<UUIDTranscriptionWorkProject, String> loadMyTranscriptionWorkProjectList(UUIDUser usr)
+			throws DatabaseException {
 
 		Connection con = null;
 
@@ -197,12 +195,13 @@ public class HomePageQuerySet {
 	 * seleziona i progetti di digitalizzazione ai quali lavoro (ovvero progetti che
 	 * non sono stati ancora pubblicati)
 	 * 
-	 * @param UUIDUser
-	 *            utente di cui si devono reperire i progetti di digitalizzazione
+	 * @param UUIDUser utente di cui si devono reperire i progetti di
+	 *                 digitalizzazione
 	 * @return HashMap<Integer,String> Mappa di Id progetti di digitalizzazione e
 	 *         titolo dell'opera associata
 	 */
-	public static HashMap<UUIDScanningWorkProject, String> loadMyScanningWorkProjectList(UUIDUser usr) throws DatabaseException {
+	public static HashMap<UUIDScanningWorkProject, String> loadMyScanningWorkProjectList(UUIDUser usr)
+			throws DatabaseException {
 		Connection con = null;
 
 		try {
@@ -249,13 +248,13 @@ public class HomePageQuerySet {
 	/**
 	 * Carica la lista dei Document preferiti di un utente
 	 * 
-	 * @param UUIdUser
-	 *            id dell'utente di cui si vuole caricare la Collection personale
+	 * @param UUIdUser id dell'utente di cui si vuole caricare la Collection
+	 *                 personale
 	 * @return HashMap<Integer,String[]> dove la chiave è l'Id del Document,
 	 *         String[0] il titolo dell'opera e String[1] è l'immagine della prima
 	 *         Page
-	 * @exception DatabaseException
-	 *                in caso di errori di connessione o esecuzione query nel DB
+	 * @exception DatabaseException in caso di errori di connessione o esecuzione
+	 *                              query nel DB
 	 */
 	public static HashMap<UUIDDocument, String[]> loadMyCollectionList(UUIDUser usr) throws DatabaseException {
 		Connection con = null;
@@ -309,12 +308,12 @@ public class HomePageQuerySet {
 	 * Recupera i metadati di tutti i Document presenti nella collezione personale
 	 * di un User
 	 * 
-	 * @param UUIDUser
-	 *            id dell'utente di cui carichiamo la PersonalDocumentCollection
+	 * @param UUIDUser id dell'utente di cui carichiamo la
+	 *                 PersonalDocumentCollection
 	 * @return HashMap<Integer,DocumentMetadata> dove la chiave è l'Id del Document
 	 *         e il valore il rispettivo DocumentMetadata
-	 * @exception DatabaseException
-	 *                in caso di mancata conessione o errori di query sul DB
+	 * @exception DatabaseException in caso di mancata conessione o errori di query
+	 *                              sul DB
 	 */
 	public static HashMap<Integer, DocumentMetadata> loadMyCollectionMetaData(UUIDUser usr) throws DatabaseException {
 		Connection con = null;
@@ -340,28 +339,9 @@ public class HomePageQuerySet {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				Date comp = null;
-				Date cpf = null;
-				Date cpt = null;
-
-				if (rs.getDate("cd") != null) {
-
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-					String date = rs.getString("cd");
-					comp = sdf.parse(date);
-				}
-
-				if (rs.getDate("cpf") != null) {
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-					String date = rs.getString("cpf");
-					cpf = sdf.parse(date);
-				}
-
-				if (rs.getDate("cpt") != null) {
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM_dd");
-					String date = rs.getString("cpt");
-					cpt = sdf.parse(date);
-				}
+				Integer comp = rs.getInt("cd");
+				Integer cpf = rs.getInt("cpf");
+				Integer cpt = rs.getInt("cpt");
 
 				dm.put(rs.getInt("ID"), new DocumentMetadata(rs.getString("a"), rs.getString("d"), comp,
 						new VagueDate(cpf, cpt), rs.getInt("ps")));
@@ -394,8 +374,6 @@ public class HomePageQuerySet {
 
 		} catch (SQLException e) {
 			throw new DatabaseException("Errore di esecuzione della query", e);
-		} catch (ParseException ex) {
-			throw new DatabaseException("Impossibile effettuare il parsing della data", ex);
 		} finally {
 			try {
 				if (ps != null)
@@ -415,8 +393,7 @@ public class HomePageQuerySet {
 	/**
 	 * Recupera tutti i BookMarks di un utente
 	 * 
-	 * @param UUIDUser
-	 *            id dell'utente che vuole caricare i BookMarks
+	 * @param UUIDUser id dell'utente che vuole caricare i BookMarks
 	 * @return HashMap<Integer,BookMark> HashMap con chiave l'ID del BookMark e
 	 *         value un BookMark
 	 * @throw DatabaseException
@@ -467,11 +444,13 @@ public class HomePageQuerySet {
 
 	/**
 	 * seleziona le categorie di opere della biblioteca
+	 * 
 	 * @return
 	 * @throws DatabaseException
 	 * @throws SQLException
 	 */
-	public static HashMap<UUIDDocumentCollection, String> loadLibraryCollectionList() throws DatabaseException, SQLException {
+	public static HashMap<UUIDDocumentCollection, String> loadLibraryCollectionList()
+			throws DatabaseException, SQLException {
 		Connection con = null;
 
 		try {
@@ -482,7 +461,7 @@ public class HomePageQuerySet {
 
 		Statement s = con.createStatement();
 		ResultSet rs = null;
-		HashMap<UUIDDocumentCollection, String> cat = new HashMap<UUIDDocumentCollection,String>();
+		HashMap<UUIDDocumentCollection, String> cat = new HashMap<UUIDDocumentCollection, String>();
 
 		try {
 			rs = s.executeQuery("SELECT * FROM document_collection;");
@@ -511,12 +490,12 @@ public class HomePageQuerySet {
 	/**
 	 * Seleziona id,titolo e miniatura delle opere di una determinata categoria
 	 * 
-	 * @param UUIDDocumentCollection
-	 *            Id della Collezione di cui si vogliono caricare le opere
+	 * @param UUIDDocumentCollection Id della Collezione di cui si vogliono caricare
+	 *                               le opere
 	 * @return LinkedList<String[]> String[0] = Document ID, String[1] = Document
 	 *         title , String[2] = link Imange della prima pagina
-	 * @exception DatabaseException
-	 *                Per errori di connessione al DB o di esecuzione delle query
+	 * @exception DatabaseException Per errori di connessione al DB o di esecuzione
+	 *                              delle query
 	 */
 	public static LinkedList<String[]> loadCollection(UUIDDocumentCollection idc) throws DatabaseException {
 		Connection con = null;
