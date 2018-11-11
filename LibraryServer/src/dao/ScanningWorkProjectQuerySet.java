@@ -792,7 +792,7 @@ public class ScanningWorkProjectQuerySet {
 		
 		return uncompletedDocument;
 	}
-	
+	/*
 	public static void main(String[] args) {
 		
 		try{
@@ -800,5 +800,5 @@ public class ScanningWorkProjectQuerySet {
 		}catch(DatabaseException e) {
 			e.getMessage();
 		}
-	}
+	}*/
 }
