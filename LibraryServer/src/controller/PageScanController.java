@@ -53,12 +53,9 @@ public class PageScanController {
 		uncompletedDocument = uncompleted_Document;
 	}
 	
-	public static void loadNewDocumentPages(UUIDDocument doc) {
+	public static void loadNewDocumentPages(UUIDDocument doc,Boolean revision,Boolean convalidation) {
 		try {
-			currentDocumentPages = DigitalizerQuerySet.loadDocument(doc, false, false);
-			currentDocumentPages.addAll(DigitalizerQuerySet.loadDocument(doc, false, true));
-			currentDocumentPages.addAll(DigitalizerQuerySet.loadDocument(doc, true, false));
-			currentDocumentPages.addAll(DigitalizerQuerySet.loadDocument(doc, true, true));
+			currentDocumentPages = DigitalizerQuerySet.loadDocument(doc, revision, convalidation);
 		} catch (DatabaseException e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();

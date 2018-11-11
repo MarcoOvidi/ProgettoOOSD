@@ -14,7 +14,7 @@ import java.util.LinkedList;
 import controller.SessionDataHandler;
 
 
-public class Page {
+public class Page implements Comparable<Page>{
 	
 	//variabili istanza
 	private UUIDPage id;
@@ -30,6 +30,11 @@ public class Page {
 		this.transcription=page_trans;
 	}
 	
+	@Override
+	public int compareTo(Page p) {
+		
+		return this.pageNumber.compareTo(p.getPageNumber());
+	}
 	
 	//metodi get e set
 	

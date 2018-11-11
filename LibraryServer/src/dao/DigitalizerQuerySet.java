@@ -52,6 +52,7 @@ public class DigitalizerQuerySet { //COMPLETATA E VERIFICATA DEF
 								rs.getBoolean("image_revised"), null), null));
 			}
 			
+			
 		}catch(SQLException e) {
 			throw new DatabaseException("Errore di esecuzione della query", e);
 		}finally {

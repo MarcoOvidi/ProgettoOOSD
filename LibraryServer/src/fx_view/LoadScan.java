@@ -1,6 +1,8 @@
 package fx_view;
 
 import java.io.File;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.Map.Entry;
 
 import controller.LocalSession;
@@ -11,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -58,6 +61,12 @@ public class LoadScan {
 
 	@FXML
 	private ObservableList<Rows> pages;
+
+	@FXML
+	private CheckBox checkConvalidated;
+
+	@FXML
+	private CheckBox checkRevisioned;
 
 	@FXML
 	public void initialize() {
@@ -141,11 +150,17 @@ public class LoadScan {
 		validated.setCellValueFactory(new PropertyValueFactory<Rows, String>("Validated"));
 
 		loadDocumentButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-			PageScanController.loadNewDocumentPages(documentList.getSelectionModel().getSelectedItem().getKey());
-			
+
+			PageScanController.loadNewDocumentPages(documentList.getSelectionModel().getSelectedItem().getKey()
+					, checkConvalidated.isSelected(),checkRevisioned.isSelected());
+
 			pageTable.getItems().clear();
-			
-			for (Page page : PageScanController.getCurrentDocumentPages()) {
+
+			LinkedList<Page> p = PageScanController.getCurrentDocumentPages();
+
+			Collections.sort(p);
+
+			for (Page page : p) {
 				String rev = "";
 				if (page.getScan().getRevised()) {
 					rev = "\u2714";
