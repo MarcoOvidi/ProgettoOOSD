@@ -46,7 +46,7 @@ public class Topbar {
 		for (String str : buttons) {
 			initButtonLink(str, map.get(str));
 		}
-		
+
 		initLogoutLink();
 
 	}
@@ -63,6 +63,7 @@ public class Topbar {
 	
 	// inizializzo il bottone gotoprofile
 	public void initLogoutLink() {
+		
 		
 		logout.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 		

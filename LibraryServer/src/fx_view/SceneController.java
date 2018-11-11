@@ -16,8 +16,8 @@ public class SceneController extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		stage=primaryStage;
+
 		//scene = new Scene(root,1400,800);
-		
 		loadScene("login");
 		
 	}
@@ -37,7 +37,15 @@ public class SceneController extends Application {
 			stage.setScene(scene);
 
 			//scene.getStylesheets().add(new Object().getClass().getResource("home.css").toExternalForm());
-			stage.setResizable(false);
+			stage.setResizable(true);
+
+			//stage.setFullScreen(true);
+			
+			stage.setMinHeight(480);
+			stage.setMinWidth(720);
+			
+			stage.setTitle("Library - " + name);
+			
 			//stage.initStyle(StageStyle.UNDECORATED);
 			stage.show();			
 		} catch(Exception e) {

@@ -26,7 +26,11 @@
       </Pane>
    </bottom>
    <center>
-      <AnchorPane prefHeight="780.0" prefWidth="1400.0" style="-fx-background-image: url(images/lib.jpg); -fx-background-size: cover, auto;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="780.0" prefWidth="1400.0" 
+      style="	-fx-background-image: url(images/lib.jpg);
+      			-fx-background-position: left top, center; 
+      			-fx-background-repeat: stretch;
+      			-fx-background-size: contain, auto;" BorderPane.alignment="CENTER">
          <children>
             <AnchorPane layoutX="99.0" layoutY="117.0" prefHeight="374.0" prefWidth="517.0" style="-fx-background-color: rgba(0, 0, 0, 0.0);">
                <children>

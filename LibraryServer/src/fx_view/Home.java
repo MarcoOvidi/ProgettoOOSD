@@ -19,7 +19,7 @@ import javafx.scene.layout.VBox;
 import vo.UUIDDocument;
 
 public class Home {
-
+	
 	@FXML
 	private AnchorPane topbar;
 
