@@ -1,4 +1,4 @@
-package dao;
+ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -51,6 +51,7 @@ public class DigitalizerQuerySet { //COMPLETATA E VERIFICATA DEF
 								rs.getBoolean("image_convalidation"), 
 								rs.getBoolean("image_revised"), null), null));
 			}
+			
 			
 		}catch(SQLException e) {
 			throw new DatabaseException("Errore di esecuzione della query", e);

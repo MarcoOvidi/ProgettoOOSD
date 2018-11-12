@@ -56,7 +56,7 @@ public class ShowDocument {
         System.out.println("1");
 	   
         for(Page page : pages) {
-        	Image pageIcon = new Image(page.getScan().getImage().getUrl());
+        	Image pageIcon = new Image("images/libricino.png");
 			VBox hbox= new VBox();
 			hbox.setAlignment(Pos.CENTER);
 			hbox.setPadding(new Insets(20));
