@@ -31,7 +31,7 @@ public class SceneController extends Application {
 			BorderPane root = (BorderPane)FXMLLoader.load(new Object(){}.getClass().getResource("/fx_view/"+name+".fxml"));
 			
 			scene = new Scene(root,1400,800);
-			scene.getStylesheets().add(new RootCss().getCss());
+			//scene.getStylesheets().add(new RootCss().getCss());
 
 			scene.setRoot(root);
 			stage.setScene(scene);

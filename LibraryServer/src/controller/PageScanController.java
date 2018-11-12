@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import dao.DatabaseException;
 import dao.DigitalizerQuerySet;
 import dao.ScanningWorkProjectQuerySet;
+import javafx.scene.image.Image;
 import model.Document;
 import model.Page;
 import model.User;
@@ -15,6 +16,7 @@ import vo.UUIDUser;
 
 public class PageScanController {
 	private static HashMap<UUIDDocument, String> uncompletedDocument = new HashMap<UUIDDocument, String>();
+	private static UUIDDocument currentDocument;
 	private static LinkedList<Page> currentDocumentPages;
 
 	// costruttore
@@ -60,6 +62,7 @@ public class PageScanController {
 			currentDocumentPages.addAll(DigitalizerQuerySet.loadDocument(doc, false, true));
 			currentDocumentPages.addAll(DigitalizerQuerySet.loadDocument(doc, true, false));
 			currentDocumentPages.addAll(DigitalizerQuerySet.loadDocument(doc, true, true));
+			currentDocument = doc;
 		} catch (DatabaseException e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
@@ -90,6 +93,20 @@ public class PageScanController {
 
 	public static void setCurrentDocument(LinkedList<Page> currentDocumentPages) {
 		PageScanController.currentDocumentPages = currentDocumentPages;
+	}
+		
+	public static UUIDPage createNewPage(Image image, int num) {
+		UUIDPage page = new UUIDPage(-1);
+		vo.Image img = new vo.Image("");
+		try {
+			page = DigitalizerQuerySet.createPage(num, img , currentDocument);
+			img = new vo.Image(currentDocument.toString() + page);
+			ImageUploader.uploadImage(image, img.getUrl());
+			DigitalizerQuerySet.updatePage(page, img);	
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+		}
+		return page;
 	}
 
 }

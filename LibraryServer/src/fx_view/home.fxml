@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fx_view.Home">
-   <center>
+   <left>
       <AnchorPane style="-fx-background-color: #222;" BorderPane.alignment="CENTER">
          <children>
             <AnchorPane fx:id="topbar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -96,5 +96,5 @@
             <Separator layoutX="1013.0" layoutY="89.0" orientation="VERTICAL" prefHeight="675.0" prefWidth="17.0" />
          </children>
       </AnchorPane>
-   </center>
+   </left>
 </BorderPane>

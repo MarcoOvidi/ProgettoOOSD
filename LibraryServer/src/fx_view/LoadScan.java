@@ -118,6 +118,7 @@ public class LoadScan {
 			
 			send.addEventHandler(MouseEvent.MOUSE_CLICKED, sending -> {
 				//TODO chiama controller che chiama la query createPage di digitalizerQuerySET
+				
 				sending.consume();
 			});
 			scanList.getChildren().add(hbox);
