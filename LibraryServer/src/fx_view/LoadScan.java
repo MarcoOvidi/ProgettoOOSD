@@ -76,6 +76,8 @@ public class LoadScan {
 	@FXML
 	private Button clearFilters;
 
+	private int buttonLoadinstance = 0;
+	
 	@FXML
 	public void initialize() {
 		documentList();
@@ -165,7 +167,14 @@ public class LoadScan {
 			LinkedList<Page> p = PageScanController.getCurrentDocumentPages();
 
 			Collections.sort(p);
-
+			
+			if(buttonLoadinstance != 0) {
+				pages.clear();
+				pageTable.refresh();
+			}
+			
+			buttonLoadinstance++;
+			
 			for (Page page : p) {
 				String rev = "";
 				if (page.getScan().getRevised()) {
