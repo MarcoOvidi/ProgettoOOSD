@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import java.util.Map.Entry;
 import java.util.function.Predicate;
 
+import javax.swing.text.ChangedCharSetException;
+
 import controller.LocalSession;
 import controller.PageScanController;
 import javafx.collections.FXCollections;
@@ -76,8 +78,6 @@ public class LoadScan {
 	@FXML
 	private Button clearFilters;
 
-	private int buttonLoadinstance = 0;
-	
 	@FXML
 	public void initialize() {
 		documentList();
@@ -167,14 +167,15 @@ public class LoadScan {
 			LinkedList<Page> p = PageScanController.getCurrentDocumentPages();
 
 			Collections.sort(p);
+
+			pages.clear();
+			pageTable.refresh();
 			
-			if(buttonLoadinstance != 0) {
-				pages.clear();
-				pageTable.refresh();
-			}
-			
-			buttonLoadinstance++;
-			
+			if (checkRevisioned.isSelected())
+				checkRevisioned.fire();
+			if (checkConvalidated.isSelected())
+				checkConvalidated.fire();
+
 			for (Page page : p) {
 				String rev = "";
 				if (page.getScan().getRevised()) {
@@ -246,12 +247,17 @@ public class LoadScan {
 
 			pages.clear();
 			pageTable.refresh();
-			
+
 			PageScanController.loadNewDocumentPages(documentList.getSelectionModel().getSelectedItem().getKey());
 
 			LinkedList<Page> p = PageScanController.getCurrentDocumentPages();
 
 			Collections.sort(p);
+			
+			if (checkRevisioned.isSelected())
+				checkRevisioned.fire();
+			if (checkConvalidated.isSelected())
+				checkConvalidated.fire();
 
 			for (Page page : p) {
 				String rev = "";
