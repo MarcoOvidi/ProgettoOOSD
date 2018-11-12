@@ -25,22 +25,22 @@
 						</AnchorPane>
 					</children>
 				</AnchorPane>
-				<Label layoutX="41.0" layoutY="122.0" text="Load scan:" textFill="#aaaaaa">
+				<Label layoutX="657.0" layoutY="126.0" text="Load scan:" textFill="#aaaaaa">
 					<font>
 						<Font size="28.0" />
 					</font>
 				</Label>
-				<Button fx:id="filechooser" layoutX="198.0" layoutY="128.0" mnemonicParsing="false" text="Choose file" />
-				<ScrollPane layoutX="41.0" layoutY="173.0" prefHeight="561.0" prefWidth="1182.0">
+				<Button fx:id="filechooser" layoutX="814.0" layoutY="132.0" mnemonicParsing="false" text="Choose file" />
+				<ScrollPane layoutX="41.0" layoutY="173.0" prefHeight="530.0" prefWidth="1182.0">
 					<content>
 						<VBox fx:id="scanList" prefHeight="202.0" prefWidth="1035.0">
 							<children>
-								<TableView fx:id="pageTable" prefHeight="200.0" prefWidth="200.0">
+								<TableView fx:id="pageTable" prefHeight="296.0" prefWidth="1035.0">
 									<columns>
 										<TableColumn fx:id="number" prefWidth="75.0" text="Number" />
-										<TableColumn fx:id="image" prefWidth="75.0" text="Page" />
-										<TableColumn fx:id="validated" prefWidth="75.0" text="Validated" />
-                              <TableColumn fx:id="revisioned" prefWidth="75.0" text="Revisioned" />
+										<TableColumn fx:id="image" editable="false" prefWidth="75.0" sortable="false" text="Page" />
+                              <TableColumn fx:id="revisioned" editable="false" prefWidth="75.0" sortable="false" text="Revisioned" />
+										<TableColumn fx:id="validated" editable="false" prefWidth="75.0" sortable="false" text="Validated" />
 									</columns>
 								</TableView>
 							</children>
@@ -54,15 +54,15 @@
 				</Label>
 				<ChoiceBox fx:id="documentList" layoutX="326.0" layoutY="78.0" prefWidth="150.0" />
 				<Button fx:id="loadDocumentButton" layoutX="506.0" layoutY="78.0" mnemonicParsing="false" text="Load" />
-            <Label layoutX="314.0" layoutY="125.0" text="Filter: " textFill="#aaaaaa">
+            <Label layoutX="43.0" layoutY="125.0" text="Filter: " textFill="#aaaaaa">
                <font>
                   <Font size="28.0" />
                </font>
             </Label>
-            <CheckBox fx:id="checkRevisioned" layoutX="415.0" layoutY="130.0" mnemonicParsing="false" text="Revisioned" textFill="#fffefe" />
-            <CheckBox fx:id="checkConvalidated" layoutX="531.0" layoutY="133.0" mnemonicParsing="false" text="Convalidated" textFill="#fffefe" />
-            <Button fx:id="filterPages" layoutX="676.0" layoutY="129.0" mnemonicParsing="false" text="Filter Pages" />
-            <Button fx:id="clearFilters" layoutX="794.0" layoutY="129.0" mnemonicParsing="false" text="No Filter" />
+            <CheckBox fx:id="checkRevisioned" layoutX="144.0" layoutY="130.0" mnemonicParsing="false" text="Revisioned" textFill="#fffefe" />
+            <CheckBox fx:id="checkConvalidated" layoutX="260.0" layoutY="133.0" mnemonicParsing="false" text="Convalidated" textFill="#fffefe" />
+            <Button fx:id="filterPages" layoutX="405.0" layoutY="129.0" mnemonicParsing="false" text="Filter Pages" />
+            <Button fx:id="clearFilters" layoutX="523.0" layoutY="129.0" mnemonicParsing="false" text="No Filter" />
 			</children>
 		</AnchorPane>
 	</top>

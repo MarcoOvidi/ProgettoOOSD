@@ -1,33 +1,44 @@
 package vo;
 
+import javafx.scene.image.ImageView;
+
 public class Rows {
 
-	private Integer number;
-	private String image;
+	private String number;
+	private ImageView ImageView;
 	private String revisioned;
 	private String validated;
+	private UUIDPage id;
 
-	public Rows(Integer n, String i,String rev,String val) {
+	public Rows(String n, ImageView i,String rev,String val) {
 		this.number=n;
-		this.image=i;
+		this.ImageView=i;
 		this.revisioned=rev;
 		this.validated=val;
 	}
+	
+	public Rows(String n, ImageView i,String rev,String val, UUIDPage id) {
+		this.number=n;
+		this.ImageView=i;
+		this.revisioned=rev;
+		this.validated=val;
+		this.setId(id);
+	}
 
-	public Integer getNumber() {
+	public String getNumber() {
 		return number;
 	}
 
-	public void setNumber(Integer number) {
+	public void setNumber(String number) {
 		this.number = number;
 	}
 
-	public String getImage() {
-		return image;
+	public ImageView getImageView() {
+		return ImageView;
 	}
 
-	public void setImage(String image) {
-		this.image = image;
+	public void setImageView(ImageView ImageView) {
+		this.ImageView = ImageView;
 	}
 
 	public String getRevisioned() {
@@ -44,6 +55,14 @@ public class Rows {
 
 	public void setValidated(String validated) {
 		this.validated = validated;
+	}
+
+	public UUIDPage getId() {
+		return id;
+	}
+
+	public void setId(UUIDPage id) {
+		this.id = id;
 	}
 	
 	
