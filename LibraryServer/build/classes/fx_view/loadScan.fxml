@@ -61,6 +61,8 @@
             </Label>
             <CheckBox fx:id="checkRevisioned" layoutX="415.0" layoutY="130.0" mnemonicParsing="false" text="Revisioned" textFill="#fffefe" />
             <CheckBox fx:id="checkConvalidated" layoutX="531.0" layoutY="133.0" mnemonicParsing="false" text="Convalidated" textFill="#fffefe" />
+            <Button fx:id="filterPages" layoutX="676.0" layoutY="129.0" mnemonicParsing="false" text="Filter Pages" />
+            <Button fx:id="clearFilters" layoutX="794.0" layoutY="129.0" mnemonicParsing="false" text="No Filter" />
 			</children>
 		</AnchorPane>
 	</top>

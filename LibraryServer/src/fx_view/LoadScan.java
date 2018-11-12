@@ -4,11 +4,13 @@ import java.io.File;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Map.Entry;
+import java.util.function.Predicate;
 
 import controller.LocalSession;
 import controller.PageScanController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -69,11 +71,18 @@ public class LoadScan {
 	private CheckBox checkRevisioned;
 
 	@FXML
+	private Button filterPages;
+
+	@FXML
+	private Button clearFilters;
+
+	@FXML
 	public void initialize() {
 		documentList();
 		insertDocument();
 		initButtonChoice();
 		initLoadDocumentButton();
+		filterButton();
 	}
 
 	public void documentList() {
@@ -151,10 +160,85 @@ public class LoadScan {
 
 		loadDocumentButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 
-			PageScanController.loadNewDocumentPages(documentList.getSelectionModel().getSelectedItem().getKey()
-					, checkConvalidated.isSelected(),checkRevisioned.isSelected());
+			PageScanController.loadNewDocumentPages(documentList.getSelectionModel().getSelectedItem().getKey());
 
-			pageTable.getItems().clear();
+			LinkedList<Page> p = PageScanController.getCurrentDocumentPages();
+
+			Collections.sort(p);
+
+			for (Page page : p) {
+				String rev = "";
+				if (page.getScan().getRevised()) {
+					rev = "\u2714";
+				} else {
+					rev = "\u2718";
+				}
+
+				String val = "";
+
+				if (page.getScan().getValidated()) {
+					val = "\u2714";
+				} else {
+					val = "\u2718";
+				}
+
+				pages.add(new Rows(page.getPageNumber(), page.getScan().getImage().getUrl(), val, rev));
+
+			}
+
+			pageTable.setItems(pages);
+
+			event.consume();
+		});
+
+	}
+
+	@FXML
+	public void filterButton() {
+		filterPages.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+			FilteredList<Rows> filteredList = new FilteredList<>(pages);
+
+			pageTable.setItems(filteredList);
+
+			filteredList.setPredicate(new Predicate<Rows>() {
+				public boolean test(Rows t) {
+					Boolean control = false;
+
+					if (checkConvalidated.isSelected() && checkRevisioned.isSelected()) {
+						if (t.getValidated().equalsIgnoreCase("\u2714") && t.getRevisioned().equalsIgnoreCase("\u2714"))
+							control = true;
+						else
+							control = false;
+					} else if (checkConvalidated.isSelected() && !(checkRevisioned.isSelected())) {
+						if (t.getValidated().equalsIgnoreCase("\u2714") && t.getRevisioned().equalsIgnoreCase("\u2718"))
+							control = true;
+						else
+							control = false;
+					} else if (!(checkConvalidated.isSelected()) && checkRevisioned.isSelected()) {
+						if (t.getValidated().equalsIgnoreCase("\u2718") && t.getRevisioned().equalsIgnoreCase("\u2714"))
+							control = true;
+						else
+							control = false;
+					} else if (!(checkConvalidated.isSelected()) && !(checkRevisioned.isSelected())) {
+						if (t.getValidated().equalsIgnoreCase("\u2718") && t.getRevisioned().equalsIgnoreCase("\u2718"))
+							control = true;
+						else
+							control = false;
+					}
+
+					return control;
+				}
+			});
+
+			event.consume();
+		});
+
+		clearFilters.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+
+			pages.clear();
+			pageTable.refresh();
+			
+			PageScanController.loadNewDocumentPages(documentList.getSelectionModel().getSelectedItem().getKey());
 
 			LinkedList<Page> p = PageScanController.getCurrentDocumentPages();
 
@@ -185,4 +269,5 @@ public class LoadScan {
 			event.consume();
 		});
 	}
+
 }

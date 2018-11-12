@@ -53,14 +53,25 @@ public class PageScanController {
 		uncompletedDocument = uncompleted_Document;
 	}
 	
-	public static void loadNewDocumentPages(UUIDDocument doc,Boolean revision,Boolean convalidation) {
+	public static void loadNewDocumentPages(UUIDDocument doc) {
 		try {
-			currentDocumentPages = DigitalizerQuerySet.loadDocument(doc, revision, convalidation);
+			currentDocumentPages = DigitalizerQuerySet.loadDocument(doc,false,false);
+			currentDocumentPages.addAll(DigitalizerQuerySet.loadDocument(doc, false, true));
+			currentDocumentPages.addAll(DigitalizerQuerySet.loadDocument(doc, true, false));
+			currentDocumentPages.addAll(DigitalizerQuerySet.loadDocument(doc, true, true));
 		} catch (DatabaseException e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 		}
-		
+	}
+	
+	public static void setUncompletedDocumentPagesFilters(UUIDDocument doc, Boolean revised, Boolean validated) {
+		try {
+			currentDocumentPages = DigitalizerQuerySet.loadDocument(doc, revised, validated);
+		}catch(DatabaseException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
 	}
 
 	public static LinkedList<Page> getCurrentDocumentPages() {
