@@ -35,7 +35,7 @@ public class Topbar {
 		map.put("Manage Projects", "manageProject");
 		map.put("Upload", "loadScan");
 		map.put("Transcription", "");
-		map.put("Review", "");
+		map.put("Review", "scanRevisor");
 	}
 
 	public void initialize() {
