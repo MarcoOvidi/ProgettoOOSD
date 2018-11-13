@@ -143,9 +143,9 @@ public class Home {
 			HashMap<UUIDDocument, String[]> newsMap = HomePageController.getNews();
 			int c = 0;
 
-			for (String[] text : newsMap.values()) {
+			for (Entry<UUIDDocument, String[]> entry : newsMap.entrySet()) {
 
-				Label title = new Label(text[0] + "               ( " + text[1] + " giorni fa) " + text[2]);
+				Label title = new Label(entry.getValue()[0] + "               ( " + entry.getValue()[1] + " giorni fa) " + entry.getValue()[2]);
 
 				HBox row = new HBox();
 
@@ -154,6 +154,12 @@ public class Home {
 				else
 					row.setId("news-row1");
 				row.getChildren().add(title);
+				
+				row.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+					PageViewController.showDocument(entry.getKey());
+					event.consume();
+				});
+				
 				news.getChildren().add(row);
 				c++;
 			}
