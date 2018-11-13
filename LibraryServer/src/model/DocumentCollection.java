@@ -12,11 +12,10 @@ public class DocumentCollection {
 	private String name;
 	private LinkedList<UUIDDocument> documents;
 	
-	
-	//Costruttore
-	//TODO
-	public DocumentCollection() {
-
+	public DocumentCollection(UUIDDocumentCollection id, String name, LinkedList<UUIDDocument> documents) {
+		this.id = id;
+		this.name = name;
+		this.documents = documents;
 	}
 	
 	// metodi get e set

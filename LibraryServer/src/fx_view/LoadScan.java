@@ -152,7 +152,7 @@ public class LoadScan {
 	@FXML
 	public void initButtonChoice() {
 		filechooser.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-			// TODO
+			// TODO Cos'è questo?
 			event.consume();
 		});
 	}

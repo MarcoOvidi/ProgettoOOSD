@@ -24,9 +24,6 @@ public class Document {
 	private UUIDScanningWorkProject scanningWorkProject;
 	private UUIDTranscriptionWorkProject transcriptionWorkProject;
 	
-	//TODO
-	//costruttore
-	
 	public Document(String title, UUIDDocument id, DocumentMetadata dm, LinkedList<Page> pagel,
 			UUIDScanningWorkProject idsp, UUIDTranscriptionWorkProject idtp) {
 		this.title = title;

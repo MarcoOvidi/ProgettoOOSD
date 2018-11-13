@@ -13,7 +13,6 @@ public class User {
 	//variabili istanza
 	
 	private UUIDUser id;
-	//private SessionDataHandler session; //WTF //FIXME 
 	private String username;
 	private UserInformations informations;
 	private UserPermissions permissions;

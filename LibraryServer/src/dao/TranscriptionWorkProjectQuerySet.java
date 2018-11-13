@@ -15,7 +15,7 @@ import vo.UUIDDocument;
 import vo.UUIDTranscriptionWorkProject;
 
 public class TranscriptionWorkProjectQuerySet {
-	//TODO
+	//TODO Cosa manca?
 	public static UUIDTranscriptionWorkProject insertTranscriptionWorkProject(LinkedList<UUIDUser> transcribers , 
 			LinkedList<UUIDUser> revisers, UUIDUser coordinator, Boolean completed, UUIDDocument doc) throws DatabaseException {
 			Connection con = null;

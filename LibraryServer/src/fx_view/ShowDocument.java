@@ -1,6 +1,5 @@
 package fx_view;
 
-
 import java.util.LinkedList;
 
 import controller.LocalSession;
@@ -8,16 +7,24 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.VBox;
 import model.Page;
 
 public class ShowDocument {
 	private static int currentPage;
+
+	@FXML
+	private Button backButton;
+
+	@FXML
+	private ScrollPane scrollPage;
 	
 	@FXML
 	private VBox pageList;
@@ -47,7 +54,20 @@ public class ShowDocument {
 			hbox.getChildren().add(miniature);
 	       scanList.getChildren().add(hbox);
 	    }
-	*/    
+	*/   
+		//backButton = new Button();
+		backButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+			SceneController.loadPreviousScene();
+	        event.consume();
+	        });
+		
+		/*scanList.addEventHandler(ScrollEvent.SCROLL, event -> {
+			 System.out.println(scanList.getHeight());
+			 System.out.println(event.getDeltaY());
+			 System.out.println(event.getDeltaY() / scanList.getHeight());
+		});*/
+		
+		scrollPage.vvalueProperty().bind(scanList.heightProperty());
 	}
 	
 
@@ -71,7 +91,6 @@ public class ShowDocument {
 			miniature.setFitHeight(130);
 			hbox.getChildren().add(miniature);
 			hbox.getChildren().add(new Label(page.getPageNumber().toString()));
-			pageList.getChildren().add(hbox);
 			hbox.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 				Node nodeOut = hbox.getChildren().get(1);
 		        if(nodeOut instanceof Label){
@@ -81,9 +100,24 @@ public class ShowDocument {
 		           }
 		        else {System.out.println("Not");}
 		        event.consume();
-		        
 		        });
-	        
+			pageList.getChildren().add(hbox);
+			
+			ImageView scan = new ImageView(pageIcon);
+			scan.setFitWidth(360);
+			scan.setFitHeight(520);
+			//hbox.getChildren().add(new Label(page.getPageNumber().toString()));
+			scan.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+				Node nodeOut = hbox.getChildren().get(1);
+		        if(nodeOut instanceof Label){
+		        			currentPage=Integer.parseInt(((Label) nodeOut).getText());
+		    				loadPage();
+		    				System.out.println(scanListScroll.getViewportBounds().getHeight());
+		           }
+		        else {System.out.println("Not");}
+		        event.consume();
+		        });
+			scanList.getChildren().add(scan);
 	    }
 	}
 
