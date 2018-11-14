@@ -31,7 +31,7 @@ public class Topbar {
 
 	static {
 		map.put("Home", "home");
-		map.put("MyProfile", "userProfile");
+		map.put("My Profile", "userProfile");
 		map.put("Manage Projects", "manageProject");
 		map.put("Upload", "loadScan");
 		map.put("Transcription", "");

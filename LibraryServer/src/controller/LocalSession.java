@@ -5,6 +5,7 @@ import java.util.List;
 
 import model.Document;
 import model.User;
+import vo.UserInformations;
 import vo.UserPermissions;
 
 public final class LocalSession {
@@ -33,6 +34,10 @@ public final class LocalSession {
 
 	public static User getLocalUser() {
 		return localUser;
+	}
+	
+	public static UserInformations getLocalUserInfo() {
+		return localUser.getInformations();
 	}
 
 	private static void loadTopBarButtons() {
