@@ -17,6 +17,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 public class LoginScene {
+	
+	private boolean autoLogin = true;
 
 	String controllerUrl = "LoginController";
 
@@ -73,6 +75,12 @@ public class LoginScene {
 
 	@FXML
 	public void initialize() throws DatabaseException, ParseException {
+		if(autoLogin){
+			username.setText("Username");
+			password.setText("Password");
+			Platform.runLater( () -> go());
+		}
+		
 		login.setFocusTraversable(true);
 		recover.setFocusTraversable(true);
 
