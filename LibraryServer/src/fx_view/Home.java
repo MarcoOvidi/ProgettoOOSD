@@ -17,6 +17,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import vo.UUIDDocument;
+import vo.UUIDScanningWorkProject;
 
 public class Home {
 	
@@ -61,9 +62,9 @@ public class Home {
 			HomePageController.loadMyScanningProjects();
 
 			Image pageIcon = new Image("images/blank.png");
-			for (String text : HomePageController.getMySPrj().values()) {
+			for (Entry<UUIDScanningWorkProject, String> entry: HomePageController.getMySPrj().entrySet()) {
 				ImageView miniature = new ImageView(pageIcon);
-				Label label = new Label(text);
+				Label label = new Label(entry.getValue());
 				VBox elem = new VBox();
 
 				miniature.setFitWidth(100);
@@ -71,6 +72,15 @@ public class Home {
 				elem.setId("project-miniature");
 				elem.getChildren().add(miniature);
 				elem.getChildren().add(label);
+				elem.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+					try {
+						LoadScan.setToOpenDocumentFromScanningProject(entry.getKey());
+						SceneController.loadScene("loadScan");
+					} catch (NullPointerException | DatabaseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				});
 				sProjects.getChildren().add(elem);
 			}
 		} else {

@@ -8,6 +8,8 @@ import java.util.function.Predicate;
 
 import controller.LocalSession;
 import controller.PageScanController;
+import dao.DatabaseException;
+import dao.ScanningWorkProjectQuerySet;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -21,9 +23,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
@@ -36,8 +38,11 @@ import javafx.util.StringConverter;
 import model.Page;
 import vo.Rows;
 import vo.UUIDDocument;
+import vo.UUIDScanningWorkProject;
 
 public class LoadScan {
+
+	private static UUIDDocument toOpenDocument = null;
 
 	@FXML
 	private Button filechooser;
@@ -88,12 +93,25 @@ public class LoadScan {
 		initButtonChoice();
 		initLoadDocumentButton();
 		filterButton();
+		
+		if(toOpenDocument != null) {
+			loadDocument(toOpenDocument);
+		}
+		toOpenDocument = null;
+	}
+
+	public static void setToOpenDocumentFromScanningProject(UUIDScanningWorkProject swp) throws NullPointerException, DatabaseException {
+		LoadScan.toOpenDocument = ScanningWorkProjectQuerySet.loadUUIDDocument(swp);
+	}
+	
+	public static void setToOpenDocument(UUIDDocument toOpenDocument) {
+		LoadScan.toOpenDocument = toOpenDocument;
 	}
 
 	public void imageUpload() {
 		filechooser.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 			FileChooser fileChooser = new FileChooser();
-			FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Images", "*.jpg","*.png");
+			FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Images", "*.jpg", "*.png");
 			fileChooser.getExtensionFilters().add(extFilter);
 			File file = fileChooser.showOpenDialog(new Stage());
 
@@ -115,10 +133,10 @@ public class LoadScan {
 			hbox.getChildren().add(newscan);
 			hbox.getChildren().add(new TextField("1"));
 			Button send = new Button("Upload Page");
-			
+
 			send.addEventHandler(MouseEvent.MOUSE_CLICKED, sending -> {
-				//TODO chiama controller che chiama la query createPage di digitalizerQuerySET
-				
+				// TODO chiama controller che chiama la query createPage di digitalizerQuerySET
+
 				sending.consume();
 			});
 			scanList.getChildren().add(hbox);
@@ -126,7 +144,6 @@ public class LoadScan {
 			event.consume();
 		});
 	}
-
 
 	@FXML
 	public void insertDocument() {
@@ -159,7 +176,6 @@ public class LoadScan {
 
 	@FXML
 	public void initLoadDocumentButton() {
-		LinkedList<Page> pL = new LinkedList<Page>();
 		pages = FXCollections.observableArrayList();
 		number.setCellValueFactory(new PropertyValueFactory<Rows, String>("Number"));
 		number.setCellFactory(TextFieldTableCell.<Rows>forTableColumn());
@@ -168,84 +184,89 @@ public class LoadScan {
 		validated.setCellValueFactory(new PropertyValueFactory<Rows, String>("Validated"));
 
 		loadDocumentButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-			pageTable.setEditable(true);
-			PageScanController.loadNewDocumentPages(documentList.getSelectionModel().getSelectedItem().getKey());
-
-			LinkedList<Page> p = PageScanController.getCurrentDocumentPages();
-			pL.addAll(p);
-
-			Collections.sort(p);
-
-			pages.clear();
-			pageTable.refresh();
-
-			if (checkRevisioned.isSelected())
-				checkRevisioned.fire();
-			if (checkConvalidated.isSelected())
-				checkConvalidated.fire();
-
-			for (Page page : p) {
-				String rev = "";
-				if (page.getScan().getRevised()) {
-					rev = "\u2714";
-				} else {
-					rev = "\u2718";
-				}
-
-				String val = "";
-
-				if (page.getScan().getValidated()) {
-					val = "\u2714";
-				} else {
-					val = "\u2718";
-				}
-
-				Image img = new Image("file:" + page.getScan().getImage().getUrl());
-
-				ImageView imgView = new ImageView();
-				imgView.setImage(img);
-
-				pages.add(new Rows(page.getPageNumber().toString(), imgView, val, rev,page.getID()));
-
-			}
-
-			pageTable.setItems(pages);
-
-			number.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Rows, String>>() {
-
-				@Override
-				public void handle(CellEditEvent<Rows, String> event) {
-					if (event.getOldValue() == event.getNewValue()) {
-						return;
-					}
-					for (Page p : pL) {
-						if (p.getPageNumber() == Integer.parseInt(event.getNewValue())) {
-							/*
-							 * if (p.getScan().getValidated()) { Alert alt = new
-							 * Alert(AlertType.INFORMATION); alt.setTitle("Not Valid Operation");
-							 * alt.setHeaderText("Attention");
-							 * alt.setContentText("Cannot change number to a validated Page!"); alt.show();
-							 * event.getRowValue().setNumber(event.getOldValue()); pageTable.refresh();
-							 * return; } else {
-							 */
-							event.getRowValue().setNumber(event.getOldValue()); pageTable.refresh();
-							Alert alt = new Alert(AlertType.INFORMATION);
-							alt.setTitle("Not Valid Operation");
-							alt.setHeaderText("Attention");
-							alt.setContentText("Cannot change number to an existing Page!");
-							alt.show();
-							
-							return;
-						}
-						
-					}
-					PageScanController.updatePageNumber(event.getRowValue().getId(), Integer.parseInt(event.getNewValue()));
-				}
-			});
-
+			loadDocument(documentList.getSelectionModel().getSelectedItem().getKey());
 			event.consume();
 		});
 
+	}
+
+	public void preLoadDocument(UUIDDocument document) {
+		toOpenDocument = document;
+	}
+
+	public void loadDocument(UUIDDocument document) { //FIXME tutto da testare
+		PageScanController.loadNewDocumentPages(document);
+		LinkedList<Page> pL = PageScanController.getCurrentDocumentPages();
+		pageTable.setEditable(true);
+
+		Collections.sort(pL);
+
+		pages.clear();
+		pageTable.refresh();
+
+		if (checkRevisioned.isSelected())
+			checkRevisioned.fire();
+		if (checkConvalidated.isSelected())
+			checkConvalidated.fire();
+
+		for (Page page : pL) {
+			String rev = "";
+			if (page.getScan().getRevised()) {
+				rev = "\u2714";
+			} else {
+				rev = "\u2718";
+			}
+
+			String val = "";
+
+			if (page.getScan().getValidated()) {
+				val = "\u2714";
+			} else {
+				val = "\u2718";
+			}
+
+			Image img = new Image("file:" + page.getScan().getImage().getUrl());
+
+			ImageView imgView = new ImageView();
+			imgView.setImage(img);
+
+			pages.add(new Rows(page.getPageNumber().toString(), imgView, val, rev,page.getID()));
+
+		}
+
+		pageTable.setItems(pages);
+
+		number.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Rows, String>>() {
+
+			@Override
+			public void handle(CellEditEvent<Rows, String> event) {
+				if (event.getOldValue() == event.getNewValue()) {
+					return;
+				}
+				for (Page p : pL) {
+					if (p.getPageNumber() == Integer.parseInt(event.getNewValue())) {
+						/*
+						 * if (p.getScan().getValidated()) { Alert alt = new
+						 * Alert(AlertType.INFORMATION); alt.setTitle("Not Valid Operation");
+						 * alt.setHeaderText("Attention");
+						 * alt.setContentText("Cannot change number to a validated Page!"); alt.show();
+						 * event.getRowValue().setNumber(event.getOldValue()); pageTable.refresh();
+						 * return; } else {
+						 */
+						event.getRowValue().setNumber(event.getOldValue()); pageTable.refresh();
+						Alert alt = new Alert(AlertType.INFORMATION);
+						alt.setTitle("Not Valid Operation");
+						alt.setHeaderText("Attention");
+						alt.setContentText("Cannot change number to an existing Page!");
+						alt.show();
+						
+						return;
+					}
+					
+				}
+				PageScanController.updatePageNumber(event.getRowValue().getId(), Integer.parseInt(event.getNewValue()));
+			}
+		});
 	}
 
 	@FXML
@@ -325,7 +346,7 @@ public class LoadScan {
 				ImageView imgView = new ImageView();
 				imgView.setImage(img);
 
-				pages.add(new Rows(page.getPageNumber().toString(), imgView, val, rev,page.getID()));
+				pages.add(new Rows(page.getPageNumber().toString(), imgView, val, rev, page.getID()));
 
 			}
 

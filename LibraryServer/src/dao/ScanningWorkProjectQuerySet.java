@@ -208,6 +208,60 @@ public class ScanningWorkProjectQuerySet {
 		return swp;
 	}
 
+
+	/*
+	 * Selects the UUIDDocument of a specific UUIDScanningWorkProject
+	 * 
+	 * @param UUIDScanningWorkProject id corresponding to the Document
+	 * 
+	 * @return UUIDDocument UUID of the Document
+	 */
+
+	public static UUIDDocument loadUUIDDocument(UUIDScanningWorkProject id)
+			throws DatabaseException, NullPointerException {
+		if (id == null)
+			throw new NullPointerException("Id non vallido");
+
+		Connection con = null;
+
+		try {
+			con = DBConnection.connect();
+		} catch (DatabaseException ex) {
+			throw new DatabaseException("Errore di connessione", ex);
+		}
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		UUIDDocument doc = null;
+		
+		try {
+			ps = con.prepareStatement("SELECT ID_document FROM scanning_project "
+					+ "WHERE ID = ?;");
+			ps.setInt(1, id.getValue());
+
+			rs = ps.executeQuery();
+			
+			if (rs.next())
+				doc = new UUIDDocument(rs.getInt("ID_document"));
+
+		} catch (SQLException e) {
+			throw new DatabaseException("Errore di esecuzione query", e);
+		} finally {
+
+			try {
+				if (rs != null)
+					rs.close();
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+		}
+		return doc;
+	}
+
 	/*
 	 * Aggiungi un utente Digitalizzatore ad un progetto di Digitalizzazione
 	 * 

@@ -73,7 +73,7 @@ public class ShowDocument {
 
 	public void loadPageList(){
         LinkedList<Page> pages = LocalSession.getOpenedDocumet().getPageList();
-        System.out.println("1");
+        //System.out.println("1");
 	   
         for(Page page : pages) {
         	Image pageIcon = new Image("images/libricino.png");
