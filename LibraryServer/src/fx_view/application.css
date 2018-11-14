@@ -83,6 +83,11 @@ Button:hover{
 	-fx-text-fill:#fff;	  
 }
 
+Button:focused{
+	-fx-border-color:#e86e0a;
+	-fx-text-fill:#fff;	  
+}
+
 TextField:hover{
 	-fx-border-color:#e86e0a;
 	-fx-text-fill:#fff;

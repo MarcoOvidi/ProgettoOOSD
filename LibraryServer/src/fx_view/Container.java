@@ -31,7 +31,8 @@ public class Container {
 	
 	@FXML
 	public void initialize() throws DatabaseException, ParseException {
-		content = newContent;
+		//content = newContent;
+		content.getChildren().setAll(newContent);
 	}
 	
 }
