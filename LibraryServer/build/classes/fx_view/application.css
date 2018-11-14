@@ -7,34 +7,27 @@ Button,TextField, PasswordField{
     -fx-alignment: CENTER;
 	-fx-background-color: transparent;
 	-fx-border-color:#aaa;
-	-fx-border-radius: 0px;
-	-fx-border-width: 0.0px 0.0px 2px 0.0px ;
+	-fx-border-radius: 0.0px;
+	-fx-border-width: 0.0px 0.0px 2.0px 0.0px ;
 	-fx-text-fill:#aaa;	  
 }
-  .text-area .content{
-      -fx-background-color: transparent;
-      -fx-text-fill:#aaa;	  
-      -fx-highlight-fill: #aaa;
-       -fx-highlight-text-fill: #aaa; 
-  }
-  
   
  #pageContainer{
  	-fx-background-color: #222;
- 	-fx-border-width:1px;
+ 	-fx-border-width:1.0px;
  	-fx-border-color:#777;
  } 
 
 #news-row{
 	-fx-background-color:#202020;
-	-fx-padding:4px;
-	-fx-border-width:0px 0px 1px 0px;
+	-fx-padding:4.0px;
+	-fx-border-width:0.0px 0.0px 1.0px 0.0px;
 	-fx-border-color:#191919;
 	}
 #news-row1{
 	-fx-background-color:#222;
-	-fx-padding:4px;
-	-fx-border-width:0px 0px 0px 0px;
+	-fx-padding:4.0px;
+	-fx-border-width:0.0px 0.0px 0.0px 0.0px;
 	-fx-border-color:#191919;
 	}
 	
@@ -49,33 +42,33 @@ Button,TextField, PasswordField{
 AnchorPane,HBox, VBox, FlowPane{-fx-background:#222; -fx-border-width:0.0px;}
 
 .scroll-pane {
-    -fx-background-insets: 0;
-    -fx-padding: 0;
+    -fx-background-insets: 0.0;
+    -fx-padding: 0.0;
 }
 
 .scroll-pane:focused {
-    -fx-background-insets: 0;
+    -fx-background-insets: 0.0;
 }
 
 .scroll-pane .corner {
-    -fx-background-insets: 0;
+    -fx-background-insets: 0.0;
 }
 
 #categories{
 	-fx-alignment:center;
-	-fx-padding:4px;
+	-fx-padding:4.0px;
 	
 	}
 #categories>Label{
 	-fx-alignment: CENTER;
     -fx-text-fill: #aaa;
     -fx-font-weight: bold;
-	-fx-padding:4px;
-	-fx-border-width: 2px;
-	-fx-border-radius: 14px;
+	-fx-padding:4.0px;
+	-fx-border-width: 2.0px;
+	-fx-border-radius: 14.0px;
 	-fx-border-color: #191919;
 	-fx-background-color:#202020;
-	-fx-background-radius:14px;
+	-fx-background-radius:14.0px;
 }
 
 Button:hover{
@@ -119,15 +112,15 @@ PasswordField:hover{
 
 .tab-pane
 {
-    -fx-tab-min-width:90px;
+    -fx-tab-min-width:90.0px;
     
     -fx-background-color: #191919;
 }
 
 .tab{
-    -fx-background-insets: 0 1 0 1,0,0;
+    -fx-background-insets: 0.0 1.0 0.0 1.0,0.0,0.0;
     
-    -fx-pref-height: 50;
+    -fx-pref-height: 50.0;
 }
 .tab-pane .tab
 {
@@ -143,11 +136,11 @@ PasswordField:hover{
 .tab .tab-label { 
     -fx-alignment: CENTER;
     -fx-text-fill: #aaa;
-    -fx-font-size: 16px;
+    -fx-font-size: 16.0px;
     
     -fx-border-color:#aaa0;
 
-    -fx-border-width: 0px 0px 2px 0px;
+    -fx-border-width: 0.0px 0.0px 2.0px 0.0px;
 }
 
 .tab:hover .tab-label { 
@@ -163,7 +156,7 @@ PasswordField:hover{
 }
 	
 .tab-pane>*.tab-header-area>*.tab-header-background {
-     -fx-opacity: 0;
+     -fx-opacity: 0.0;
 }
 		
 
@@ -178,7 +171,7 @@ PasswordField:hover{
 }
 
 #scrollPage{
-	-fx-border-width:0px 1px 0px 0px;
+	-fx-border-width:0.0px 1.0px 0.0px 0.0px;
 	-fx-border-color:#191919;
 
 }
@@ -200,13 +193,13 @@ PasswordField:hover{
 .scroll-bar:vertical .track{
     -fx-background-color: #202020;
     -fx-border-color: #202020;
-    -fx-background-radius: 0em;
+    -fx-background-radius: 0.0em;
 }
 
 .scroll-bar:horizontal .thumb,
 .scroll-bar:vertical .thumb {
     -fx-background-color: #444;
-    -fx-background-radius: 5em;
+    -fx-background-radius: 5.0em;
 }
 
 .scroll-pane > .corner {
@@ -215,9 +208,25 @@ PasswordField:hover{
 }
 
 #project-miniature{
-	-fx-padding:0px 20px 0px 20px;
+	-fx-padding:0.0px 20.0px 0.0px 20.0px;
 	-fx-alignment:center;
 }
+ 
+.text-area .content{
+	-fx-border-width:0.0px 1.0px 0.0px 2.0px;
+    -fx-alignment: CENTER;
+    -fx-border-color:#e86e0a;
+      -fx-background-color: #202020;
+  }
+  
+TextArea {
+	-fx-text-fill: #fff;
+      -fx-highlight-fill: #e86e0a;
+       -fx-highlight-text-fill: #222;
+}
 
-
-
+TextArea:focused {
+	-fx-border-width:0.0px 0.0px 0.0px 2.0px;
+    -fx-border-color:#e86e0a;
+      -fx-background-color: #2220;
+}

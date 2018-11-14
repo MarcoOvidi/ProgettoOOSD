@@ -79,9 +79,10 @@ public class LoginScene {
 		});
 
 		username.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-			/*if (event.isShiftDown() && event.getCode() == KeyCode.TAB) {
-				recover.requestFocus();
-			}*/
+			/*
+			 * if (event.isShiftDown() && event.getCode() == KeyCode.TAB) {
+			 * recover.requestFocus(); }
+			 */
 			if (event.getCode() == KeyCode.ENTER) {
 				password.requestFocus();
 			} else if (event.getCode() == KeyCode.ESCAPE) {
@@ -89,8 +90,10 @@ public class LoginScene {
 				password.setText("");
 				username.getParent().requestFocus();
 			}
-			if (event.getCode() != KeyCode.TAB)
-			event.consume();
+			if (event.getCode() != KeyCode.TAB && event.getCode() != KeyCode.BACK_SPACE
+					&& event.getCode() != KeyCode.DELETE && event.getCode() != KeyCode.RIGHT
+					&& event.getCode() != KeyCode.LEFT)
+				event.consume();
 		});
 
 		password.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
@@ -106,9 +109,13 @@ public class LoginScene {
 				password.setText("");
 				username.getParent().requestFocus();
 			}
-			if (event.getCode() != KeyCode.TAB)
-			event.consume();
+			if (event.getCode() != KeyCode.TAB && event.getCode() != KeyCode.BACK_SPACE
+					&& event.getCode() != KeyCode.DELETE && event.getCode() != KeyCode.RIGHT
+					&& event.getCode() != KeyCode.LEFT)
+				event.consume();
 		});
+
+		username.getParent().requestFocus();
 	}
 
 	public void displayMessage(String msg) {
