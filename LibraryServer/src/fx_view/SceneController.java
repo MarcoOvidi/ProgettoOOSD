@@ -21,41 +21,73 @@ public class SceneController extends Application {
 
 		//scene = new Scene(root,1400,800);
 		loadScene("login");
+		//loadLogin();
 		
 	}
 	
 	public static void main(String[] args) {
 		launch(args);
 	}
- 
-	public static void loadScene(String name) {
-		try {
-			previousScene = scene;
-			BorderPane root = (BorderPane)FXMLLoader.load(new Object(){}.getClass().getResource("/fx_view/"+name+".fxml"));
-			
-			scene = new Scene(root,1400,800);
-			scene.getStylesheets().add(new RootCss().getCss());
+	 
+		public static void loadScene(String name) {
+			try {
+				previousScene = scene;
+				BorderPane root = (BorderPane)FXMLLoader.load(new Object(){}.getClass().getResource("/fx_view/"+name+".fxml"));
+				/*Container.loadScene(name);
+				BorderPane root = (BorderPane)FXMLLoader.load(new Object(){}.getClass().getResource("/fx_view/container.fxml"));
+				*/
+				scene = new Scene(root,1400,800);
+				scene.getStylesheets().add(new RootCss().getCss());
 
-			scene.setRoot(root);
-			stage.setScene(scene);
+				scene.setRoot(root);
+				stage.setScene(scene);
 
-			//scene.getStylesheets().add(new Object().getClass().getResource("home.css").toExternalForm());
-			stage.setResizable(true);
+				//scene.getStylesheets().add(new Object().getClass().getResource("home.css").toExternalForm());
+				stage.setResizable(true);
 
-			//stage.setFullScreen(true);
+				//stage.setFullScreen(true);
+				
+				stage.setMinHeight(480);
+				stage.setMinWidth(720);
+				
+				stage.setTitle("Library - " + name);
+				
+				//stage.initStyle(StageStyle.UNDECORATED);
+				stage.show();			
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
 			
-			stage.setMinHeight(480);
-			stage.setMinWidth(720);
-			
-			stage.setTitle("Library - " + name);
-			
-			//stage.initStyle(StageStyle.UNDECORATED);
-			stage.show();			
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+		} 
 		
-	}
+		/*public static void loadLogin() {
+			try {
+				previousScene = scene;
+				BorderPane root = (BorderPane)FXMLLoader.load(new Object(){}.getClass().getResource("/fx_view/login.fxml"));
+				
+				scene = new Scene(root,1400,800);
+				scene.getStylesheets().add(new RootCss().getCss());
+
+				scene.setRoot(root);
+				stage.setScene(scene);
+
+				//scene.getStylesheets().add(new Object().getClass().getResource("home.css").toExternalForm());
+				stage.setResizable(true);
+
+				//stage.setFullScreen(true);
+				
+				stage.setMinHeight(480);
+				stage.setMinWidth(720);
+				
+				stage.setTitle("Library - login");
+				
+				//stage.initStyle(StageStyle.UNDECORATED);
+				stage.show();			
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+		}*/
 	
 	public static void loadPreviousScene() {
 

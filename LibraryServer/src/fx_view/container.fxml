@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
+	minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0"
+	prefWidth="400.0" xmlns="http://javafx.com/javafx/9.0.1"
+	xmlns:fx="http://javafx.com/fxml/1" fx:controller="fx_view.Container">
+	<left>
+		<AnchorPane style="-fx-background-color: #222;"
+			BorderPane.alignment="CENTER">
+			<children>
+				<AnchorPane fx:id="topbar" AnchorPane.leftAnchor="0.0"
+					AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+					<children>
+						<AnchorPane layoutX="29.0" layoutY="17.0"
+							AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+							<children>
+								<fx:include AnchorPane.leftAnchor="0.0"
+									AnchorPane.rightAnchor="0.0" source="topbar.fxml" />
+							</children>
+						</AnchorPane>
+					</children>
+				</AnchorPane>
+				<BorderPane fx:id="content" AnchorPane.leftAnchor="0.0"
+					AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0" >
+				</BorderPane>
+			</children>
+		</AnchorPane>
+	</left>
+</BorderPane>

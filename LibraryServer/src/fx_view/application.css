@@ -4,6 +4,7 @@
 }
 
 Button,TextField, PasswordField{
+    -fx-alignment: CENTER;
 	-fx-background-color: transparent;
 	-fx-border-color:#aaa;
 	-fx-border-radius: 0px;
@@ -80,7 +81,28 @@ AnchorPane,HBox, VBox, FlowPane{-fx-background:#222; -fx-border-width:0.0px;}
 Button:hover{
 	-fx-border-color:#e86e0a;
 	-fx-text-fill:#fff;	  
+}
 
+TextField:hover{
+	-fx-border-color:#e86e0a;
+	-fx-text-fill:#fff;
+}
+
+TextField:focused{
+	-fx-border-color:#e86e0a;
+	-fx-background-color:#444;
+	-fx-text-fill:#fff;
+}
+
+PasswordField:focused{
+	-fx-border-color:#e86e0a;
+	-fx-background-color:#444;
+	-fx-text-fill:#fff;	  
+}
+
+PasswordField:hover{
+	-fx-border-color:#e86e0a;
+	-fx-text-fill:#fff;	  
 }
 
 
@@ -93,6 +115,8 @@ Button:hover{
 .tab-pane
 {
     -fx-tab-min-width:90px;
+    
+    -fx-background-color: #191919;
 }
 
 .tab{
@@ -102,29 +126,35 @@ Button:hover{
 }
 .tab-pane .tab
 {
-    -fx-background-color: #222;
+    -fx-background-color: #4440;
 
 }
 
 .tab-pane .tab:selected
 {
-    -fx-background-color: #222;
+    -fx-background-color: #2220;
 }
 
 .tab .tab-label { 
     -fx-alignment: CENTER;
     -fx-text-fill: #aaa;
     -fx-font-size: 16px;
+    
+    -fx-border-color:#aaa0;
 
     -fx-border-width: 0px 0px 2px 0px;
+}
+
+.tab:hover .tab-label { 
+    -fx-alignment: CENTER;
+    -fx-text-fill: #ccc;
+    -fx-border-color:#ccc;
 }
 
 .tab:selected .tab-label { 
     -fx-alignment: CENTER;
     -fx-text-fill: #fff;
     -fx-border-color:#e86e0a;
-    -fx-font-weight: bold;
-
 }
 	
 .tab-pane>*.tab-header-area>*.tab-header-background {
@@ -133,7 +163,7 @@ Button:hover{
 		
 
 .tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
-    -fx-border-color: #222;
+    -fx-border-color: #2220;
 }
 
 
