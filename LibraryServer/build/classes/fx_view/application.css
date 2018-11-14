@@ -10,6 +10,8 @@ Button,TextField, PasswordField{
 	-fx-border-radius: 0.0px;
 	-fx-border-width: 0.0px 0.0px 2.0px 0.0px ;
 	-fx-text-fill:#aaa;	  
+    -fx-highlight-fill: #f87e1a;
+    -fx-highlight-text-fill: #222;
 }
   
  #pageContainer{
@@ -88,13 +90,13 @@ TextField:hover{
 
 TextField:focused{
 	-fx-border-color:#e86e0a;
-	-fx-background-color:#444;
+	-fx-background-color: #fff4;
 	-fx-text-fill:#fff;
 }
 
 PasswordField:focused{
 	-fx-border-color:#e86e0a;
-	-fx-background-color:#444;
+	-fx-background-color:#8889;
 	-fx-text-fill:#fff;	  
 }
 
@@ -228,5 +230,5 @@ TextArea {
 TextArea:focused {
 	-fx-border-width:0.0px 0.0px 0.0px 2.0px;
     -fx-border-color:#e86e0a;
-      -fx-background-color: #2220;
+      -fx-background-color: #e86e0a;
 }

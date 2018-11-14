@@ -56,10 +56,10 @@
 						</Label>
 						<TextField fx:id="username" layoutX="184.0"
 							layoutY="134.0" prefHeight="26.0" prefWidth="150.0"
-							promptText="Username" text="Username"/>
+							promptText="Username"/>
 						<PasswordField fx:id="password" layoutX="183.0"
 							layoutY="187.0" prefHeight="26.0" prefWidth="150.0"
-							promptText="Password" text="Password" />
+							promptText="Password"/>
 						<Button fx:id="login" layoutX="183.0" layoutY="239.0"
 							mnemonicParsing="false" onMouseClicked="#loginButtonPushed"
 							prefHeight="26.0" prefWidth="150.0" text="Login" />

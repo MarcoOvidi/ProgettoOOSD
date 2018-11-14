@@ -4,6 +4,7 @@ import java.text.ParseException;
 
 import controller.LoginController;
 import dao.DatabaseException;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -50,14 +51,19 @@ public class LoginScene {
 	private Label message;
 
 	@FXML
-	void go() throws Exception {
+	void go(){
 		String usr = username.getText();
 		String psw = password.getText();
 		if (usr.equals("") || psw.equals("")) {
 			displayMessage("Username and password cannot be blank");
 			return;
 		}
-		LoginController.login(this, usr, psw);
+		try {
+			LoginController.login(this, usr, psw);
+		} catch (DatabaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@FXML
@@ -69,7 +75,6 @@ public class LoginScene {
 	public void initialize() throws DatabaseException, ParseException {
 		login.setFocusTraversable(true);
 		recover.setFocusTraversable(true);
-		login.arm();
 
 		username.getParent().addEventHandler(KeyEvent.KEY_PRESSED, event -> {
 			if (event.getCode() != KeyCode.SHIFT && event.getCode() != KeyCode.TAB) {
@@ -98,12 +103,7 @@ public class LoginScene {
 
 		password.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
 			if (event.getCode() == KeyCode.ENTER) {
-				try {
 					go();
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 			} else if (event.getCode() == KeyCode.ESCAPE) {
 				username.setText("");
 				password.setText("");
@@ -114,8 +114,13 @@ public class LoginScene {
 					&& event.getCode() != KeyCode.LEFT)
 				event.consume();
 		});
-
-		username.getParent().requestFocus();
+		
+		login.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+			if (event.getCode() == KeyCode.ENTER)
+					go();
+		});
+		
+		Platform.runLater( () -> username.getParent().requestFocus());
 	}
 
 	public void displayMessage(String msg) {
