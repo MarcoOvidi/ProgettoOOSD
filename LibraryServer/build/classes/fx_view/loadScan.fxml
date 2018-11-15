@@ -45,17 +45,16 @@
 					<content>
 						<VBox fx:id="scanList" prefHeight="202.0" prefWidth="1035.0">
 							<children>
-								<TableView fx:id="pageTable" prefHeight="296.0"
-									prefWidth="1035.0">
+								<TableView fx:id="pageTable" prefHeight="296.0">
 									<columns>
 										<TableColumn fx:id="number" prefWidth="75.0"
 											text="Number" />
 										<TableColumn fx:id="image" editable="false"
 											prefWidth="75.0" sortable="false" text="Page" />
 										<TableColumn fx:id="revisioned" editable="false"
-											prefWidth="75.0" sortable="false" text="Revisioned" />
+											prefWidth="100.0" sortable="false" text="Revisioned" />
 										<TableColumn fx:id="validated" editable="false"
-											prefWidth="75.0" sortable="false" text="Validated" />
+											prefWidth="100.0" sortable="false" text="Validated" />
 									</columns>
 								</TableView>
 							</children>

@@ -9,20 +9,21 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import vo.UserInformations;
 import vo.UserPermissions;
 
-public class UserProfile {
+public class EditUserProfile {
 
 	@FXML
 	private Label username;
 	@FXML
-	private Label name;
+	private TextField name;
 	@FXML
-	private Label surname;
+	private TextField surname;
 	@FXML
-	private Label email;
+	private TextField email;
 
 	@FXML
 	private CheckBox download;
@@ -46,58 +47,69 @@ public class UserProfile {
 	private CheckBox reviewPage;
 	@FXML
 	private CheckBox reviewTranscription;
-	
+
 	@FXML
-	private Button edit;
-	
+	private Button done;
 
 	@FXML
 	public void initialize() throws DatabaseException, ParseException {
 		loadInfo();
 		loadPermissions();
-		initEditButton();
+		initDoneButton();
 	}
-	
+
 	private void loadInfo() {
-		UserInformations info = LocalSession.getLocalUserInfo();
-		username.setText(LocalSession.getLocalUser().getUsername());
+		UserInformations info = EditUserController.getToEditUser().getInformations();
+		username.setText(EditUserController.getToEditUser().getUsername());
 		name.setText(info.getName());
 		surname.setText(info.getSurname());
 		email.setText(info.getMail().getEmail());
 	}
-	
+
 	private void loadPermissions() {
-		UserPermissions up = LocalSession.getLocalUser().getPermissions();
+		UserPermissions up = EditUserController.getToEditUser().getPermissions();
 		if (up.getAddNewProjectPerm())
 			addNewProject.setSelected(true);
-		if(up.getAssignDigitalizationTaskPerm())
+		if (up.getAssignDigitalizationTaskPerm())
 			assignDigitalizationTask.setSelected(true);
-		if(up.getAssignTranscriptionTaskPerm())
+		if (up.getAssignTranscriptionTaskPerm())
 			assignTranscriptionTask.setSelected(true);
-		if(up.getDownloadPerm())
+		if (up.getDownloadPerm())
 			download.setSelected(true);
-		if(up.getEditMetaDataPerm())
+		if (up.getEditMetaDataPerm())
 			editMetaData.setSelected(true);
-		if(up.getModifyTranscriptionPerm())
+		if (up.getModifyTranscriptionPerm())
 			modifyTranscription.setSelected(true);
-		if(up.getPublishDocumentPerm())
+		if (up.getPublishDocumentPerm())
 			publishDocument.setSelected(true);
-		if(up.getRequestTranscriptionTaskPerm())
+		if (up.getRequestTranscriptionTaskPerm())
 			requestTranscriptionTask.setSelected(true);
-		if(up.getReviewPagePerm())
+		if (up.getReviewPagePerm())
 			reviewPage.setSelected(true);
-		if(up.getReviewTranscriptionPerm())
+		if (up.getReviewTranscriptionPerm())
 			reviewTranscription.setSelected(true);
-		if(up.getUploadPerm())
+		if (up.getUploadPerm())
 			upload.setSelected(true);
-		
+
+		if (EditUserController.canEditPermissions()) {
+			addNewProject.setDisable(false);
+			assignDigitalizationTask.setDisable(false);
+			assignTranscriptionTask.setDisable(false);
+			download.setDisable(false);
+			editMetaData.setDisable(false);
+			modifyTranscription.setDisable(false);
+			publishDocument.setDisable(false);
+			requestTranscriptionTask.setDisable(false);
+			reviewPage.setDisable(false);
+			reviewTranscription.setDisable(false);
+			upload.setDisable(false);
+		}
+
 	}
-	
-	private void initEditButton() {
-		edit.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-			EditUserController.setEditingUser(LocalSession.getLocalUser().getID());
-			EditUserController.setToEditUser(LocalSession.getLocalUser());
-			SceneController.loadScene("editUserProfile");
+
+	private void initDoneButton() {
+		done.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+			SceneController.loadPreviousScene();
 		});
 	}
 
