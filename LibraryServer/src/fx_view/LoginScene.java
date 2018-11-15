@@ -17,8 +17,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 public class LoginScene {
-	
-	private boolean autoLogin = true;
+
+	private static boolean autoLogin = true;
 
 	String controllerUrl = "LoginController";
 
@@ -50,10 +50,13 @@ public class LoginScene {
 	private Button recover;
 
 	@FXML
+	private Button register;
+
+	@FXML
 	private Label message;
 
 	@FXML
-	void go(){
+	void go() {
 		String usr = username.getText();
 		String psw = password.getText();
 		if (usr.equals("") || psw.equals("")) {
@@ -75,12 +78,13 @@ public class LoginScene {
 
 	@FXML
 	public void initialize() throws DatabaseException, ParseException {
-		if(autoLogin){
+		if (autoLogin) {
 			username.setText("Username");
 			password.setText("Password");
-			Platform.runLater( () -> go());
+			Platform.runLater(() -> go());
+			autoLogin = false;
 		}
-		
+
 		login.setFocusTraversable(true);
 		recover.setFocusTraversable(true);
 
@@ -111,7 +115,7 @@ public class LoginScene {
 
 		password.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
 			if (event.getCode() == KeyCode.ENTER) {
-					go();
+				go();
 			} else if (event.getCode() == KeyCode.ESCAPE) {
 				username.setText("");
 				password.setText("");
@@ -122,13 +126,22 @@ public class LoginScene {
 					&& event.getCode() != KeyCode.LEFT)
 				event.consume();
 		});
-		
+
 		login.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
 			if (event.getCode() == KeyCode.ENTER)
-					go();
+				go();
 		});
-		
-		Platform.runLater( () -> username.getParent().requestFocus());
+
+		register.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+			if (event.getCode() == KeyCode.ENTER)
+				SceneController.loadScene("registration");
+		});
+
+		register.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+			SceneController.loadScene("registration");
+		});
+
+		Platform.runLater(() -> username.getParent().requestFocus());
 	}
 
 	public void displayMessage(String msg) {

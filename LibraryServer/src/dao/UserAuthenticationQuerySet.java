@@ -62,6 +62,57 @@ public class UserAuthenticationQuerySet { //COMPLETATA E TUTTA FUNZIONANTE
 		}			
 	}
 	
+	
+	/** Controlla se lo username fornito è presente nel DB
+	 * 
+	 * @param username Username da verificare
+	 * @return true se esiste già un utente con quello username
+	 * @throws SQLException
+	 * @throws DatabaseException
+	 */
+	public static boolean checkIfUsernameExists(String username) throws SQLException, DatabaseException {
+		Connection con = null;
+		
+		try {
+			con = DBConnection.connect();
+		}catch(DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+		
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {			
+			ps = con.prepareStatement("SELECT username FROM user WHERE username=?");
+		
+			ps.setString(1, username);
+			rs = ps.executeQuery();
+			
+			if(rs.next()) 
+				return true;
+			else 
+				return false;
+			
+		}catch(SQLException e) {
+			
+				throw new DatabaseException("Errore di esecuzione della query", e);
+			
+		}finally {
+			try{
+				if(ps != null)
+					ps.close();
+				if(con!=null)
+					con.close();
+			}catch(SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+			
+			
+		}			
+	}
+
+	
+	
 	/**
 	 * 
 	 * @param usr Username dell'utente che vuole effettuare il login
