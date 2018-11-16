@@ -5,10 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -200,7 +197,7 @@ public class HomePageQuerySet {
 	 * @return HashMap<Integer,String> Mappa di Id progetti di digitalizzazione e
 	 *         titolo dell'opera associata
 	 */
-	public static HashMap<UUIDScanningWorkProject, String> loadMyScanningWorkProjectList(UUIDUser usr)
+	public static HashMap<UUIDScanningWorkProject, String[]> loadMyScanningWorkProjectList(UUIDUser usr)
 			throws DatabaseException {
 		Connection con = null;
 
@@ -212,10 +209,10 @@ public class HomePageQuerySet {
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		HashMap<UUIDScanningWorkProject, String> swpl = new HashMap<UUIDScanningWorkProject, String>();
+		HashMap<UUIDScanningWorkProject, String[]> swpl = new HashMap<UUIDScanningWorkProject, String[]>();
 
 		try {
-			ps = con.prepareStatement("SELECT sp.ID as ID_progetto, d.title as Title "
+			ps = con.prepareStatement("SELECT sp.ID as ID_progetto, d.title as Title , sp.scanning_complete "
 					+ "FROM scanning_project as sp JOIN scanning_project_digitalizer_partecipant as spdp "
 					+ "JOIN document as d " + "ON sp.ID=spdp.ID_scanning_project AND sp.ID_document=d.ID "
 					+ "WHERE ID_digitalizer_user=?;");
@@ -224,7 +221,8 @@ public class HomePageQuerySet {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				swpl.put(new UUIDScanningWorkProject(rs.getInt("ID_progetto")), rs.getString("Title"));
+				String[] array = {rs.getString("Title"),String.valueOf(rs.getBoolean("sp.scanning_complete"))};
+				swpl.put(new UUIDScanningWorkProject(rs.getInt("ID_progetto")), array);
 			}
 
 		} catch (SQLException e) {

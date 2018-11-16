@@ -62,9 +62,9 @@ public class Home {
 			HomePageController.loadMyScanningProjects();
 
 			Image pageIcon = new Image("images/blank.png");
-			for (Entry<UUIDScanningWorkProject, String> entry: HomePageController.getMySPrj().entrySet()) {
+			for (Entry<UUIDScanningWorkProject, String[]> entry: HomePageController.getMySPrj().entrySet()) {
 				ImageView miniature = new ImageView(pageIcon);
-				Label label = new Label(entry.getValue());
+				Label label = new Label(entry.getValue()[0]);
 				VBox elem = new VBox();
 
 				miniature.setFitWidth(100);

@@ -3,7 +3,6 @@ package fx_view;
 import java.text.ParseException;
 
 import controller.EditUserController;
-import controller.LocalSession;
 import dao.DatabaseException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

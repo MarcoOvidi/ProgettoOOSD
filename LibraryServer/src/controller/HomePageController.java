@@ -24,7 +24,7 @@ public class HomePageController {
 	private static HashMap<UUIDDocumentCollection, String>  categories = new HashMap<UUIDDocumentCollection,String>();
 	private static HashMap<UUIDDocument,String[]> myCollection = new HashMap<UUIDDocument,String[]>();
 	private static HashMap<UUIDTranscriptionWorkProject, String> myTPrj = new HashMap<UUIDTranscriptionWorkProject,String>();
-	private static HashMap<UUIDScanningWorkProject, String> mySPrj = new HashMap<UUIDScanningWorkProject,String>();
+	private static HashMap<UUIDScanningWorkProject, String[]> mySPrj = new HashMap<UUIDScanningWorkProject,String[]>();
 	
 	public void loadHomePage() {
 		
@@ -128,11 +128,11 @@ public class HomePageController {
 		HomePageController.myTPrj = myTPrj;
 	}
 
-	public static HashMap<UUIDScanningWorkProject, String> getMySPrj() {
+	public static HashMap<UUIDScanningWorkProject, String[]> getMySPrj() {
 		return mySPrj;
 	}
 
-	public static void setMySPrj(HashMap<UUIDScanningWorkProject, String> mySPrj) {
+	public static void setMySPrj(HashMap<UUIDScanningWorkProject, String[]> mySPrj) {
 		HomePageController.mySPrj = mySPrj;
 	}	
 	
