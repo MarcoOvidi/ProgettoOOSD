@@ -16,7 +16,7 @@ public class PageViewController {
 			e.printStackTrace();
 		}
 		
-		SceneController.loadScene("showDocument");
+		SceneController.loadScene("showDocumentNEW");
 		
 	}
 	

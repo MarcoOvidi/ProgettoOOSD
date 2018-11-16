@@ -35,7 +35,7 @@
 		<FlowPane prefHeight="600.0" prefWidth="1400.0"
 			BorderPane.alignment="CENTER">
 			<children>
-				<ScrollPane fx:id="scrollPage" prefHeight="785.0"
+				<ScrollPane fx:id="scrollPage" prefHeight="800.0"
 					prefWidth="170.0">
 					<content>
 						<VBox fx:id="pageList" prefHeight="200.0" prefWidth="120.0" />

@@ -101,6 +101,7 @@ public class LoadScan {
 	}
 
 	public static void setToOpenDocumentFromScanningProject(UUIDScanningWorkProject swp) throws NullPointerException, DatabaseException {
+		//FIXME andrebbe incapsulato in un metodo del controller
 		LoadScan.toOpenDocument = ScanningWorkProjectQuerySet.loadUUIDDocument(swp);
 	}
 	

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
+	minHeight="-Infinity" minWidth="-Infinity"
+	xmlns="http://javafx.com/javafx/8.0.171"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="fx_view.ShowDocumentNEW">
+	<top>
+		<Button layoutX="0.0" layoutY="0.0" mnemonicParsing="false"
+			prefHeight="250.0" prefWidth="150.0"
+			text="THE MAGICAL INVISIBLE BUTTON">
+		</Button>
+		<AnchorPane fx:id="topbar" prefHeight="90.0">
+			<children>
+				<AnchorPane layoutX="10.0" layoutY="17.0"
+					AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+					<children>
+						<Button fx:id="backButton" layoutX="0.0" layoutY="0.0"
+							mnemonicParsing="false" prefHeight="24.0" prefWidth="170.0"
+							text="⬅   Back">
+						</Button>
+					</children>
+				</AnchorPane>
+			</children>
+		</AnchorPane>
+	</top>
+	<left>
+		<HBox BorderPane.alignment="CENTER">
+			<!-- <ScrollPane fx:id="pageListScroll" prefHeight="800.0"> <content> 
+				<VBox fx:id="pageList" prefHeight="200.0" /> </content> </ScrollPane> -->
+			<ListView fx:id="pageList" />
+			<StackPane>
+				<children>
+					<ImageView fx:id="currentPage" />
+					<AnchorPane>
+						<children>
+							<HBox spacing="20" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="120">
+								<Button fx:id="top" text="▲" />
+								<Button fx:id="previous" text="◀" />
+								<Label fx:id="number" />
+								<Button fx:id="next" text="▶" />
+								<Button fx:id="bottom" text="▼" />
+							</HBox>
+						</children>
+					</AnchorPane>
+				</children>
+			</StackPane>
+			<TextArea fx:id="transcription" text="Questo andrà sostituito con l'editor o il visualizzatore TEI"/>
+		</HBox>
+
+	</left>
+</BorderPane>
