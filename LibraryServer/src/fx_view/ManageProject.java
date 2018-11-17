@@ -1,6 +1,8 @@
 package fx_view;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Map.Entry;
 
 import controller.PageTranscriptionController;
@@ -118,7 +120,7 @@ public class ManageProject {
 
 	@FXML
 	private TableColumn<PageTranscriptionLog, String> transcriptionTranscriber;
-	
+
 	@FXML
 	private ObservableList<PageTranscriptionLog> listLog;
 
@@ -158,7 +160,6 @@ public class ManageProject {
 
 			document.put(ScanningWorkProjectQuerySet.loadUUIDDocument(entry.getKey()), dr);
 
-			System.out.println(dr);
 		}
 
 		for (Entry<UUIDTranscriptionWorkProject, String[]> entry : TranscriptionProjectController
@@ -212,36 +213,61 @@ public class ManageProject {
 	}
 
 	public void loadPagesLog(DocumentRow dR) {
-		
+
 		pageNumber.setCellValueFactory(new PropertyValueFactory<PageTranscriptionLog, String>("pageNumber"));
-		transcriptionReviser.setCellValueFactory(new PropertyValueFactory<PageTranscriptionLog, String>("transcriptionReviser"));
-		transcriptionRevised.setCellValueFactory(new PropertyValueFactory<PageTranscriptionLog, String>("transcriptionRevised"));
-		transcriptionValidated.setCellValueFactory(new PropertyValueFactory<PageTranscriptionLog, String>("transcriptionValidated"));
-		transcriptionTranscriber.setCellValueFactory(new PropertyValueFactory<PageTranscriptionLog, String>("transcriptionTranscriber"));
+		transcriptionReviser
+				.setCellValueFactory(new PropertyValueFactory<PageTranscriptionLog, String>("transcriptionReviser"));
+		transcriptionRevised
+				.setCellValueFactory(new PropertyValueFactory<PageTranscriptionLog, String>("transcriptionRevised"));
+		transcriptionValidated
+				.setCellValueFactory(new PropertyValueFactory<PageTranscriptionLog, String>("transcriptionValidated"));
+		transcriptionTranscriber.setCellValueFactory(
+				new PropertyValueFactory<PageTranscriptionLog, String>("transcriptionTranscriber"));
 		
-		try{
-			PageTranscriptionController.loadTranscriptionLog(TranscriptionWorkProjectQuerySet.loadUUIDDocument(dR.getIdTPrj()));
-			if(listLog != null) {
+		listLog = FXCollections.observableArrayList();
+
+		try {
+			PageTranscriptionController
+					.loadTranscriptionLog(TranscriptionWorkProjectQuerySet.loadUUIDDocument(dR.getIdTPrj()));
+
+			if (listLog != null) {
 				listLog.clear();
 				transcriptionLog.refresh();
 			}
+
+			LinkedList<Page> pageList = PageTranscriptionController.getTranscriptionLog();
 			
-			for(Page p : PageTranscriptionController.getTranscriptionLog()) {
-				listLog.add(
-						new PageTranscriptionLog(String.valueOf(p.getPageNumber()), String.valueOf(p.getTranscription().getStaff().getReviser().getValue()), String.valueOf(p.getTranscription().getRevised()), String.valueOf(p.getTranscription().getValidated()), String.valueOf(p.getTranscription().getStaff().getLastTranscriber().getValue())));
+			Iterator<Page> itr = pageList.iterator();
 			
-				System.out.println("CIAO");
+			while(itr.hasNext()) {
+				Page p = itr.next();
+				listLog.add(new PageTranscriptionLog(String.valueOf(p.getPageNumber()), String.valueOf(p.getTranscription().getStaff().getReviser()), String.valueOf(p.getTranscription().getRevised()), String.valueOf(p.getTranscription().getValidated()), String.valueOf(p.getTranscription().getStaff().getLastTranscriber())));
 			}
-			transcriptionLog.setItems(listLog);
 			
-		}catch(Exception e) {
+			System.out.println(listLog);
+			/*
+			 * for(Page p : PageTranscriptionController.getTranscriptionLog()) {
+			 * listLog.add( new PageTranscriptionLog(String.valueOf(p.getPageNumber()),
+			 * String.valueOf(p.getTranscription().getStaff().getReviser().getValue()),
+			 * String.valueOf(p.getTranscription().getRevised()),
+			 * String.valueOf(p.getTranscription().getValidated()),
+			 * String.valueOf(p.getTranscription().getStaff().getLastTranscriber().getValue(
+			 * ))));
+			 * 
+			 * }
+			 */
+			
+			System.out.println(pageList);
+
+			transcriptionLog.setItems(listLog);
+
+		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
 		}
-		
+
 	}
-	
-	
+
 	public void loadTranscriptionProjectStaff(DocumentRow dR) {
 		if (transcriptionProjectStaff != null) {
 			transcriptionProjectStaff.clear();
@@ -268,8 +294,6 @@ public class ManageProject {
 
 			User coordinator = TranscriptionProjectController
 					.getUserProfile((TranscriptionProjectController.getTPrj().getCoordinator()));
-
-			System.out.println(coordinator.getUsername());
 
 			transcriptionProjectStaff.add(new StaffRow(coordinator.getUsername(), "Coordinator"));
 

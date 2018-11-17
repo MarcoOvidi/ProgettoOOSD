@@ -237,9 +237,13 @@ public class DocumentQuerySet {
 											new UUIDUser(rs.getInt("ID_scanning_reviser")))),
 							new PageTranscription(new TEItext(rs.getString("transcription")),
 									rs.getBoolean("transcription_revised"),
-									rs.getBoolean("transcription_convalidation"), new PageTranscriptionStaff(null,
-											new UUIDUser(rs.getInt("ID_transcription_reviser")))));
-
+									rs.getBoolean("transcription_convalidation"),
+									new PageTranscriptionStaff(
+											new UUIDUser(rs.getInt("ID_transcriber")), 
+											new UUIDUser(rs.getInt("ID_transcription_reviser"))
+											)
+									)
+							);
 					ps1 = con.prepareStatement(
 							"SELECT ta.ID_transcriber_user FROM transcription_assigned AS ta JOIN document AS d "
 									+ "JOIN page AS p ON d.ID=p.ID_document AND p.ID=ta.ID_page "
