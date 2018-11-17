@@ -14,11 +14,11 @@ public class ScanningWorkProject extends WorkProject {
 	private LinkedList<UUIDUser> revisers;
 	private UUIDScanningWorkProject id;
 	
-	public ScanningWorkProject(Date d,UUIDUser coord,LinkedList<UUIDUser> dg, LinkedList<UUIDUser> rev, UUIDScanningWorkProject id, Boolean b) {
-		super(d,coord,b);
-		this.digitalizers=dg;
-		this.revisers=rev;
-		this.id=id;
+	public ScanningWorkProject(Date date,UUIDUser coord,LinkedList<UUIDUser> digitalizers, LinkedList<UUIDUser> revisers, UUIDScanningWorkProject id, Boolean completed) {
+		super(date,coord,completed);
+		this.digitalizers=digitalizers;
+		this.revisers=revisers;
+		this.setId(id);
 	}
 	
 	
@@ -39,13 +39,23 @@ public class ScanningWorkProject extends WorkProject {
 	
 
 	//TODO implementare a multiplo inserimento
-	public void setDigitalizers(UUIDUser u) {
-		this.digitalizers.addLast(u);
+	public void setDigitalizer(UUIDUser user) {
+		this.digitalizers.addLast(user);
 	}
 	
 	
-	public void setRevisers(UUIDUser u) {
-		this.revisers.addLast(u);
+	public void setReviser(UUIDUser user) {
+		this.revisers.addLast(user);
+	}
+
+
+	public UUIDScanningWorkProject getId() {
+		return id;
+	}
+
+
+	public void setId(UUIDScanningWorkProject id) {
+		this.id = id;
 	}
 
 

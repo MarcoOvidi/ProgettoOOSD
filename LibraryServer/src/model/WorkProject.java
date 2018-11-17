@@ -14,10 +14,10 @@ public class WorkProject {
 	private Boolean completed;
 	
 	// costruttore
-	public WorkProject(Date d,UUIDUser coord, Boolean b) {
-		this.publishingDate=d;
-		this.coordinator=coord;
-		this.completed=b;
+	public WorkProject(Date date,UUIDUser coordinator, Boolean completed) {
+		this.publishingDate=date;
+		this.coordinator=coordinator;
+		this.completed=completed;
 		
 	}
 	
@@ -40,14 +40,17 @@ public class WorkProject {
 	public void setId(UUID id) {
 		this.id=id;
 	}*/
-	
-	//TODO implementare con imput UUID
-	public void setCoordinator(User c) {
-		this.coordinator=c.getID();
+
+	public void setCoordinator(UUIDUser coordinator) {
+		this.coordinator=coordinator;
 	}
 	
-	public void setPublishingDate(Date d) {
-		this.publishingDate=d;
+	public void setCoordinator(User coordinator) {
+		this.coordinator=coordinator.getID();
+	}
+	
+	public void setPublishingDate(Date date) {
+		this.publishingDate=date;
 	}
 
 	@Override

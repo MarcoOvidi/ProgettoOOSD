@@ -237,8 +237,7 @@ public class DocumentQuerySet {
 											new UUIDUser(rs.getInt("ID_scanning_reviser")))),
 							new PageTranscription(new TEItext(rs.getString("transcription")),
 									rs.getBoolean("transcription_revised"),
-									rs.getBoolean("transcription_convalidation"),
-									rs.getBoolean("transcription_completed"), new PageTranscriptionStaff(null,
+									rs.getBoolean("transcription_convalidation"), new PageTranscriptionStaff(null,
 											new UUIDUser(rs.getInt("ID_transcription_reviser")))));
 
 					ps1 = con.prepareStatement(
@@ -337,13 +336,10 @@ public class DocumentQuerySet {
 
 	}
 	/*
-	public static void main(String[] args) {
-		try {
-			DocumentQuerySet.loadDocument(new UUIDDocument(142));
-
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-	}*/
+	 * public static void main(String[] args) { try {
+	 * DocumentQuerySet.loadDocument(new UUIDDocument(142));
+	 * 
+	 * } catch (Exception e) { System.out.println(e); } }
+	 */
 
 }

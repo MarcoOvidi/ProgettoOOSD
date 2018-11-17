@@ -9,18 +9,16 @@ public class PageTranscription {
 	private TEItext text;
 	private Boolean revised;
 	private Boolean validated;
-	private Boolean completed;
 	private PageTranscriptionStaff staff;
 	
 	
 	//costruttore
-	public PageTranscription(TEItext text, Boolean revised, Boolean validated,Boolean comp,
+	public PageTranscription(TEItext text, Boolean revised, Boolean validated,
 			PageTranscriptionStaff staff) {
 		super();
 		this.text = text;
 		this.revised = revised;
 		this.validated = validated;
-		this.completed = comp;
 		this.staff = staff;
 	}
 	
@@ -28,10 +26,6 @@ public class PageTranscription {
 		public TEItext getText() {
 			return this.text;
 		}
-
-	public boolean getCompleted() {
-		return this.completed;
-	}
 	
 	public boolean getRevised() {
 		return this.revised;
@@ -47,10 +41,6 @@ public class PageTranscription {
 	
 	public void setText(TEItext txt) {
 		this.text=txt;
-	}
-
-	public void setCompleted(Boolean c) {
-		this.completed=c;
 	}
 	
 	public void setRevised(Boolean r) {

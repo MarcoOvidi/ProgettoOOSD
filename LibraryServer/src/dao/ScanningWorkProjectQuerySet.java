@@ -183,7 +183,7 @@ public class ScanningWorkProjectQuerySet {
 
 				} else {
 					swp = new ScanningWorkProject(null, new UUIDUser(rs.getInt("ID_coordinator")), digitalizers,
-							revisers, id, rs.getBoolean("transcription_complete"));
+							revisers, id, rs.getBoolean("scanning_complete"));
 
 				}
 			}

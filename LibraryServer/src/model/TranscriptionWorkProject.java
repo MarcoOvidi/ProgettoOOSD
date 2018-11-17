@@ -1,16 +1,8 @@
 package model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedList;
 
-import dao.DBConnection;
-import dao.DatabaseException;
-import vo.UUIDScanningWorkProject;
 import vo.UUIDTranscriptionWorkProject;
 import vo.UUIDUser;
 
@@ -26,10 +18,10 @@ public class TranscriptionWorkProject extends WorkProject{
 	
 	
 	
-	public TranscriptionWorkProject(Date d,UUIDUser coord,LinkedList<UUIDUser> tr, LinkedList<UUIDUser> rev, UUIDTranscriptionWorkProject id, Boolean b) {
-		super(d,coord,b);
-		this.transcribers=tr;
-		this.revisers=rev;
+	public TranscriptionWorkProject(Date date,UUIDUser coordinator,LinkedList<UUIDUser> transcribers, LinkedList<UUIDUser> revisers, UUIDTranscriptionWorkProject id, Boolean completed) {
+		super(date,coordinator,completed);
+		this.transcribers=transcribers;
+		this.revisers=revisers;
 		this.id=id;
 	}
 		//metodi get e set

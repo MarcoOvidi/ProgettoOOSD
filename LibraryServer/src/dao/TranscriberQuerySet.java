@@ -35,7 +35,6 @@ public class TranscriberQuerySet {
 		
 		try {
 			ps = con.prepareStatement("SELECT transcription,transcription_convalidation as tconv,transcription_revised as tr, "
-					+ "transcription_completed as tc "
 					+ "FROM page "
 					+ "WHERE ID = ?;");
 			ps.setInt(1, id.getValue());
@@ -44,7 +43,7 @@ public class TranscriberQuerySet {
 			
 			if(rs.next()) {
 				pt = new PageTranscription(new TEItext(rs.getString("transcription")), 
-						rs.getBoolean("tr"), rs.getBoolean("tconv"),rs.getBoolean("tc"), null);
+						rs.getBoolean("tr"), rs.getBoolean("tconv"), null);
 			}
 			
 			
