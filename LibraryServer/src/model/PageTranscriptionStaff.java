@@ -7,6 +7,7 @@ public class PageTranscriptionStaff {
 
 	//variabili istanza
 	private LinkedList<UUIDUser> transcribers;
+	private UUIDUser lastTranscriber;
 	private UUIDUser reviser;
 	
 	//costruttore
@@ -14,6 +15,13 @@ public class PageTranscriptionStaff {
 		this.transcribers=trans;
 		this.reviser=rev;
 	}
+	
+	public PageTranscriptionStaff(UUIDUser lastTranscriber, UUIDUser reviser) {
+		super();
+		this.lastTranscriber = lastTranscriber;
+		this.reviser = reviser;
+	}
+
 	public PageTranscriptionStaff(LinkedList<UUIDUser> trans) {
 		this.transcribers=trans;
 	}
@@ -33,6 +41,12 @@ public class PageTranscriptionStaff {
 	
 	public void setReviser(UUIDUser u) {
 		this.reviser=u;
+	}
+	public UUIDUser getLastTranscriber() {
+		return lastTranscriber;
+	}
+	public void setLastTranscriber(UUIDUser lastTranscriber) {
+		this.lastTranscriber = lastTranscriber;
 	}
 	
 	

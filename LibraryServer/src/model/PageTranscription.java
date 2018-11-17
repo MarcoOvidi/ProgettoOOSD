@@ -20,7 +20,15 @@ public class PageTranscription {
 		this.text = text;
 		this.revised = revised;
 		this.validated = validated;
-		this.completed = comp;
+		this.staff = staff;
+	}
+	
+	public PageTranscription(TEItext text, Boolean revised, Boolean validated,
+			PageTranscriptionStaff staff) {
+		super();
+		this.text = text;
+		this.revised = revised;
+		this.validated = validated;
 		this.staff = staff;
 	}
 	
