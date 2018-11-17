@@ -238,8 +238,13 @@ public class DocumentQuerySet {
 							new PageTranscription(new TEItext(rs.getString("transcription")),
 									rs.getBoolean("transcription_revised"),
 									rs.getBoolean("transcription_convalidation"),
-									rs.getBoolean("transcription_completed"), new PageTranscriptionStaff(null,
-											new UUIDUser(rs.getInt("ID_transcription_reviser")))));
+									rs.getBoolean("transcription_completed"), 
+									new PageTranscriptionStaff(
+											new UUIDUser(rs.getInt("ID_transcriber")), 
+											new UUIDUser(rs.getInt("ID_transcription_reviser"))
+											)
+									)
+							);
 
 					ps1 = con.prepareStatement(
 							"SELECT ta.ID_transcriber_user FROM transcription_assigned AS ta JOIN document AS d "

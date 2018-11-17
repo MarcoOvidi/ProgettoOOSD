@@ -153,8 +153,7 @@ public class TranscriberQuerySet {
 		LinkedList<Page> pages = new LinkedList<Page>();
 
 		try {
-			ps = con.prepareStatement("select ID,number,transcription_convalidation,transcription_revised,ID_transcription_reviser,"
-					+ "ID_transcriber from page WHERE ID_document=?;");
+			ps = con.prepareStatement("select ID,number,transcription_convalidation,transcription_revised,ID_transcription_reviser, ID_transcriber from page WHERE ID_document=?;");
 			ps.setInt(1, id.getValue());
 
 			rs = ps.executeQuery();
@@ -171,7 +170,7 @@ public class TranscriberQuerySet {
 										rs.getBoolean("transcription_convalidation"), 
 										new PageTranscriptionStaff(
 												new UUIDUser(rs.getInt("ID_transcriber")), 
-												new UUIDUser(rs.getInt("ID_tramscription_reviser"))
+												new UUIDUser(rs.getInt("ID_transcription_reviser"))
 												)
 										)
 								)

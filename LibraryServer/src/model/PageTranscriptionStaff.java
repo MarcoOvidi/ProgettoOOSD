@@ -48,6 +48,13 @@ public class PageTranscriptionStaff {
 	public void setLastTranscriber(UUIDUser lastTranscriber) {
 		this.lastTranscriber = lastTranscriber;
 	}
+
+	@Override
+	public String toString() {
+		return "PageTranscriptionStaff [transcribers=" + transcribers + ", lastTranscriber=" + lastTranscriber
+				+ ", reviser=" + reviser + "]";
+	}
+	
 	
 	
 }
