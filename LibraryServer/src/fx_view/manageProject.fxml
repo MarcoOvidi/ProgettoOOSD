@@ -37,7 +37,18 @@
                                 <tabs>
                                   <Tab fx:id="transcriptionPagesTab" text="Pages">
                                     <content>
-                                      <AnchorPane fx:id="transcriptionPagesAnchor" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                      <AnchorPane fx:id="transcriptionPagesAnchor" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <TableView fx:id="transcriptionLog" prefHeight="200.0" prefWidth="584.0">
+                                                  <columns>
+                                                    <TableColumn fx:id="pageNumber" prefWidth="113.0" text="Page Number" />
+                                                    <TableColumn fx:id="transcriptionReviser" prefWidth="103.0" text="Reviser" />
+                                                      <TableColumn fx:id="transcriptionRevised" prefWidth="103.0" text="Revised" />
+                                                      <TableColumn fx:id="transcriptionValidated" prefWidth="103.0" text="Validated" />
+                                                      <TableColumn fx:id="transcriptionTranscriber" prefWidth="103.0" text="Transcriber" />
+                                                  </columns>
+                                                </TableView>
+                                             </children></AnchorPane>
                                     </content>
                                   </Tab>
                                   <Tab fx:id="transcriptionTranscribersTab" text="Transcribers">

@@ -12,7 +12,6 @@ import model.Page;
 import model.User;
 import vo.UUIDDocument;
 import vo.UUIDPage;
-import vo.UUIDScanningWorkProject;
 import vo.UUIDUser;
 
 public class PageScanController {

@@ -3,6 +3,7 @@ package fx_view;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import controller.PageTranscriptionController;
 import controller.ScanningProjectController;
 import controller.TranscriptionProjectController;
 import dao.DatabaseException;
@@ -19,8 +20,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
+import model.Page;
 import model.User;
 import vo.DocumentRow;
+import vo.PageTranscriptionLog;
 import vo.StaffRow;
 import vo.UUIDDocument;
 import vo.UUIDScanningWorkProject;
@@ -97,6 +100,27 @@ public class ManageProject {
 
 	@FXML
 	private ObservableList<StaffRow> transcriptionProjectStaff;
+
+	@FXML
+	private TableView<PageTranscriptionLog> transcriptionLog;
+
+	@FXML
+	private TableColumn<PageTranscriptionLog, String> pageNumber;
+
+	@FXML
+	private TableColumn<PageTranscriptionLog, String> transcriptionReviser;
+
+	@FXML
+	private TableColumn<PageTranscriptionLog, String> transcriptionRevised;
+
+	@FXML
+	private TableColumn<PageTranscriptionLog, String> transcriptionValidated;
+
+	@FXML
+	private TableColumn<PageTranscriptionLog, String> transcriptionTranscriber;
+	
+	@FXML
+	private ObservableList<PageTranscriptionLog> listLog;
 
 	public void initialize() {
 		try {
@@ -178,6 +202,7 @@ public class ManageProject {
 				if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
 
 					DocumentRow clickedRow = row.getItem();
+					loadPagesLog(clickedRow);
 					loadTranscriptionProjectStaff(clickedRow);
 				}
 			});
@@ -186,12 +211,43 @@ public class ManageProject {
 
 	}
 
+	public void loadPagesLog(DocumentRow dR) {
+		
+		pageNumber.setCellValueFactory(new PropertyValueFactory<PageTranscriptionLog, String>("pageNumber"));
+		transcriptionReviser.setCellValueFactory(new PropertyValueFactory<PageTranscriptionLog, String>("transcriptionReviser"));
+		transcriptionRevised.setCellValueFactory(new PropertyValueFactory<PageTranscriptionLog, String>("transcriptionRevised"));
+		transcriptionValidated.setCellValueFactory(new PropertyValueFactory<PageTranscriptionLog, String>("transcriptionValidated"));
+		transcriptionTranscriber.setCellValueFactory(new PropertyValueFactory<PageTranscriptionLog, String>("transcriptionTranscriber"));
+		
+		try{
+			PageTranscriptionController.loadTranscriptionLog(TranscriptionWorkProjectQuerySet.loadUUIDDocument(dR.getIdTPrj()));
+			if(listLog != null) {
+				listLog.clear();
+				transcriptionLog.refresh();
+			}
+			
+			for(Page p : PageTranscriptionController.getTranscriptionLog()) {
+				listLog.add(
+						new PageTranscriptionLog(String.valueOf(p.getPageNumber()), String.valueOf(p.getTranscription().getStaff().getReviser().getValue()), String.valueOf(p.getTranscription().getRevised()), String.valueOf(p.getTranscription().getValidated()), String.valueOf(p.getTranscription().getStaff().getLastTranscriber().getValue())));
+			
+				System.out.println("CIAO");
+			}
+			transcriptionLog.setItems(listLog);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+		
+	}
+	
+	
 	public void loadTranscriptionProjectStaff(DocumentRow dR) {
-		if(transcriptionProjectStaff != null) {
+		if (transcriptionProjectStaff != null) {
 			transcriptionProjectStaff.clear();
 			transcriptionStaff.refresh();
 		}
-		
+
 		if (dR.getIdTPrj() != null) {
 			TranscriptionProjectController.loadTranscriptionProject(dR.getIdTPrj());
 
@@ -214,11 +270,12 @@ public class ManageProject {
 					.getUserProfile((TranscriptionProjectController.getTPrj().getCoordinator()));
 
 			System.out.println(coordinator.getUsername());
-			
+
 			transcriptionProjectStaff.add(new StaffRow(coordinator.getUsername(), "Coordinator"));
-			
+
 			transcriptionStaff.setItems(transcriptionProjectStaff);
-		}else {
+		} else {
+
 		}
 	}
 

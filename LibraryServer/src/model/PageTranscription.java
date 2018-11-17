@@ -19,6 +19,18 @@ public class PageTranscription {
 		this.text = text;
 		this.revised = revised;
 		this.validated = validated;
+<<<<<<< HEAD
+=======
+		this.staff = staff;
+	}
+	
+	public PageTranscription(TEItext text, Boolean revised, Boolean validated,
+			PageTranscriptionStaff staff) {
+		super();
+		this.text = text;
+		this.revised = revised;
+		this.validated = validated;
+>>>>>>> branch 'master' of https://github.com/MarcoOvidi/ProgettoOOSD.git
 		this.staff = staff;
 	}
 	
