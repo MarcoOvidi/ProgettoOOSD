@@ -25,6 +25,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TableView.ResizeFeatures;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -93,18 +94,31 @@ public class LoadScan {
 		initButtonChoice();
 		initLoadDocumentButton();
 		filterButton();
-		
-		if(toOpenDocument != null) {
+		initPageTable();
+
+		prepareDocument();
+	}
+
+	private void prepareDocument() {
+		if (toOpenDocument != null) {
 			loadDocument(toOpenDocument);
 		}
 		toOpenDocument = null;
 	}
+	
+	private void initPageTable() {
+		number.setResizable(false);
+		image.setResizable(false);
+		revisioned.setResizable(false);
+		validated.setResizable(false);
+	}
 
-	public static void setToOpenDocumentFromScanningProject(UUIDScanningWorkProject swp) throws NullPointerException, DatabaseException {
-		//FIXME andrebbe incapsulato in un metodo del controller
+	public static void setToOpenDocumentFromScanningProject(UUIDScanningWorkProject swp)
+			throws NullPointerException, DatabaseException {
+		// FIXME andrebbe incapsulato in un metodo del controller
 		LoadScan.toOpenDocument = ScanningWorkProjectQuerySet.loadUUIDDocument(swp);
 	}
-	
+
 	public static void setToOpenDocument(UUIDDocument toOpenDocument) {
 		LoadScan.toOpenDocument = toOpenDocument;
 	}
@@ -195,7 +209,7 @@ public class LoadScan {
 		toOpenDocument = document;
 	}
 
-	public void loadDocument(UUIDDocument document) { //FIXME tutto da testare
+	public void loadDocument(UUIDDocument document) { // FIXME tutto da testare
 		PageScanController.loadNewDocumentPages(document);
 		LinkedList<Page> pL = PageScanController.getCurrentDocumentPages();
 		pageTable.setEditable(true);
@@ -231,7 +245,8 @@ public class LoadScan {
 			ImageView imgView = new ImageView();
 			imgView.setImage(img);
 
-			pages.add(new Rows(page.getPageNumber().toString(), rev, val, page.getID(), new vo.Image("file:" + page.getScan().getImage().getUrl())));
+			pages.add(new Rows(page.getPageNumber().toString(), rev, val, page.getID(),
+					new vo.Image("file:" + page.getScan().getImage().getUrl())));
 
 		}
 
@@ -254,16 +269,17 @@ public class LoadScan {
 						 * event.getRowValue().setNumber(event.getOldValue()); pageTable.refresh();
 						 * return; } else {
 						 */
-						event.getRowValue().setNumber(event.getOldValue()); pageTable.refresh();
+						event.getRowValue().setNumber(event.getOldValue());
+						pageTable.refresh();
 						Alert alt = new Alert(AlertType.INFORMATION);
 						alt.setTitle("Not Valid Operation");
 						alt.setHeaderText("Attention");
 						alt.setContentText("Cannot change number to an existing Page!");
 						alt.show();
-						
+
 						return;
 					}
-					
+
 				}
 				PageScanController.updatePageNumber(event.getRowValue().getId(), Integer.parseInt(event.getNewValue()));
 			}
@@ -347,7 +363,8 @@ public class LoadScan {
 				ImageView imgView = new ImageView();
 				imgView.setImage(img);
 
-				pages.add(new Rows(page.getPageNumber().toString(), rev, val, page.getID(), new vo.Image("file:" + page.getScan().getImage().getUrl())));
+				pages.add(new Rows(page.getPageNumber().toString(), rev, val, page.getID(),
+						new vo.Image("file:" + page.getScan().getImage().getUrl())));
 
 			}
 

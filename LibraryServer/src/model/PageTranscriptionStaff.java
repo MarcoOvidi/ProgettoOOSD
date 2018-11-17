@@ -11,8 +11,8 @@ public class PageTranscriptionStaff {
 	private UUIDUser reviser;
 	
 	//costruttore
-	public PageTranscriptionStaff(LinkedList<UUIDUser> trans, UUIDUser rev) {
-		this.transcribers=trans;
+	public PageTranscriptionStaff(LinkedList<UUIDUser> transcribers, UUIDUser rev) {
+		this.transcribers=transcribers;
 		this.reviser=rev;
 	}
 	

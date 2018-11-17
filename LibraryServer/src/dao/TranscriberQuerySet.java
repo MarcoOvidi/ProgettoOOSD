@@ -47,29 +47,17 @@ public class TranscriberQuerySet {
 		PageTranscription pt = null;
 
 		try {
-<<<<<<< HEAD
-			ps = con.prepareStatement("SELECT transcription,transcription_convalidation as tconv,transcription_revised as tr, "
+			ps = con.prepareStatement("SELECT transcription,transcription_convalidation as tconv,transcription_revised as tr "
 					+ "FROM page "
 					+ "WHERE ID = ?;");
-=======
-			ps = con.prepareStatement(
-					"SELECT transcription,transcription_convalidation as tconv,transcription_revised as tr, "
-							+ "transcription_completed as tc " + "FROM page " + "WHERE ID = ?;");
->>>>>>> branch 'master' of https://github.com/MarcoOvidi/ProgettoOOSD.git
+
 			ps.setInt(1, id.getValue());
 
 			rs = ps.executeQuery();
-<<<<<<< HEAD
 			
 			if(rs.next()) {
 				pt = new PageTranscription(new TEItext(rs.getString("transcription")), 
 						rs.getBoolean("tr"), rs.getBoolean("tconv"), null);
-=======
-
-			if (rs.next()) {
-				pt = new PageTranscription(new TEItext(rs.getString("transcription")), rs.getBoolean("tr"),
-						rs.getBoolean("tconv"), rs.getBoolean("tc"), null);
->>>>>>> branch 'master' of https://github.com/MarcoOvidi/ProgettoOOSD.git
 			}
 
 		} catch (SQLException e) {
