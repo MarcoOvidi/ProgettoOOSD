@@ -124,6 +124,18 @@ public class ManageProject {
 	@FXML
 	private ObservableList<PageTranscriptionLog> listLog;
 
+	@FXML
+	private TableView<StaffRow> scanningStaff;
+
+	@FXML
+	private TableColumn<StaffRow, String> usernameDigitalizer;
+
+	@FXML
+	private TableColumn<StaffRow, String> roleDigitalizer;
+
+	@FXML
+	private ObservableList<StaffRow> scanningProjectStaff;
+
 	public void initialize() {
 		try {
 			tableDocumentFiller();
@@ -203,8 +215,32 @@ public class ManageProject {
 				if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
 
 					DocumentRow clickedRow = row.getItem();
-					loadPagesLog(clickedRow);
-					loadTranscriptionProjectStaff(clickedRow);
+
+					if (transcriptionProjectStaff != null) {
+						transcriptionProjectStaff.clear();
+						transcriptionStaff.refresh();
+					}
+
+					if (scanningProjectStaff != null) {
+						scanningProjectStaff.clear();
+						scanningStaff.refresh();
+					}
+
+					if (listLog != null) {
+						listLog.clear();
+						transcriptionLog.refresh();
+					}
+
+					if (clickedRow.getIdTPrj() != null) {
+						loadTranscriptionPagesLog(clickedRow);
+						loadTranscriptionProjectStaff(clickedRow);
+					}
+
+					if (clickedRow.getIdSPrj() != null) {
+						//loadScanningPagesLog(clickedRow);
+						loadScanningProjectStaff(clickedRow);
+					}
+
 				}
 			});
 			return row;
@@ -212,7 +248,7 @@ public class ManageProject {
 
 	}
 
-	public void loadPagesLog(DocumentRow dR) {
+	public void loadTranscriptionPagesLog(DocumentRow dR) {
 
 		pageNumber.setCellValueFactory(new PropertyValueFactory<PageTranscriptionLog, String>("pageNumber"));
 		transcriptionReviser
@@ -223,7 +259,7 @@ public class ManageProject {
 				.setCellValueFactory(new PropertyValueFactory<PageTranscriptionLog, String>("transcriptionValidated"));
 		transcriptionTranscriber.setCellValueFactory(
 				new PropertyValueFactory<PageTranscriptionLog, String>("transcriptionTranscriber"));
-		
+
 		listLog = FXCollections.observableArrayList();
 
 		try {
@@ -236,28 +272,92 @@ public class ManageProject {
 			}
 
 			LinkedList<Page> pageList = PageTranscriptionController.getTranscriptionLog();
-			
+
 			Iterator<Page> itr = pageList.iterator();
-			
-			while(itr.hasNext()) {
+
+			while (itr.hasNext()) {
 				Page p = itr.next();
-				listLog.add(new PageTranscriptionLog(String.valueOf(p.getPageNumber()), String.valueOf(p.getTranscription().getStaff().getReviser()), String.valueOf(p.getTranscription().getRevised()), String.valueOf(p.getTranscription().getValidated()), String.valueOf(p.getTranscription().getStaff().getLastTranscriber())));
+
+				String format1 = String.valueOf(p.getTranscription().getRevised());
+
+				if (format1.equalsIgnoreCase("true"))
+					format1 = "\u2714";
+
+				else if (format1.equals("false"))
+					format1 = "\u2718";
+
+				String format2 = String.valueOf(p.getTranscription().getValidated());
+
+				if (format2.equalsIgnoreCase("true"))
+					format2 = "\u2714";
+
+				else if (format2.equals("false"))
+					format2 = "\u2718";
+
+				listLog.add(new PageTranscriptionLog(String.valueOf(p.getPageNumber()),
+						String.valueOf(p.getTranscription().getStaff().getReviser().getValue()), format1, format2,
+						String.valueOf(p.getTranscription().getStaff().getLastTranscriber().getValue())));
 			}
-			
-			System.out.println(listLog);
-			/*
-			 * for(Page p : PageTranscriptionController.getTranscriptionLog()) {
-			 * listLog.add( new PageTranscriptionLog(String.valueOf(p.getPageNumber()),
-			 * String.valueOf(p.getTranscription().getStaff().getReviser().getValue()),
-			 * String.valueOf(p.getTranscription().getRevised()),
-			 * String.valueOf(p.getTranscription().getValidated()),
-			 * String.valueOf(p.getTranscription().getStaff().getLastTranscriber().getValue(
-			 * ))));
-			 * 
-			 * }
-			 */
-			
-			System.out.println(pageList);
+
+			transcriptionLog.setItems(listLog);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+
+	}
+
+	public void loadScanningPagesLog(DocumentRow dR) {
+
+		pageNumber.setCellValueFactory(new PropertyValueFactory<PageTranscriptionLog, String>("pageNumber"));
+		transcriptionReviser
+				.setCellValueFactory(new PropertyValueFactory<PageTranscriptionLog, String>("transcriptionReviser"));
+		transcriptionRevised
+				.setCellValueFactory(new PropertyValueFactory<PageTranscriptionLog, String>("transcriptionRevised"));
+		transcriptionValidated
+				.setCellValueFactory(new PropertyValueFactory<PageTranscriptionLog, String>("transcriptionValidated"));
+		transcriptionTranscriber.setCellValueFactory(
+				new PropertyValueFactory<PageTranscriptionLog, String>("transcriptionTranscriber"));
+
+		listLog = FXCollections.observableArrayList();
+
+		try {
+			PageTranscriptionController
+					.loadTranscriptionLog(TranscriptionWorkProjectQuerySet.loadUUIDDocument(dR.getIdTPrj()));
+
+			if (listLog != null) {
+				listLog.clear();
+				transcriptionLog.refresh();
+			}
+
+			LinkedList<Page> pageList = PageTranscriptionController.getTranscriptionLog();
+
+			Iterator<Page> itr = pageList.iterator();
+
+			while (itr.hasNext()) {
+				Page p = itr.next();
+
+				String format1 = String.valueOf(p.getTranscription().getRevised());
+
+				if (format1.equalsIgnoreCase("true"))
+					format1 = "\u2714";
+
+				else if (format1.equals("false"))
+					format1 = "\u2718";
+
+				String format2 = String.valueOf(p.getTranscription().getValidated());
+
+				if (format2.equalsIgnoreCase("true"))
+					format2 = "\u2714";
+
+				else if (format2.equals("false"))
+					format2 = "\u2718";
+
+				listLog.add(new PageTranscriptionLog(String.valueOf(p.getPageNumber()),
+						String.valueOf(p.getTranscription().getStaff().getReviser().getValue()), format1, format2,
+						String.valueOf(p.getTranscription().getStaff().getLastTranscriber().getValue())));
+			}
 
 			transcriptionLog.setItems(listLog);
 
@@ -301,6 +401,32 @@ public class ManageProject {
 		} else {
 
 		}
+	}
+
+	public void loadScanningProjectStaff(DocumentRow dR) {
+			ScanningProjectController.loadScanningProject(dR.getIdSPrj());
+
+			usernameDigitalizer.setCellValueFactory(new PropertyValueFactory<StaffRow, String>("username"));
+			roleDigitalizer.setCellValueFactory(new PropertyValueFactory<StaffRow, String>("role"));
+
+			scanningProjectStaff = FXCollections.observableArrayList();
+
+			for (UUIDUser user : ScanningProjectController.getSPrj().getDigitalizers()) {
+				User u = ScanningProjectController.getUserProfile(user);
+				scanningProjectStaff.add(new StaffRow(u.getUsername(), "Digitalizer"));
+			}
+
+			for (UUIDUser user : ScanningProjectController.getSPrj().getRevisers()) {
+				User u = ScanningProjectController.getUserProfile(user);
+				scanningProjectStaff.add(new StaffRow(u.getUsername(), "Reviser"));
+			}
+
+			User coordinator = ScanningProjectController
+					.getUserProfile((ScanningProjectController.getSPrj().getCoordinator()));
+
+			scanningProjectStaff.add(new StaffRow(coordinator.getUsername(), "Coordinator"));
+
+			scanningStaff.setItems(scanningProjectStaff);
 	}
 
 	/*

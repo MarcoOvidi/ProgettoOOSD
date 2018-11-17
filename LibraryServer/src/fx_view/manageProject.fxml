@@ -83,7 +83,15 @@
                                   </Tab>
                                   <Tab fx:id="scanningDigitalizersTab" text="Digitalizers">
                                     <content>
-                                      <AnchorPane fx:id="scanningDigitalizersAnchor" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                      <AnchorPane fx:id="scanningDigitalizersAnchor" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <TableView fx:id="scanningStaff" prefHeight="391.0" prefWidth="468.0">
+                                                  <columns>
+                                                    <TableColumn fx:id="usernameDigitalizer" prefWidth="109.0" text="User" />
+                                                    <TableColumn fx:id="roleDigitalizer" prefWidth="194.0" text="Role" />
+                                                  </columns>
+                                                </TableView>
+                                             </children></AnchorPane>
                                     </content>
                                   </Tab>
                                 </tabs>
