@@ -1,10 +1,11 @@
 package fx_view;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
+import controller.PageScanController;
 import controller.PageTranscriptionController;
 import controller.ScanningProjectController;
 import controller.TranscriptionProjectController;
@@ -25,6 +26,7 @@ import javafx.scene.layout.AnchorPane;
 import model.Page;
 import model.User;
 import vo.DocumentRow;
+import vo.PageScanningLog;
 import vo.PageTranscriptionLog;
 import vo.StaffRow;
 import vo.UUIDDocument;
@@ -136,6 +138,27 @@ public class ManageProject {
 	@FXML
 	private ObservableList<StaffRow> scanningProjectStaff;
 
+	@FXML
+	private TableView<PageScanningLog> scanningLog;
+
+	@FXML
+	private TableColumn<PageScanningLog, String> pageScanNumber;
+
+	@FXML
+	private TableColumn<PageScanningLog, String> scanningReviser;
+
+	@FXML
+	private TableColumn<PageScanningLog, String> scanningRevised;
+
+	@FXML
+	private TableColumn<PageScanningLog, String> scanningValidated;
+
+	@FXML
+	private TableColumn<PageScanningLog, String> scanningDigitalizer;
+
+	@FXML
+	private ObservableList<PageScanningLog> listScanLog;
+	
 	public void initialize() {
 		try {
 			tableDocumentFiller();
@@ -156,7 +179,7 @@ public class ManageProject {
 		ScanningProjectController.loadCoordinatedScanningPRoject();
 		TranscriptionProjectController.loadCoordinatedTranscriptionPRoject();
 
-		HashMap<UUIDDocument, DocumentRow> document = new HashMap<UUIDDocument, DocumentRow>();
+		TreeMap<UUIDDocument, DocumentRow> document = new TreeMap<UUIDDocument, DocumentRow>();
 
 		// TODO credo che tutto ciò vada nel controller
 		for (Entry<UUIDScanningWorkProject, String[]> entry : ScanningProjectController.getCoordinatedScanningProject()
@@ -200,9 +223,31 @@ public class ManageProject {
 				document.put(TranscriptionWorkProjectQuerySet.loadUUIDDocument(entry.getKey()), d);
 			}
 		}
-
-		for (DocumentRow docRow : document.values()) {
-			rows.add(docRow);
+		
+		for(Entry<UUIDDocument , DocumentRow> entry : document.entrySet()) {
+			if(entry.getValue().getIdTPrj() == null)
+				if(TranscriptionWorkProjectQuerySet.ifExistTranscriptionProject(entry.getKey())) {
+					DocumentRow transcription = entry.getValue();
+					transcription.setTranscription_PRJ("Not allowed");
+					entry.setValue(transcription);
+				}else {
+					DocumentRow transcription = entry.getValue();
+					transcription.setTranscription_PRJ("\u2204");
+					entry.setValue(transcription);
+				}
+			
+			if(entry.getValue().getIdSPrj() == null)
+				if(ScanningWorkProjectQuerySet.ifExistScanningProject(entry.getKey())) {
+					DocumentRow scanning = entry.getValue();
+					scanning.setScanning_PRJ("Not allowed");
+					entry.setValue(scanning);
+				}else {
+					DocumentRow scanning = entry.getValue();
+					scanning.setScanning_PRJ("\u2204");
+					entry.setValue(scanning);
+				}
+			
+			rows.add(entry.getValue());
 		}
 
 		documentTable.setItems(rows);
@@ -231,13 +276,18 @@ public class ManageProject {
 						transcriptionLog.refresh();
 					}
 
+					if (listScanLog != null) {
+						listScanLog.clear();
+						scanningLog.refresh();
+					}
+
 					if (clickedRow.getIdTPrj() != null) {
 						loadTranscriptionPagesLog(clickedRow);
 						loadTranscriptionProjectStaff(clickedRow);
 					}
 
 					if (clickedRow.getIdSPrj() != null) {
-						//loadScanningPagesLog(clickedRow);
+						loadScanningPagesLog(clickedRow);
 						loadScanningProjectStaff(clickedRow);
 					}
 
@@ -310,35 +360,30 @@ public class ManageProject {
 
 	public void loadScanningPagesLog(DocumentRow dR) {
 
-		pageNumber.setCellValueFactory(new PropertyValueFactory<PageTranscriptionLog, String>("pageNumber"));
-		transcriptionReviser
-				.setCellValueFactory(new PropertyValueFactory<PageTranscriptionLog, String>("transcriptionReviser"));
-		transcriptionRevised
-				.setCellValueFactory(new PropertyValueFactory<PageTranscriptionLog, String>("transcriptionRevised"));
-		transcriptionValidated
-				.setCellValueFactory(new PropertyValueFactory<PageTranscriptionLog, String>("transcriptionValidated"));
-		transcriptionTranscriber.setCellValueFactory(
-				new PropertyValueFactory<PageTranscriptionLog, String>("transcriptionTranscriber"));
+		pageScanNumber.setCellValueFactory(new PropertyValueFactory<PageScanningLog, String>("pageNumber"));
+		scanningReviser.setCellValueFactory(new PropertyValueFactory<PageScanningLog, String>("scanningReviser"));
+		scanningRevised.setCellValueFactory(new PropertyValueFactory<PageScanningLog, String>("scanningRevised"));
+		scanningValidated.setCellValueFactory(new PropertyValueFactory<PageScanningLog, String>("scanningValidated"));
+		scanningDigitalizer
+				.setCellValueFactory(new PropertyValueFactory<PageScanningLog, String>("scanningDigitalizer"));
 
-		listLog = FXCollections.observableArrayList();
+		listScanLog = FXCollections.observableArrayList();
 
 		try {
-			PageTranscriptionController
-					.loadTranscriptionLog(TranscriptionWorkProjectQuerySet.loadUUIDDocument(dR.getIdTPrj()));
+			PageScanController.loadScanningLog(ScanningWorkProjectQuerySet.loadUUIDDocument(dR.getIdSPrj()));
 
-			if (listLog != null) {
-				listLog.clear();
-				transcriptionLog.refresh();
+			if (listScanLog != null) {
+				listScanLog.clear();
+				scanningLog.refresh();
 			}
 
-			LinkedList<Page> pageList = PageTranscriptionController.getTranscriptionLog();
-
+			LinkedList<Page> pageList = PageScanController.getScanningLog();
 			Iterator<Page> itr = pageList.iterator();
 
 			while (itr.hasNext()) {
 				Page p = itr.next();
 
-				String format1 = String.valueOf(p.getTranscription().getRevised());
+				String format1 = String.valueOf(p.getScan().getRevised());
 
 				if (format1.equalsIgnoreCase("true"))
 					format1 = "\u2714";
@@ -346,7 +391,7 @@ public class ManageProject {
 				else if (format1.equals("false"))
 					format1 = "\u2718";
 
-				String format2 = String.valueOf(p.getTranscription().getValidated());
+				String format2 = String.valueOf(p.getScan().getValidated());
 
 				if (format2.equalsIgnoreCase("true"))
 					format2 = "\u2714";
@@ -354,12 +399,13 @@ public class ManageProject {
 				else if (format2.equals("false"))
 					format2 = "\u2718";
 
-				listLog.add(new PageTranscriptionLog(String.valueOf(p.getPageNumber()),
-						String.valueOf(p.getTranscription().getStaff().getReviser().getValue()), format1, format2,
-						String.valueOf(p.getTranscription().getStaff().getLastTranscriber().getValue())));
-			}
+				listScanLog.add(new PageScanningLog(String.valueOf(p.getPageNumber()),
+						String.valueOf(p.getScan().getStaff().getReviser().getValue()),
+						format1, format2,
+						String.valueOf(p.getScan().getStaff().getDigitalizer().getValue())));
 
-			transcriptionLog.setItems(listLog);
+			}
+			scanningLog.setItems(listScanLog);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -369,64 +415,55 @@ public class ManageProject {
 	}
 
 	public void loadTranscriptionProjectStaff(DocumentRow dR) {
-		if (transcriptionProjectStaff != null) {
-			transcriptionProjectStaff.clear();
-			transcriptionStaff.refresh();
+		TranscriptionProjectController.loadTranscriptionProject(dR.getIdTPrj());
+
+		usernameTranscriber.setCellValueFactory(new PropertyValueFactory<StaffRow, String>("username"));
+		roleTranscriber.setCellValueFactory(new PropertyValueFactory<StaffRow, String>("role"));
+
+		transcriptionProjectStaff = FXCollections.observableArrayList();
+
+		for (UUIDUser user : TranscriptionProjectController.getTPrj().getTranscribers()) {
+			User u = TranscriptionProjectController.getUserProfile(user);
+			transcriptionProjectStaff.add(new StaffRow(u.getUsername(), "Transcriber"));
 		}
 
-		if (dR.getIdTPrj() != null) {
-			TranscriptionProjectController.loadTranscriptionProject(dR.getIdTPrj());
-
-			usernameTranscriber.setCellValueFactory(new PropertyValueFactory<StaffRow, String>("username"));
-			roleTranscriber.setCellValueFactory(new PropertyValueFactory<StaffRow, String>("role"));
-
-			transcriptionProjectStaff = FXCollections.observableArrayList();
-
-			for (UUIDUser user : TranscriptionProjectController.getTPrj().getTranscribers()) {
-				User u = TranscriptionProjectController.getUserProfile(user);
-				transcriptionProjectStaff.add(new StaffRow(u.getUsername(), "Transcriber"));
-			}
-
-			for (UUIDUser user : TranscriptionProjectController.getTPrj().getRevisers()) {
-				User u = TranscriptionProjectController.getUserProfile(user);
-				transcriptionProjectStaff.add(new StaffRow(u.getUsername(), "Reviser"));
-			}
-
-			User coordinator = TranscriptionProjectController
-					.getUserProfile((TranscriptionProjectController.getTPrj().getCoordinator()));
-
-			transcriptionProjectStaff.add(new StaffRow(coordinator.getUsername(), "Coordinator"));
-
-			transcriptionStaff.setItems(transcriptionProjectStaff);
-		} else {
-
+		for (UUIDUser user : TranscriptionProjectController.getTPrj().getRevisers()) {
+			User u = TranscriptionProjectController.getUserProfile(user);
+			transcriptionProjectStaff.add(new StaffRow(u.getUsername(), "Reviser"));
 		}
+
+		User coordinator = TranscriptionProjectController
+				.getUserProfile((TranscriptionProjectController.getTPrj().getCoordinator()));
+
+		transcriptionProjectStaff.add(new StaffRow(coordinator.getUsername(), "Coordinator"));
+
+		transcriptionStaff.setItems(transcriptionProjectStaff);
 	}
 
 	public void loadScanningProjectStaff(DocumentRow dR) {
-			ScanningProjectController.loadScanningProject(dR.getIdSPrj());
+		ScanningProjectController.loadScanningProject(dR.getIdSPrj());
 
-			usernameDigitalizer.setCellValueFactory(new PropertyValueFactory<StaffRow, String>("username"));
-			roleDigitalizer.setCellValueFactory(new PropertyValueFactory<StaffRow, String>("role"));
+		usernameDigitalizer.setCellValueFactory(new PropertyValueFactory<StaffRow, String>("username"));
+		roleDigitalizer.setCellValueFactory(new PropertyValueFactory<StaffRow, String>("role"));
 
-			scanningProjectStaff = FXCollections.observableArrayList();
+		scanningProjectStaff = FXCollections.observableArrayList();
 
-			for (UUIDUser user : ScanningProjectController.getSPrj().getDigitalizers()) {
-				User u = ScanningProjectController.getUserProfile(user);
-				scanningProjectStaff.add(new StaffRow(u.getUsername(), "Digitalizer"));
-			}
+		for (UUIDUser user : ScanningProjectController.getSPrj().getDigitalizers()) {
+			User u = ScanningProjectController.getUserProfile(user);
+			scanningProjectStaff.add(new StaffRow(u.getUsername(), "Digitalizer"));
+		}
 
-			for (UUIDUser user : ScanningProjectController.getSPrj().getRevisers()) {
-				User u = ScanningProjectController.getUserProfile(user);
-				scanningProjectStaff.add(new StaffRow(u.getUsername(), "Reviser"));
-			}
+		for (UUIDUser user : ScanningProjectController.getSPrj().getRevisers()) {
+			User u = ScanningProjectController.getUserProfile(user);
+			scanningProjectStaff.add(new StaffRow(u.getUsername(), "Reviser"));
+		}
 
-			User coordinator = ScanningProjectController
-					.getUserProfile((ScanningProjectController.getSPrj().getCoordinator()));
+		User coordinator = ScanningProjectController
+				.getUserProfile((ScanningProjectController.getSPrj().getCoordinator()));
 
-			scanningProjectStaff.add(new StaffRow(coordinator.getUsername(), "Coordinator"));
+		scanningProjectStaff.add(new StaffRow(coordinator.getUsername(), "Coordinator"));
 
-			scanningStaff.setItems(scanningProjectStaff);
+		scanningStaff.setItems(scanningProjectStaff);
 	}
 
 	/*

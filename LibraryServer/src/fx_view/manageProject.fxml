@@ -78,7 +78,18 @@
                                 <tabs>
                                   <Tab fx:id="scanningPagesTab" text="Pages">
                                     <content>
-                                      <AnchorPane fx:id="scanningPagesAnchor" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                      <AnchorPane fx:id="scanningPagesAnchor" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <TableView fx:id="scanningLog" prefHeight="200.0" prefWidth="455.0">
+                                                  <columns>
+                                                    <TableColumn fx:id="pageScanNumber" prefWidth="75.0" text="Number" />
+                                                    <TableColumn fx:id="scanningReviser" prefWidth="75.0" text="Reviser" />
+                                                      <TableColumn fx:id="scanningRevised" prefWidth="75.0" text="Revised" />
+                                                      <TableColumn fx:id="scanningValidated" prefWidth="75.0" text="Validated" />
+                                                      <TableColumn fx:id="scanningDigitalizer" prefWidth="75.0" text="Digitalizer" />
+                                                  </columns>
+                                                </TableView>
+                                             </children></AnchorPane>
                                     </content>
                                   </Tab>
                                   <Tab fx:id="scanningDigitalizersTab" text="Digitalizers">

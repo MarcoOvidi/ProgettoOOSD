@@ -18,6 +18,7 @@ public class PageScanController {
 	private static HashMap<UUIDDocument, String> uncompletedDocument = new HashMap<UUIDDocument, String>();
 	private static UUIDDocument currentDocument;
 	private static LinkedList<Page> currentDocumentPages;
+	private static LinkedList<Page> scanningLog;
 
 	// costruttore
 	public PageScanController(User u, Document d) {
@@ -25,6 +26,18 @@ public class PageScanController {
 
 	public void openWorkSession() {
 
+	}
+	
+	public static void loadScanningLog(UUIDDocument doc) {
+		try{
+			setScanningLog(DigitalizerQuerySet.loadDocument(doc, false, false));
+			scanningLog.addAll(DigitalizerQuerySet.loadDocument(doc, false, true));
+			scanningLog.addAll(DigitalizerQuerySet.loadDocument(doc, true, false));
+			scanningLog.addAll(DigitalizerQuerySet.loadDocument(doc, true, true));
+		}catch(Exception e) {
+			e.printStackTrace();
+			e.getMessage();
+		}
 	}
 
 	public void saveDigitalizerModifications(/* modifications */) {
@@ -107,6 +120,14 @@ public class PageScanController {
 			e.printStackTrace();
 		}
 		return page;
+	}
+
+	public static LinkedList<Page> getScanningLog() {
+		return scanningLog;
+	}
+
+	public static void setScanningLog(LinkedList<Page> scanningLog) {
+		PageScanController.scanningLog = scanningLog;
 	}
 
 }

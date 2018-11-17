@@ -35,4 +35,12 @@ public class PageScan {
 	public PageScanStaff getStaff() {
 		return this.staff;
 	}
+
+	@Override
+	public String toString() {
+		return "PageScan [image=" + image + ", validated=" + validated + ", revised=" + revised + ", staff=" + staff
+				+ "]";
+	}
+	
+	
 }
