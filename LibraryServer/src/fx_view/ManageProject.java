@@ -1,12 +1,17 @@
 package fx_view;
 
+import java.awt.Toolkit;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.TreeMap;
 
 import controller.PageScanController;
 import controller.PageTranscriptionController;
+import controller.RoleController;
 import controller.ScanningProjectController;
 import controller.TranscriptionProjectController;
 import dao.DatabaseException;
@@ -15,6 +20,9 @@ import dao.TranscriptionWorkProjectQuerySet;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
@@ -158,11 +166,18 @@ public class ManageProject {
 
 	@FXML
 	private ObservableList<PageScanningLog> listScanLog;
+
+	private UUIDScanningWorkProject selectedDocumentScanningProject;
+
+	private UUIDTranscriptionWorkProject selectedDocumentTranscriptionProject;
 	
+	private DocumentRow clickedDocument;
+
 	public void initialize() {
 		try {
 			tableDocumentFiller();
 			rowClick();
+			userRowClick();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -223,74 +238,155 @@ public class ManageProject {
 				document.put(TranscriptionWorkProjectQuerySet.loadUUIDDocument(entry.getKey()), d);
 			}
 		}
-		
-		for(Entry<UUIDDocument , DocumentRow> entry : document.entrySet()) {
-			if(entry.getValue().getIdTPrj() == null)
-				if(TranscriptionWorkProjectQuerySet.ifExistTranscriptionProject(entry.getKey())) {
+
+		for (Entry<UUIDDocument, DocumentRow> entry : document.entrySet()) {
+			if (entry.getValue().getIdTPrj() == null)
+				if (TranscriptionWorkProjectQuerySet.ifExistTranscriptionProject(entry.getKey())) {
 					DocumentRow transcription = entry.getValue();
 					transcription.setTranscription_PRJ("Not allowed");
 					entry.setValue(transcription);
-				}else {
+				} else {
 					DocumentRow transcription = entry.getValue();
 					transcription.setTranscription_PRJ("\u2204");
 					entry.setValue(transcription);
 				}
-			
-			if(entry.getValue().getIdSPrj() == null)
-				if(ScanningWorkProjectQuerySet.ifExistScanningProject(entry.getKey())) {
+
+			if (entry.getValue().getIdSPrj() == null)
+				if (ScanningWorkProjectQuerySet.ifExistScanningProject(entry.getKey())) {
 					DocumentRow scanning = entry.getValue();
 					scanning.setScanning_PRJ("Not allowed");
 					entry.setValue(scanning);
-				}else {
+				} else {
 					DocumentRow scanning = entry.getValue();
 					scanning.setScanning_PRJ("\u2204");
 					entry.setValue(scanning);
 				}
-			
+
 			rows.add(entry.getValue());
 		}
 
 		documentTable.setItems(rows);
 	}
 
+	// TODO controllare gli eventconsume
 	public void rowClick() {
 		documentTable.setRowFactory(tv -> {
 			TableRow<DocumentRow> row = new TableRow<>();
 			row.setOnMouseClicked(event -> {
 				if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
+					clickedDocument = row.getItem();
+					loadClickedDocumentProjects();
+					
+				}
+			});
+			return row;
+		});
+	}
+	
+	public void loadClickedDocumentProjects() {
 
-					DocumentRow clickedRow = row.getItem();
+		selectedDocumentScanningProject = clickedDocument.getIdSPrj();
+		selectedDocumentTranscriptionProject = clickedDocument.getIdTPrj();
 
-					if (transcriptionProjectStaff != null) {
-						transcriptionProjectStaff.clear();
-						transcriptionStaff.refresh();
+		if (transcriptionProjectStaff != null) {
+			transcriptionProjectStaff.clear();
+			transcriptionStaff.refresh();
+		}
+
+		if (scanningProjectStaff != null) {
+			scanningProjectStaff.clear();
+			scanningStaff.refresh();
+		}
+
+		if (listLog != null) {
+			listLog.clear();
+			transcriptionLog.refresh();
+		}
+
+		if (listScanLog != null) {
+			listScanLog.clear();
+			scanningLog.refresh();
+		}
+
+		if (clickedDocument.getIdTPrj() != null) {
+			loadTranscriptionPagesLog(clickedDocument);
+			loadTranscriptionProjectStaff(clickedDocument);
+		}
+
+		if (clickedDocument.getIdSPrj() != null) {
+			loadScanningPagesLog(clickedDocument);
+			loadScanningProjectStaff(clickedDocument);
+		}
+
+	}
+
+	public void userRowClick() {
+		transcriptionStaff.setRowFactory(tv -> {
+			TableRow<StaffRow> row = new TableRow<StaffRow>();
+			row.setOnMouseClicked(event -> {
+				if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
+					if (!(row.getItem().getRole().equals("Coordinator"))) {
+						List<String> choices = new ArrayList<>();
+						choices.add("Transcriber");
+						choices.add("Reviser");
+						choices.add("Remove user from project");
+
+						ChoiceDialog<String> dialog = new ChoiceDialog<>(row.getItem().getRole(), choices);
+						dialog.setTitle("User role management");
+						dialog.setHeaderText("Role for the user: " + row.getItem().getUsername());
+						dialog.setContentText("Choose new role:");
+
+						Optional<String> result = dialog.showAndWait();
+
+						if (result.isPresent()) {
+							if (result.get().equalsIgnoreCase(row.getItem().getRole())) {
+								Alert alert = new Alert(AlertType.WARNING);
+								alert.setTitle("Warning");
+								alert.setHeaderText("No Change");
+								alert.setContentText("You haven't change user's role");
+
+								alert.showAndWait();
+							} else if (result.get().equalsIgnoreCase("Transcriber")) {
+								// toglilo dai reviser
+								RoleController.removeReviserUserInTrascriptionProject(row.getItem().getId(),selectedDocumentTranscriptionProject);
+								// mettilo nei trascriber
+								RoleController.addTranscriberUserInTrascriptionProject(row.getItem().getId(), selectedDocumentTranscriptionProject);
+							} else if (result.get().equalsIgnoreCase("Reviser")) {
+								// toglilo dai transcriber
+								RoleController.removeTranscriberUserInTrascriptionProject(row.getItem().getId(), selectedDocumentTranscriptionProject);
+								// mettilo nei reviser
+								RoleController.addReviserUserInTrascriptionProject(row.getItem().getId(), selectedDocumentTranscriptionProject);
+							} else if (result.get().equalsIgnoreCase("Remove user from project")) {
+								if (row.getItem().getRole().equalsIgnoreCase("Reviser")) {
+									// toglilo dai revisori
+									RoleController.removeReviserUserInTrascriptionProject(row.getItem().getId(), selectedDocumentTranscriptionProject);
+								} else if (row.getItem().getRole().equalsIgnoreCase("Transcriber")) {
+									// toglilo dai trascrittori
+									RoleController.removeTranscriberUserInTrascriptionProject(row.getItem().getId(), selectedDocumentTranscriptionProject);
+								}
+							}
+
+						}
+					} else {
+						Alert alert = new Alert(AlertType.WARNING);
+						alert.setTitle("Warning");
+						alert.setHeaderText("Not authorized operation");
+						alert.setContentText("Only admin can change coordinator's role");
+						Toolkit.getDefaultToolkit().beep();
+						alert.showAndWait();
 					}
-
-					if (scanningProjectStaff != null) {
-						scanningProjectStaff.clear();
-						scanningStaff.refresh();
-					}
-
-					if (listLog != null) {
-						listLog.clear();
-						transcriptionLog.refresh();
-					}
-
-					if (listScanLog != null) {
-						listScanLog.clear();
-						scanningLog.refresh();
-					}
-
-					if (clickedRow.getIdTPrj() != null) {
-						loadTranscriptionPagesLog(clickedRow);
-						loadTranscriptionProjectStaff(clickedRow);
-					}
-
-					if (clickedRow.getIdSPrj() != null) {
-						loadScanningPagesLog(clickedRow);
-						loadScanningProjectStaff(clickedRow);
-					}
-
+				}
+				loadClickedDocumentProjects();
+			});
+			return row;
+			
+		});
+		
+		scanningStaff.setRowFactory(tv -> {
+			TableRow<StaffRow> row = new TableRow<StaffRow>();
+			row.setOnMouseClicked(event -> {
+				if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
+					System.out.println("ciaoneeee");
 				}
 			});
 			return row;
@@ -400,8 +496,7 @@ public class ManageProject {
 					format2 = "\u2718";
 
 				listScanLog.add(new PageScanningLog(String.valueOf(p.getPageNumber()),
-						String.valueOf(p.getScan().getStaff().getReviser().getValue()),
-						format1, format2,
+						String.valueOf(p.getScan().getStaff().getReviser().getValue()), format1, format2,
 						String.valueOf(p.getScan().getStaff().getDigitalizer().getValue())));
 
 			}
@@ -424,18 +519,18 @@ public class ManageProject {
 
 		for (UUIDUser user : TranscriptionProjectController.getTPrj().getTranscribers()) {
 			User u = TranscriptionProjectController.getUserProfile(user);
-			transcriptionProjectStaff.add(new StaffRow(u.getUsername(), "Transcriber"));
+			transcriptionProjectStaff.add(new StaffRow(u.getUsername(), "Transcriber", u.getID()));
 		}
 
 		for (UUIDUser user : TranscriptionProjectController.getTPrj().getRevisers()) {
 			User u = TranscriptionProjectController.getUserProfile(user);
-			transcriptionProjectStaff.add(new StaffRow(u.getUsername(), "Reviser"));
+			transcriptionProjectStaff.add(new StaffRow(u.getUsername(), "Reviser", u.getID()));
 		}
 
 		User coordinator = TranscriptionProjectController
 				.getUserProfile((TranscriptionProjectController.getTPrj().getCoordinator()));
 
-		transcriptionProjectStaff.add(new StaffRow(coordinator.getUsername(), "Coordinator"));
+		transcriptionProjectStaff.add(new StaffRow(coordinator.getUsername(), "Coordinator", coordinator.getID()));
 
 		transcriptionStaff.setItems(transcriptionProjectStaff);
 	}
@@ -450,18 +545,18 @@ public class ManageProject {
 
 		for (UUIDUser user : ScanningProjectController.getSPrj().getDigitalizers()) {
 			User u = ScanningProjectController.getUserProfile(user);
-			scanningProjectStaff.add(new StaffRow(u.getUsername(), "Digitalizer"));
+			scanningProjectStaff.add(new StaffRow(u.getUsername(), "Digitalizer",u.getID()));
 		}
 
 		for (UUIDUser user : ScanningProjectController.getSPrj().getRevisers()) {
 			User u = ScanningProjectController.getUserProfile(user);
-			scanningProjectStaff.add(new StaffRow(u.getUsername(), "Reviser"));
+			scanningProjectStaff.add(new StaffRow(u.getUsername(), "Reviser", u.getID()));
 		}
 
 		User coordinator = ScanningProjectController
 				.getUserProfile((ScanningProjectController.getSPrj().getCoordinator()));
 
-		scanningProjectStaff.add(new StaffRow(coordinator.getUsername(), "Coordinator"));
+		scanningProjectStaff.add(new StaffRow(coordinator.getUsername(), "Coordinator" , coordinator.getID()));
 
 		scanningStaff.setItems(scanningProjectStaff);
 	}
