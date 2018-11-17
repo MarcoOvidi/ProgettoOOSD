@@ -1,11 +1,18 @@
 package model;
 
-import vo.UUIDUser;
-import vo.UUIDDocument;
-import vo.UUIDTranscriptionWorkProject;
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
+
+import dao.DBConnection;
+import dao.DatabaseException;
+import vo.UUIDScanningWorkProject;
+import vo.UUIDTranscriptionWorkProject;
+import vo.UUIDUser;
 
 
 
@@ -25,10 +32,7 @@ public class TranscriptionWorkProject extends WorkProject{
 		this.revisers=rev;
 		this.id=id;
 	}
-	
-	
-	
-	//metodi get e set
+		//metodi get e set
 	public LinkedList<UUIDUser> getTranscribers(){
 		return this.transcribers;
 	}

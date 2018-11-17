@@ -95,9 +95,9 @@ public class Home {
 			HomePageController.loadMyTranscriptionProjects();
 
 			Image pageIcon = new Image("images/blank.png");
-			for (String text : HomePageController.getMyTPrj().values()) {
+			for (String[] text : HomePageController.getMyTPrj().values()) {
 				ImageView miniature = new ImageView(pageIcon);
-				Label label = new Label(text);
+				Label label = new Label(text[0]);
 				VBox elem = new VBox();
 
 				miniature.setFitWidth(100);

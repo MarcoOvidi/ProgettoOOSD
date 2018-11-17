@@ -231,7 +231,7 @@ public class LoadScan {
 			ImageView imgView = new ImageView();
 			imgView.setImage(img);
 
-			pages.add(new Rows(page.getPageNumber().toString(), imgView, val, rev,page.getID()));
+			pages.add(new Rows(page.getPageNumber().toString(), rev, val, page.getID(), new vo.Image("file:" + page.getScan().getImage().getUrl())));
 
 		}
 
@@ -347,7 +347,7 @@ public class LoadScan {
 				ImageView imgView = new ImageView();
 				imgView.setImage(img);
 
-				pages.add(new Rows(page.getPageNumber().toString(), imgView, val, rev, page.getID()));
+				pages.add(new Rows(page.getPageNumber().toString(), rev, val, page.getID(), new vo.Image("file:" + page.getScan().getImage().getUrl())));
 
 			}
 

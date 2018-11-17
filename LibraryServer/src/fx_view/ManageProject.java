@@ -3,21 +3,29 @@ package fx_view;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import controller.HomePageController;
+import controller.ScanningProjectController;
+import controller.TranscriptionProjectController;
 import dao.DatabaseException;
 import dao.ScanningWorkProjectQuerySet;
+import dao.TranscriptionWorkProjectQuerySet;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
+import model.User;
 import vo.DocumentRow;
+import vo.StaffRow;
 import vo.UUIDDocument;
 import vo.UUIDScanningWorkProject;
+import vo.UUIDTranscriptionWorkProject;
+import vo.UUIDUser;
 
 public class ManageProject {
 
@@ -46,17 +54,54 @@ public class ManageProject {
 	private Tab scanningTab;
 
 	@FXML
-	private AnchorPane transcriptionTabPane;
+	private TabPane transcriptionTabPane;
 
 	@FXML
-	private AnchorPane scanningTabPane;
+	private TabPane scanningTabPane;
+
+	@FXML
+	private Tab transcriptionPagesTab;
+
+	@FXML
+	private Tab scanningPagesTab;
+
+	@FXML
+	private Tab transcriptionTranscribersTab;
+
+	@FXML
+	private Tab scanningDigitalizersTab;
+
+	@FXML
+	private AnchorPane transcriptionPagesAnchor;
+
+	@FXML
+	private AnchorPane scanningPagesAnchor;
+
+	@FXML
+	private AnchorPane transcriptionTranscriberAnchor;
+
+	@FXML
+	private AnchorPane scanningDigitalizersAnchor;
 
 	@FXML
 	private ObservableList<DocumentRow> rows;
 
+	@FXML
+	private TableView<StaffRow> transcriptionStaff;
+
+	@FXML
+	private TableColumn<StaffRow, String> usernameTranscriber;
+
+	@FXML
+	private TableColumn<StaffRow, String> roleTranscriber;
+
+	@FXML
+	private ObservableList<StaffRow> transcriptionProjectStaff;
+
 	public void initialize() {
 		try {
 			tableDocumentFiller();
+			rowClick();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -70,22 +115,111 @@ public class ManageProject {
 
 		rows = FXCollections.observableArrayList();
 
-		HomePageController.loadMyScanningProjects();
-		HomePageController.loadMyTranscriptionProjects();
+		ScanningProjectController.loadCoordinatedScanningPRoject();
+		TranscriptionProjectController.loadCoordinatedTranscriptionPRoject();
 
 		HashMap<UUIDDocument, DocumentRow> document = new HashMap<UUIDDocument, DocumentRow>();
 
-		for (Entry<UUIDScanningWorkProject, String[]> entry : HomePageController.getMySPrj().entrySet()) {
+		// TODO credo che tutto ciò vada nel controller
+		for (Entry<UUIDScanningWorkProject, String[]> entry : ScanningProjectController.getCoordinatedScanningProject()
+				.entrySet()) {
 			String[] array = entry.getValue();
-			document.put(ScanningWorkProjectQuerySet.loadUUIDDocument(entry.getKey()),
-					new DocumentRow(array[0], array[1]));
+			// TODO chiamare tramite controller
+			String format = "";
+			if (array[1].equalsIgnoreCase("true"))
+				format = "\u2714";
+			else if (array[1].equals("false"))
+				format = "\u2718";
+			DocumentRow dr = new DocumentRow(array[0], format, entry.getKey());
+
+			document.put(ScanningWorkProjectQuerySet.loadUUIDDocument(entry.getKey()), dr);
+
+			System.out.println(dr);
 		}
+
+		for (Entry<UUIDTranscriptionWorkProject, String[]> entry : TranscriptionProjectController
+				.getCoordinatedTranscriptionProject().entrySet()) {
+			// TODO chiamare tramite controller
+			String[] array = entry.getValue();
+			// TODO questo cazzo di if non funziona va sempre nell'else
+			if (document.containsKey(TranscriptionWorkProjectQuerySet.loadUUIDDocument(entry.getKey()))) {
+				String format = "";
+				if (array[1].equalsIgnoreCase("true"))
+					format = "\u2714";
+				else if (array[1].equals("false"))
+					format = "\u2718";
+
+				DocumentRow dr = document.get(TranscriptionWorkProjectQuerySet.loadUUIDDocument(entry.getKey()));
+				dr.setTranscription_PRJ(format);
+				dr.setIdTPrj(entry.getKey());
+				document.put(TranscriptionWorkProjectQuerySet.loadUUIDDocument(entry.getKey()), dr);
+			} else {
+				String format = "";
+				if (array[1].equalsIgnoreCase("true"))
+					format = "\u2714";
+				else if (array[1].equals("false"))
+					format = "\u2718";
+				DocumentRow d = new DocumentRow(array[0], format, entry.getKey());
+				document.put(TranscriptionWorkProjectQuerySet.loadUUIDDocument(entry.getKey()), d);
+			}
+		}
+
 		for (DocumentRow docRow : document.values()) {
 			rows.add(docRow);
 		}
 
 		documentTable.setItems(rows);
+	}
 
+	public void rowClick() {
+		documentTable.setRowFactory(tv -> {
+			TableRow<DocumentRow> row = new TableRow<>();
+			row.setOnMouseClicked(event -> {
+				if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
+
+					DocumentRow clickedRow = row.getItem();
+					loadTranscriptionProjectStaff(clickedRow);
+				}
+			});
+			return row;
+		});
+
+	}
+
+	public void loadTranscriptionProjectStaff(DocumentRow dR) {
+		if(transcriptionProjectStaff != null) {
+			transcriptionProjectStaff.clear();
+			transcriptionStaff.refresh();
+		}
+		
+		if (dR.getIdTPrj() != null) {
+			TranscriptionProjectController.loadTranscriptionProject(dR.getIdTPrj());
+
+			usernameTranscriber.setCellValueFactory(new PropertyValueFactory<StaffRow, String>("username"));
+			roleTranscriber.setCellValueFactory(new PropertyValueFactory<StaffRow, String>("role"));
+
+			transcriptionProjectStaff = FXCollections.observableArrayList();
+
+			for (UUIDUser user : TranscriptionProjectController.getTPrj().getTranscribers()) {
+				User u = TranscriptionProjectController.getUserProfile(user);
+				transcriptionProjectStaff.add(new StaffRow(u.getUsername(), "Transcriber"));
+			}
+
+			for (UUIDUser user : TranscriptionProjectController.getTPrj().getRevisers()) {
+				User u = TranscriptionProjectController.getUserProfile(user);
+				transcriptionProjectStaff.add(new StaffRow(u.getUsername(), "Reviser"));
+			}
+
+			User coordinator = TranscriptionProjectController
+					.getUserProfile((TranscriptionProjectController.getTPrj().getCoordinator()));
+
+			System.out.println(coordinator.getUsername());
+			
+			transcriptionProjectStaff.add(new StaffRow(coordinator.getUsername(), "Coordinator"));
+			
+			transcriptionStaff.setItems(transcriptionProjectStaff);
+		}else {
+		}
 	}
 
 	/*

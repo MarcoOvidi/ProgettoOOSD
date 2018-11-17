@@ -31,12 +31,54 @@
               <tabs>
                 <Tab fx:id="transcriptionTab" text="Transcription PRJ">
                   <content>
-                    <AnchorPane fx:id="transcriptionTabPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TabPane fx:id="transcriptionTabPane" layoutX="14.0" layoutY="8.0" prefHeight="524.0" prefWidth="718.0" tabClosingPolicy="UNAVAILABLE">
+                                <tabs>
+                                  <Tab fx:id="transcriptionPagesTab" text="Pages">
+                                    <content>
+                                      <AnchorPane fx:id="transcriptionPagesAnchor" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                    </content>
+                                  </Tab>
+                                  <Tab fx:id="transcriptionTranscribersTab" text="Transcribers">
+                                    <content>
+                                      <AnchorPane fx:id="transcriptionTranscriberAnchor" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <TableView fx:id="transcriptionStaff" prefHeight="200.0" prefWidth="352.0">
+                                                  <columns>
+                                                    <TableColumn fx:id="usernameTranscriber" prefWidth="102.0" text="User" />
+                                                    <TableColumn fx:id="roleTranscriber" prefWidth="158.0" text="Role" />
+                                                  </columns>
+                                                </TableView>
+                                             </children></AnchorPane>
+                                    </content>
+                                  </Tab>
+                                </tabs>
+                              </TabPane>
+                           </children>
+                        </AnchorPane>
                   </content>
                 </Tab>
                 <Tab fx:id="scanningTab" text="Scanning PRJ">
                   <content>
-                    <AnchorPane fx:id="scanningTabPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TabPane fx:id="scanningTabPane" layoutX="14.0" layoutY="8.0" prefHeight="515.0" prefWidth="717.0" tabClosingPolicy="UNAVAILABLE">
+                                <tabs>
+                                  <Tab fx:id="scanningPagesTab" text="Pages">
+                                    <content>
+                                      <AnchorPane fx:id="scanningPagesAnchor" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                    </content>
+                                  </Tab>
+                                  <Tab fx:id="scanningDigitalizersTab" text="Digitalizers">
+                                    <content>
+                                      <AnchorPane fx:id="scanningDigitalizersAnchor" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                    </content>
+                                  </Tab>
+                                </tabs>
+                              </TabPane>
+                           </children>
+                        </AnchorPane>
                   </content>
                 </Tab>
               </tabs>

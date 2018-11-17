@@ -142,7 +142,7 @@ public class HomePageQuerySet {
 	 * @return HashMap<Integer,String> Mappa di Id progetti di trascrizione e titolo
 	 *         dell'opera associata
 	 */
-	public static HashMap<UUIDTranscriptionWorkProject, String> loadMyTranscriptionWorkProjectList(UUIDUser usr)
+	public static HashMap<UUIDTranscriptionWorkProject, String[]> loadMyTranscriptionWorkProjectList(UUIDUser usr)
 			throws DatabaseException {
 
 		Connection con = null;
@@ -155,10 +155,10 @@ public class HomePageQuerySet {
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		HashMap<UUIDTranscriptionWorkProject, String> twpl = new HashMap<UUIDTranscriptionWorkProject, String>();
+		HashMap<UUIDTranscriptionWorkProject, String[]> twpl = new HashMap<UUIDTranscriptionWorkProject, String[]>();
 
 		try {
-			ps = con.prepareStatement("SELECT tp.ID as ID_progetto, d.title as Title "
+			ps = con.prepareStatement("SELECT tp.ID as ID_progetto, d.title as Title, transcription_complete "
 					+ "FROM transcription_project as tp JOIN transcription_project_transcriber_partecipant as tptp "
 					+ "JOIN document as d " + "ON tp.ID=tptp.ID_transcription_project and tp.ID_document=d.ID "
 					+ "WHERE ID_transcriber_user=? ;");
@@ -168,7 +168,9 @@ public class HomePageQuerySet {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				twpl.put(new UUIDTranscriptionWorkProject(rs.getInt("ID_progetto")), rs.getString("Title"));
+				String[] array = {rs.getString("Title"),String.valueOf(rs.getBoolean("transcription_complete"))};
+				
+				twpl.put(new UUIDTranscriptionWorkProject(rs.getInt("ID_progetto")), array);
 			}
 
 		} catch (SQLException e) {

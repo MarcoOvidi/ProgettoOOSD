@@ -23,7 +23,7 @@ public class HomePageController {
 	private static HashMap<UUIDDocument,String[]> news = new HashMap<UUIDDocument,String[]>();
 	private static HashMap<UUIDDocumentCollection, String>  categories = new HashMap<UUIDDocumentCollection,String>();
 	private static HashMap<UUIDDocument,String[]> myCollection = new HashMap<UUIDDocument,String[]>();
-	private static HashMap<UUIDTranscriptionWorkProject, String> myTPrj = new HashMap<UUIDTranscriptionWorkProject,String>();
+	private static HashMap<UUIDTranscriptionWorkProject, String[]> myTPrj = new HashMap<UUIDTranscriptionWorkProject,String[]>();
 	private static HashMap<UUIDScanningWorkProject, String[]> mySPrj = new HashMap<UUIDScanningWorkProject,String[]>();
 	
 	public void loadHomePage() {
@@ -120,11 +120,11 @@ public class HomePageController {
 		HomePageController.news = news;
 	}
 
-	public static HashMap<UUIDTranscriptionWorkProject, String> getMyTPrj() {
+	public static HashMap<UUIDTranscriptionWorkProject, String[]> getMyTPrj() {
 		return myTPrj;
 	}
 
-	public static void setMyTPrj(HashMap<UUIDTranscriptionWorkProject, String> myTPrj) {
+	public static void setMyTPrj(HashMap<UUIDTranscriptionWorkProject, String[]> myTPrj) {
 		HomePageController.myTPrj = myTPrj;
 	}
 

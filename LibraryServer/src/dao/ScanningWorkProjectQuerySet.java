@@ -209,7 +209,7 @@ public class ScanningWorkProjectQuerySet {
 	}
 
 
-	/*
+	/**
 	 * Selects the UUIDDocument of a specific UUIDScanningWorkProject
 	 * 
 	 * @param UUIDScanningWorkProject id corresponding to the Document
@@ -855,4 +855,62 @@ public class ScanningWorkProjectQuerySet {
 			e.getMessage();
 		}
 	}*/
+	
+
+	/**
+	 * seleziona i progetti di digitalizzazione ai quali lavoro (ovvero progetti che
+	 * non sono stati ancora pubblicati)
+	 * 
+	 * @param UUIDUser utente di cui si devono reperire i progetti di
+	 *                 digitalizzazione
+	 * @return HashMap<Integer,String> Mappa di Id progetti di digitalizzazione e
+	 *         titolo dell'opera associata
+	 */
+	public static HashMap<UUIDScanningWorkProject, String[]> loadMyCoordinatedScanningWorkProjectList(UUIDUser usr)
+			throws DatabaseException {
+		Connection con = null;
+
+		try {
+			con = DBConnection.connect();
+		} catch (DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		HashMap<UUIDScanningWorkProject, String[]> swpl = new HashMap<UUIDScanningWorkProject, String[]>();
+
+		try {
+			ps = con.prepareStatement("SELECT sp.ID as ID_progetto, d.title as Title , sp.scanning_complete "
+					+ "FROM scanning_project as sp "
+					+ "JOIN document as d ON sp.ID_document=d.ID WHERE ID_coordinator=?;");
+			ps.setInt(1, usr.getValue());
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				String[] array = {rs.getString("Title"),String.valueOf(rs.getBoolean("sp.scanning_complete"))};
+				swpl.put(new UUIDScanningWorkProject(rs.getInt("ID_progetto")), array);
+			}
+
+		} catch (SQLException e) {
+			throw new DatabaseException("Errore di esecuzione della query", e);
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+
+		}
+
+		return swpl;
+
+	}
+
+	
+
 }

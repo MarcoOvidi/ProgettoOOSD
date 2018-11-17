@@ -31,6 +31,15 @@ public class UUID implements Comparable<UUID> {
 	public String toString() {
 		return "UUID [value=" + value + "]";
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		
+		if(obj == null || !(obj instanceof UUID))
+				return false;
+		else
+			return this.value == ((UUID) obj).value;
+	}
 
 
 	
