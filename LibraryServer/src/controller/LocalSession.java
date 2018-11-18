@@ -3,6 +3,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.scene.image.Image;
 import model.Document;
 import model.User;
 import vo.UserInformations;
@@ -12,6 +13,19 @@ public final class LocalSession {
 	static User localUser;
 	static ArrayList<String> topBarButtons = new ArrayList<String>();
 	static Document openedDocumet = null;
+	
+	public static Image loadImage(String url) {
+		Image image;
+		try {
+			image = new Image (url);
+		} catch (IllegalArgumentException e) {
+			// TODO: handle exception
+			return image = new Image ("images/missing");
+		}
+		
+		return image;
+		
+	}
 	
 	public static Document getOpenedDocumet() {
 		return openedDocumet;
@@ -75,5 +89,4 @@ public final class LocalSession {
 		localUser = null;
 		topBarButtons = new ArrayList<String>();
 	}
-
 }

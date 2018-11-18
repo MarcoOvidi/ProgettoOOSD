@@ -72,7 +72,18 @@ public class ShowDocumentNEW {
 				return Integer.compare(arg0.getPageNumber(), arg1.getPageNumber());
 			}
 		});
+		
+		/*if (pages.isEmpty()) { 
+			
+		VBox vbox = new VBox();
+		vbox.setAlignment(Pos.CENTER);
+		vbox.setPadding(new Insets(20));
+		
+		pageList.getItems().add(vbox);
+		return;
+		}*/
 
+		
 		for (Page page : pages) {
 			Image pageIcon = new Image(page.getScan().getImage().getUrl());
 			VBox vbox = new VBox();
