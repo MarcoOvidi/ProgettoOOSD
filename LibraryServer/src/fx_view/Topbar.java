@@ -5,10 +5,13 @@ import java.util.TreeMap;
 
 import controller.LocalSession;
 import controller.LoginController;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 
 public class Topbar {
 	/*
@@ -22,8 +25,8 @@ public class Topbar {
 	 */
 
 	@FXML
-	private HBox container;
-	
+	private TabPane container;
+
 	@FXML
 	private Button logout;
 
@@ -39,13 +42,18 @@ public class Topbar {
 	}
 
 	public void initialize() {
-		
-		container.setSpacing(5);
+
+		// container.setSpacing(5);
 		List<String> buttons = LocalSession.getTopBarButtons();
 
 		for (String str : buttons) {
 			initButtonLink(str, map.get(str));
 		}
+		
+
+		container.setOnMouseClicked(event -> {
+			SceneController.loadScene(map.get(container.getSelectionModel().getSelectedItem().getText()));
+		});
 
 		initLogoutLink();
 
@@ -53,22 +61,20 @@ public class Topbar {
 
 	// inizializzo il bottone gotoprofile
 	public void initButtonLink(String label, String link) {
-		Button button = new Button(label);
-		container.getChildren().add(button);
-		button.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-			SceneController.loadScene(link);
-			event.consume();
-		});
+		Tab tab = new Tab(label);
+		container.getTabs().add(tab);
+		if (link.equals(SceneController.getSceneName())) {
+			container.getSelectionModel().select(tab);
+		}
+			
 	}
-	
+
 	// inizializzo il bottone gotoprofile
 	public void initLogoutLink() {
-		
-		
+
 		logout.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-		
-			
-			//SceneController.loadScene("login");
+
+			// SceneController.loadScene("login");
 			LoginController.logout();
 			event.consume();
 		});

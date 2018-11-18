@@ -11,6 +11,7 @@ public class SceneController extends Application {
 	
 	private static Scene scene;
 	private static Stage stage;
+	private static String sceneName;
 	
 	private static Scene previousScene;
 
@@ -32,6 +33,7 @@ public class SceneController extends Application {
 		public static void loadScene(String name) {
 			try {
 				previousScene = scene;
+				sceneName = name;
 				BorderPane root = (BorderPane)FXMLLoader.load(new Object(){}.getClass().getResource("/fx_view/"+name+".fxml"));
 				/*Container.loadScene(name);
 				BorderPane root = (BorderPane)FXMLLoader.load(new Object(){}.getClass().getResource("/fx_view/container.fxml"));
@@ -108,9 +110,13 @@ public class SceneController extends Application {
 		stage.show();			
 
 	}
-	
+
 	public static Stage getStage() {
 		return stage;
+	}
+	
+	public static String getSceneName() {
+		return sceneName;
 	}
 
 }
