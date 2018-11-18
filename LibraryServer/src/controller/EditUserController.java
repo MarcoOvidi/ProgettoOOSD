@@ -25,6 +25,10 @@ public class EditUserController {
 	public static boolean canEdit () {
 		if(getEditingUser().equals(getToEditUser().getID()))
 			return true;
+		/*
+		 * else if (getEditingUser().isAdmin())
+		 * 	return true;
+		 * */
 		return false;
 	}
 	

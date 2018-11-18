@@ -53,6 +53,7 @@ private static ScanningWorkProject sPrj;
 		}
 	}
 	
+	//FIXME questo non dovrebbe essere qui
 	public static User getUserProfile(UUIDUser user) {
 		User u = null;
 		try{

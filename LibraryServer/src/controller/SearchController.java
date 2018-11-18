@@ -1,6 +1,6 @@
 package controller;
 
-public class DocumentSearchController {
+public class SearchController {
 	
 	public void searchDocument() {
 		

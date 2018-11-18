@@ -22,6 +22,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -30,7 +31,9 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Font;
 import model.Page;
 import model.User;
 import vo.DocumentRow;
@@ -46,6 +49,9 @@ public class ManageProject {
 
 	@FXML
 	private AnchorPane topbar;
+	
+	@FXML
+	private Button newDocumentButton;
 
 	@FXML
 	private TableView<DocumentRow> documentTable;
@@ -174,6 +180,8 @@ public class ManageProject {
 	private DocumentRow clickedDocument;
 
 	public void initialize() {
+		initNewDocumentButton();
+		
 		try {
 			tableDocumentFiller();
 			rowClick();
@@ -182,6 +190,16 @@ public class ManageProject {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
 		}
+	}
+	
+	private void initNewDocumentButton() {
+		newDocumentButton.setFont(new Font(24));
+		//dd.setPrefSize(20,50);
+		newDocumentButton.setMinSize(60, 45);
+		newDocumentButton.setMaxSize(60, 45);
+		newDocumentButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+			SceneController.loadScene("newDocument");
+		});
 	}
 
 	public void tableDocumentFiller() throws NullPointerException, DatabaseException {

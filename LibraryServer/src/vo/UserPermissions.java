@@ -45,7 +45,7 @@ public class UserPermissions {
 		this.addNewProject =
 		this.assignDigitalizationTask =
 		this.assignTranscriptionTask =
-		this.publishDocument = true;
+		this.publishDocument = false; //WTF all'inizio l'avevamo messo a true. Corretta questa idea pessima. 
 	}
 	
 	//metodi set

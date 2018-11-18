@@ -1,5 +1,6 @@
 package fx_view;
 
+import controller.CreateDocumentController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -36,14 +37,14 @@ public class NewDocument {
     Button indefinita;
     
     @FXML
-	ChoiceBox choiceBox = new ChoiceBox();
+	ChoiceBox<String> choiceBox = new ChoiceBox<String>();
     
     @FXML
-	ChoiceBox choiceBox1 = new ChoiceBox();
+	ChoiceBox<String> choiceBox1 = new ChoiceBox<String>();
 
     @FXML
-    ChoiceBox choiceBox2 = new ChoiceBox();
-    
+    ChoiceBox<String> choiceBox2 = new ChoiceBox<String>();
+
     @FXML
 	private TextField year= new TextField("");
 	
@@ -53,8 +54,9 @@ public class NewDocument {
     @FXML
     private TextField year2= new TextField("");
     public static int c;
-    private String titlevar, autorsvar, descriptionvar;
+    private String title, author, description;
     private String yearvar, year1var, year2var;
+    private String preservState;
     
     @FXML
 	public void initialize() {
@@ -106,7 +108,7 @@ public class NewDocument {
     
     @FXML
     public void caseZero() {
-    	titlevar=intext.getText();
+    	title=intext.getText();
     	label.setText("Inserisci autore/i");
     	intext.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
     		event.consume();
@@ -120,7 +122,7 @@ public class NewDocument {
     @FXML
     public void caseOne() {
     	TextArea inarea=new TextArea();
-    	autorsvar=intext.getText();
+    	author=intext.getText();
     	label.setText("Inserisci descrizione");
     	container.getChildren().clear();
     	container.getChildren().add(inarea);
@@ -279,30 +281,40 @@ public class NewDocument {
     		System.out.println(year1var);
     		System.out.println(year2var);
     	}
-    	
-    	HBox hbox=new HBox();
 
     	label.setText("Indicare lo stato di conservazione");
     	
         container.getChildren().clear();
 
-    	ChoiceBox choiceBox = new ChoiceBox();
+    	choiceBox = new ChoiceBox<String>();
 
-        choiceBox.getItems().add("1");
-        choiceBox.getItems().add("2");
-        choiceBox.getItems().add("3");
-        choiceBox.getItems().add("4");
-        choiceBox.getItems().add("5");
+    	choiceBox.getItems().add("1");
+    	choiceBox.getItems().add("2");
+    	choiceBox.getItems().add("3");
+    	choiceBox.getItems().add("4");
+    	choiceBox.getItems().add("5");
         
-        choiceBox.getSelectionModel().select(2);
+    	choiceBox.getSelectionModel().select(2);
+        
+        //choiceBox.
         
         container.getChildren().add(choiceBox);
         
     }
     
     public void caseSix() {
+    	preservState = choiceBox.getSelectionModel().getSelectedItem();
+    	
+    	//TODO idee migliori per questi sono ben accette
+    	if(title.isEmpty())
+    		title = "Unknown";
+    	if(author.isEmpty())
+    		author = "Unknown";
+    	
     	label.setText("Il tuo documento è stato creato");
+    	next.setText(" Torna indietro.\n Dove sarà tutto nuovamente in inglese.\n Magico.");
         container.getChildren().clear();
+        CreateDocumentController.createDocument(title, author, description, yearvar, year1var, year2var, preservState);
     }
     
     public void finalCase() {
