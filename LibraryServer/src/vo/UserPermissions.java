@@ -18,9 +18,10 @@ public class UserPermissions {
 	private Boolean assignDigitalizationTask; //like 9
 	private Boolean assignTranscriptionTask; //like 10
 	private Boolean publishDocument; //like 11
+	private Boolean admin; //like 12
 	
 	//costruttore
-	public UserPermissions(Boolean a, Boolean b, Boolean c, Boolean d, Boolean e, Boolean f, Boolean g, Boolean h, Boolean i, Boolean l, Boolean m) {
+	public UserPermissions(Boolean a, Boolean b, Boolean c, Boolean d, Boolean e, Boolean f, Boolean g, Boolean h, Boolean i, Boolean l, Boolean m, Boolean administrator) {
 		this.download = a;
 		this.upload = b;
 		this.editMetadata = c;
@@ -32,6 +33,7 @@ public class UserPermissions {
 		this.assignDigitalizationTask = i;
 		this.assignTranscriptionTask = l;
 		this.publishDocument = m;
+		this.setAdmin(administrator);
 	}
 	
 	public UserPermissions() {
@@ -45,7 +47,8 @@ public class UserPermissions {
 		this.addNewProject =
 		this.assignDigitalizationTask =
 		this.assignTranscriptionTask =
-		this.publishDocument = false; //WTF all'inizio l'avevamo messo a true. Corretta questa idea pessima. 
+		this.publishDocument = 
+		this.setAdmin(false); 
 	}
 	
 	//metodi set
@@ -150,6 +153,16 @@ public class UserPermissions {
 		this.assignDigitalizationTask=p[9];
 		this.assignTranscriptionTask=p[10];
 		this.publishDocument=p[11];
+		this.admin=p[12];
+	}
+
+	public Boolean getAdmin() {
+		return admin;
+	}
+
+	public Boolean setAdmin(Boolean admin) {
+		this.admin = admin;
+		return admin;
 	}
 	
 	
