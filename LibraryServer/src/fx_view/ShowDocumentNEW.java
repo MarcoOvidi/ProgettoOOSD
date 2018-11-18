@@ -72,18 +72,16 @@ public class ShowDocumentNEW {
 				return Integer.compare(arg0.getPageNumber(), arg1.getPageNumber());
 			}
 		});
-		
-		/*if (pages.isEmpty()) { 
-			
-		VBox vbox = new VBox();
-		vbox.setAlignment(Pos.CENTER);
-		vbox.setPadding(new Insets(20));
-		
-		pageList.getItems().add(vbox);
-		return;
-		}*/
 
-		
+		/*
+		 * if (pages.isEmpty()) {
+		 * 
+		 * VBox vbox = new VBox(); vbox.setAlignment(Pos.CENTER); vbox.setPadding(new
+		 * Insets(20));
+		 * 
+		 * pageList.getItems().add(vbox); return; }
+		 */
+
 		for (Page page : pages) {
 			Image pageIcon = new Image(page.getScan().getImage().getUrl());
 			VBox vbox = new VBox();
@@ -151,6 +149,15 @@ public class ShowDocumentNEW {
 	private void updatePageNumber() {
 		number.setText(((Label) pageList.getSelectionModel().getSelectedItem().getChildren().get(1)).getText());
 		pageList.scrollTo(pageList.getSelectionModel().getSelectedIndex());
+		updatePage();
+	}
+
+	private void updatePage() {
+		viewPage(((ImageView) pageList.getSelectionModel().getSelectedItem().getChildren().get(0)).getImage());
+	}
+
+	private void updatePage(int index) {
+		viewPage(((ImageView) pageList.getItems().get(index).getChildren().get(0)).getImage());
 	}
 
 	private void initKeyboardNavigation() {
@@ -170,34 +177,46 @@ public class ShowDocumentNEW {
 			}
 			if (event.getCode() == KeyCode.UP) {
 				int newIndex = pageList.getFocusModel().getFocusedIndex() - 1;
-				if (newIndex >= 0)
+				if (newIndex >= 0) {
 					number.setText(((Label) pageList.getItems().get(newIndex).getChildren().get(1)).getText());
+				updatePage(newIndex);
+			}
 			}
 			if (event.getCode() == KeyCode.DOWN) {
 				int newIndex = pageList.getFocusModel().getFocusedIndex() + 1;
-				if (newIndex < pageList.getItems().size())
+				if (newIndex < pageList.getItems().size()) {
 					number.setText(((Label) pageList.getItems().get(newIndex).getChildren().get(1)).getText());
+					updatePage(newIndex);
+				}
 			}
 			if (event.getCode() == KeyCode.PAGE_UP) {
 				int newIndex = pageList.getFocusModel().getFocusedIndex() - 2;
-				if (newIndex >= 0)
+				if (newIndex >= 0) {
 					number.setText(((Label) pageList.getItems().get(newIndex).getChildren().get(1)).getText());
-				else if (newIndex == -1)
+					updatePage(newIndex);
+				} else if (newIndex == -1) {
 					number.setText(((Label) pageList.getItems().get(0).getChildren().get(1)).getText());
+					updatePage(0);
+				}
 			}
 			if (event.getCode() == KeyCode.PAGE_DOWN) {
 				int newIndex = pageList.getFocusModel().getFocusedIndex() + 2;
-				if (newIndex < pageList.getItems().size())
+				if (newIndex < pageList.getItems().size()) {
 					number.setText(((Label) pageList.getItems().get(newIndex).getChildren().get(1)).getText());
-				else if (newIndex == pageList.getItems().size())
+					updatePage(newIndex);
+				} else if (newIndex == pageList.getItems().size()) {
 					number.setText(((Label) pageList.getItems().get(newIndex - 1).getChildren().get(1)).getText());
+					updatePage(newIndex - 1);
+				}
 			}
 			if (event.getCode() == KeyCode.HOME) {
 				number.setText(((Label) pageList.getItems().get(0).getChildren().get(1)).getText());
+				updatePage(0);
 			}
 			if (event.getCode() == KeyCode.END) {
 				number.setText(((Label) pageList.getItems().get(pageList.getItems().size() - 1).getChildren().get(1))
 						.getText());
+				updatePage(pageList.getItems().size() - 1);
 			}
 			if (event.getCode() == KeyCode.ESCAPE) {
 				backButton.requestFocus();

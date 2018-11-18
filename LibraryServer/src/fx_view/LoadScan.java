@@ -25,7 +25,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TableView.ResizeFeatures;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -178,6 +177,9 @@ public class LoadScan {
 
 		for (Entry<UUIDDocument, String> e : PageScanController.getUncompletedDocument().entrySet()) {
 			documentList.getItems().add(e);
+			if(e.getKey().equals(toOpenDocument)) {
+				documentList.getSelectionModel().select(e);
+			}
 		}
 	}
 
@@ -211,6 +213,7 @@ public class LoadScan {
 
 	public void loadDocument(UUIDDocument document) { // FIXME tutto da testare
 		PageScanController.loadNewDocumentPages(document);
+		
 		LinkedList<Page> pL = PageScanController.getCurrentDocumentPages();
 		pageTable.setEditable(true);
 
