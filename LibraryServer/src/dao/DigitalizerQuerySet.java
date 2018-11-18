@@ -8,9 +8,11 @@ import java.util.LinkedList;
 
 import model.Page;
 import model.PageScan;
+import model.PageScanStaff;
 import vo.Image;
 import vo.UUIDDocument;
 import vo.UUIDPage;
+import vo.UUIDUser;
 
 public class DigitalizerQuerySet { // COMPLETATA E VERIFICATA DEF
 
@@ -41,7 +43,7 @@ public class DigitalizerQuerySet { // COMPLETATA E VERIFICATA DEF
 
 		try {
 			ps = con.prepareStatement("select ID,number,image,image_revised,"
-					+ "image_convalidation from page WHERE image_convalidation=? "
+					+ "image_convalidation, ID_digitalizer, ID_scanning_reviser from page WHERE image_convalidation=? "
 					+ "AND image_revised=? AND ID_document=?");
 			ps.setBoolean(1, validation);
 			ps.setBoolean(2, revision);
@@ -52,7 +54,7 @@ public class DigitalizerQuerySet { // COMPLETATA E VERIFICATA DEF
 			while (rs.next()) {
 				pages.add(new Page(new UUIDPage(rs.getInt("ID")), rs.getInt("number"),
 						new PageScan(new Image(rs.getString("image")), rs.getBoolean("image_convalidation"),
-								rs.getBoolean("image_revised"), null),
+								rs.getBoolean("image_revised"), new PageScanStaff(new UUIDUser(rs.getInt("ID_digitalizer")), new UUIDUser(rs.getInt("ID_scanning_reviser")))),
 						null));
 			}
 

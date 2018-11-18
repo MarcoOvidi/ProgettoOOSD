@@ -738,7 +738,7 @@ public class TranscriptionWorkProjectQuerySet {
 	public static UUIDDocument loadUUIDDocument(UUIDTranscriptionWorkProject id)
 			throws DatabaseException, NullPointerException {
 		if (id == null)
-			throw new NullPointerException("Id non vallido");
+			throw new NullPointerException("Id non valido");
 
 		Connection con = null;
 
@@ -833,5 +833,48 @@ public class TranscriptionWorkProjectQuerySet {
 
 		return twpl;
 	}
+	
+	public static boolean ifExistTranscriptionProject(UUIDDocument doc) throws DatabaseException {
+		Connection con = null;
+
+		try {
+			con = DBConnection.connect();
+		} catch (DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		Boolean exist = false;
+
+		try {
+			ps = con.prepareStatement("SELECT IF( EXISTS(SELECT * FROM transcription_project WHERE ID_document = ?), 1, 0) as Exist;");
+			ps.setInt(1, doc.getValue());
+
+			rs = ps.executeQuery();
+			
+			if(rs.next())
+				exist = rs.getBoolean("Exist");
+			
+
+		} catch (SQLException e) {
+			throw new DatabaseException("Errore di esecuzione della query", e);
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+
+		}
+
+		return exist;
+
+	}
+
 
 }

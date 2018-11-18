@@ -208,7 +208,6 @@ public class ScanningWorkProjectQuerySet {
 		return swp;
 	}
 
-
 	/**
 	 * Selects the UUIDDocument of a specific UUIDScanningWorkProject
 	 * 
@@ -233,14 +232,13 @@ public class ScanningWorkProjectQuerySet {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		UUIDDocument doc = null;
-		
+
 		try {
-			ps = con.prepareStatement("SELECT ID_document FROM scanning_project "
-					+ "WHERE ID = ?;");
+			ps = con.prepareStatement("SELECT ID_document FROM scanning_project " + "WHERE ID = ?;");
 			ps.setInt(1, id.getValue());
 
 			rs = ps.executeQuery();
-			
+
 			if (rs.next())
 				doc = new UUIDDocument(rs.getInt("ID_document"));
 
@@ -795,20 +793,22 @@ public class ScanningWorkProjectQuerySet {
 			}
 		}
 	}
+
 	/**
-	 * Permette di estrarre tutti i documenti il cui scanning project non è completato 
-	 * e l'utente parametro ne è un digitalizzatore
+	 * Permette di estrarre tutti i documenti il cui scanning project non è
+	 * completato e l'utente parametro ne è un digitalizzatore
+	 * 
 	 * @param id
 	 * @return
 	 * @throws DatabaseException
 	 */
 	public static HashMap<UUIDDocument, String> getScanningUncompletedDocument(UUIDUser id) throws DatabaseException {
-		
+
 		HashMap<UUIDDocument, String> uncompletedDocument = new HashMap<UUIDDocument, String>();
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		
+
 		try {
 			con = DBConnection.connect();
 		} catch (DatabaseException ex) {
@@ -821,19 +821,19 @@ public class ScanningWorkProjectQuerySet {
 					+ "as spp on d.ID=sp.ID_document  AND spp.ID_scanning_project=sp.ID "
 					+ "WHERE scanning_complete=0 AND spp.ID_digitalizer_user = ?;");
 			ps.setInt(1, id.getValue());
-			
+
 			rs = ps.executeQuery();
-			
-			while(rs.next()) {
+
+			while (rs.next()) {
 				uncompletedDocument.put(new UUIDDocument(rs.getInt("ID")), rs.getString("T"));
 			}
-			
+
 		} catch (SQLException e) {
 			throw new DatabaseException("Errore di esecuzione query", e);
 		} finally {
 
 			try {
-				if(rs != null)
+				if (rs != null)
 					rs.close();
 				if (ps != null)
 					ps.close();
@@ -843,19 +843,16 @@ public class ScanningWorkProjectQuerySet {
 				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
 			}
 		}
-		
+
 		return uncompletedDocument;
 	}
 	/*
-	public static void main(String[] args) {
-		
-		try{
-			System.out.println(ScanningWorkProjectQuerySet.getScanningUncompletedDocument(new UUIDUser(61)));
-		}catch(DatabaseException e) {
-			e.getMessage();
-		}
-	}*/
-	
+	 * public static void main(String[] args) {
+	 * 
+	 * try{
+	 * System.out.println(ScanningWorkProjectQuerySet.getScanningUncompletedDocument
+	 * (new UUIDUser(61))); }catch(DatabaseException e) { e.getMessage(); } }
+	 */
 
 	/**
 	 * seleziona i progetti di digitalizzazione ai quali lavoro (ovvero progetti che
@@ -889,7 +886,7 @@ public class ScanningWorkProjectQuerySet {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				String[] array = {rs.getString("Title"),String.valueOf(rs.getBoolean("sp.scanning_complete"))};
+				String[] array = { rs.getString("Title"), String.valueOf(rs.getBoolean("sp.scanning_complete")) };
 				swpl.put(new UUIDScanningWorkProject(rs.getInt("ID_progetto")), array);
 			}
 
@@ -911,6 +908,47 @@ public class ScanningWorkProjectQuerySet {
 
 	}
 
+	public static boolean ifExistScanningProject(UUIDDocument doc) throws DatabaseException {
+		Connection con = null;
+
+		try {
+			con = DBConnection.connect();
+		} catch (DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		Boolean exist = false;
+
+		try {
+			ps = con.prepareStatement("SELECT IF( EXISTS(SELECT * FROM scanning_project WHERE ID_document = ?), 1, 0) as Exist;");
+			ps.setInt(1, doc.getValue());
+
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				exist = rs.getBoolean("Exist");
+			}
+
+		} catch (SQLException e) {
+			throw new DatabaseException("Errore di esecuzione della query", e);
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+
+		}
+
+		return exist;
+
+	}
 	
 
 }

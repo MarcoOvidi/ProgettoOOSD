@@ -1,11 +1,17 @@
 package fx_view;
 
-import java.util.HashMap;
+import java.awt.Toolkit;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map.Entry;
+import java.util.Optional;
+import java.util.TreeMap;
 
+import controller.PageScanController;
 import controller.PageTranscriptionController;
+import controller.RoleController;
 import controller.ScanningProjectController;
 import controller.TranscriptionProjectController;
 import dao.DatabaseException;
@@ -14,6 +20,9 @@ import dao.TranscriptionWorkProjectQuerySet;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
@@ -25,6 +34,7 @@ import javafx.scene.layout.AnchorPane;
 import model.Page;
 import model.User;
 import vo.DocumentRow;
+import vo.PageScanningLog;
 import vo.PageTranscriptionLog;
 import vo.StaffRow;
 import vo.UUIDDocument;
@@ -124,10 +134,50 @@ public class ManageProject {
 	@FXML
 	private ObservableList<PageTranscriptionLog> listLog;
 
+	@FXML
+	private TableView<StaffRow> scanningStaff;
+
+	@FXML
+	private TableColumn<StaffRow, String> usernameDigitalizer;
+
+	@FXML
+	private TableColumn<StaffRow, String> roleDigitalizer;
+
+	@FXML
+	private ObservableList<StaffRow> scanningProjectStaff;
+
+	@FXML
+	private TableView<PageScanningLog> scanningLog;
+
+	@FXML
+	private TableColumn<PageScanningLog, String> pageScanNumber;
+
+	@FXML
+	private TableColumn<PageScanningLog, String> scanningReviser;
+
+	@FXML
+	private TableColumn<PageScanningLog, String> scanningRevised;
+
+	@FXML
+	private TableColumn<PageScanningLog, String> scanningValidated;
+
+	@FXML
+	private TableColumn<PageScanningLog, String> scanningDigitalizer;
+
+	@FXML
+	private ObservableList<PageScanningLog> listScanLog;
+
+	private UUIDScanningWorkProject selectedDocumentScanningProject;
+
+	private UUIDTranscriptionWorkProject selectedDocumentTranscriptionProject;
+	
+	private DocumentRow clickedDocument;
+
 	public void initialize() {
 		try {
 			tableDocumentFiller();
 			rowClick();
+			userRowClick();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -144,7 +194,7 @@ public class ManageProject {
 		ScanningProjectController.loadCoordinatedScanningPRoject();
 		TranscriptionProjectController.loadCoordinatedTranscriptionPRoject();
 
-		HashMap<UUIDDocument, DocumentRow> document = new HashMap<UUIDDocument, DocumentRow>();
+		TreeMap<UUIDDocument, DocumentRow> document = new TreeMap<UUIDDocument, DocumentRow>();
 
 		// TODO credo che tutto ciò vada nel controller
 		for (Entry<UUIDScanningWorkProject, String[]> entry : ScanningProjectController.getCoordinatedScanningProject()
@@ -189,22 +239,154 @@ public class ManageProject {
 			}
 		}
 
-		for (DocumentRow docRow : document.values()) {
-			rows.add(docRow);
+		for (Entry<UUIDDocument, DocumentRow> entry : document.entrySet()) {
+			if (entry.getValue().getIdTPrj() == null)
+				if (TranscriptionWorkProjectQuerySet.ifExistTranscriptionProject(entry.getKey())) {
+					DocumentRow transcription = entry.getValue();
+					transcription.setTranscription_PRJ("Not allowed");
+					entry.setValue(transcription);
+				} else {
+					DocumentRow transcription = entry.getValue();
+					transcription.setTranscription_PRJ("\u2204");
+					entry.setValue(transcription);
+				}
+
+			if (entry.getValue().getIdSPrj() == null)
+				if (ScanningWorkProjectQuerySet.ifExistScanningProject(entry.getKey())) {
+					DocumentRow scanning = entry.getValue();
+					scanning.setScanning_PRJ("Not allowed");
+					entry.setValue(scanning);
+				} else {
+					DocumentRow scanning = entry.getValue();
+					scanning.setScanning_PRJ("\u2204");
+					entry.setValue(scanning);
+				}
+
+			rows.add(entry.getValue());
 		}
 
 		documentTable.setItems(rows);
 	}
 
+	// TODO controllare gli eventconsume
 	public void rowClick() {
 		documentTable.setRowFactory(tv -> {
 			TableRow<DocumentRow> row = new TableRow<>();
 			row.setOnMouseClicked(event -> {
 				if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
+					clickedDocument = row.getItem();
+					loadClickedDocumentProjects();
+					
+				}
+			});
+			return row;
+		});
+	}
+	
+	public void loadClickedDocumentProjects() {
 
-					DocumentRow clickedRow = row.getItem();
-					loadPagesLog(clickedRow);
-					loadTranscriptionProjectStaff(clickedRow);
+		selectedDocumentScanningProject = clickedDocument.getIdSPrj();
+		selectedDocumentTranscriptionProject = clickedDocument.getIdTPrj();
+
+		if (transcriptionProjectStaff != null) {
+			transcriptionProjectStaff.clear();
+			transcriptionStaff.refresh();
+		}
+
+		if (scanningProjectStaff != null) {
+			scanningProjectStaff.clear();
+			scanningStaff.refresh();
+		}
+
+		if (listLog != null) {
+			listLog.clear();
+			transcriptionLog.refresh();
+		}
+
+		if (listScanLog != null) {
+			listScanLog.clear();
+			scanningLog.refresh();
+		}
+
+		if (clickedDocument.getIdTPrj() != null) {
+			loadTranscriptionPagesLog(clickedDocument);
+			loadTranscriptionProjectStaff(clickedDocument);
+		}
+
+		if (clickedDocument.getIdSPrj() != null) {
+			loadScanningPagesLog(clickedDocument);
+			loadScanningProjectStaff(clickedDocument);
+		}
+
+	}
+
+	public void userRowClick() {
+		transcriptionStaff.setRowFactory(tv -> {
+			TableRow<StaffRow> row = new TableRow<StaffRow>();
+			row.setOnMouseClicked(event -> {
+				if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
+					if (!(row.getItem().getRole().equals("Coordinator"))) {
+						List<String> choices = new ArrayList<>();
+						choices.add("Transcriber");
+						choices.add("Reviser");
+						choices.add("Remove user from project");
+
+						ChoiceDialog<String> dialog = new ChoiceDialog<>(row.getItem().getRole(), choices);
+						dialog.setTitle("User role management");
+						dialog.setHeaderText("Role for the user: " + row.getItem().getUsername());
+						dialog.setContentText("Choose new role:");
+
+						Optional<String> result = dialog.showAndWait();
+
+						if (result.isPresent()) {
+							if (result.get().equalsIgnoreCase(row.getItem().getRole())) {
+								Alert alert = new Alert(AlertType.WARNING);
+								alert.setTitle("Warning");
+								alert.setHeaderText("No Change");
+								alert.setContentText("You haven't change user's role");
+
+								alert.showAndWait();
+							} else if (result.get().equalsIgnoreCase("Transcriber")) {
+								// toglilo dai reviser
+								RoleController.removeReviserUserInTrascriptionProject(row.getItem().getId(),selectedDocumentTranscriptionProject);
+								// mettilo nei trascriber
+								RoleController.addTranscriberUserInTrascriptionProject(row.getItem().getId(), selectedDocumentTranscriptionProject);
+							} else if (result.get().equalsIgnoreCase("Reviser")) {
+								// toglilo dai transcriber
+								RoleController.removeTranscriberUserInTrascriptionProject(row.getItem().getId(), selectedDocumentTranscriptionProject);
+								// mettilo nei reviser
+								RoleController.addReviserUserInTrascriptionProject(row.getItem().getId(), selectedDocumentTranscriptionProject);
+							} else if (result.get().equalsIgnoreCase("Remove user from project")) {
+								if (row.getItem().getRole().equalsIgnoreCase("Reviser")) {
+									// toglilo dai revisori
+									RoleController.removeReviserUserInTrascriptionProject(row.getItem().getId(), selectedDocumentTranscriptionProject);
+								} else if (row.getItem().getRole().equalsIgnoreCase("Transcriber")) {
+									// toglilo dai trascrittori
+									RoleController.removeTranscriberUserInTrascriptionProject(row.getItem().getId(), selectedDocumentTranscriptionProject);
+								}
+							}
+
+						}
+					} else {
+						Alert alert = new Alert(AlertType.WARNING);
+						alert.setTitle("Warning");
+						alert.setHeaderText("Not authorized operation");
+						alert.setContentText("Only admin can change coordinator's role");
+						Toolkit.getDefaultToolkit().beep();
+						alert.showAndWait();
+					}
+				}
+				loadClickedDocumentProjects();
+			});
+			return row;
+			
+		});
+		
+		scanningStaff.setRowFactory(tv -> {
+			TableRow<StaffRow> row = new TableRow<StaffRow>();
+			row.setOnMouseClicked(event -> {
+				if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
+					System.out.println("ciaoneeee");
 				}
 			});
 			return row;
@@ -212,7 +394,7 @@ public class ManageProject {
 
 	}
 
-	public void loadPagesLog(DocumentRow dR) {
+	public void loadTranscriptionPagesLog(DocumentRow dR) {
 
 		pageNumber.setCellValueFactory(new PropertyValueFactory<PageTranscriptionLog, String>("pageNumber"));
 		transcriptionReviser
@@ -223,7 +405,7 @@ public class ManageProject {
 				.setCellValueFactory(new PropertyValueFactory<PageTranscriptionLog, String>("transcriptionValidated"));
 		transcriptionTranscriber.setCellValueFactory(
 				new PropertyValueFactory<PageTranscriptionLog, String>("transcriptionTranscriber"));
-		
+
 		listLog = FXCollections.observableArrayList();
 
 		try {
@@ -236,28 +418,32 @@ public class ManageProject {
 			}
 
 			LinkedList<Page> pageList = PageTranscriptionController.getTranscriptionLog();
-			
+
 			Iterator<Page> itr = pageList.iterator();
-			
-			while(itr.hasNext()) {
+
+			while (itr.hasNext()) {
 				Page p = itr.next();
-				listLog.add(new PageTranscriptionLog(String.valueOf(p.getPageNumber()), String.valueOf(p.getTranscription().getStaff().getReviser()), String.valueOf(p.getTranscription().getRevised()), String.valueOf(p.getTranscription().getValidated()), String.valueOf(p.getTranscription().getStaff().getLastTranscriber())));
+
+				String format1 = String.valueOf(p.getTranscription().getRevised());
+
+				if (format1.equalsIgnoreCase("true"))
+					format1 = "\u2714";
+
+				else if (format1.equals("false"))
+					format1 = "\u2718";
+
+				String format2 = String.valueOf(p.getTranscription().getValidated());
+
+				if (format2.equalsIgnoreCase("true"))
+					format2 = "\u2714";
+
+				else if (format2.equals("false"))
+					format2 = "\u2718";
+
+				listLog.add(new PageTranscriptionLog(String.valueOf(p.getPageNumber()),
+						String.valueOf(p.getTranscription().getStaff().getReviser().getValue()), format1, format2,
+						String.valueOf(p.getTranscription().getStaff().getLastTranscriber().getValue())));
 			}
-			
-			System.out.println(listLog);
-			/*
-			 * for(Page p : PageTranscriptionController.getTranscriptionLog()) {
-			 * listLog.add( new PageTranscriptionLog(String.valueOf(p.getPageNumber()),
-			 * String.valueOf(p.getTranscription().getStaff().getReviser().getValue()),
-			 * String.valueOf(p.getTranscription().getRevised()),
-			 * String.valueOf(p.getTranscription().getValidated()),
-			 * String.valueOf(p.getTranscription().getStaff().getLastTranscriber().getValue(
-			 * ))));
-			 * 
-			 * }
-			 */
-			
-			System.out.println(pageList);
 
 			transcriptionLog.setItems(listLog);
 
@@ -268,39 +454,111 @@ public class ManageProject {
 
 	}
 
+	public void loadScanningPagesLog(DocumentRow dR) {
+
+		pageScanNumber.setCellValueFactory(new PropertyValueFactory<PageScanningLog, String>("pageNumber"));
+		scanningReviser.setCellValueFactory(new PropertyValueFactory<PageScanningLog, String>("scanningReviser"));
+		scanningRevised.setCellValueFactory(new PropertyValueFactory<PageScanningLog, String>("scanningRevised"));
+		scanningValidated.setCellValueFactory(new PropertyValueFactory<PageScanningLog, String>("scanningValidated"));
+		scanningDigitalizer
+				.setCellValueFactory(new PropertyValueFactory<PageScanningLog, String>("scanningDigitalizer"));
+
+		listScanLog = FXCollections.observableArrayList();
+
+		try {
+			PageScanController.loadScanningLog(ScanningWorkProjectQuerySet.loadUUIDDocument(dR.getIdSPrj()));
+
+			if (listScanLog != null) {
+				listScanLog.clear();
+				scanningLog.refresh();
+			}
+
+			LinkedList<Page> pageList = PageScanController.getScanningLog();
+			Iterator<Page> itr = pageList.iterator();
+
+			while (itr.hasNext()) {
+				Page p = itr.next();
+
+				String format1 = String.valueOf(p.getScan().getRevised());
+
+				if (format1.equalsIgnoreCase("true"))
+					format1 = "\u2714";
+
+				else if (format1.equals("false"))
+					format1 = "\u2718";
+
+				String format2 = String.valueOf(p.getScan().getValidated());
+
+				if (format2.equalsIgnoreCase("true"))
+					format2 = "\u2714";
+
+				else if (format2.equals("false"))
+					format2 = "\u2718";
+
+				listScanLog.add(new PageScanningLog(String.valueOf(p.getPageNumber()),
+						String.valueOf(p.getScan().getStaff().getReviser().getValue()), format1, format2,
+						String.valueOf(p.getScan().getStaff().getDigitalizer().getValue())));
+
+			}
+			scanningLog.setItems(listScanLog);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+
+	}
+
 	public void loadTranscriptionProjectStaff(DocumentRow dR) {
-		if (transcriptionProjectStaff != null) {
-			transcriptionProjectStaff.clear();
-			transcriptionStaff.refresh();
+		TranscriptionProjectController.loadTranscriptionProject(dR.getIdTPrj());
+
+		usernameTranscriber.setCellValueFactory(new PropertyValueFactory<StaffRow, String>("username"));
+		roleTranscriber.setCellValueFactory(new PropertyValueFactory<StaffRow, String>("role"));
+
+		transcriptionProjectStaff = FXCollections.observableArrayList();
+
+		for (UUIDUser user : TranscriptionProjectController.getTPrj().getTranscribers()) {
+			User u = TranscriptionProjectController.getUserProfile(user);
+			transcriptionProjectStaff.add(new StaffRow(u.getUsername(), "Transcriber", u.getID()));
 		}
 
-		if (dR.getIdTPrj() != null) {
-			TranscriptionProjectController.loadTranscriptionProject(dR.getIdTPrj());
-
-			usernameTranscriber.setCellValueFactory(new PropertyValueFactory<StaffRow, String>("username"));
-			roleTranscriber.setCellValueFactory(new PropertyValueFactory<StaffRow, String>("role"));
-
-			transcriptionProjectStaff = FXCollections.observableArrayList();
-
-			for (UUIDUser user : TranscriptionProjectController.getTPrj().getTranscribers()) {
-				User u = TranscriptionProjectController.getUserProfile(user);
-				transcriptionProjectStaff.add(new StaffRow(u.getUsername(), "Transcriber"));
-			}
-
-			for (UUIDUser user : TranscriptionProjectController.getTPrj().getRevisers()) {
-				User u = TranscriptionProjectController.getUserProfile(user);
-				transcriptionProjectStaff.add(new StaffRow(u.getUsername(), "Reviser"));
-			}
-
-			User coordinator = TranscriptionProjectController
-					.getUserProfile((TranscriptionProjectController.getTPrj().getCoordinator()));
-
-			transcriptionProjectStaff.add(new StaffRow(coordinator.getUsername(), "Coordinator"));
-
-			transcriptionStaff.setItems(transcriptionProjectStaff);
-		} else {
-
+		for (UUIDUser user : TranscriptionProjectController.getTPrj().getRevisers()) {
+			User u = TranscriptionProjectController.getUserProfile(user);
+			transcriptionProjectStaff.add(new StaffRow(u.getUsername(), "Reviser", u.getID()));
 		}
+
+		User coordinator = TranscriptionProjectController
+				.getUserProfile((TranscriptionProjectController.getTPrj().getCoordinator()));
+
+		transcriptionProjectStaff.add(new StaffRow(coordinator.getUsername(), "Coordinator", coordinator.getID()));
+
+		transcriptionStaff.setItems(transcriptionProjectStaff);
+	}
+
+	public void loadScanningProjectStaff(DocumentRow dR) {
+		ScanningProjectController.loadScanningProject(dR.getIdSPrj());
+
+		usernameDigitalizer.setCellValueFactory(new PropertyValueFactory<StaffRow, String>("username"));
+		roleDigitalizer.setCellValueFactory(new PropertyValueFactory<StaffRow, String>("role"));
+
+		scanningProjectStaff = FXCollections.observableArrayList();
+
+		for (UUIDUser user : ScanningProjectController.getSPrj().getDigitalizers()) {
+			User u = ScanningProjectController.getUserProfile(user);
+			scanningProjectStaff.add(new StaffRow(u.getUsername(), "Digitalizer",u.getID()));
+		}
+
+		for (UUIDUser user : ScanningProjectController.getSPrj().getRevisers()) {
+			User u = ScanningProjectController.getUserProfile(user);
+			scanningProjectStaff.add(new StaffRow(u.getUsername(), "Reviser", u.getID()));
+		}
+
+		User coordinator = ScanningProjectController
+				.getUserProfile((ScanningProjectController.getSPrj().getCoordinator()));
+
+		scanningProjectStaff.add(new StaffRow(coordinator.getUsername(), "Coordinator" , coordinator.getID()));
+
+		scanningStaff.setItems(scanningProjectStaff);
 	}
 
 	/*
