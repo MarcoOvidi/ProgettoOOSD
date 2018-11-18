@@ -400,12 +400,69 @@ public class ManageProject {
 			
 		});
 		
+
 		scanningStaff.setRowFactory(tv -> {
 			TableRow<StaffRow> row = new TableRow<StaffRow>();
 			row.setOnMouseClicked(event -> {
 				if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
-					System.out.println("ciaoneeee");
+					if (!(row.getItem().getRole().equals("Coordinator")/* aggiungere && con permesso admin */)) {
+						List<String> choices = new ArrayList<>();
+						choices.add("Digitalizer");
+						choices.add("Reviser");
+						choices.add("Remove user from project");
+
+						ChoiceDialog<String> dialog = new ChoiceDialog<>(row.getItem().getRole(), choices);
+						dialog.setTitle("User role management");
+						dialog.setHeaderText("Role for the user: " + row.getItem().getUsername());
+						dialog.setContentText("Choose new role:");
+
+						Optional<String> result = dialog.showAndWait();
+
+						if (result.isPresent()) {
+							if (result.get().equalsIgnoreCase(row.getItem().getRole())) {
+								Alert alert = new Alert(AlertType.WARNING);
+								alert.setTitle("Warning");
+								alert.setHeaderText("No Change");
+								alert.setContentText("You haven't change user's role");
+
+								alert.showAndWait();
+							} else if (result.get().equalsIgnoreCase("Digitalizer")) {
+								// toglilo dai reviser
+								RoleController.removeReviserUserInScanningProject(row.getItem().getId(),
+										selectedDocumentScanningProject);
+								// mettilo nei digitalizer
+								RoleController.addDigitalizerUserInScanningProject(row.getItem().getId(),
+										selectedDocumentScanningProject);
+							} else if (result.get().equalsIgnoreCase("Reviser")) {
+								// toglilo dai digitalizer
+								RoleController.removeDigitalizerUserInScanningProject(row.getItem().getId(),
+										selectedDocumentScanningProject);
+								// mettilo nei reviser
+								RoleController.addReviserUserInScanningProject(row.getItem().getId(),
+										selectedDocumentScanningProject);
+							} else if (result.get().equalsIgnoreCase("Remove user from project")) {
+								if (row.getItem().getRole().equalsIgnoreCase("Reviser")) {
+									// toglilo dai revisori
+									RoleController.removeReviserUserInScanningProject(row.getItem().getId(),
+											selectedDocumentScanningProject);
+								} else if (row.getItem().getRole().equalsIgnoreCase("Digitalizer")) {
+									// toglilo dai digitalizzatori
+									RoleController.removeDigitalizerUserInScanningProject(row.getItem().getId(),
+											selectedDocumentScanningProject);
+								}
+							}
+
+						}
+					} else {
+						Alert alert = new Alert(AlertType.WARNING);
+						alert.setTitle("Warning");
+						alert.setHeaderText("Not authorized operation");
+						alert.setContentText("Only admin can change coordinator's role");
+						Toolkit.getDefaultToolkit().beep();
+						alert.showAndWait();
+					}
 				}
+				loadClickedDocumentProjects();
 			});
 			return row;
 		});
