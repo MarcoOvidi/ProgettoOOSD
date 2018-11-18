@@ -1,4 +1,4 @@
 /bin/
 /.metadata/
-/*.class/
-/LibraryServer/build/
+**/*.class
+/LibraryServer/build/**
