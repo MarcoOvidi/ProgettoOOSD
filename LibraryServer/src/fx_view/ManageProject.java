@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.TreeMap;
 
+import controller.LocalSession;
 import controller.PageScanController;
 import controller.PageTranscriptionController;
 import controller.RoleController;
@@ -49,7 +51,7 @@ public class ManageProject {
 
 	@FXML
 	private AnchorPane topbar;
-	
+
 	@FXML
 	private Button newDocumentButton;
 
@@ -176,12 +178,12 @@ public class ManageProject {
 	private UUIDScanningWorkProject selectedDocumentScanningProject;
 
 	private UUIDTranscriptionWorkProject selectedDocumentTranscriptionProject;
-	
+
 	private DocumentRow clickedDocument;
 
 	public void initialize() {
 		initNewDocumentButton();
-		
+
 		try {
 			tableDocumentFiller();
 			rowClick();
@@ -191,10 +193,10 @@ public class ManageProject {
 			System.out.println(e.getMessage());
 		}
 	}
-	
+
 	private void initNewDocumentButton() {
 		newDocumentButton.setFont(new Font(24));
-		//dd.setPrefSize(20,50);
+		// dd.setPrefSize(20,50);
 		newDocumentButton.setMinSize(60, 45);
 		newDocumentButton.setMaxSize(60, 45);
 		newDocumentButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -294,13 +296,13 @@ public class ManageProject {
 				if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
 					clickedDocument = row.getItem();
 					loadClickedDocumentProjects();
-					
+
 				}
 			});
 			return row;
 		});
 	}
-	
+
 	public void loadClickedDocumentProjects() {
 
 		selectedDocumentScanningProject = clickedDocument.getIdSPrj();
@@ -343,10 +345,167 @@ public class ManageProject {
 			TableRow<StaffRow> row = new TableRow<StaffRow>();
 			row.setOnMouseClicked(event -> {
 				if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
-					if (!(row.getItem().getRole().equals("Coordinator"))) {
+					// se la riga cliccata non è di un utente coordinatore e chi clicca è un
+					// coordinatore o admin
+					if (!(row.getItem().getRole().equals("Coordinator"))
+							&& (RoleController.controlUserPermission(8, LocalSession.getLocalUser().getID())
+									|| RoleController.controlUserPermission(12, LocalSession.getLocalUser().getID()))) {
+
 						List<String> choices = new ArrayList<>();
 						choices.add("Transcriber");
 						choices.add("Reviser");
+						choices.add("Remove user from project");
+						if (RoleController.controlUserPermission(12, LocalSession.getLocalUser().getID()) &&
+								RoleController.controlUserPermission(8, row.getItem().getId())) {
+							choices.add("Coordinator");
+						}
+
+						ChoiceDialog<String> dialog = new ChoiceDialog<>(row.getItem().getRole(), choices);
+						dialog.setTitle("User role management");
+						dialog.setHeaderText("Role for the user: " + row.getItem().getUsername());
+						dialog.setContentText("Choose new role:");
+
+						Optional<String> result = dialog.showAndWait();
+
+						if (result.isPresent()) {
+							if (result.get().equalsIgnoreCase(row.getItem().getRole())) {
+								Alert alert = new Alert(AlertType.WARNING);
+								alert.setTitle("Warning");
+								alert.setHeaderText("No Change");
+								alert.setContentText("You haven't changed user's role");
+
+								alert.showAndWait();
+							} else if (result.get().equalsIgnoreCase("Transcriber")) {
+								if (row.getItem().getRole().equalsIgnoreCase("Reviser")) {
+									// toglilo dai reviser
+									RoleController.removeReviserUserInTrascriptionProject(row.getItem().getId(),
+											selectedDocumentTranscriptionProject);
+									// mettilo nei trascriber
+									RoleController.addTranscriberUserInTrascriptionProject(row.getItem().getId(),
+											selectedDocumentTranscriptionProject);
+								} else if (row.getItem().getRole().equalsIgnoreCase("Coordinator")) {
+									// toglilo da coordinatore
+									// scegli un nuovo coordinatore
+									// mettilo fra i transcriber
+									List<Formatter> scelta = new LinkedList<Formatter>();
+
+									for (Map.Entry<UUIDUser, String> e : RoleController.showCoordinatorUsers()
+											.entrySet()) {
+										scelta.add(new Formatter(e.getKey(), e.getValue()));
+									}
+
+									if (!(scelta.isEmpty())) {
+
+										ChoiceDialog<Formatter> dialogo = new ChoiceDialog<>(scelta.get(0), scelta);
+										dialogo.setTitle("User Role Management");
+										dialogo.setHeaderText("You must choose a new Coordinator");
+										dialogo.setContentText("Available Coordinators:");
+										Optional<Formatter> risultato = dialogo.showAndWait();
+										if (risultato.isPresent()) {
+											Formatter f = dialogo.getResult();
+											RoleController.changeTransriptionProjectCoordinator(f.getIdUser(),
+													selectedDocumentTranscriptionProject);
+											RoleController.addTranscriberUserInTrascriptionProject(
+													row.getItem().getId(), selectedDocumentTranscriptionProject);
+										}
+									} else {
+										Alert alert = new Alert(AlertType.WARNING);
+										alert.setTitle("Warning");
+										alert.setHeaderText("No Staff");
+										alert.setContentText("Add coordinators to your staff");
+
+										alert.showAndWait();
+									}
+
+								}
+
+							} else if (result.get().equalsIgnoreCase("Reviser")) {
+								if (row.getItem().getRole().equalsIgnoreCase("Transcriber")) {
+									// toglilo dai transcriber
+
+									RoleController.removeTranscriberUserInTrascriptionProject(row.getItem().getId(),
+											selectedDocumentTranscriptionProject);
+									// mettilo nei reviser
+									RoleController.addReviserUserInTrascriptionProject(row.getItem().getId(),
+											selectedDocumentTranscriptionProject);
+								} else if (row.getItem().getRole().equalsIgnoreCase("Coordinator")) {
+									// toglilo da coordinatore
+									// scegli un nuovo coordinatore
+									// mettilo nei reviser
+									List<Formatter> scelta = new LinkedList<Formatter>();
+
+									for (Map.Entry<UUIDUser, String> e : RoleController.showCoordinatorUsers()
+											.entrySet()) {
+										scelta.add(new Formatter(e.getKey(), e.getValue()));
+									}
+
+									if (!(scelta.isEmpty())) {
+
+										ChoiceDialog<Formatter> dialogo = new ChoiceDialog<>(scelta.get(0), scelta);
+										dialogo.setTitle("User Role Management");
+										dialogo.setHeaderText("You must choose a new Coordinator");
+										dialogo.setContentText("Available Coordinators:");
+										Optional<Formatter> risultato = dialogo.showAndWait();
+										if (risultato.isPresent()) {
+											Formatter f = dialogo.getResult();
+											RoleController.changeTransriptionProjectCoordinator(f.getIdUser(),
+													selectedDocumentTranscriptionProject);
+											RoleController.addReviserUserInTrascriptionProject(row.getItem().getId(),
+													selectedDocumentTranscriptionProject);
+										}
+									} else {
+										Alert alert = new Alert(AlertType.WARNING);
+										alert.setTitle("Warning");
+										alert.setHeaderText("No Staff");
+										alert.setContentText("Add coordinators to your staff");
+
+										alert.showAndWait();
+									}
+
+								} // parentesi
+							} else if (result.get().equalsIgnoreCase("Remove user from project")) {
+								if (row.getItem().getRole().equalsIgnoreCase("Reviser")) {
+									// toglilo dai revisori
+									RoleController.removeReviserUserInTrascriptionProject(row.getItem().getId(),
+											selectedDocumentTranscriptionProject);
+								} else if (row.getItem().getRole().equalsIgnoreCase("Transcriber")) {
+									// toglilo dai trascrittori
+									RoleController.removeTranscriberUserInTrascriptionProject(row.getItem().getId(),
+											selectedDocumentTranscriptionProject);
+								}
+
+							} else if (result.get().equalsIgnoreCase("Coordinator")) {
+
+								// scegli un nuovo coordinatore
+								List<Formatter> scelta = new LinkedList<Formatter>();
+
+								for (Map.Entry<UUIDUser, String> e : RoleController.showCoordinatorUsers().entrySet()) {
+									scelta.add(new Formatter(e.getKey(), e.getValue()));
+								}
+
+								if (!(scelta.isEmpty())) {
+
+									RoleController.changeTransriptionProjectCoordinator(row.getItem().getId() ,
+											selectedDocumentTranscriptionProject);
+
+								} else {
+									Alert alert = new Alert(AlertType.WARNING);
+									alert.setTitle("Warning");
+									alert.setHeaderText("No Staff");
+									alert.setContentText("Add coordinators to your staff");
+
+									alert.showAndWait();
+								}
+							}
+						}
+
+						// se la riga cliccata è di un utente coordinatore e chi clicca è un admin
+					} else if (row.getItem().getRole().equals("Coordinator")
+							&& RoleController.controlUserPermission(12, LocalSession.getLocalUser().getID())) {
+						List<String> choices = new ArrayList<>();
+						choices.add("Transcriber");
+						choices.add("Reviser");
+						choices.add("Coordinator");
 						choices.add("Remove user from project");
 
 						ChoiceDialog<String> dialog = new ChoiceDialog<>(row.getItem().getRole(), choices);
@@ -361,26 +520,105 @@ public class ManageProject {
 								Alert alert = new Alert(AlertType.WARNING);
 								alert.setTitle("Warning");
 								alert.setHeaderText("No Change");
-								alert.setContentText("You haven't change user's role");
+								alert.setContentText("You haven't changed user's role");
 
 								alert.showAndWait();
 							} else if (result.get().equalsIgnoreCase("Transcriber")) {
-								// toglilo dai reviser
-								RoleController.removeReviserUserInTrascriptionProject(row.getItem().getId(),selectedDocumentTranscriptionProject);
-								// mettilo nei trascriber
-								RoleController.addTranscriberUserInTrascriptionProject(row.getItem().getId(), selectedDocumentTranscriptionProject);
+								// rimuovi da coordinatore
+								// aggiungi nuovo coordinatore
+								// aggiungilo nei transcriber
+
+								List<Formatter> scelta = new LinkedList<Formatter>();
+
+								for (Map.Entry<UUIDUser, String> e : RoleController.showCoordinatorUsers().entrySet()) {
+									scelta.add(new Formatter(e.getKey(), e.getValue()));
+								}
+
+								if (!(scelta.isEmpty())) {
+
+									ChoiceDialog<Formatter> dialogo = new ChoiceDialog<>(scelta.get(0), scelta);
+									dialogo.setTitle("User Role Management");
+									dialogo.setHeaderText("You must choose a new Coordinator");
+									dialogo.setContentText("Available Coordinators:");
+									Optional<Formatter> risultato = dialogo.showAndWait();
+									if (risultato.isPresent()) {
+										Formatter f = dialogo.getResult();
+										RoleController.changeTransriptionProjectCoordinator(f.getIdUser(),
+												selectedDocumentTranscriptionProject);
+										RoleController.addTranscriberUserInTrascriptionProject(row.getItem().getId(),
+												selectedDocumentTranscriptionProject);
+									}
+								} else {
+									Alert alert = new Alert(AlertType.WARNING);
+									alert.setTitle("Warning");
+									alert.setHeaderText("No Staff");
+									alert.setContentText("Add coordinators to your staff");
+
+									alert.showAndWait();
+								}
 							} else if (result.get().equalsIgnoreCase("Reviser")) {
-								// toglilo dai transcriber
-								RoleController.removeTranscriberUserInTrascriptionProject(row.getItem().getId(), selectedDocumentTranscriptionProject);
-								// mettilo nei reviser
-								RoleController.addReviserUserInTrascriptionProject(row.getItem().getId(), selectedDocumentTranscriptionProject);
+								// rimuovilo da coordinatore
+								// aggiungi un nuovo coordinatore
+								// aggiungiglo ai revisori
+
+								List<Formatter> scelta = new LinkedList<Formatter>();
+
+								for (Map.Entry<UUIDUser, String> e : RoleController.showCoordinatorUsers().entrySet()) {
+									scelta.add(new Formatter(e.getKey(), e.getValue()));
+								}
+
+								if (!(scelta.isEmpty())) {
+
+									ChoiceDialog<Formatter> dialogo = new ChoiceDialog<>(scelta.get(0), scelta);
+									dialogo.setTitle("User Role Management");
+									dialogo.setHeaderText("You must choose a new Coordinator");
+									dialogo.setContentText("Available Coordinators:");
+									Optional<Formatter> risultato = dialogo.showAndWait();
+									if (risultato.isPresent()) {
+										Formatter f = dialogo.getResult();
+										RoleController.changeTransriptionProjectCoordinator(f.getIdUser(),
+												selectedDocumentTranscriptionProject);
+										RoleController.addReviserUserInTrascriptionProject(row.getItem().getId(),
+												selectedDocumentTranscriptionProject);
+									}
+								} else {
+									Alert alert = new Alert(AlertType.WARNING);
+									alert.setTitle("Warning");
+									alert.setHeaderText("No Staff");
+									alert.setContentText(
+											"Add coordinators to your staff, impossible to change Coordinator");
+
+									alert.showAndWait();
+								}
 							} else if (result.get().equalsIgnoreCase("Remove user from project")) {
-								if (row.getItem().getRole().equalsIgnoreCase("Reviser")) {
-									// toglilo dai revisori
-									RoleController.removeReviserUserInTrascriptionProject(row.getItem().getId(), selectedDocumentTranscriptionProject);
-								} else if (row.getItem().getRole().equalsIgnoreCase("Transcriber")) {
-									// toglilo dai trascrittori
-									RoleController.removeTranscriberUserInTrascriptionProject(row.getItem().getId(), selectedDocumentTranscriptionProject);
+								// rimuovilo da coordinatore
+								// scegli un nuovo coordinatore
+
+								List<Formatter> scelta = new LinkedList<Formatter>();
+
+								for (Map.Entry<UUIDUser, String> e : RoleController.showCoordinatorUsers().entrySet()) {
+									scelta.add(new Formatter(e.getKey(), e.getValue()));
+								}
+
+								if (!(scelta.isEmpty())) {
+
+									ChoiceDialog<Formatter> dialogo = new ChoiceDialog<>(scelta.get(0), scelta);
+									dialogo.setTitle("User Role Management");
+									dialogo.setHeaderText("You must choose a new Coordinator");
+									dialogo.setContentText("Available Coordinators:");
+									Optional<Formatter> risultato = dialogo.showAndWait();
+									if (risultato.isPresent()) {
+										Formatter f = dialogo.getResult();
+										RoleController.changeTransriptionProjectCoordinator(f.getIdUser(),
+												selectedDocumentTranscriptionProject);
+									}
+								} else {
+									Alert alert = new Alert(AlertType.WARNING);
+									alert.setTitle("Warning");
+									alert.setHeaderText("No Staff");
+									alert.setContentText("Add coordinators to your staff");
+
+									alert.showAndWait();
 								}
 							}
 
@@ -389,7 +627,7 @@ public class ManageProject {
 						Alert alert = new Alert(AlertType.WARNING);
 						alert.setTitle("Warning");
 						alert.setHeaderText("Not authorized operation");
-						alert.setContentText("Only admin can change coordinator's role");
+						alert.setContentText("You haven't permission to do that !");
 						Toolkit.getDefaultToolkit().beep();
 						alert.showAndWait();
 					}
@@ -397,18 +635,306 @@ public class ManageProject {
 				loadClickedDocumentProjects();
 			});
 			return row;
-			
+
 		});
-		
+
 		scanningStaff.setRowFactory(tv -> {
 			TableRow<StaffRow> row = new TableRow<StaffRow>();
 			row.setOnMouseClicked(event -> {
 				if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
-					System.out.println("ciaoneeee");
+					// se la riga cliccata non è di un utente coordinatore e chi clicca è un
+					// coordinatore o admin
+					if (!(row.getItem().getRole().equals("Coordinator"))
+							&& (RoleController.controlUserPermission(8, LocalSession.getLocalUser().getID())
+									|| RoleController.controlUserPermission(12, LocalSession.getLocalUser().getID()))) {
+
+						List<String> choices = new ArrayList<>();
+						choices.add("Digitalizer");
+						choices.add("Reviser");
+						choices.add("Remove user from project");
+						if (RoleController.controlUserPermission(12, LocalSession.getLocalUser().getID()) &&
+								RoleController.controlUserPermission(8, row.getItem().getId())) {
+							choices.add("Coordinator");
+						}
+
+						ChoiceDialog<String> dialog = new ChoiceDialog<>(row.getItem().getRole(), choices);
+						dialog.setTitle("User role management");
+						dialog.setHeaderText("Role for the user: " + row.getItem().getUsername());
+						dialog.setContentText("Choose new role:");
+
+						Optional<String> result = dialog.showAndWait();
+
+						if (result.isPresent()) {
+							if (result.get().equalsIgnoreCase(row.getItem().getRole())) {
+								Alert alert = new Alert(AlertType.WARNING);
+								alert.setTitle("Warning");
+								alert.setHeaderText("No Change");
+								alert.setContentText("You haven't changed user's role");
+
+								alert.showAndWait();
+							} else if (result.get().equalsIgnoreCase("Digitalizer")) {
+								if (row.getItem().getRole().equalsIgnoreCase("Reviser")) {
+									// toglilo dai reviser
+									RoleController.removeReviserUserInScanningProject(row.getItem().getId(),
+											selectedDocumentScanningProject);
+									// mettilo nei digitalizer
+									RoleController.addDigitalizerUserInScanningProject(row.getItem().getId(),
+											selectedDocumentScanningProject);
+								} else if (row.getItem().getRole().equalsIgnoreCase("Coordinator")) {
+									// toglilo da coordinatore
+									// scegli un nuovo coordinatore
+									// mettilo fra i digitalizer
+									List<Formatter> scelta = new LinkedList<Formatter>();
+
+									for (Map.Entry<UUIDUser, String> e : RoleController.showCoordinatorUsers()
+											.entrySet()) {
+										scelta.add(new Formatter(e.getKey(), e.getValue()));
+									}
+
+									if (!(scelta.isEmpty())) {
+
+										ChoiceDialog<Formatter> dialogo = new ChoiceDialog<>(scelta.get(0), scelta);
+										dialogo.setTitle("User Role Management");
+										dialogo.setHeaderText("You must choose a new Coordinator");
+										dialogo.setContentText("Available Coordinators:");
+										Optional<Formatter> risultato = dialogo.showAndWait();
+										if (risultato.isPresent()) {
+											Formatter f = dialogo.getResult();
+											RoleController.changeScanningProjectCoordinator(f.getIdUser(),
+													selectedDocumentScanningProject);
+											RoleController.addDigitalizerUserInScanningProject(
+													row.getItem().getId(), selectedDocumentScanningProject);
+										}
+									} else {
+										Alert alert = new Alert(AlertType.WARNING);
+										alert.setTitle("Warning");
+										alert.setHeaderText("No Staff");
+										alert.setContentText("Add coordinators to your staff");
+
+										alert.showAndWait();
+									}
+
+								}
+
+							} else if (result.get().equalsIgnoreCase("Reviser")) {
+								if (row.getItem().getRole().equalsIgnoreCase("Digitalizer")) {
+									// toglilo dai digitalizer
+
+									RoleController.removeDigitalizerUserInScanningProject(row.getItem().getId(),
+											selectedDocumentScanningProject);
+									// mettilo nei reviser
+									RoleController.addReviserUserInScanningProject(row.getItem().getId(),
+											selectedDocumentScanningProject);
+								} else if (row.getItem().getRole().equalsIgnoreCase("Coordinator")) {
+									// toglilo da coordinatore
+									// scegli un nuovo coordinatore
+									// mettilo nei reviser
+									List<Formatter> scelta = new LinkedList<Formatter>();
+
+									for (Map.Entry<UUIDUser, String> e : RoleController.showCoordinatorUsers()
+											.entrySet()) {
+										scelta.add(new Formatter(e.getKey(), e.getValue()));
+									}
+
+									if (!(scelta.isEmpty())) {
+
+										ChoiceDialog<Formatter> dialogo = new ChoiceDialog<>(scelta.get(0), scelta);
+										dialogo.setTitle("User Role Management");
+										dialogo.setHeaderText("You must choose a new Coordinator");
+										dialogo.setContentText("Available Coordinators:");
+										Optional<Formatter> risultato = dialogo.showAndWait();
+										if (risultato.isPresent()) {
+											Formatter f = dialogo.getResult();
+											RoleController.changeScanningProjectCoordinator(f.getIdUser(),
+													selectedDocumentScanningProject);
+											RoleController.addReviserUserInScanningProject(row.getItem().getId(),
+													selectedDocumentScanningProject);
+										}
+									} else {
+										Alert alert = new Alert(AlertType.WARNING);
+										alert.setTitle("Warning");
+										alert.setHeaderText("No Staff");
+										alert.setContentText("Add coordinators to your staff");
+
+										alert.showAndWait();
+									}
+
+								} // parentesi
+							} else if (result.get().equalsIgnoreCase("Remove user from project")) {
+								if (row.getItem().getRole().equalsIgnoreCase("Reviser")) {
+									// toglilo dai revisori
+									RoleController.removeReviserUserInScanningProject(row.getItem().getId(),
+											selectedDocumentScanningProject);
+								} else if (row.getItem().getRole().equalsIgnoreCase("Digitalizer")) {
+									// toglilo dai digitalizzatori
+									RoleController.removeDigitalizerUserInScanningProject(row.getItem().getId(),
+											selectedDocumentScanningProject);
+								}
+
+							} else if (result.get().equalsIgnoreCase("Coordinator")) {
+
+								// scegli un nuovo coordinatore
+								List<Formatter> scelta = new LinkedList<Formatter>();
+
+								for (Map.Entry<UUIDUser, String> e : RoleController.showCoordinatorUsers().entrySet()) {
+									scelta.add(new Formatter(e.getKey(), e.getValue()));
+								}
+
+								if (!(scelta.isEmpty())) {
+
+									RoleController.changeScanningProjectCoordinator(row.getItem().getId() ,
+											selectedDocumentScanningProject);
+
+								} else {
+									Alert alert = new Alert(AlertType.WARNING);
+									alert.setTitle("Warning");
+									alert.setHeaderText("No Staff");
+									alert.setContentText("Add coordinators to your staff");
+
+									alert.showAndWait();
+								}
+							}
+						}
+
+						// se la riga cliccata è di un utente coordinatore e chi clicca è un admin
+					} else if (row.getItem().getRole().equals("Coordinator")
+							&& RoleController.controlUserPermission(12, LocalSession.getLocalUser().getID())) {
+						List<String> choices = new ArrayList<>();
+						choices.add("Digitalizer");
+						choices.add("Reviser");
+						choices.add("Coordinator");
+						choices.add("Remove user from project");
+
+						ChoiceDialog<String> dialog = new ChoiceDialog<>(row.getItem().getRole(), choices);
+						dialog.setTitle("User role management");
+						dialog.setHeaderText("Role for the user: " + row.getItem().getUsername());
+						dialog.setContentText("Choose new role:");
+
+						Optional<String> result = dialog.showAndWait();
+
+						if (result.isPresent()) {
+							if (result.get().equalsIgnoreCase(row.getItem().getRole())) {
+								Alert alert = new Alert(AlertType.WARNING);
+								alert.setTitle("Warning");
+								alert.setHeaderText("No Change");
+								alert.setContentText("You haven't changed user's role");
+
+								alert.showAndWait();
+							} else if (result.get().equalsIgnoreCase("Digitalizer")) {
+								// rimuovi da coordinatore
+								// aggiungi nuovo coordinatore
+								// aggiungilo nei digitalizer
+
+								List<Formatter> scelta = new LinkedList<Formatter>();
+
+								for (Map.Entry<UUIDUser, String> e : RoleController.showCoordinatorUsers().entrySet()) {
+									scelta.add(new Formatter(e.getKey(), e.getValue()));
+								}
+
+								if (!(scelta.isEmpty())) {
+
+									ChoiceDialog<Formatter> dialogo = new ChoiceDialog<>(scelta.get(0), scelta);
+									dialogo.setTitle("User Role Management");
+									dialogo.setHeaderText("You must choose a new Coordinator");
+									dialogo.setContentText("Available Coordinators:");
+									Optional<Formatter> risultato = dialogo.showAndWait();
+									if (risultato.isPresent()) {
+										Formatter f = dialogo.getResult();
+										RoleController.changeScanningProjectCoordinator(f.getIdUser(),
+												selectedDocumentScanningProject);
+										RoleController.addDigitalizerUserInScanningProject(row.getItem().getId(),
+												selectedDocumentScanningProject);
+									}
+								} else {
+									Alert alert = new Alert(AlertType.WARNING);
+									alert.setTitle("Warning");
+									alert.setHeaderText("No Staff");
+									alert.setContentText("Add coordinators to your staff");
+
+									alert.showAndWait();
+								}
+							} else if (result.get().equalsIgnoreCase("Reviser")) {
+								// rimuovilo da coordinatore
+								// aggiungi un nuovo coordinatore
+								// aggiungiglo ai revisori
+
+								List<Formatter> scelta = new LinkedList<Formatter>();
+
+								for (Map.Entry<UUIDUser, String> e : RoleController.showCoordinatorUsers().entrySet()) {
+									scelta.add(new Formatter(e.getKey(), e.getValue()));
+								}
+
+								if (!(scelta.isEmpty())) {
+
+									ChoiceDialog<Formatter> dialogo = new ChoiceDialog<>(scelta.get(0), scelta);
+									dialogo.setTitle("User Role Management");
+									dialogo.setHeaderText("You must choose a new Coordinator");
+									dialogo.setContentText("Available Coordinators:");
+									Optional<Formatter> risultato = dialogo.showAndWait();
+									if (risultato.isPresent()) {
+										Formatter f = dialogo.getResult();
+										RoleController.changeScanningProjectCoordinator(f.getIdUser(),
+												selectedDocumentScanningProject);
+										RoleController.addReviserUserInScanningProject(row.getItem().getId(),
+												selectedDocumentScanningProject);
+									}
+								} else {
+									Alert alert = new Alert(AlertType.WARNING);
+									alert.setTitle("Warning");
+									alert.setHeaderText("No Staff");
+									alert.setContentText(
+											"Add coordinators to your staff, impossible to change Coordinator");
+
+									alert.showAndWait();
+								}
+							} else if (result.get().equalsIgnoreCase("Remove user from project")) {
+								// rimuovilo da coordinatore
+								// scegli un nuovo coordinatore
+
+								List<Formatter> scelta = new LinkedList<Formatter>();
+
+								for (Map.Entry<UUIDUser, String> e : RoleController.showCoordinatorUsers().entrySet()) {
+									scelta.add(new Formatter(e.getKey(), e.getValue()));
+								}
+
+								if (!(scelta.isEmpty())) {
+
+									ChoiceDialog<Formatter> dialogo = new ChoiceDialog<>(scelta.get(0), scelta);
+									dialogo.setTitle("User Role Management");
+									dialogo.setHeaderText("You must choose a new Coordinator");
+									dialogo.setContentText("Available Coordinators:");
+									Optional<Formatter> risultato = dialogo.showAndWait();
+									if (risultato.isPresent()) {
+										Formatter f = dialogo.getResult();
+										RoleController.changeScanningProjectCoordinator(f.getIdUser(),
+												selectedDocumentScanningProject);
+									}
+								} else {
+									Alert alert = new Alert(AlertType.WARNING);
+									alert.setTitle("Warning");
+									alert.setHeaderText("No Staff");
+									alert.setContentText("Add coordinators to your staff");
+
+									alert.showAndWait();
+								}
+							}
+
+						}
+					} else {
+						Alert alert = new Alert(AlertType.WARNING);
+						alert.setTitle("Warning");
+						alert.setHeaderText("Not authorized operation");
+						alert.setContentText("You haven't permission to do that !");
+						Toolkit.getDefaultToolkit().beep();
+						alert.showAndWait();
+					}
 				}
+				loadClickedDocumentProjects();
 			});
 			return row;
+
 		});
+
 
 	}
 
@@ -563,7 +1089,7 @@ public class ManageProject {
 
 		for (UUIDUser user : ScanningProjectController.getSPrj().getDigitalizers()) {
 			User u = ScanningProjectController.getUserProfile(user);
-			scanningProjectStaff.add(new StaffRow(u.getUsername(), "Digitalizer",u.getID()));
+			scanningProjectStaff.add(new StaffRow(u.getUsername(), "Digitalizer", u.getID()));
 		}
 
 		for (UUIDUser user : ScanningProjectController.getSPrj().getRevisers()) {
@@ -574,7 +1100,7 @@ public class ManageProject {
 		User coordinator = ScanningProjectController
 				.getUserProfile((ScanningProjectController.getSPrj().getCoordinator()));
 
-		scanningProjectStaff.add(new StaffRow(coordinator.getUsername(), "Coordinator" , coordinator.getID()));
+		scanningProjectStaff.add(new StaffRow(coordinator.getUsername(), "Coordinator", coordinator.getID()));
 
 		scanningStaff.setItems(scanningProjectStaff);
 	}
@@ -621,4 +1147,37 @@ public class ManageProject {
 	 * }
 	 */
 
+	// ___
+	final class Formatter {
+		UUIDUser idUser;
+		String username;
+
+		public UUIDUser getIdUser() {
+			return idUser;
+		}
+
+		public void setIdUser(UUIDUser idUser) {
+			this.idUser = idUser;
+		}
+
+		public String getUsername() {
+			return username;
+		}
+
+		public void setUsername(String username) {
+			this.username = username;
+		}
+
+		public Formatter(UUIDUser idUser, String username) {
+			super();
+			this.idUser = idUser;
+			this.username = username;
+		}
+
+		@Override
+		public String toString() {
+			return username;
+		}
+
+	}
 }

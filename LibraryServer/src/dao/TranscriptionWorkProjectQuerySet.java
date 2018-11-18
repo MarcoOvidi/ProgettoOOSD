@@ -833,7 +833,7 @@ public class TranscriptionWorkProjectQuerySet {
 
 		return twpl;
 	}
-	
+
 	public static boolean ifExistTranscriptionProject(UUIDDocument doc) throws DatabaseException {
 		Connection con = null;
 
@@ -845,18 +845,18 @@ public class TranscriptionWorkProjectQuerySet {
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		
+
 		Boolean exist = false;
 
 		try {
-			ps = con.prepareStatement("SELECT IF( EXISTS(SELECT * FROM transcription_project WHERE ID_document = ?), 1, 0) as Exist;");
+			ps = con.prepareStatement(
+					"SELECT IF( EXISTS(SELECT * FROM transcription_project WHERE ID_document = ?), 1, 0) as Exist;");
 			ps.setInt(1, doc.getValue());
 
 			rs = ps.executeQuery();
-			
-			if(rs.next())
+
+			if (rs.next())
 				exist = rs.getBoolean("Exist");
-			
 
 		} catch (SQLException e) {
 			throw new DatabaseException("Errore di esecuzione della query", e);
@@ -876,5 +876,54 @@ public class TranscriptionWorkProjectQuerySet {
 
 	}
 
+	/**
+	 * Cambia il coordinatore di un progetto di trascrizione
+	 * 
+	 * @param id
+	 * @param ids
+	 * @return
+	 * @throws DatabaseException
+	 * @throws NullPointerException
+	 */
+	public static Boolean changeTranscriptionProjectCoordinator(UUIDUser id, UUIDTranscriptionWorkProject ids)
+			throws DatabaseException, NullPointerException {
+		if (ids == null)
+			throw new NullPointerException("Id Progetto non valido");
+
+		if (id == null)
+			throw new NullPointerException("Id non vallido");
+
+		Connection con = null;
+
+		try {
+			con = DBConnection.connect();
+		} catch (DatabaseException ex) {
+			throw new DatabaseException("Errore di connessione", ex);
+		}
+
+		PreparedStatement ps = null;
+
+		try {
+			ps = con.prepareStatement("update transcription_project set ID_coordinator = ? where ID = ?;");
+			ps.setInt(1, id.getValue());
+			ps.setInt(2, ids.getValue());
+
+			return (ps.executeUpdate() == 1);
+
+		} catch (SQLException e) {
+			throw new DatabaseException("Errore di esecuzione query", e);
+		} finally {
+
+			try {
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+		}
+
+	}
 
 }

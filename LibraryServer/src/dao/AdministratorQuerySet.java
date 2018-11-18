@@ -332,9 +332,8 @@ public class AdministratorQuerySet { // tutto ok
 				// object creation
 				Email em = new Email(email);
 				UserInformations ui = new UserInformations(name, surname, regDate, em, pass);
-				
-				result.add(new User(id, username, ui, status,
-						UserAuthenticationQuerySet.getUSerPermission(id)));
+
+				result.add(new User(id, username, ui, status, UserAuthenticationQuerySet.getUSerPermission(id)));
 			}
 
 		} catch (SQLException e) {
@@ -352,6 +351,53 @@ public class AdministratorQuerySet { // tutto ok
 		}
 
 		return result;
+	}
 
+	/**
+	 * lista degli utenti che hanno il permessi di creare progetti := Coordinator
+	 * 
+	 * @return
+	 * @throws DatabaseException
+	 */
+	public static HashMap<UUIDUser, String> showCoordinatorList() throws DatabaseException {
+		Connection con = null;
+
+		try {
+			con = DBConnection.connect();
+		} catch (DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		HashMap<UUIDUser, String> coordinators = new HashMap<UUIDUser, String>();
+
+		try {
+			ps = con.prepareStatement(
+					"select u.id,u.username from user as u join perm_authorization as pA on u.ID=pA.ID_user WHERE addNewProject=1;");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+
+				coordinators.put(new UUIDUser(rs.getInt("u.id")), rs.getString("u.username"));
+
+			}
+
+		} catch (SQLException e) {
+			throw new DatabaseException("Errore di esecuzione della query", e);
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+
+		}
+
+		return coordinators;
 	}
 }

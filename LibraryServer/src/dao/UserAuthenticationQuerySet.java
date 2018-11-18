@@ -193,7 +193,9 @@ public class UserAuthenticationQuerySet { //COMPLETATA E TUTTA FUNZIONANTE
 						rs.getBoolean("addNewProject"), 
 						rs.getBoolean("assignDigitalizationTask"), 
 						rs.getBoolean("assignTranscriptionTask"), 
-						rs.getBoolean("publishDocument"));
+						rs.getBoolean("publishDocument"),
+						rs.getBoolean("admin"));
+				
 				return usrPerm;
 			}else {
 				return usrPerm;
@@ -253,6 +255,8 @@ public class UserAuthenticationQuerySet { //COMPLETATA E TUTTA FUNZIONANTE
 			return control("assignTranscriptionTask",id);
 		case 11 :
 			return control("publishDocument",id);
+		case 12 :
+			return control("admin",id);
 		default :
 			throw new Exception("Permesso non riconosciuto");
 		}
