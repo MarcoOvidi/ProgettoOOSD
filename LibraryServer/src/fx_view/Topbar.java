@@ -5,8 +5,6 @@ import java.util.TreeMap;
 
 import controller.LocalSession;
 import controller.LoginController;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
