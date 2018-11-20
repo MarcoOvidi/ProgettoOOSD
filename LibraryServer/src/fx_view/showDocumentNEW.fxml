@@ -43,9 +43,11 @@
 			<StackPane>
 				<children>
 					<ImageView fx:id="currentPage" />
+					<Label fx:id="message" />
 					<AnchorPane>
 						<children>
-							<HBox spacing="20" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="120">
+							<HBox spacing="20" AnchorPane.bottomAnchor="20.0"
+								AnchorPane.leftAnchor="120">
 								<Button fx:id="top" text="▲" />
 								<Button fx:id="previous" text="◀" />
 								<Label fx:id="number" />
@@ -56,7 +58,8 @@
 					</AnchorPane>
 				</children>
 			</StackPane>
-			<TextArea fx:id="transcription" text="Questo andrà sostituito con l'editor o il visualizzatore TEI"/>
+			<TextArea fx:id="transcription"
+				text="Questo andrà sostituito con l'editor o il visualizzatore TEI" />
 		</HBox>
 
 	</left>

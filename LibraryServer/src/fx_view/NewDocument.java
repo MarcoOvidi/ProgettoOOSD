@@ -110,11 +110,11 @@ public class NewDocument {
     public void caseZero() {
     	title=intext.getText();
     	label.setText("Inserisci autore/i");
-    	intext.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-    		event.consume();
-    		c=c+2;
-    		caseThree();
-		});
+//    	intext.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+//    		event.consume();
+//    		c=c+2;
+//    		caseThree();
+//		});
     	intext.setText("");
     	intext.setPromptText("Autore/i");
     }

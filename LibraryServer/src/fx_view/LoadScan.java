@@ -17,6 +17,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.chart.LineChart.SortingPolicy;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -24,6 +25,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.scene.control.TableColumn.SortType;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -110,6 +112,8 @@ public class LoadScan {
 		image.setResizable(false);
 		revisioned.setResizable(false);
 		validated.setResizable(false);
+
+		number.setSortable(false); //Sorting as Strings. Not good. Nope.
 	}
 
 	public static void setToOpenDocumentFromScanningProject(UUIDScanningWorkProject swp)

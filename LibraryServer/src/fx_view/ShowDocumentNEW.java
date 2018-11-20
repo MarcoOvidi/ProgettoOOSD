@@ -21,6 +21,7 @@ import javafx.scene.layout.VBox;
 import model.Page;
 
 public class ShowDocumentNEW {
+	public static boolean isEmpty = false;
 
 	@FXML
 	private Button backButton;
@@ -28,8 +29,9 @@ public class ShowDocumentNEW {
 	@FXML
 	private ListView<VBox> pageList;
 
-	@FXML
-	private VBox transcriptionList;
+	/*
+	 * @FXML private VBox transcriptionVBox;
+	 */
 
 	@FXML
 	private ImageView currentPage;
@@ -49,9 +51,23 @@ public class ShowDocumentNEW {
 	private Label number;
 
 	@FXML
+	private Label message;
+
+	@FXML
 	public void initialize() {
 		loadPageList();
 		initBackButton();
+		if (isEmpty) {
+			message.setText("Empty Document");
+			transcription.setVisible(false);
+			pageList.setVisible(false);
+			next.setVisible(false);
+			previous.setVisible(false);
+			top.setVisible(false);
+			bottom.setVisible(false);
+			isEmpty=false; // for when opening the next document
+			return;
+		}
 		initNavigationButton();
 		initKeyboardNavigation();
 
@@ -65,13 +81,6 @@ public class ShowDocumentNEW {
 	public void loadPageList() {
 		LinkedList<Page> pages = LocalSession.getOpenedDocumet().getPageList();
 		// System.out.println("1");
-		pages.sort(new Comparator<Page>() {
-			// FIXME spostare da qui per renderlo utilizzabile ovunque
-			@Override
-			public int compare(Page arg0, Page arg1) {
-				return Integer.compare(arg0.getPageNumber(), arg1.getPageNumber());
-			}
-		});
 
 		/*
 		 * if (pages.isEmpty()) {
@@ -81,9 +90,21 @@ public class ShowDocumentNEW {
 		 * 
 		 * pageList.getItems().add(vbox); return; }
 		 */
+		if (pages.size() == 0) {
+			isEmpty = true;
+			return;
+		}
+
+		pages.sort(new Comparator<Page>() {
+			// FIXME spostare da qui per renderlo utilizzabile ovunque
+			@Override
+			public int compare(Page arg0, Page arg1) {
+				return Integer.compare(arg0.getPageNumber(), arg1.getPageNumber());
+			}
+		});
 
 		for (Page page : pages) {
-			Image pageIcon = new Image(page.getScan().getImage().getUrl());
+			Image pageIcon = LocalSession.loadImage(page.getScan().getImage().getUrl());
 			VBox vbox = new VBox();
 			vbox.setAlignment(Pos.CENTER);
 			vbox.setPadding(new Insets(20));
@@ -179,8 +200,8 @@ public class ShowDocumentNEW {
 				int newIndex = pageList.getFocusModel().getFocusedIndex() - 1;
 				if (newIndex >= 0) {
 					number.setText(((Label) pageList.getItems().get(newIndex).getChildren().get(1)).getText());
-				updatePage(newIndex);
-			}
+					updatePage(newIndex);
+				}
 			}
 			if (event.getCode() == KeyCode.DOWN) {
 				int newIndex = pageList.getFocusModel().getFocusedIndex() + 1;

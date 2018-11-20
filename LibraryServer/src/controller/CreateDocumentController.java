@@ -30,8 +30,10 @@ public class CreateDocumentController {
 
 	private static void attachToNewScanningWorkProject(UUIDDocument id) {
 		try {
-			ScanningWorkProjectQuerySet.insertScanningWorkProject(LocalSession.getLocalUser().getID(), false,
-					new LinkedList<UUIDUser>(), new LinkedList<UUIDUser>(), id);
+			System.out.println("cane");
+			System.out.println(ScanningWorkProjectQuerySet.insertScanningWorkProject(LocalSession.getLocalUser().getID(), false,
+					new LinkedList<UUIDUser>(), new LinkedList<UUIDUser>(), id));
+			
 		} catch (DatabaseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

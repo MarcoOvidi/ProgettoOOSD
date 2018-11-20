@@ -8,6 +8,8 @@ import controller.HomePageController;
 import controller.PageViewController;
 import dao.DatabaseException;
 import javafx.fxml.FXML;
+import javafx.fxml.LoadException;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
@@ -132,7 +134,15 @@ public class Home {
 
 			elem.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 
-				PageViewController.showDocument(entry.getKey());
+				try {
+					PageViewController.showDocument(entry.getKey());
+				} catch(LoadException e) {
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+					alert.setTitle("Error");
+					alert.setContentText(e.getMessage());
+					alert.show();
+					e.printStackTrace();
+				}
 				
 
 				event.consume();
@@ -166,7 +176,15 @@ public class Home {
 				row.getChildren().add(title);
 				
 				row.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-					PageViewController.showDocument(entry.getKey());
+					try {
+						PageViewController.showDocument(entry.getKey());
+					} catch(LoadException e) {
+						Alert alert = new Alert(Alert.AlertType.ERROR);
+						alert.setTitle("Error");
+						alert.setContentText(e.getMessage());
+						alert.show();
+						e.printStackTrace();
+					}
 					event.consume();
 				});
 				

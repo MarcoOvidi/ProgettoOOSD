@@ -3,6 +3,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import model.Document;
 import model.User;
@@ -19,8 +20,13 @@ public final class LocalSession {
 		try {
 			image = new Image (url);
 		} catch (IllegalArgumentException e) {
-			// TODO: handle exception
-			return image = new Image ("images/missing");
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setContentText(e.getMessage() + "\n" + url + "\nCheck you database, motherfucker");
+			alert.show();
+			e.printStackTrace();
+			
+			return image = new Image ("images/missing.png");
 		}
 		
 		return image;

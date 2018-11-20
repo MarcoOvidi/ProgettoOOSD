@@ -7,6 +7,7 @@ import dao.DocumentQuerySet;
 import dao.EditProfileQuerySet;
 import dao.ScanningWorkProjectQuerySet;
 import dao.TranscriptionWorkProjectQuerySet;
+import javafx.fxml.LoadException;
 import model.Document;
 import model.DocumentCollection;
 import model.ScanningWorkProject;
@@ -57,8 +58,13 @@ public final class SessionDataHandler {
 		
 	public Document getDocument(UUIDDocument id) throws DatabaseException {
 		if (!mapDocument.containsKey(id)) {
-			Document doc;
-			doc = DocumentQuerySet.loadDocument(id);
+			Document doc = null;
+			try {
+				doc = DocumentQuerySet.loadDocument(id);
+			} catch (LoadException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return doc;
 		}
 		else 
