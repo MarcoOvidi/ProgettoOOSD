@@ -58,10 +58,25 @@ public class NewDocument {
     private String yearvar, year1var, year2var;
     private String preservState;
     
+    
+    
     @FXML
 	public void initialize() {
     	c=0;    	
     	initNextButton();
+    	next.setVisible(false);
+    	intext.textProperty().addListener(new ChangeListener<String>() {
+    	    @Override
+    	    public void changed(ObservableValue<? extends String> observable, String oldValue, 
+    	        String newValue) {
+    	        if(title.length()>5)
+    	        	next.setVisible(true);
+    	        else 
+    	        	next.setVisible(false);
+    	    }    	    
+    	});
+    	
+    	
     }
     
     @FXML
@@ -110,11 +125,15 @@ public class NewDocument {
     public void caseZero() {
     	title=intext.getText();
     	label.setText("Inserisci autore/i");
+    	next.setVisible(false);
 //    	intext.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 //    		event.consume();
 //    		c=c+2;
 //    		caseThree();
 //		});
+
+    	
+    	
     	intext.setText("");
     	intext.setPromptText("Autore/i");
     }
@@ -126,6 +145,7 @@ public class NewDocument {
     	label.setText("Inserisci descrizione");
     	container.getChildren().clear();
     	container.getChildren().add(inarea);
+    	
     }
     
     @FXML
@@ -145,7 +165,7 @@ public class NewDocument {
 			
 	   	indefinita.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 	   		event.consume();
-	   		c=c++;
+	   		c=c+2;
 	   		caseFour();
 	   	});	
 			
@@ -186,6 +206,8 @@ public class NewDocument {
     	        	next.setVisible(true);
     	    }    	    
     	});
+    	
+    	
     	
     	hbox.getChildren().add(year);
         hbox.getChildren().add(choiceBox);
@@ -311,8 +333,8 @@ public class NewDocument {
     	if(author.isEmpty())
     		author = "Unknown";
     	
-    	label.setText("Il tuo documento è stato creato");
-    	next.setText(" Torna indietro.\n Dove sarà tutto nuovamente in inglese.\n Magico.");
+    	label.setText("Il tuo documento e' stato creato");
+    	next.setText(" Torna indietro.\n Dove sara'� tutto nuovamente in inglese.\n Magico.");
         container.getChildren().clear();
         CreateDocumentController.createDocument(title, author, description, yearvar, year1var, year2var, preservState);
     }
