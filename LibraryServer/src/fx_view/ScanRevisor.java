@@ -22,6 +22,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -29,12 +30,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import model.Page;
+import vo.DocumentRow;
 import vo.Rows;
 import vo.UUIDDocument;
 
@@ -81,14 +85,37 @@ public class ScanRevisor {
 
 	@FXML
 	private Button clearFilters;
+	
+	@FXML
+	private Pane pageContainer;
+	
+	@FXML
+	private Button closePageContainerButton;
+	
+	@FXML
+	private ImageView pageImg;
 
 	@FXML
 	public void initialize() {
+		initPageContainer();
 		imageUpload();
 		insertDocument();
 		initButtonChoice();
 		initLoadDocumentButton();
 		filterButton();
+		initRowClick();
+		initClosePageContainerButton();
+	}
+	
+	public void initClosePageContainerButton(){
+		closePageContainerButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+			pageContainer.setVisible(false);
+	      });
+				
+	}
+	
+	public void initPageContainer() {
+		pageContainer.setVisible(false);
 	}
 
 	public void imageUpload() {
@@ -325,14 +352,28 @@ public class ScanRevisor {
 
 				ImageView imgView = new ImageView();
 				imgView.setImage(img);
-
-				pages.add(new Rows(page.getPageNumber().toString(), rev, val, page.getID(), new vo.Image("file:" + page.getScan().getImage().getUrl())));
+				
+				Rows row=new Rows(page.getPageNumber().toString(), rev, val, page.getID(), new vo.Image("file:" + page.getScan().getImage().getUrl()));
+				
+				pages.add(row);
 
 			}
 
 			pageTable.setItems(pages);
 
 			event.consume();
+		});
+	}
+	
+	public void initRowClick() {
+		pageTable.setRowFactory(tv -> {
+			TableRow<Rows> row = new TableRow<>();
+			row.setOnMouseClicked(event -> {
+				if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
+					pageContainer.setVisible(true);
+				}
+			});
+			return row;
 		});
 	}
 
