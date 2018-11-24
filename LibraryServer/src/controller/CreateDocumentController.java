@@ -14,7 +14,8 @@ public class CreateDocumentController {
 	// costruttore
 	public static UUIDDocument createDocument(String title, String author, String description, String composition_date,
 			String composition_period_from, String composition_period_to, String preservation_state) {
-		UUIDDocument id = new UUIDDocument(-1);
+		UUIDDocument id = null;
+
 		try {
 			id = DocumentQuerySet.insertDocument(title, author, description, composition_date, composition_period_from,
 					composition_period_to, preservation_state);
@@ -23,17 +24,20 @@ public class CreateDocumentController {
 			e.printStackTrace();
 		}
 
-		attachToNewScanningWorkProject(id);
-
+		if (id != null) {
+			attachToNewScanningWorkProject(id);
+		}
+		
 		return id;
 	}
 
 	private static void attachToNewScanningWorkProject(UUIDDocument id) {
 		try {
 			System.out.println("cane");
-			System.out.println(ScanningWorkProjectQuerySet.insertScanningWorkProject(LocalSession.getLocalUser().getID(), false,
-					new LinkedList<UUIDUser>(), new LinkedList<UUIDUser>(), id));
-			
+			System.out
+					.println(ScanningWorkProjectQuerySet.insertScanningWorkProject(LocalSession.getLocalUser().getID(),
+							false, new LinkedList<UUIDUser>(), new LinkedList<UUIDUser>(), id));
+
 		} catch (DatabaseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

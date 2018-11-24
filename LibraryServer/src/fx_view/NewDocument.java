@@ -62,14 +62,14 @@ public class NewDocument {
     
     @FXML
 	public void initialize() {
-    	c=0;    	
+    	c=0;
     	initNextButton();
     	next.setVisible(false);
     	intext.textProperty().addListener(new ChangeListener<String>() {
     	    @Override
     	    public void changed(ObservableValue<? extends String> observable, String oldValue, 
     	        String newValue) {
-    	        if(title.length()>5)
+    	        if(intext.getText().length()>5)
     	        	next.setVisible(true);
     	        else 
     	        	next.setVisible(false);
@@ -285,10 +285,8 @@ public class NewDocument {
     
     public void caseFive() {
        	
-    	if(year.getText().equals("")) {
+    	if(!year.getText().equals("")) {
     		yearvar=year.getText();
-    		String s=(String)choiceBox.getSelectionModel().getSelectedItem();
-    		System.out.println(s);
     	}
     	else
     	{	
@@ -299,9 +297,6 @@ public class NewDocument {
 
     		if(choiceBox2.getSelectionModel().getSelectedItem().equals("a.C."))
     			year2var="-"+year2var;
-    		
-    		System.out.println(year1var);
-    		System.out.println(year2var);
     	}
 
     	label.setText("Indicare lo stato di conservazione");
@@ -334,8 +329,9 @@ public class NewDocument {
     		author = "Unknown";
     	
     	label.setText("Il tuo documento e' stato creato");
-    	next.setText(" Torna indietro.\n Dove sara'  tutto nuovamente in inglese.\n Magico.");
+    	next.setText(" Torna indietro.\n Dove sara'ï¿½ tutto nuovamente in inglese.\n Magico.");
         container.getChildren().clear();
+        System.out.println(title + author + description + yearvar + year1var + year2var + preservState);
         CreateDocumentController.createDocument(title, author, description, yearvar, year1var, year2var, preservState);
     }
     

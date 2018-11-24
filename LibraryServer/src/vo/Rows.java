@@ -2,10 +2,51 @@ package vo;
 
 public class Rows {
 	private Image img;
+	private TEItext transcription;
 	private String number;
 	private String revisioned;
 	private String validated;
 	private UUIDPage id;
+	private UUIDUser transcriber;
+	private UUIDUser digitalizer;
+	
+	
+	public TEItext getTranscription() {
+		return transcription;
+	}
+
+	public void setTranscription(TEItext transcription) {
+		this.transcription = transcription;
+	}
+
+	public UUIDUser getTranscriber() {
+		return transcriber;
+	}
+
+	public void setTranscriber(UUIDUser transcriber) {
+		this.transcriber = transcriber;
+	}
+
+	public UUIDUser getDigitalizer() {
+		return digitalizer;
+	}
+
+	public void setDigitalizer(UUIDUser digitalizer) {
+		this.digitalizer = digitalizer;
+	}
+
+	
+	public Rows(String n, UUIDUser transcriber, TEItext transcription) {
+		this.number=n;
+		this.transcriber=transcriber;
+		this.transcription=transcription;
+	}
+	
+	public Rows(String number, UUIDUser digitalizer, Image img) {
+		this.number=number;
+		this.digitalizer=digitalizer;
+		this.img=img;
+	}
 
 	public Rows(String n,String rev,String val) {
 		this.number=n;
