@@ -9,9 +9,11 @@ import controller.PageViewController;
 import dao.DatabaseException;
 import javafx.fxml.FXML;
 import javafx.fxml.LoadException;
+import javafx.scene.control.Accordion;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -19,10 +21,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import vo.UUIDDocument;
+import vo.UUIDDocumentCollection;
 import vo.UUIDScanningWorkProject;
 
 public class Home {
-	
+
 	@FXML
 	private AnchorPane topbar;
 
@@ -48,6 +51,9 @@ public class Home {
 	private Tab scanningTab;
 
 	@FXML
+	private Accordion documentCollections;
+
+	@FXML
 	public void initialize() throws DatabaseException, ParseException {
 		loadNews();
 		loadCollections();
@@ -64,7 +70,7 @@ public class Home {
 			HomePageController.loadMyScanningProjects();
 
 			Image pageIcon = new Image("images/blank.png");
-			for (Entry<UUIDScanningWorkProject, String[]> entry: HomePageController.getMySPrj().entrySet()) {
+			for (Entry<UUIDScanningWorkProject, String[]> entry : HomePageController.getMySPrj().entrySet()) {
 				ImageView miniature = new ImageView(pageIcon);
 				Label label = new Label(entry.getValue()[0]);
 				VBox elem = new VBox();
@@ -136,14 +142,13 @@ public class Home {
 
 				try {
 					PageViewController.showDocument(entry.getKey());
-				} catch(LoadException e) {
+				} catch (LoadException e) {
 					Alert alert = new Alert(Alert.AlertType.ERROR);
 					alert.setTitle("Error");
 					alert.setContentText(e.getMessage());
 					alert.show();
 					e.printStackTrace();
 				}
-				
 
 				event.consume();
 			});
@@ -165,7 +170,8 @@ public class Home {
 
 			for (Entry<UUIDDocument, String[]> entry : newsMap.entrySet()) {
 
-				Label title = new Label(entry.getValue()[0] + "               ( " + entry.getValue()[1] + " giorni fa) " + entry.getValue()[2]);
+				Label title = new Label(entry.getValue()[0] + "               ( " + entry.getValue()[1] + " giorni fa) "
+						+ entry.getValue()[2]);
 
 				HBox row = new HBox();
 
@@ -174,11 +180,11 @@ public class Home {
 				else
 					row.setId("news-row1");
 				row.getChildren().add(title);
-				
+
 				row.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 					try {
 						PageViewController.showDocument(entry.getKey());
-					} catch(LoadException e) {
+					} catch (LoadException e) {
 						Alert alert = new Alert(Alert.AlertType.ERROR);
 						alert.setTitle("Error");
 						alert.setContentText(e.getMessage());
@@ -187,7 +193,7 @@ public class Home {
 					}
 					event.consume();
 				});
-				
+
 				news.getChildren().add(row);
 				c++;
 			}
@@ -202,13 +208,26 @@ public class Home {
 	public void loadCollections() {
 		HomePageController.loadCategories();
 
-		for (String title : HomePageController.getCategories().values()) {
-			Label label = new Label(title);
-			HBox row = new HBox();
+		for (Entry<UUIDDocumentCollection, String> title : HomePageController.getCategories().entrySet()) {
+			// Label label = new Label(title);
+			// HBox row = new HBox();
 
-			row.setId("categories");
-			row.getChildren().add(label);
-			collections.getChildren().add(row);
+			// row.setId("categories");
+			// row.getChildren().add(label);
+			// collections.getChildren().add(row);
+			TitledPane tp = new TitledPane();
+			tp.setText(title.getValue());
+			HomePageController.loadDocumentInCollections(title.getKey());
+			
+			VBox  content = new VBox();
+			for (String[] document : HomePageController.getListDocumentInCollections()) {
+				
+				content.getChildren().add(new Label(document[1]));
+				tp.setContent(content);
+				
+				
+			}
+			documentCollections.getPanes().add(tp);
 		}
 	}
 
