@@ -102,7 +102,7 @@ public class EditUserProfile {
 		done.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 			User editedUser = EditUserController.getToEditUser();
 			editedUser.setPermissions(getUpdatedPermissions());
-			editedUser.setInformations(getUpdatedInformations(editedUser.getInformations()));		
+			editedUser.setInformations(getUpdatedInformations(editedUser.getInformations()));	
 			
 			EditUserController.setModifications(editedUser);
 			EditUserController.commitModifications();

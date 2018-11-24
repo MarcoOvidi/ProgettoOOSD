@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.LinkedList;
 
 import controller.LocalSession;
+import model.Page;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -18,7 +19,13 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import model.Page;
+
+import org.fxmisc.flowless.VirtualizedScrollPane;
+import org.fxmisc.richtext.CodeArea;
+import org.fxmisc.richtext.LineNumberFactory;
+import org.fxmisc.richtext.model.StyleSpans;
+import org.fxmisc.richtext.model.StyleSpansBuilder;
+
 
 public class ShowDocumentNEW {
 	public static boolean isEmpty = false;
@@ -37,7 +44,7 @@ public class ShowDocumentNEW {
 	private ImageView currentPage;
 
 	@FXML
-	private TextArea transcription;
+	private CodeArea transcription;
 
 	@FXML
 	private Button previous;
@@ -70,6 +77,7 @@ public class ShowDocumentNEW {
 		}
 		initNavigationButton();
 		initKeyboardNavigation();
+		initTranscription();
 
 		pageList.getSelectionModel().selectFirst();
 		updatePageNumber();
@@ -263,6 +271,18 @@ public class ShowDocumentNEW {
 	private void bottom() {
 		pageList.getSelectionModel().selectLast();
 		updatePageNumber();
+	}
+	
+	
+	private void initTranscription() {
+        transcription.setParagraphGraphicFactory(LineNumberFactory.get(transcription));
+
+        transcription.textProperty().addListener((obs, oldText, newText) -> {
+            transcription.setStyleSpans(0, XmlSyntaxHighlight.computeHighlighting(newText));
+        });
+        transcription.replaceText(0, 0, "TRASCRIZIONE:\n\nSALVE, SONO BLENDER.\nPREGO, INSERIRE FLOPPINO\n\n\n(ancora non funziona)");
+        
+        
 	}
 
 }
