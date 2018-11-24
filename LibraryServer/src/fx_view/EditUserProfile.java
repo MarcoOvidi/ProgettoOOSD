@@ -10,6 +10,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import model.User;
+import vo.Email;
 import vo.UserInformations;
 import vo.UserPermissions;
 
@@ -55,6 +57,7 @@ public class EditUserProfile {
 		loadInfo();
 		loadPermissions();
 		initDoneButton();
+		initAdminOptions();
 	}
 
 	private void loadInfo() {
@@ -67,28 +70,17 @@ public class EditUserProfile {
 
 	private void loadPermissions() {
 		UserPermissions up = EditUserController.getToEditUser().getPermissions();
-		if (up.getAddNewProjectPerm())
-			addNewProject.setSelected(true);
-		if (up.getAssignDigitalizationTaskPerm())
-			assignDigitalizationTask.setSelected(true);
-		if (up.getAssignTranscriptionTaskPerm())
-			assignTranscriptionTask.setSelected(true);
-		if (up.getDownloadPerm())
-			download.setSelected(true);
-		if (up.getEditMetaDataPerm())
-			editMetaData.setSelected(true);
-		if (up.getModifyTranscriptionPerm())
-			modifyTranscription.setSelected(true);
-		if (up.getPublishDocumentPerm())
-			publishDocument.setSelected(true);
-		if (up.getRequestTranscriptionTaskPerm())
-			requestTranscriptionTask.setSelected(true);
-		if (up.getReviewPagePerm())
-			reviewPage.setSelected(true);
-		if (up.getReviewTranscriptionPerm())
-			reviewTranscription.setSelected(true);
-		if (up.getUploadPerm())
-			upload.setSelected(true);
+			addNewProject.setSelected(up.getAddNewProjectPerm());
+			assignDigitalizationTask.setSelected(up.getAssignDigitalizationTaskPerm());
+			assignTranscriptionTask.setSelected(up.getAssignTranscriptionTaskPerm());
+			download.setSelected(up.getDownloadPerm());
+			editMetaData.setSelected(up.getEditMetaDataPerm());
+			modifyTranscription.setSelected(up.getModifyTranscriptionPerm());
+			publishDocument.setSelected(up.getPublishDocumentPerm());
+			requestTranscriptionTask.setSelected(up.getRequestTranscriptionTaskPerm());
+			reviewPage.setSelected(up.getReviewPagePerm());
+			reviewTranscription.setSelected(up.getReviewTranscriptionPerm());
+			upload.setSelected(up.getUploadPerm());
 
 		if (EditUserController.canEditPermissions()) {
 			addNewProject.setDisable(false);
@@ -108,8 +100,41 @@ public class EditUserProfile {
 
 	private void initDoneButton() {
 		done.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+			User editedUser = EditUserController.getToEditUser();
+			editedUser.setPermissions(getUpdatedPermissions());
+			editedUser.setInformations(getUpdatedInformations(editedUser.getInformations()));		
+			
+			EditUserController.setModifications(editedUser);
+			EditUserController.commitModifications();
 			SceneController.loadPreviousScene();
 		});
+	}
+	
+	private UserPermissions getUpdatedPermissions() {
+		UserPermissions editedPermissions = new UserPermissions();
+		editedPermissions.setAddNewProjectPerm(addNewProject.isSelected());
+		editedPermissions.setAssignDigitalizationTaskPerm(assignDigitalizationTask.isSelected());
+		editedPermissions.setAssignTranscriptionTaskPerm(assignTranscriptionTask.isSelected());
+		editedPermissions.setDownloadPerm(download.isSelected());
+		editedPermissions.setEditMetaDataPerm(editMetaData.isSelected());
+		editedPermissions.setModifyTranscriptionPerm(modifyTranscription.isSelected());
+		editedPermissions.setPublishDocumentPerm(publishDocument.isSelected());
+		editedPermissions.setRequestTranscriptionTaskPerm(requestTranscriptionTask.isSelected());
+		editedPermissions.setReviewPagePerm(reviewPage.isSelected());
+		editedPermissions.setReviewTranscriptionPerm(reviewTranscription.isSelected());
+		editedPermissions.setUploadPerm(upload.isSelected());
+		return editedPermissions;
+	}
+	
+	private UserInformations getUpdatedInformations(UserInformations old) {
+		old.setName(name.getText());
+		old.setSurname(surname.getText());
+		old.setEmail(new Email(email.getText()));
+		return old;
+	}
+	
+	private void initAdminOptions() {
+		
 	}
 
 }

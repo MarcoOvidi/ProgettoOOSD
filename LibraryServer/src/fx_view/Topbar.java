@@ -37,6 +37,7 @@ public class Topbar {
 		map.put("Upload", "loadScan");
 		map.put("Transcription", "");
 		map.put("Review", "scanRevisor");
+		map.put("Admin", "adminPanel");
 	}
 
 	public void initialize() {
@@ -57,7 +58,6 @@ public class Topbar {
 
 	}
 
-	// inizializzo il bottone gotoprofile
 	public void initButtonLink(String label, String link) {
 		Tab tab = new Tab(label);
 		container.getTabs().add(tab);
@@ -67,7 +67,6 @@ public class Topbar {
 			
 	}
 
-	// inizializzo il bottone gotoprofile
 	public void initLogoutLink() {
 
 		logout.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {

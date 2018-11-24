@@ -12,4 +12,9 @@ public class Email {
 	public String getEmail() {
 		return this.email;
 	}
+	
+	public static boolean checkValid(String mail) {
+		//TODO controlla se la stringa è una email valida
+		return true;
+	}
 }

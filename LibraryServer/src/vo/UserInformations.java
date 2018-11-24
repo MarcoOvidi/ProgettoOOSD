@@ -12,12 +12,12 @@ public class UserInformations {
 	private String password;
 	
 	//costruttore
-	public UserInformations(String n, String s, Date d, Email e, String passwd) {
-		this.name=n;
-		this.surname=s;
-		this.registrationDate=d;
-		this.email=e;
-		this.password=passwd;
+	public UserInformations(String name, String surname, Date registrationDate, Email email, String password) {
+		this.name=name;
+		this.surname=surname;
+		this.registrationDate=registrationDate;
+		this.email=email;
+		this.password=password;
 		
 	}
 	

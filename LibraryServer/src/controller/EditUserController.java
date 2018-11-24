@@ -1,18 +1,16 @@
 package controller;
 
+import dao.AdministratorQuerySet;
 import dao.DatabaseException;
 import dao.EditProfileQuerySet;
+import dao.UserAuthenticationQuerySet;
+import fx_view.SceneController;
 import model.User;
 import vo.UUIDUser;
 
 public class EditUserController {
 	private static UUIDUser editingUser;
 	private static User toEditUser;
-	
-	public EditUserController(UUIDUser editingUser, User toEditUser) {
-		EditUserController.setEditingUser(editingUser);
-		EditUserController.setToEditUser(toEditUser);
-	}
 	
 	public static UUIDUser getEditingUser() {
 		return editingUser;
@@ -25,10 +23,13 @@ public class EditUserController {
 	public static boolean canEdit () {
 		if(getEditingUser().equals(getToEditUser().getID()))
 			return true;
-		/*
-		 * else if (getEditingUser().isAdmin())
-		 * 	return true;
-		 * */
+		try {
+			if (UserAuthenticationQuerySet.permissionsControl(12,editingUser))
+				return true;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 	}
 	
@@ -36,8 +37,13 @@ public class EditUserController {
 		//TODO implementare amministratore
 		if (editingUser.equals(toEditUser.getID()))
 			return false;
-		/*if (editingUser.isAdmin())
-			return true;*/
+		try {
+			if (UserAuthenticationQuerySet.permissionsControl(12,editingUser))
+				return true;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 	}
 	
@@ -51,7 +57,13 @@ public class EditUserController {
 	
 	public static void commitModifications() {
 		try {
+			
+			//FIXME il metodo updateUserProfile non aggiorna i permessi
+			// per ora aggiungo qui la chiamata all'altro ma forse dovrebbe farlo il metodo del dao?
 			EditProfileQuerySet.updateUserProfile(getToEditUser().getID(), getToEditUser());
+			AdministratorQuerySet.updateUserPermissions(getToEditUser().getID(), getToEditUser().getPermissions());
+
+			
 		} catch (DatabaseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -64,5 +76,19 @@ public class EditUserController {
 
 	public static void setToEditUser(User toEditUser) {
 		EditUserController.toEditUser = toEditUser;
+	}
+	
+	public static void setToEditUser(UUIDUser toEditUser) {
+		try {
+			EditUserController.toEditUser = 
+					EditProfileQuerySet.loadUserProfile(toEditUser);
+		} catch (DatabaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void startEditing() {
+		SceneController.loadScene("editUserProfile");
 	}
 }

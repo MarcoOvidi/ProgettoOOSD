@@ -78,6 +78,8 @@ public final class LocalSession {
 				topBarButtons.add("Transcription");
 			if (permissions.getReviewPagePerm() || permissions.getReviewPagePerm())
 				topBarButtons.add("Review");
+			if (permissions.getAdmin())
+				topBarButtons.add("Admin");
 
 		}
 	}
