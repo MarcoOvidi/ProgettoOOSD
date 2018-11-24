@@ -145,6 +145,7 @@ public class NewDocument {
 
 	@FXML
 	public void caseTwo() {
+		description=inarea.getText();
 		label.setText("Riguardo la composizione dell'opera si conosce");
 		System.out.println(c);
 		next.setVisible(false);
