@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.LinkedList;
 
+import controller.LocalSession;
 import javafx.fxml.LoadException;
 import model.Document;
 import model.Page;
@@ -27,7 +28,7 @@ import vo.VagueDate;
 
 public class DocumentQuerySet {
 
-	/*
+	/**
 	 * Inserisce un nuovo documento
 	 * 
 	 * @param String Titolo dell'opera
@@ -38,7 +39,9 @@ public class DocumentQuerySet {
 	public static UUIDDocument insertDocument(String title, String author, String description, String composition_date,
 			String composition_period_from, String composition_period_to, String preservation_state)
 			throws DatabaseException, ParseException {
+		System.out.println("Descrizione: "+ description + "...FINE");
 		Connection con = null;
+		
 
 		try {
 			con = DBConnection.connect();
@@ -54,6 +57,7 @@ public class DocumentQuerySet {
 			throw new DatabaseException("Inserire entrambe le dati per il periodo");
 		else if (composition_date != null) {
 			if (composition_date.length() > 4)
+
 				throw new RuntimeException("Errore inserire anno nel formatto YYYY");
 
 			PreparedStatement ps = null;
@@ -79,8 +83,9 @@ public class DocumentQuerySet {
 
 				ps.close();
 
-				ps = con.prepareStatement("insert into document_metadata(author,description,"
-						+ "composition_date,preservation_state,ID_document) values(?,?,?,?,?);");
+				ps = con.prepareStatement(
+						"insert into document_metadata(author,description,composition_date,preservation_state,ID_document) "
+								+ "values(?,?,?,?,?);");
 
 				ps.setString(1, author);
 				ps.setString(2, description);
@@ -91,6 +96,17 @@ public class DocumentQuerySet {
 				ps.executeUpdate();
 
 				new File("resources/documents/" + id.getValue()).mkdirs();
+
+				if (ps != null)
+					ps.close();
+
+				ps = con.prepareStatement("insert into scanning_project (ID_coordinator,ID_document,scanning_complete) "
+						+ "values(?,?,0);");
+
+				ps.setInt(1, LocalSession.getLocalUser().getID().getValue());
+				ps.setInt(2, id.getValue());
+
+				ps.executeUpdate();
 
 			} catch (SQLException e) {
 				try {
@@ -154,6 +170,17 @@ public class DocumentQuerySet {
 				ps.executeUpdate();
 
 				new File("resources/documents/" + id.getValue()).mkdirs();
+				
+				if (ps != null)
+					ps.close();
+
+				ps = con.prepareStatement("insert into scanning_project (ID_coordinator,ID_document,scanning_complete) "
+						+ "values(?,?,0);");
+
+				ps.setInt(1, LocalSession.getLocalUser().getID().getValue());
+				ps.setInt(2, id.getValue());
+
+				ps.executeUpdate();
 
 			} catch (SQLException e) {
 				try {
@@ -239,12 +266,8 @@ public class DocumentQuerySet {
 							new PageTranscription(new TEItext(rs.getString("transcription")),
 									rs.getBoolean("transcription_revised"),
 									rs.getBoolean("transcription_convalidation"),
-									new PageTranscriptionStaff(
-											new UUIDUser(rs.getInt("ID_transcriber")), 
-											new UUIDUser(rs.getInt("ID_transcription_reviser"))
-											)
-									)
-							);
+									new PageTranscriptionStaff(new UUIDUser(rs.getInt("ID_transcriber")),
+											new UUIDUser(rs.getInt("ID_transcription_reviser")))));
 					ps1 = con.prepareStatement(
 							"SELECT ta.ID_transcriber_user FROM transcription_assigned AS ta JOIN document AS d "
 									+ "JOIN page AS p ON d.ID=p.ID_document AND p.ID=ta.ID_page "
@@ -300,9 +323,8 @@ public class DocumentQuerySet {
 						+ "\nCheck you database, motherfucker");
 			} else {
 
-				throw new LoadException(
-						"È stata rilevata più di una corrispondenza per l'id\n" + id.getValue() +
-						"\nCheck your database, motherfucker");
+				throw new LoadException("È stata rilevata più di una corrispondenza per l'id\n" + id.getValue()
+						+ "\nCheck your database, motherfucker");
 			}
 
 		} catch (SQLException e) {
@@ -393,12 +415,8 @@ public class DocumentQuerySet {
 							new PageTranscription(new TEItext(rs.getString("transcription")),
 									rs.getBoolean("transcription_revised"),
 									rs.getBoolean("transcription_convalidation"),
-									new PageTranscriptionStaff(
-											new UUIDUser(rs.getInt("ID_transcriber")), 
-											new UUIDUser(rs.getInt("ID_transcription_reviser"))
-											)
-									)
-							);
+									new PageTranscriptionStaff(new UUIDUser(rs.getInt("ID_transcriber")),
+											new UUIDUser(rs.getInt("ID_transcription_reviser")))));
 					ps1 = con.prepareStatement(
 							"SELECT ta.ID_transcriber_user FROM transcription_assigned AS ta JOIN document AS d "
 									+ "JOIN page AS p ON d.ID=p.ID_document AND p.ID=ta.ID_page "
@@ -454,9 +472,8 @@ public class DocumentQuerySet {
 						+ "\nCheck you database, motherfucker");
 			} else {
 
-				throw new LoadException(
-						"È stata rilevata più di una corrispondenza per l'id\n" + id.getValue() +
-						"\nCheck your database, motherfucker");
+				throw new LoadException("È stata rilevata più di una corrispondenza per l'id\n" + id.getValue()
+						+ "\nCheck your database, motherfucker");
 			}
 
 		} catch (SQLException e) {

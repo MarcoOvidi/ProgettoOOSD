@@ -1,13 +1,10 @@
 package controller;
 
 import java.text.ParseException;
-import java.util.LinkedList;
 
 import dao.DatabaseException;
 import dao.DocumentQuerySet;
-import dao.ScanningWorkProjectQuerySet;
 import vo.UUIDDocument;
-import vo.UUIDUser;
 
 public class CreateDocumentController {
 
@@ -23,14 +20,14 @@ public class CreateDocumentController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+/*
 		if (id != null) {
 			attachToNewScanningWorkProject(id);
-		}
+		}*/
 		
 		return id;
 	}
-
+/*
 	private static void attachToNewScanningWorkProject(UUIDDocument id) {
 		try {
 			System.out.println("cane");
@@ -43,6 +40,6 @@ public class CreateDocumentController {
 			e.printStackTrace();
 		}
 
-	}
+	}*/
 
 }
