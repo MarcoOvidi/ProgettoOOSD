@@ -7,11 +7,17 @@ import java.util.Map.Entry;
 import controller.HomePageController;
 import controller.PageViewController;
 import dao.DatabaseException;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.LoadException;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
@@ -20,6 +26,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import vo.DocumentRow;
 import vo.UUIDDocument;
 import vo.UUIDDocumentCollection;
 import vo.UUIDScanningWorkProject;
@@ -160,9 +167,6 @@ public class Home {
 
 	@FXML
 	public void loadNews() throws DatabaseException, ParseException {
-		// List<String> newsList = Arrays.asList("Hello", "World!", "How", "Are", "You",
-		// "World!", "How", "Are", "You", "World!", "How", "Are", "You", "World!",
-		// "How", "Are", "You");
 		try {
 			HomePageController.loadNews();
 			HashMap<UUIDDocument, String[]> newsMap = HomePageController.getNews();
@@ -206,27 +210,61 @@ public class Home {
 
 	@FXML
 	public void loadCollections() {
+		// carico le collezioni
 		HomePageController.loadCategories();
 
 		for (Entry<UUIDDocumentCollection, String> title : HomePageController.getCategories().entrySet()) {
-			// Label label = new Label(title);
-			// HBox row = new HBox();
-
-			// row.setId("categories");
-			// row.getChildren().add(label);
-			// collections.getChildren().add(row);
+			// creo il nome della collezione
 			TitledPane tp = new TitledPane();
+			// imposto il titolo della collezione
 			tp.setText(title.getValue());
+			// carico i documenti della collezione
 			HomePageController.loadDocumentInCollections(title.getKey());
-			
-			VBox  content = new VBox();
+			// creo il contenitore per i documenti
+			ListView<DocumentRow> lista = new ListView<DocumentRow>();
+			ObservableList<DocumentRow> oss = FXCollections.observableArrayList();
+			// imposto la visualizzazione della cella
+			lista.setCellFactory(lv -> new ListCell<DocumentRow>() {
+				@Override
+				protected void updateItem(DocumentRow item, boolean empty) {
+					super.updateItem(item, empty);
+					setText(empty || item == null ? "" : item.getDocument());
+				}
+			});
+
+			lista.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<DocumentRow>() {
+
+				@Override
+				public void changed(ObservableValue<? extends DocumentRow> observable, DocumentRow oldValue,
+						DocumentRow newValue) {
+					
+					try {
+						PageViewController.showDocument(newValue.getId());
+					} catch (LoadException e) {
+						e.printStackTrace();
+						System.out.println(e.getMessage());
+					}
+
+				}
+
+			});
+			/*
+			 * leaderListView.getSelectionModel().selectedItemProperty() .addListener(new
+			 * ChangeListener<Person>() { public void changed(ObservableValue<? extends
+			 * Person> observable, Person oldValue, Person newValue) {
+			 * System.out.println("selection changed"); } });
+			 */
+
 			for (String[] document : HomePageController.getListDocumentInCollections()) {
-				
-				content.getChildren().add(new Label(document[1]));
-				tp.setContent(content);
-				
-				
+
+				oss.add(new DocumentRow(document[1], new UUIDDocument(Integer.parseInt(document[0]))));
+
 			}
+			// aggiungo la lista di documenti al listview
+			lista.setItems(oss);
+			// inserisco la listview nel pane
+			tp.setContent(lista);
+			// aggiungo il pane nell'accordion
 			documentCollections.getPanes().add(tp);
 		}
 	}

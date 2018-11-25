@@ -6,6 +6,22 @@ public class DocumentRow {
 	private String scanning_PRJ;
 	private UUIDTranscriptionWorkProject idTPrj;
 	private UUIDScanningWorkProject idSPrj;
+	private UUIDDocument id;
+	
+	public UUIDDocument getId() {
+		return id;
+	}
+
+
+	public void setId(UUIDDocument id) {
+		this.id = id;
+	}
+
+
+	public DocumentRow(String title, UUIDDocument id) {
+		this.document=title;
+		this.id=id;
+	}
 
 	
 	public DocumentRow(String document, String transcription_PRJ, String scanning_PRJ,
@@ -74,6 +90,7 @@ public class DocumentRow {
 		this.scanning_PRJ = scanning_PRJ;
 	}
 
+	
 	@Override
 	public String toString() {
 		return "DocumentRow [document=" + document + ", transcription_PRJ=" + transcription_PRJ + ", scanning_PRJ="
