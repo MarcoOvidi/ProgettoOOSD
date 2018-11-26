@@ -82,7 +82,7 @@ public class PageScanController {
 		}
 	}
 
-	public static void setUncompletedDocumentPagesFilters(UUIDDocument doc, Boolean revised, Boolean validated) {
+	public static void loadUncompletedDocumentPagesFilters(UUIDDocument doc, Boolean revised, Boolean validated) {
 		try {
 			currentDocumentPages = DigitalizerQuerySet.loadDocument(doc, revised, validated);
 		} catch (DatabaseException e) {
