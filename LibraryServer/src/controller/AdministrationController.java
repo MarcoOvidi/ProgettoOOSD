@@ -12,18 +12,18 @@ import vo.UUIDUser;
 
 public class AdministrationController {
 
-	private HashMap<UUIDRequest, String> pendingRequests = new HashMap<UUIDRequest, String>();
-	private HashMap<UUIDRequest, String> readRequests = new HashMap<UUIDRequest, String>();
+	private static HashMap<UUIDRequest, String> pendingRequests = new HashMap<UUIDRequest, String>();
+	private static HashMap<UUIDRequest, String> readRequests = new HashMap<UUIDRequest, String>();
 
-	public HashMap<UUIDRequest, String> getPendingRequests() {
+	public static HashMap<UUIDRequest, String> getPendingRequests() {
 		return pendingRequests;
 	}
 
-	public void setPendingRequests(HashMap<UUIDRequest, String> pendingRequests) {
-		this.pendingRequests = pendingRequests;
+	public static void setPendingRequests(HashMap<UUIDRequest, String> pendingRequests) {
+		AdministrationController.pendingRequests = pendingRequests;
 	}
 
-	public void loadPendingRequestList() {
+	public static void loadPendingRequestList() {
 		try {
 			pendingRequests = AdministratorQuerySet.loadRequestsList(0);
 		} catch (DatabaseException e) {
@@ -32,7 +32,7 @@ public class AdministrationController {
 		}
 	}
 
-	public void loadReadRequestsList() {
+	public static void loadReadRequestsList() {
 		try {
 			setReadRequests(AdministratorQuerySet.loadRequestsList(1));
 		} catch (DatabaseException e) {
@@ -41,7 +41,7 @@ public class AdministrationController {
 		}
 	}
 
-	public Request loadRequest(UUIDRequest id) {
+	public static Request loadRequest(UUIDRequest id) {
 		Request r = null;
 		try {
 			r = AdministratorQuerySet.loadRequest(id);
@@ -72,12 +72,12 @@ public class AdministrationController {
 		return res;
 	}
 
-	public HashMap<UUIDRequest, String> getReadRequests() {
+	public static HashMap<UUIDRequest, String> getReadRequests() {
 		return readRequests;
 	}
 
-	public void setReadRequests(HashMap<UUIDRequest, String> readRequests) {
-		this.readRequests = readRequests;
+	public static void setReadRequests(HashMap<UUIDRequest, String> readRequests) {
+		AdministrationController.readRequests = readRequests;
 	}
 
 }

@@ -53,8 +53,6 @@
 											<TableView fx:id="requests" layoutX="56.0"
 												layoutY="239.0" prefHeight="530.0" prefWidth="700.0">
 												<columns>
-													<TableColumn fx:id="requestUserID"
-														text="UserID" />
 													<TableColumn fx:id="requestID" text="RequestID" />
 													<TableColumn fx:id="requestUsername"
 														text="Username" />

@@ -1,6 +1,9 @@
 package fx_view;
 
 import java.text.ParseException;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map.Entry;
 
 import controller.AdministrationController;
 import controller.EditUserController;
@@ -17,6 +20,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import model.User;
+import vo.Request;
 import vo.RequestRow;
 import vo.UUIDRequest;
 import vo.UUIDUser;
@@ -51,8 +55,6 @@ public class AdminPanel {
 	private ObservableList<RequestRow> requestsRows;
 	@FXML
 	private TableColumn<RequestRow, UUIDRequest> requestID;
-	@FXML
-	private TableColumn<RequestRow, UUIDUser> requestUserID;
 	@FXML
 	private TableColumn<RequestRow, String> requestUsername;
 	@FXML
@@ -122,12 +124,23 @@ public class AdminPanel {
 	}
 	
 	private void initRequestTabs() {
+		requestID.setCellValueFactory(new PropertyValueFactory<RequestRow, UUIDRequest>("requestID"));
+		requestUsername.setCellValueFactory(new PropertyValueFactory<RequestRow, String>("requestUsername"));
+		RequestObject.setCellValueFactory(new PropertyValueFactory<RequestRow, String>("RequestObject"));
+		requestID.setVisible(false);
+		
+		requestsRows = FXCollections.observableArrayList();
+		
 		pending.getTabPane().setOnMouseClicked(event -> {
 			if(pending.getTabPane().getSelectionModel().getSelectedItem() == pending) {
-				
+				//LinkedList<vo.Request> requestsList = AdministrationController.getPendingRequests();
+				LinkedList<Request> requestsList = new LinkedList<vo.Request>(); 
+				for (Request request : requestsList) {
+					RequestRow row = new RequestRow(request.getId(), request.g, object)
+				}
 			}
 			else {
-				
+				HashMap<UUIDRequest, String> requestsMap = AdministrationController.getReadRequests();				
 			}
 		});
 	}
