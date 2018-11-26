@@ -10,12 +10,15 @@ import dao.EditProfileQuerySet;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import model.User;
+import vo.RequestRow;
+import vo.UUIDRequest;
 import vo.UUIDUser;
 import vo.UserRow;
 
@@ -24,7 +27,7 @@ public class AdminPanel {
 	@FXML
 	private TableView<UserRow> users;
 	@FXML
-	private ObservableList<UserRow> rows;
+	private ObservableList<UserRow> userRows;
 	@FXML
 	private TableColumn<UserRow, UUIDUser> userID;
 	@FXML
@@ -35,15 +38,31 @@ public class AdminPanel {
 	private TableColumn<UserRow, String> surname;
 	@FXML
 	private TableColumn<UserRow, String> email;
+	
 
-	/*
-	 * @FXML private Button done;
-	 */
+	@FXML
+	private Tab pending;
+	@FXML
+	private Tab old;
+	
+	@FXML
+	private TableView<RequestRow> requests;
+	@FXML
+	private ObservableList<RequestRow> requestsRows;
+	@FXML
+	private TableColumn<RequestRow, UUIDRequest> requestID;
+	@FXML
+	private TableColumn<RequestRow, UUIDUser> requestUserID;
+	@FXML
+	private TableColumn<RequestRow, String> requestUsername;
+	@FXML
+	private TableColumn<RequestRow, String> RequestObject;
 
 	@FXML
 	public void initialize() throws DatabaseException, ParseException {
 		initUserList();
 		initRowClick();
+		initRequestTabs();
 	}
 
 	private void initUserList() {
@@ -54,15 +73,15 @@ public class AdminPanel {
 		email.setCellValueFactory(new PropertyValueFactory<UserRow, String>("email"));
 		userID.setVisible(false);
 
-		rows = FXCollections.observableArrayList();
+		userRows = FXCollections.observableArrayList();
 
 		for (User user : AdministrationController.loadUserList()) {
 			UserRow row = new UserRow(user.getID(), user.getUsername(), user.getInformations().getName(),
 					user.getInformations().getSurname(), user.getInformations().getMail());
-			rows.add(row);
+			userRows.add(row);
 		}
 
-		users.setItems(rows);
+		users.setItems(userRows);
 	}
 
 	public void initRowClick() {
@@ -95,11 +114,22 @@ public class AdminPanel {
 				user.getInformations().getSurname(), user.getInformations().getMail());
 
 		int index = row.getIndex();
-		rows.remove(index);
-		rows.add(index, newRow);
+		userRows.remove(index);
+		userRows.add(index, newRow);
 		
 		users.refresh();
 
+	}
+	
+	private void initRequestTabs() {
+		pending.getTabPane().setOnMouseClicked(event -> {
+			if(pending.getTabPane().getSelectionModel().getSelectedItem() == pending) {
+				
+			}
+			else {
+				
+			}
+		});
 	}
 
 }
