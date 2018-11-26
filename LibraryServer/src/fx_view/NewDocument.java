@@ -28,22 +28,22 @@ public class NewDocument {
 	private Pane container;
 
 	@FXML
-	Button definita;
+	private Button definita;
 
 	@FXML
-	TextArea inarea;
+	private TextArea inarea;
 
 	@FXML
-	Button indefinita;
+	private Button indefinita;
 
 	@FXML
-	ChoiceBox<String> choiceBox = new ChoiceBox<String>();
+	private ChoiceBox<String> choiceBox = new ChoiceBox<String>();
 
 	@FXML
-	ChoiceBox<String> choiceBox1 = new ChoiceBox<String>();
+	private ChoiceBox<String> choiceBox1 = new ChoiceBox<String>();
 
 	@FXML
-	ChoiceBox<String> choiceBox2 = new ChoiceBox<String>();
+	private ChoiceBox<String> choiceBox2 = new ChoiceBox<String>();
 
 	@FXML
 	private TextField year = new TextField("");
@@ -53,6 +53,7 @@ public class NewDocument {
 
 	@FXML
 	private TextField year2 = new TextField("");
+
 	public static int c;
 	private String title, author, description;
 	private String yearvar, year1var, year2var;
@@ -61,8 +62,13 @@ public class NewDocument {
 	@FXML
 	public void initialize() {
 		c = 0;
-		initNextButton();
 		next.setVisible(false);
+		title = "";
+		author = "";
+		description = "";
+
+		initNextButton();
+
 		intext.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -136,16 +142,17 @@ public class NewDocument {
 	@FXML
 	public void caseOne() {
 		author = intext.getText();
-		TextArea inarea = new TextArea();
 		label.setText("Inserisci descrizione");
 		container.getChildren().clear();
+		inarea = new TextArea();
 		container.getChildren().add(inarea);
 
 	}
 
 	@FXML
 	public void caseTwo() {
-		description = new String(inarea.getText());
+		description = inarea.getText();
+		inarea.getText();
 		label.setText("Riguardo la composizione dell'opera si conosce");
 		System.out.println(c);
 		next.setVisible(false);
@@ -183,7 +190,7 @@ public class NewDocument {
 
 		next.setVisible(false);
 
-		label.setText("Digita l'anno in cui è stato composto il manoscritto");
+		label.setText("Digita l'anno in cui Ã¨ stato composto il manoscritto");
 		container.getChildren().clear();
 
 		year.textProperty().addListener(new ChangeListener<String>() {
@@ -311,10 +318,11 @@ public class NewDocument {
 			author = "Unknown";
 
 		label.setText("Il tuo documento e' stato creato");
-		next.setText(" Torna indietro.\n Dove sara'� tutto nuovamente in inglese.\n Magico.");
+		next.setText(" Torna indietro.\n Dove sara'ï¿½ tutto nuovamente in inglese.\n Magico.");
 		container.getChildren().clear();
 		System.out.println(title + author + description + yearvar + year1var + year2var + preservState);
 		CreateDocumentController.createDocument(title, author, description, yearvar, year1var, year2var, preservState);
+		
 	}
 
 	public void finalCase() {

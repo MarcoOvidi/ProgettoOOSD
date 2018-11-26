@@ -550,5 +550,65 @@ public class HomePageQuerySet {
 	public void loadHomeInfo() {
 
 	}
+	
+	
+	/**
+	 * 
+	 *
+	
+	 * seleziona le categorie di opere della biblioteca
+	 * 
+	 * @return
+	 * @throws DatabaseException
+	 * @throws SQLException
+	 */
+	
+	public static LinkedList<String[]> loadLibraryCollectionListWithDocument(UUIDDocumentCollection docColl)
+			throws DatabaseException, SQLException {
+		Connection con = null;
+
+		try {
+			con = DBConnection.connect();
+		} catch (DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+
+		PreparedStatement s ;
+		ResultSet rs = null;
+		LinkedList<String[]> cat = new LinkedList<String[]>();
+
+		try {
+			s = con.prepareStatement("select ID_document, doc.title from document_collection as dc "
+					+ "join document_of_collection as dof  join document as doc on doc.ID=dof.ID_document "
+					+ "AND dc.ID=dof.ID_document_collection where dc.ID=?;");
+			
+			s.setInt(1, docColl.getValue());
+			rs = s.executeQuery();
+
+			while (rs.next()) {
+				
+				String[] array = new String[2];
+				array[0]=String.valueOf(rs.getInt("ID_document"));
+				array[1]=rs.getString("doc.title");
+				cat.add(array);
+
+			}
+
+		} catch (SQLException e) {
+			throw new DatabaseException("Errore di esecuzione della query", e);
+		} finally {
+			try {
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+
+		}
+
+		return cat;
+
+	}
+
 
 }

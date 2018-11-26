@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -25,9 +26,19 @@ public class HomePageController {
 	private static HashMap<UUIDDocument,String[]> myCollection = new HashMap<UUIDDocument,String[]>();
 	private static HashMap<UUIDTranscriptionWorkProject, String[]> myTPrj = new HashMap<UUIDTranscriptionWorkProject,String[]>();
 	private static HashMap<UUIDScanningWorkProject, String[]> mySPrj = new HashMap<UUIDScanningWorkProject,String[]>();
+	private static LinkedList<String[]> listDocumentInCollections = new LinkedList<String[]>();
 	
 	public void loadHomePage() {
 		
+	}
+	
+	public static void loadDocumentInCollections(UUIDDocumentCollection doc) {
+		try {
+			listDocumentInCollections = HomePageQuerySet.loadLibraryCollectionListWithDocument(doc);
+		}catch(DatabaseException | SQLException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
 	}
 		
 	public static void loadCategories() {
@@ -174,4 +185,12 @@ public class HomePageController {
 		return perm;
 	}
 	//TODO load menu buttons (checking permissions)
+
+	public static LinkedList<String[]> getListDocumentInCollections() {
+		return listDocumentInCollections;
+	}
+
+	public static void setListDocumentInCollections(LinkedList<String[]> listDocumentInCollections) {
+		HomePageController.listDocumentInCollections = listDocumentInCollections;
+	}
 }
