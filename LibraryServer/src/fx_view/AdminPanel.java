@@ -133,14 +133,14 @@ public class AdminPanel {
 		
 		pending.getTabPane().setOnMouseClicked(event -> {
 			if(pending.getTabPane().getSelectionModel().getSelectedItem() == pending) {
-				//LinkedList<vo.Request> requestsList = AdministrationController.getPendingRequests();
-				LinkedList<Request> requestsList = new LinkedList<vo.Request>(); 
+				LinkedList<vo.Request> requestsList = AdministrationController.getRequest(0);
+				//LinkedList<Request> requestsList = new LinkedList<vo.Request>(); 
 				for (Request request : requestsList) {
-					RequestRow row = new RequestRow(request.getId(), request.g, object)
+					//RequestRow row = new RequestRow(request.getId(), request.getUser(), request.getObject());
 				}
 			}
 			else {
-				HashMap<UUIDRequest, String> requestsMap = AdministrationController.getReadRequests();				
+				//HashMap<UUIDRequest, String> requestsMap = AdministrationController.getReadRequests();				
 			}
 		});
 	}
