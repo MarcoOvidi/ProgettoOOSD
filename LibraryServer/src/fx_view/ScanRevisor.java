@@ -9,9 +9,11 @@ import java.util.function.Predicate;
 
 import controller.LocalSession;
 import controller.PageScanController;
+import controller.ScanningProjectController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -40,6 +42,7 @@ import javafx.util.StringConverter;
 import model.Page;
 import vo.Rows;
 import vo.UUIDDocument;
+import vo.UUIDPage;
 
 public class ScanRevisor {
 
@@ -99,7 +102,14 @@ public class ScanRevisor {
 	
 	@FXML
 	private Button rejectButton;
-
+	
+	@FXML
+	private Button confirmButton;
+	
+	private UUIDPage currentPage;
+	
+	private boolean isValidated;
+	
 	@FXML
 	public void initialize() {
 		initPageContainer();
@@ -112,21 +122,33 @@ public class ScanRevisor {
 		initClosePageContainerButton();
 		initAcceptButton();
 		initRejectButton();
+		initConfirmButton();
 	}
 	
 	public void initAcceptButton(){
 		acceptButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-			pageContainer.setVisible(false);
-			
+			isValidated=true;
 	      });	
 	};
 	
 	public void initRejectButton(){
 		rejectButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-			pageContainer.setVisible(false);
-			
-	      });	
+			isValidated=false;
+		});	
 	};
+	
+	public void initConfirmButton() {
+		confirmButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+			pageContainer.setVisible(false);
+			ScanningProjectController.validatePage(currentPage, isValidated);
+			ScanningProjectController.revisedPage(currentPage, true);
+			
+			Event.fireEvent(loadDocumentButton, new MouseEvent(MouseEvent.MOUSE_CLICKED, 0,
+	                0, 0, 0, MouseButton.PRIMARY, 1, true, true, true, true,
+	                true, true, true, true, true, true, null));		});	
+	}
+	
+	
 	
 	public void initClosePageContainerButton(){
 		closePageContainerButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -217,7 +239,8 @@ public class ScanRevisor {
 
 		loadDocumentButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 			pageTable.setEditable(true);
-			PageScanController.loadNewDocumentPages(documentList.getSelectionModel().getSelectedItem().getKey());
+			PageScanController.loadUncompletedDocumentPagesFilters(documentList.getSelectionModel().getSelectedItem().getKey(), false, false);
+			//PageScanController.loadNewDocumentPages(documentList.getSelectionModel().getSelectedItem().getKey());
 
 			LinkedList<Page> p = PageScanController.getCurrentDocumentPages();
 			pL.addAll(p);
@@ -392,6 +415,7 @@ public class ScanRevisor {
 				if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
 					pageContainer.setVisible(true);
 					pageImg.setImage(row.getItem().getImage());
+					currentPage=row.getItem().getId();
 				}
 			});
 			return row;

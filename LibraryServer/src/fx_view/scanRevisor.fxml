@@ -15,47 +15,47 @@
 <?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fx_view.ScanRevisor">
-	<top>
-		<AnchorPane prefHeight="800.0" prefWidth="1400.0" style="-fx-background-color: #222;" BorderPane.alignment="CENTER">
-			<children>
-				<AnchorPane fx:id="topbar" prefHeight="45.0" prefWidth="1402.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-					<children>
-						<AnchorPane layoutX="29.0" layoutY="17.0">
-							<children>
-								<fx:include source="topbar.fxml" />
-							</children>
-						</AnchorPane>
-					</children>
-				</AnchorPane>
-				<Label layoutX="657.0" layoutY="126.0" text="Load scan:" textFill="#aaaaaa">
-					<font>
-						<Font size="28.0" />
-					</font>
-				</Label>
-				<Button fx:id="filechooser" layoutX="814.0" layoutY="132.0" mnemonicParsing="false" text="Choose file" />
-				<ScrollPane layoutX="41.0" layoutY="173.0" prefHeight="530.0" prefWidth="1182.0">
-					<content>
-						<VBox fx:id="scanList" prefHeight="202.0" prefWidth="1035.0">
-							<children>
-								<TableView fx:id="pageTable" prefHeight="296.0" prefWidth="1035.0">
-									<columns>
-										<TableColumn fx:id="number" prefWidth="75.0" text="Number" />
-										<TableColumn fx:id="image" editable="false" prefWidth="75.0" sortable="false" text="Page" />
+    <top>
+        <AnchorPane prefHeight="800.0" prefWidth="1400.0" style="-fx-background-color: #222;" BorderPane.alignment="CENTER">
+            <children>
+                <AnchorPane fx:id="topbar" prefHeight="45.0" prefWidth="1402.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <children>
+                        <AnchorPane layoutX="29.0" layoutY="17.0">
+                            <children>
+                                <fx:include source="topbar.fxml" />
+                            </children>
+                        </AnchorPane>
+                    </children>
+                </AnchorPane>
+                <Label layoutX="657.0" layoutY="126.0" text="Load scan:" textFill="#aaaaaa">
+                    <font>
+                        <Font size="28.0" />
+                    </font>
+                </Label>
+                <Button fx:id="filechooser" layoutX="814.0" layoutY="132.0" mnemonicParsing="false" text="Choose file" />
+                <ScrollPane layoutX="41.0" layoutY="173.0" prefHeight="530.0" prefWidth="1182.0">
+                    <content>
+                        <VBox fx:id="scanList" prefHeight="202.0" prefWidth="1035.0">
+                            <children>
+                                <TableView fx:id="pageTable" prefHeight="296.0" prefWidth="1035.0">
+                                    <columns>
+                                        <TableColumn fx:id="number" prefWidth="75.0" text="Number" />
+                                        <TableColumn fx:id="image" editable="false" prefWidth="75.0" sortable="false" text="Page" />
                               <TableColumn fx:id="revisioned" editable="false" prefWidth="75.0" sortable="false" text="Revisioned" />
-										<TableColumn fx:id="validated" editable="false" prefWidth="75.0" sortable="false" text="Validated" />
-									</columns>
-								</TableView>
-							</children>
-						</VBox>
-					</content>
-				</ScrollPane>
-				<Label layoutX="41.0" layoutY="72.0" prefHeight="40.0" prefWidth="285.0" text="Seleziona documento" textFill="#aaaaaa">
-					<font>
-						<Font size="28.0" />
-					</font>
-				</Label>
-				<ChoiceBox fx:id="documentList" layoutX="326.0" layoutY="78.0" prefWidth="150.0" />
-				<Button fx:id="loadDocumentButton" layoutX="506.0" layoutY="78.0" mnemonicParsing="false" text="Load" />
+                                        <TableColumn fx:id="validated" editable="false" prefWidth="75.0" sortable="false" text="Validated" />
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </VBox>
+                    </content>
+                </ScrollPane>
+                <Label layoutX="41.0" layoutY="72.0" prefHeight="40.0" prefWidth="285.0" text="Seleziona documento" textFill="#aaaaaa">
+                    <font>
+                        <Font size="28.0" />
+                    </font>
+                </Label>
+                <ChoiceBox fx:id="documentList" layoutX="326.0" layoutY="78.0" prefWidth="150.0" />
+                <Button fx:id="loadDocumentButton" layoutX="506.0" layoutY="78.0" mnemonicParsing="false" text="Load" />
             <Label layoutX="43.0" layoutY="125.0" text="Filter: " textFill="#aaaaaa">
                <font>
                   <Font size="28.0" />
@@ -67,12 +67,13 @@
             <Button fx:id="clearFilters" layoutX="523.0" layoutY="129.0" mnemonicParsing="false" text="No Filter" />
             <Pane fx:id="pageContainer" layoutX="224.0" layoutY="50.0" prefHeight="723.0" prefWidth="788.0">
                <children>
-                  <Button fx:id="closePageContainerButton" layoutX="743.0" layoutY="14.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="35.0" text="X" />
+                  <Button fx:id="confirmButton" layoutX="637.0" layoutY="17.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="72.0" text="Confirm" />
                   <ImageView fx:id="pageImg" fitHeight="641.0" fitWidth="764.0" layoutX="14.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button fx:id="acceptButton" layoutX="341.0" layoutY="14.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="54.0" text="✔" />
+                  <Button fx:id="acceptButton" layoutX="341.0" layoutY="14.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="54.0" text="✔️" />
                   <Button fx:id="rejectButton" layoutX="409.0" layoutY="15.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="54.0" text="✘" />
+                  <Button fx:id="closePageContainerButton" layoutX="722.0" layoutY="17.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="56.0" text="Cancel" />
                </children></Pane>
-			</children>
-		</AnchorPane>
-	</top>
+            </children>
+        </AnchorPane>
+    </top>
 </BorderPane>
