@@ -198,30 +198,7 @@ public class ManageProject {
 		dialog();
 	}
 	
-	public void dialog() {
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Message from user");
-		alert.setHeaderText("Request from user xxxdddddddddddddddhfefhjkerhnrehcfhjnrhenrjcgnejksrhcjkehrjkcehnckjehckjrhewjkcrnehjwrwhnrclkewnrclkehwnrclkhawcklnahlwcaclkwacjnkwehnanrckjhaejwkcaejwrcjnwaehrcnkjawhnjahweklj");
-		alert.setContentText("Choose your option.");
-
-		ButtonType buttonTypeOne = new ButtonType("One");
-		ButtonType buttonTypeTwo = new ButtonType("Two");
-		ButtonType buttonTypeThree = new ButtonType("Three");
-		ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
-
-		alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeThree, buttonTypeCancel);
-
-		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == buttonTypeOne){
-		    // ... user chose "One"
-		} else if (result.get() == buttonTypeTwo) {
-		    // ... user chose "Two"
-		} else if (result.get() == buttonTypeThree) {
-		    // ... user chose "Three"
-		} else {
-		    // ... user chose CANCEL or closed the dialog
-		}
-	}
+	
 	
 	private void initNewDocumentButton() {
 		newDocumentButton.setFont(new Font(24));
@@ -370,7 +347,6 @@ public class ManageProject {
 	}
 
 	public void userRowClick() {
-		dialog();
 		transcriptionStaff.setRowFactory(tv -> {
 			TableRow<StaffRow> row = new TableRow<StaffRow>();
 			row.setOnMouseClicked(event -> {
