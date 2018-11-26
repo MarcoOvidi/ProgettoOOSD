@@ -143,7 +143,7 @@ public class AdministratorQuerySet { // tutto ok
 	 * @return HashMap<Integer,String> l'intero(chiave) rappresenta l'UUIDRequest e
 	 *         la String l'oogetto della request
 	 */
-	public static HashMap<UUIDRequest, String> loadRequestsList(int b) throws DatabaseException {
+	public static LinkedList<Request> loadRequestsList(int b) throws DatabaseException {
 
 		Connection con = null;
 
@@ -154,20 +154,20 @@ public class AdministratorQuerySet { // tutto ok
 		}
 
 		PreparedStatement ps = null;
-		HashMap<UUIDRequest, String> req = new HashMap<UUIDRequest, String>();
+		LinkedList<Request> req = new LinkedList<Request>();
 		ResultSet rs = null;
 
 		try {
 
 			if (b == 0) {
-				ps = con.prepareStatement("SELECT ID,object from request WHERE status=?;");
+				ps = con.prepareStatement("SELECT * from request WHERE status=?;");
 				ps.setBoolean(1, false);
 			} else {
-				ps = con.prepareStatement("SELECT ID,object from request WHERE status=?;");
+				ps = con.prepareStatement("SELECT * from request WHERE status=?;");
 				if (b == 1) {
 					ps.setBoolean(1, true);
 				} else {
-					ps = con.prepareStatement("SELECT ID,object from request WHERE status=? or status=?;");
+					ps = con.prepareStatement("SELECT * from request WHERE status=? or status=?;");
 					ps.setBoolean(1, false);
 					ps.setBoolean(2, true);
 				}
@@ -176,7 +176,9 @@ public class AdministratorQuerySet { // tutto ok
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				req.put(new UUIDRequest(rs.getInt("ID")), rs.getString("object"));
+				req.add(new Request(new UUIDRequest(rs.getInt("ID")), new UUIDUser(rs.getInt("ID_user")),
+						new UUIDUser(rs.getInt("ID_user")), rs.getBoolean("status"), rs.getString("object"),
+						rs.getString("message"), rs.getString("answer_message")));
 			}
 		} catch (SQLException e) {
 			throw new DatabaseException("Errore di esecuzione query", e);
