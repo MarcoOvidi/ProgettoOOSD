@@ -67,8 +67,10 @@
             <Button fx:id="clearFilters" layoutX="523.0" layoutY="129.0" mnemonicParsing="false" text="No Filter" />
             <Pane fx:id="pageContainer" layoutX="224.0" layoutY="50.0" prefHeight="723.0" prefWidth="788.0">
                <children>
-                  <Button fx:id="closePageContainerButton" layoutX="748.0" layoutY="14.0" mnemonicParsing="false" text="X" />
-                  <ImageView fx:id="pageImg" fitHeight="650.0" fitWidth="756.0" layoutX="14.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true" />
+                  <Button fx:id="closePageContainerButton" layoutX="743.0" layoutY="14.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="35.0" text="X" />
+                  <ImageView fx:id="pageImg" fitHeight="641.0" fitWidth="764.0" layoutX="14.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true" />
+                  <Button fx:id="acceptButton" layoutX="341.0" layoutY="14.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="54.0" text="✔" />
+                  <Button fx:id="rejectButton" layoutX="409.0" layoutY="15.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="54.0" text="✘" />
                </children></Pane>
 			</children>
 		</AnchorPane>
