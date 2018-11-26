@@ -10,6 +10,8 @@ import controller.LocalSession;
 import controller.PageScanController;
 import dao.DatabaseException;
 import dao.ScanningWorkProjectQuerySet;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -55,9 +57,6 @@ public class LoadScan {
 	private ChoiceBox<Entry<UUIDDocument, String>> documentList;
 
 	@FXML
-	private Button loadDocumentButton;
-
-	@FXML
 	private TableView<Rows> pageTable;
 
 	@FXML
@@ -92,7 +91,7 @@ public class LoadScan {
 		imageUpload();
 		insertDocument();
 		initButtonChoice();
-		initLoadDocumentButton();
+		initLoadDocument();
 		initfilterButtons();
 		initPageTable();
 
@@ -194,8 +193,7 @@ public class LoadScan {
 		});
 	}
 
-	@FXML
-	public void initLoadDocumentButton() {
+	public void initLoadDocument() {
 		pages = FXCollections.observableArrayList();
 		number.setCellValueFactory(new PropertyValueFactory<Rows, String>("Number"));
 		number.setCellFactory(TextFieldTableCell.<Rows>forTableColumn());
@@ -223,9 +221,11 @@ public class LoadScan {
 		revisioned.setCellValueFactory(new PropertyValueFactory<Rows, String>("Revisioned"));
 		validated.setCellValueFactory(new PropertyValueFactory<Rows, String>("Validated"));
 
-		loadDocumentButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-			loadDocument(documentList.getSelectionModel().getSelectedItem().getKey());
-			event.consume();
+		documentList.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observableValue, Number entry, Number entryNew) {
+				loadDocument(documentList.getItems().get((Integer) entryNew).getKey());
+			}
 		});
 
 	}

@@ -43,9 +43,9 @@
 				<ScrollPane layoutX="41.0" layoutY="173.0"
 					prefHeight="530.0" prefWidth="1182.0">
 					<content>
-						<VBox fx:id="scanList" prefHeight="202.0" prefWidth="1035.0">
+						<VBox fx:id="scanList" prefWidth="1035.0">
 							<children>
-								<TableView fx:id="pageTable" prefHeight="296.0">
+								<TableView fx:id="pageTable" prefHeight="500.0">
 									<columns>
 										<TableColumn fx:id="number" prefWidth="75.0"
 											text="Number" />
@@ -69,8 +69,6 @@
 				</Label>
 				<ChoiceBox fx:id="documentList" layoutX="326.0"
 					layoutY="78.0" prefWidth="150.0" />
-				<Button fx:id="loadDocumentButton" layoutX="506.0"
-					layoutY="78.0" mnemonicParsing="false" text="Load" />
 				<Label layoutX="43.0" layoutY="125.0" text="Filter: "
 					textFill="#aaaaaa">
 					<font>
