@@ -93,6 +93,12 @@ public class ScanRevisor {
 	
 	@FXML
 	private ImageView pageImg;
+	
+	@FXML
+	private Button acceptButton;
+	
+	@FXML
+	private Button rejectButton;
 
 	@FXML
 	public void initialize() {
@@ -104,13 +110,28 @@ public class ScanRevisor {
 		filterButton();
 		initRowClick();
 		initClosePageContainerButton();
+		initAcceptButton();
+		initRejectButton();
 	}
+	
+	public void initAcceptButton(){
+		acceptButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+			pageContainer.setVisible(false);
+			
+	      });	
+	};
+	
+	public void initRejectButton(){
+		rejectButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+			pageContainer.setVisible(false);
+			
+	      });	
+	};
 	
 	public void initClosePageContainerButton(){
 		closePageContainerButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 			pageContainer.setVisible(false);
-	      });
-				
+	      });	
 	}
 	
 	public void initPageContainer() {
@@ -370,6 +391,7 @@ public class ScanRevisor {
 			row.setOnMouseClicked(event -> {
 				if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
 					pageContainer.setVisible(true);
+					pageImg.setImage(row.getItem().getImage());
 				}
 			});
 			return row;
