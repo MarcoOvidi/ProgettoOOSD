@@ -23,7 +23,7 @@ public class Topbar {
 	 */
 
 	@FXML
-	private TabPane container;
+	private TabPane topbar;
 
 	@FXML
 	private Button logout;
@@ -50,8 +50,8 @@ public class Topbar {
 		}
 		
 
-		container.setOnMouseClicked(event -> {
-			SceneController.loadScene(map.get(container.getSelectionModel().getSelectedItem().getText()));
+		topbar.setOnMouseClicked(event -> {
+			SceneController.loadScene(map.get(topbar.getSelectionModel().getSelectedItem().getText()));
 		});
 
 		initLogoutLink();
@@ -60,9 +60,9 @@ public class Topbar {
 
 	public void initButtonLink(String label, String link) {
 		Tab tab = new Tab(label);
-		container.getTabs().add(tab);
+		topbar.getTabs().add(tab);
 		if (link.equals(SceneController.getSceneName())) {
-			container.getSelectionModel().select(tab);
+			topbar.getSelectionModel().select(tab);
 		}
 			
 	}
