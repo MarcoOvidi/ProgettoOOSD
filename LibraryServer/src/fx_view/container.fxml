@@ -12,28 +12,16 @@
 <?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
-	minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0"
-	prefWidth="400.0" xmlns="http://javafx.com/javafx/9.0.1"
+	minHeight="-Infinity" minWidth="560" xmlns="http://javafx.com/javafx/9.0.1"
 	xmlns:fx="http://javafx.com/fxml/1" fx:controller="fx_view.Container">
 	<left>
-		<AnchorPane style="-fx-background-color: #222;"
-			BorderPane.alignment="CENTER">
+		<AnchorPane BorderPane.alignment="CENTER">
 			<children>
-				<AnchorPane fx:id="topbar" AnchorPane.leftAnchor="0.0"
-					AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-					<children>
-						<AnchorPane layoutX="29.0" layoutY="17.0"
-							AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-							<children>
-								<fx:include AnchorPane.leftAnchor="0.0"
-									AnchorPane.rightAnchor="0.0" source="topbar.fxml" />
-							</children>
-						</AnchorPane>
-					</children>
-				</AnchorPane>
-				<BorderPane fx:id="content" layoutY="50.0" AnchorPane.leftAnchor="0.0"
-					AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0" >
-				</BorderPane>
+				<fx:include source="topbar.fxml"
+					AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+					prefWidth="1200" />
+				<BorderPane fx:id="content" layoutY="60"
+					AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
 			</children>
 		</AnchorPane>
 	</left>

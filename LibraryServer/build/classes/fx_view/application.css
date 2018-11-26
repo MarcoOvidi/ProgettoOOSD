@@ -47,7 +47,10 @@ Button,TextField, PasswordField{
 }	
 
 
-AnchorPane,HBox, VBox, FlowPane{-fx-background:#222; -fx-border-width:0.0px;}
+AnchorPane,HBox, VBox, FlowPane{
+	-fx-background:#222;
+	-fx-border-width:0.0px;
+}
 
 .scroll-pane {
     -fx-background-insets: 0.0;
@@ -377,5 +380,9 @@ TextArea:focused {
 
 .styled-text-area .comment {
 	-fx-fill: teal;
+}
+
+AnchorPane {
+	-fx-background-color: #222;
 }
 

@@ -12,15 +12,6 @@
    <left>
       <AnchorPane prefHeight="800.0" prefWidth="1400.0" style="-fx-background-color: #222;" BorderPane.alignment="CENTER">
          <children>
-			<AnchorPane fx:id="topbar" prefHeight="45.0" prefWidth="1402.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                     <AnchorPane layoutX="29.0" layoutY="17.0">
-                     <children>
-                 	 <fx:include source="topbar.fxml" />
-                     </children>
-                  </AnchorPane>
-               </children>
-            </AnchorPane>
             <Label fx:id="label" layoutX="420.0" layoutY="291.0" text="Inserisci il titolo del nuovo documento" textFill="#aaaaaa">
                <font>
                   <Font size="28.0" />

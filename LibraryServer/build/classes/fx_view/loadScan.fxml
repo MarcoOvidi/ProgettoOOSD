@@ -18,20 +18,8 @@
 	xmlns:fx="http://javafx.com/fxml/1" fx:controller="fx_view.LoadScan">
 	<top>
 		<AnchorPane prefHeight="800.0" prefWidth="1400.0"
-			style="-fx-background-color: #222;" BorderPane.alignment="CENTER">
+			BorderPane.alignment="CENTER">
 			<children>
-				<AnchorPane fx:id="topbar" AnchorPane.leftAnchor="0.0"
-					AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-					<children>
-						<AnchorPane layoutX="29.0" layoutY="17.0"
-							AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-							<children>
-								<fx:include AnchorPane.leftAnchor="0.0"
-									AnchorPane.rightAnchor="0.0" source="topbar.fxml" />
-							</children>
-						</AnchorPane>
-					</children>
-				</AnchorPane>
 				<Label layoutX="657.0" layoutY="126.0" text="Load scan:"
 					textFill="#aaaaaa">
 					<font>

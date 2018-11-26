@@ -9,28 +9,13 @@
 <?import javafx.scene.layout.BorderPane?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
-	minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0"
-	prefWidth="1400.0" xmlns="http://javafx.com/javafx/8.0.171"
+	minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.171"
 	xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="fx_view.ManageProject">
 	<center>
-		<AnchorPane prefHeight="800.0" prefWidth="1400.0"
-			style="-fx-background-color: #222;" BorderPane.alignment="CENTER">
+		<AnchorPane BorderPane.alignment="CENTER">
 			<children>
-				<AnchorPane fx:id="topbar" layoutX="-3.0"
-					AnchorPane.leftAnchor="-3.0" AnchorPane.rightAnchor="3.0"
-					AnchorPane.topAnchor="0.0">
-					<children>
-						<AnchorPane layoutX="29.0" layoutY="17.0"
-							AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-							<children>
-								<fx:include source="topbar.fxml"
-									AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-							</children>
-						</AnchorPane>
-					</children>
-				</AnchorPane>
-				<Button fx:id="newDocumentButton" text="+" layoutX="50.0" layoutY="120.0" />
+				<Button fx:id="newDocumentButton" text="+" layoutX="50.0" layoutY="12.0" />
 				<TableView fx:id="documentTable" layoutX="56.0"
 					layoutY="239.0" prefHeight="530.0" prefWidth="348.0">
 					<columns>
