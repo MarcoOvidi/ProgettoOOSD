@@ -202,7 +202,7 @@ public class ManageProject {
 		newDocumentButton.setMinSize(60, 45);
 		newDocumentButton.setMaxSize(60, 45);
 		newDocumentButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-			SceneController.loadScene("newDocument");
+			SceneController.loadScene("newDocument",false);
 		});
 	}
 
