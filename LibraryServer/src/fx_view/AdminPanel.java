@@ -128,16 +128,17 @@ public class AdminPanel {
 		requestUsername.setCellValueFactory(new PropertyValueFactory<RequestRow, String>("requestUsername"));
 		RequestObject.setCellValueFactory(new PropertyValueFactory<RequestRow, String>("RequestObject"));
 		requestID.setVisible(false);
-		
-		requestsRows = FXCollections.observableArrayList();
-		
+				
 		pending.getTabPane().setOnMouseClicked(event -> {
+			requestsRows = FXCollections.observableArrayList();
+			
 			if(pending.getTabPane().getSelectionModel().getSelectedItem() == pending) {
-				LinkedList<vo.Request> requestsList = AdministrationController.getRequest(0);
-				//LinkedList<Request> requestsList = new LinkedList<vo.Request>(); 
+				LinkedList<vo.Request> requestsList = AdministrationController.getRequest(0); 
 				for (Request request : requestsList) {
-					//RequestRow row = new RequestRow(request.getId(), request.getUser(), request.getObject());
+					RequestRow row = new RequestRow(request.getId(), AdministrationController.loadUsername(request.getUser()), request.getObject());
 				}
+				
+				
 			}
 			else {
 				//HashMap<UUIDRequest, String> requestsMap = AdministrationController.getReadRequests();				
