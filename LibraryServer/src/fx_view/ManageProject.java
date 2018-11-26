@@ -194,7 +194,44 @@ public class ManageProject {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
 		}
+<<<<<<< HEAD
 	}
+||||||| merged common ancestors
+		
+		dialog();
+	}
+	
+	public void dialog() {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Message from user");
+		alert.setHeaderText("Request from user xxxdddddddddddddddhfefhjkerhnrehcfhjnrhenrjcgnejksrhcjkehrjkcehnckjehckjrhewjkcrnehjwrwhnrclkewnrclkehwnrclkhawcklnahlwcaclkwacjnkwehnanrckjhaejwkcaejwrcjnwaehrcnkjawhnjahweklj");
+		alert.setContentText("Choose your option.");
+
+		ButtonType buttonTypeOne = new ButtonType("One");
+		ButtonType buttonTypeTwo = new ButtonType("Two");
+		ButtonType buttonTypeThree = new ButtonType("Three");
+		ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+
+		alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeThree, buttonTypeCancel);
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == buttonTypeOne){
+		    // ... user chose "One"
+		} else if (result.get() == buttonTypeTwo) {
+		    // ... user chose "Two"
+		} else if (result.get() == buttonTypeThree) {
+		    // ... user chose "Three"
+		} else {
+		    // ... user chose CANCEL or closed the dialog
+		}
+	}
+=======
+		
+		dialog();
+	}
+	
+	
+>>>>>>> 1747c47b3a23a9f3ef75b1c83f0c8fc07b532434
 	
 		
 	private void initNewDocumentButton() {
