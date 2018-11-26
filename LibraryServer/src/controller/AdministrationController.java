@@ -6,13 +6,23 @@ import java.util.LinkedList;
 import dao.AdministratorQuerySet;
 import dao.DatabaseException;
 import model.User;
+import vo.Request;
+import vo.UUIDRequest;
 import vo.UUIDUser;
 
 public class AdministrationController {
-	
-	private HashMap<Integer,String> pendingRequests = new HashMap<Integer,String>();
-	private HashMap<Integer,String> readRequests = new HashMap<Integer,String>();
-	
+
+	private HashMap<UUIDRequest, String> pendingRequests = new HashMap<UUIDRequest, String>();
+	private HashMap<UUIDRequest, String> readRequests = new HashMap<UUIDRequest, String>();
+
+	public HashMap<UUIDRequest, String> getPendingRequests() {
+		return pendingRequests;
+	}
+
+	public void setPendingRequests(HashMap<UUIDRequest, String> pendingRequests) {
+		this.pendingRequests = pendingRequests;
+	}
+
 	public void loadPendingRequestList() {
 		try {
 			pendingRequests = AdministratorQuerySet.loadRequestsList(0);
@@ -21,43 +31,35 @@ public class AdministrationController {
 			System.out.println(e.getMessage());
 		}
 	}
-	
+
 	public void loadReadRequestsList() {
 		try {
-			readRequests = AdministratorQuerySet.loadRequestsList(1);
+			setReadRequests(AdministratorQuerySet.loadRequestsList(1));
 		} catch (DatabaseException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
 		}
 	}
-	
-	public HashMap<Integer, String> getRequestList() {
-		return pendingRequests;
+
+	public Request loadRequest(UUIDRequest id) {
+		Request r = null;
+		try {
+			r = AdministratorQuerySet.loadRequest(id);
+		} catch (NullPointerException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		} catch (DatabaseException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		return r;
 	}
 
-		
-	
-	public HashMap<Integer, String> getPendingRequests() {
-		return pendingRequests;
-	}
-	public void setPendingRequests(HashMap<Integer, String> pendingRequests) {
-		this.pendingRequests = pendingRequests;
-	}
-	public HashMap<Integer, String> getReadRequests() {
-		return readRequests;
-	}
-	public void setReadRequests(HashMap<Integer, String> readRequests) {
-		this.readRequests = readRequests;
-	}
-	public void setRequestList(HashMap<Integer, String> requestList) {
-		this.pendingRequests = requestList;
-	}
-
-	public static HashMap<UUIDUser, String[]> loadAllUsers () {
+	public static HashMap<UUIDUser, String[]> loadAllUsers() {
 		HashMap<UUIDUser, String[]> users = new HashMap<UUIDUser, String[]>();
 		return users;
 	}
-	
+
 	public static LinkedList<User> loadUserList() {
 		LinkedList<User> res = null;
 		try {
@@ -68,6 +70,14 @@ public class AdministrationController {
 		}
 
 		return res;
+	}
+
+	public HashMap<UUIDRequest, String> getReadRequests() {
+		return readRequests;
+	}
+
+	public void setReadRequests(HashMap<UUIDRequest, String> readRequests) {
+		this.readRequests = readRequests;
 	}
 
 }

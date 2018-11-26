@@ -26,6 +26,15 @@ public class ScanningProjectController {
 			e.printStackTrace();
 		}
 	}
+	
+	public static void revisedPage(UUIDPage p , Boolean b) {
+		try {
+			DigitalizationRevisorQuerySet.revised(p, b);
+		} catch (DatabaseException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+	}
 
 	public static HashMap<UUIDScanningWorkProject, String[]> getCoordinatedScanningProject() {
 		return coordinatedScanningProject;

@@ -143,7 +143,7 @@ public class AdministratorQuerySet { // tutto ok
 	 * @return HashMap<Integer,String> l'intero(chiave) rappresenta l'UUIDRequest e
 	 *         la String l'oogetto della request
 	 */
-	public static HashMap<Integer, String> loadRequestsList(int b) throws DatabaseException {
+	public static HashMap<UUIDRequest, String> loadRequestsList(int b) throws DatabaseException {
 
 		Connection con = null;
 
@@ -154,7 +154,7 @@ public class AdministratorQuerySet { // tutto ok
 		}
 
 		PreparedStatement ps = null;
-		HashMap<Integer, String> req = new HashMap<Integer, String>();
+		HashMap<UUIDRequest, String> req = new HashMap<UUIDRequest, String>();
 		ResultSet rs = null;
 
 		try {
@@ -176,7 +176,7 @@ public class AdministratorQuerySet { // tutto ok
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				req.put(rs.getInt("ID"), rs.getString("object"));
+				req.put(new UUIDRequest(rs.getInt("ID")), rs.getString("object"));
 			}
 		} catch (SQLException e) {
 			throw new DatabaseException("Errore di esecuzione query", e);
