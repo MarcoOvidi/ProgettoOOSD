@@ -1,7 +1,7 @@
 package vo;
 
 public class Rows {
-	private Image img;
+	private javafx.scene.image.Image image;
 	private TEItext transcription;
 	private String number;
 	private String revisioned;
@@ -42,10 +42,10 @@ public class Rows {
 		this.transcription=transcription;
 	}
 	
-	public Rows(String number, UUIDUser digitalizer, Image img) {
+	public Rows(String number, UUIDUser digitalizer, javafx.scene.image.Image image) {
 		this.number=number;
 		this.digitalizer=digitalizer;
-		this.img=img;
+		this.image=image;
 	}
 
 	public Rows(String n,String rev,String val) {
@@ -54,12 +54,12 @@ public class Rows {
 		this.validated=val;
 	}
 	
-	public Rows(String number,String rev,String val, UUIDPage id,Image img) {
+	public Rows(String number,String rev,String val, UUIDPage id,javafx.scene.image.Image image) {
 		this.number=number;
 		this.revisioned=rev;
 		this.validated=val;
 		this.setId(id);
-		this.img=img;
+		this.image=image;
 	}
 
 	public String getNumber() {
@@ -94,12 +94,12 @@ public class Rows {
 		this.id = id;
 	}
 
-	public Image getImg() {
-		return img;
+	public javafx.scene.image.Image getImage() {
+		return image;
 	}
 
-	public void setImg(Image img) {
-		this.img = img;
+	public void setImage(javafx.scene.image.Image image) {
+		this.image = image;
 	}
 	
 	

@@ -227,11 +227,11 @@ public class ScanRevisor {
 					val = "\u2718";
 				}
 
-				Image img = new Image("file:" + page.getScan().getImage().getUrl());
+				Image img = LocalSession.loadImage(page.getScan().getImage().getUrl());
 				ImageView imgView = new ImageView();
 				imgView.setImage(img);
 				
-				pages.add(new Rows(page.getPageNumber().toString(), rev, val, page.getID(), new vo.Image("file:" + page.getScan().getImage().getUrl())));
+				pages.add(new Rows(page.getPageNumber().toString(), rev, val, page.getID(), img));
 
 			}
 
@@ -347,12 +347,12 @@ public class ScanRevisor {
 					val = "\u2718";
 				}
 
-				Image img = new Image("file:" + page.getScan().getImage().getUrl());
+				Image img = LocalSession.loadImage(page.getScan().getImage().getUrl());
 
 				ImageView imgView = new ImageView();
 				imgView.setImage(img);
 				
-				Rows row=new Rows(page.getPageNumber().toString(), rev, val, page.getID(), new vo.Image("file:" + page.getScan().getImage().getUrl()));
+				Rows row=new Rows(page.getPageNumber().toString(), rev, val, page.getID(), img);
 				
 				pages.add(row);
 
