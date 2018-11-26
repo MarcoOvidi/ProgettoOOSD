@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 import dao.AdministratorQuerySet;
 import dao.DatabaseException;
+import dao.EditProfileQuerySet;
 import model.User;
 import vo.Request;
 import vo.UUIDRequest;
@@ -53,5 +54,16 @@ public class AdministrationController {
 		}
 
 		return res;
+	}
+	
+	public static String loadUsername(UUIDUser id) {
+		String u = null;
+		try {
+			u = EditProfileQuerySet.loadUserProfile(id).getUsername();
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+		return u;
 	}
 }
