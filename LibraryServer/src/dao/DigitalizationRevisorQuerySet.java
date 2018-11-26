@@ -11,7 +11,7 @@ public class DigitalizationRevisorQuerySet {
 	
 	
 	//aggiorna il flag di "validità" di uno ScanningWorkProject
-	public void validated(UUIDPage id,Boolean validation) throws DatabaseException {
+	public static void validated(UUIDPage id,Boolean validation) throws DatabaseException {
 
 		Connection con = null;
 		
@@ -47,7 +47,7 @@ public class DigitalizationRevisorQuerySet {
 	
 
 	//dichiara completato un progetto di scansione opera
-	public void scanningProcessCompleted(UUIDScanningWorkProject id) throws DatabaseException{
+	public static void scanningProcessCompleted(UUIDScanningWorkProject id) throws DatabaseException{
 
 		Connection con = null;
 		
