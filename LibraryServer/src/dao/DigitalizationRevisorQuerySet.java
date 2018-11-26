@@ -57,7 +57,7 @@ public class DigitalizationRevisorQuerySet {
 		PreparedStatement ps = null;
 	
 		try {
-			ps = con.prepareStatement("UPDATE page SET image_revised=true WHERE ID=?");
+			ps = con.prepareStatement("UPDATE page SET image_revised=? WHERE ID=?");
 			ps.setBoolean(1, validation);
 			ps.setInt(2, id.getValue());
 			
