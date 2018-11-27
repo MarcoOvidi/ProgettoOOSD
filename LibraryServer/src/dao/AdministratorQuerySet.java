@@ -295,8 +295,52 @@ public class AdministratorQuerySet { // tutto ok
 		return (result == 1);
 
 	}
+	
+	/**
+	 * Aggiorna a non pending lo stato di una richiesta che è stata scartata
+	 * 
+	 * @param id     UUIDRequest della richiesta a cui rispondere
+	 *
+	 * @return Boolean true se l'operazione è andata a buon fine , false altrimenti
+	 * 
+	 * @see vo.UUIDRequest
+	 */
+	public static Boolean ignoreRequest(UUIDRequest id) throws DatabaseException {
+		Connection con = null;
 
-	/*
+		try {
+			con = DBConnection.connect();
+		} catch (DatabaseException ex) {
+			throw new DatabaseException("Errore di connessione", ex);
+		}
+
+		PreparedStatement ps = null;
+		Integer result = null;
+
+		try {
+			ps = con.prepareStatement("UPDATE request SET status=true WHERE ID=?;");
+			ps.setInt(1, id.getValue());
+
+			result = ps.executeUpdate();
+
+		} catch (SQLException e) {
+			throw new DatabaseException("Errore nella query", e);
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException ex) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", ex));
+			}
+		}
+
+		return (result == 1);
+
+	}
+
+	/**
 	 * Seleziona tutti i campi anagrafici di tutti gli utenti
 	 * 
 	 * @return LinkedList di User

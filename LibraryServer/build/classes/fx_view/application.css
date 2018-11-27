@@ -3,6 +3,7 @@
      /*-fx-background-radius: 10;*/
 }
 
+
 Button,TextField, PasswordField{
     -fx-alignment: CENTER;
 	-fx-background-color: transparent;
@@ -116,7 +117,7 @@ PasswordField:hover{
 {
     -fx-tab-min-width:90.0px;
     
-    -fx-background-color: #191919;
+    -fx-background-color: #222;
 }
 
 .tab{
@@ -379,3 +380,27 @@ TextArea:focused {
 	-fx-fill: teal;
 }
 
+.title {
+	-fx-text-fill: #aaa;
+}
+
+.highlight {
+	-fx-text-fill: #fffefe;
+}
+
+.highlight2 {
+	-fx-text-fill: #f87e1a;
+}
+
+
+BorderPane {
+	 -fx-background-color: #222;
+}
+
+AnchorPane {
+	 -fx-background-color: #222;
+}
+
+TabPane {
+	 -fx-background-color: #222;
+}

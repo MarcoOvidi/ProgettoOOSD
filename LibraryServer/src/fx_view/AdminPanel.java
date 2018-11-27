@@ -20,6 +20,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import model.User;
@@ -142,7 +143,7 @@ public class AdminPanel {
 				initRequestTabs(1);
 			}
 		});
-		
+
 		initRequestRowClick();
 	}
 
@@ -159,7 +160,7 @@ public class AdminPanel {
 		requests.setItems(requestsRows);
 
 	}
-	
+
 	public void initRequestRowClick() {
 		requests.setRowFactory(tv -> {
 			TableRow<RequestRow> row = new TableRow<>();
@@ -179,7 +180,6 @@ public class AdminPanel {
 		alert.setTitle("Request from " + AdministrationController.loadUsername(request.getUser()));
 		alert.setHeaderText("Object: \"" + request.getObject() + "\"");
 		alert.setContentText("\"" + request.getMessage() + "\"");
-		
 
 		ButtonType buttonAnswer = new ButtonType("Answer");
 		ButtonType buttonIgnore = new ButtonType("Ignore");
@@ -191,11 +191,24 @@ public class AdminPanel {
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == buttonAnswer) {
-			// ... user chose "One"
+			
+			TextInputDialog dialog = new TextInputDialog("answer");
+			dialog.setTitle("Request Answer");
+			dialog.setHeaderText("Answer for the request " + requestID.getValue() + " commited by" + AdministrationController.loadUsername(request.getUser()) + ".");
+			dialog.setContentText("Please enter answer:");
+
+			Optional<String> result2 = dialog.showAndWait();
+			if (result2.isPresent()) {
+				AdministrationController.answerUserRequest(requestID, result2.get());
+				initRequests();
+			}
+
+			
 		} else if (result.get() == buttonIgnore) {
-			// ... user chose "Two"
+			AdministrationController.ignoreUserRequest(requestID);
+			initRequests();
 		} else {
-			// ... user chose CANCEL or closed the dialog
+			alert.close();
 		}
 	}
 

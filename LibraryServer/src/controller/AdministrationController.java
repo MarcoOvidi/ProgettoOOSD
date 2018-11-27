@@ -66,4 +66,22 @@ public class AdministrationController {
 		}
 		return u;
 	}
+	
+	public static void ignoreUserRequest(UUIDRequest id) {
+		try{
+			AdministratorQuerySet.ignoreRequest(id);
+		}catch(DatabaseException e ) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public static void answerUserRequest(UUIDRequest id, String answer) {
+		try{
+			AdministratorQuerySet.answerRequest(id, answer);
+		}catch(DatabaseException e ) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+	}
 }
