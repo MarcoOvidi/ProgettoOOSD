@@ -24,6 +24,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
@@ -85,6 +86,9 @@ public class LoadScan {
 
 	@FXML
 	private Button clearFilters;
+	
+	@FXML
+	private Label loadScanTitle;
 
 	@FXML
 	public void initialize() {
@@ -94,10 +98,23 @@ public class LoadScan {
 		initLoadDocument();
 		initfilterButtons();
 		initPageTable();
-
+		initLoadScanTitle();
+		initFileChooser();
 		prepareDocument();
 	}
 
+	
+	private void initLoadScanTitle(){
+		loadScanTitle.setVisible(false);
+		
+	}
+	
+	private void initFileChooser() {
+		filechooser.setVisible(false);
+	}
+	
+	
+	
 	private void prepareDocument() {
 		if (toOpenDocument != null) {
 			loadDocument(toOpenDocument);
@@ -224,6 +241,8 @@ public class LoadScan {
 		documentList.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observableValue, Number entry, Number entryNew) {
+				loadScanTitle.setVisible(true);
+				filechooser.setVisible(true);
 				loadDocument(documentList.getItems().get((Integer) entryNew).getKey());
 			}
 		});

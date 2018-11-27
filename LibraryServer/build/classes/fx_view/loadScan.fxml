@@ -12,79 +12,56 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
-	minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0"
-	prefWidth="1400.0" xmlns="http://javafx.com/javafx/8.0.171"
-	xmlns:fx="http://javafx.com/fxml/1" fx:controller="fx_view.LoadScan">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fx_view.LoadScan">
 	<top>
-		<AnchorPane prefHeight="800.0" prefWidth="1400.0"
-			style="-fx-background-color: #222;" BorderPane.alignment="CENTER">
+		<AnchorPane prefHeight="800.0" prefWidth="1400.0" style="-fx-background-color: #222;" BorderPane.alignment="CENTER">
 			<children>
-				<AnchorPane fx:id="topbar" AnchorPane.leftAnchor="0.0"
-					AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+				<AnchorPane  AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 					<children>
-						<AnchorPane layoutX="29.0" layoutY="17.0"
-							AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+						<AnchorPane layoutX="29.0" layoutY="17.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
 							<children>
-								<fx:include AnchorPane.leftAnchor="0.0"
-									AnchorPane.rightAnchor="0.0" source="topbar.fxml" />
+								<fx:include source="topbar.fxml" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
 							</children>
 						</AnchorPane>
 					</children>
 				</AnchorPane>
-				<Label layoutX="657.0" layoutY="126.0" text="Load scan:"
-					textFill="#aaaaaa">
+				<Label fx:id="loadScanTitle" layoutX="41.0" layoutY="725.0" text="Load scan:" textFill="#aaaaaa">
 					<font>
 						<Font size="28.0" />
 					</font>
 				</Label>
-				<Button fx:id="filechooser" layoutX="814.0" layoutY="132.0"
-					mnemonicParsing="false" text="Choose file" />
-				<ScrollPane layoutX="41.0" layoutY="173.0"
-					prefHeight="530.0" prefWidth="1182.0">
+				<Button fx:id="filechooser" layoutX="198.0" layoutY="731.0" mnemonicParsing="false" text="Choose file" />
+				<ScrollPane layoutX="41.0" layoutY="173.0" prefHeight="530.0" prefWidth="1182.0">
 					<content>
 						<VBox fx:id="scanList" prefWidth="1035.0">
 							<children>
 								<TableView fx:id="pageTable" prefHeight="500.0">
 									<columns>
-										<TableColumn fx:id="number" prefWidth="75.0"
-											text="Number" />
-										<TableColumn fx:id="image" editable="false"
-											prefWidth="75.0" sortable="false" text="Page" />
-										<TableColumn fx:id="revisioned" editable="false"
-											prefWidth="100.0" sortable="false" text="Revisioned" />
-										<TableColumn fx:id="validated" editable="false"
-											prefWidth="100.0" sortable="false" text="Validated" />
+										<TableColumn fx:id="number" prefWidth="75.0" text="Number" />
+										<TableColumn fx:id="image" editable="false" prefWidth="75.0" sortable="false" text="Page" />
+										<TableColumn fx:id="revisioned" editable="false" prefWidth="100.0" sortable="false" text="Revisioned" />
+										<TableColumn fx:id="validated" editable="false" prefWidth="100.0" sortable="false" text="Validated" />
 									</columns>
 								</TableView>
 							</children>
 						</VBox>
 					</content>
 				</ScrollPane>
-				<Label layoutX="41.0" layoutY="72.0" prefHeight="40.0"
-					prefWidth="285.0" text="Seleziona documento" textFill="#aaaaaa">
+				<Label layoutX="41.0" layoutY="72.0" prefHeight="40.0" prefWidth="285.0" text="Seleziona documento" textFill="#aaaaaa">
 					<font>
 						<Font size="28.0" />
 					</font>
 				</Label>
-				<ChoiceBox fx:id="documentList" layoutX="326.0"
-					layoutY="78.0" prefWidth="150.0" />
-				<Label layoutX="43.0" layoutY="125.0" text="Filter: "
-					textFill="#aaaaaa">
+				<ChoiceBox fx:id="documentList" layoutX="326.0" layoutY="78.0" prefWidth="150.0" />
+				<Label layoutX="43.0" layoutY="125.0" text="Filter: " textFill="#aaaaaa">
 					<font>
 						<Font size="28.0" />
 					</font>
 				</Label>
-				<CheckBox fx:id="checkRevisioned" layoutX="144.0"
-					layoutY="130.0" mnemonicParsing="false" text="Revisioned"
-					textFill="#fffefe" />
-				<CheckBox fx:id="checkConvalidated" layoutX="260.0"
-					layoutY="133.0" mnemonicParsing="false" text="Convalidated"
-					textFill="#fffefe" />
-				<Button fx:id="filterPages" layoutX="405.0" layoutY="129.0"
-					mnemonicParsing="false" text="Filter Pages" />
-				<Button fx:id="clearFilters" layoutX="523.0" layoutY="129.0"
-					mnemonicParsing="false" text="No Filter" />
+				<CheckBox fx:id="checkRevisioned" layoutX="144.0" layoutY="130.0" mnemonicParsing="false" text="Revisioned" textFill="#fffefe" />
+				<CheckBox fx:id="checkConvalidated" layoutX="260.0" layoutY="133.0" mnemonicParsing="false" text="Convalidated" textFill="#fffefe" />
+				<Button fx:id="filterPages" layoutX="405.0" layoutY="129.0" mnemonicParsing="false" text="Filter Pages" />
+				<Button fx:id="clearFilters" layoutX="523.0" layoutY="129.0" mnemonicParsing="false" text="No Filter" />
 			</children>
 		</AnchorPane>
 	</top>
