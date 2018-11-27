@@ -27,6 +27,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -45,9 +46,6 @@ import vo.UUIDDocument;
 import vo.UUIDPage;
 
 public class ScanRevisor {
-
-	@FXML
-	private Button filechooser;
 
 	@FXML
 	private VBox scanList;
@@ -75,18 +73,6 @@ public class ScanRevisor {
 
 	@FXML
 	private ObservableList<Rows> pages;
-
-	@FXML
-	private CheckBox checkConvalidated;
-
-	@FXML
-	private CheckBox checkRevisioned;
-
-	@FXML
-	private Button filterPages;
-
-	@FXML
-	private Button clearFilters;
 	
 	@FXML
 	private Pane pageContainer;
@@ -106,6 +92,10 @@ public class ScanRevisor {
 	@FXML
 	private Button confirmButton;
 	
+	@FXML
+	private TextArea commentArea;
+	
+	
 	private UUIDPage currentPage;
 	
 	private boolean isValidated;
@@ -113,27 +103,31 @@ public class ScanRevisor {
 	@FXML
 	public void initialize() {
 		initPageContainer();
-		imageUpload();
 		insertDocument();
-		initButtonChoice();
 		initLoadDocumentButton();
-		filterButton();
 		initRowClick();
 		initClosePageContainerButton();
 		initAcceptButton();
 		initRejectButton();
 		initConfirmButton();
+		initCommentArea();
+	}
+	
+	public void initCommentArea(){
+		commentArea.setVisible(false);
 	}
 	
 	public void initAcceptButton(){
 		acceptButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 			isValidated=true;
+			commentArea.setVisible(false);
 	      });	
 	};
 	
 	public void initRejectButton(){
 		rejectButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 			isValidated=false;
+			commentArea.setVisible(true);
 		});	
 	};
 	
@@ -160,44 +154,6 @@ public class ScanRevisor {
 		pageContainer.setVisible(false);
 	}
 
-	public void imageUpload() {
-		filechooser.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-			FileChooser fileChooser = new FileChooser();
-			FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Images", "*.jpg","*.png");
-			fileChooser.getExtensionFilters().add(extFilter);
-			File file = fileChooser.showOpenDialog(new Stage());
-
-			VBox hbox = new VBox();
-			hbox.setAlignment(Pos.CENTER);
-			hbox.setPadding(new Insets(40));
-			hbox.focusedProperty().addListener((ov, oldV, newV) -> {
-				if (!newV) { // focus lost
-					// Your code
-					hbox.setStyle("-fx-background: #444;");
-				}
-			});
-
-			Image pic = new Image(file.toURI().toString());
-			ImageView newscan = new ImageView(pic);
-			newscan.setFitWidth(600);
-			newscan.setFitHeight(350);
-
-			hbox.getChildren().add(newscan);
-			hbox.getChildren().add(new TextField("1"));
-			Button send = new Button("Upload Page");
-			
-			send.addEventHandler(MouseEvent.MOUSE_CLICKED, sending -> {
-				//TODO chiama controller che chiama la query createPage di digitalizerQuerySET
-				
-				sending.consume();
-			});
-			scanList.getChildren().add(hbox);
-
-			event.consume();
-		});
-	}
-
-
 	@FXML
 	public void insertDocument() {
 		PageScanController.loadUncompletedDocument(LocalSession.getLocalUser().getID());
@@ -219,13 +175,7 @@ public class ScanRevisor {
 		}
 	}
 
-	@FXML
-	public void initButtonChoice() {
-		filechooser.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-			// TODO
-			event.consume();
-		});
-	}
+
 
 	@FXML
 	public void initLoadDocumentButton() {
@@ -250,10 +200,6 @@ public class ScanRevisor {
 			pages.clear();
 			pageTable.refresh();
 
-			if (checkRevisioned.isSelected())
-				checkRevisioned.fire();
-			if (checkConvalidated.isSelected())
-				checkConvalidated.fire();
 
 			for (Page page : p) {
 				String rev = "";
@@ -319,94 +265,7 @@ public class ScanRevisor {
 
 	}
 
-	@FXML
-	public void filterButton() {
-		filterPages.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-			FilteredList<Rows> filteredList = new FilteredList<>(pages);
-
-			pageTable.setItems(filteredList);
-
-			filteredList.setPredicate(new Predicate<Rows>() {
-				public boolean test(Rows t) {
-					Boolean control = false;
-
-					if (checkConvalidated.isSelected() && checkRevisioned.isSelected()) {
-						if (t.getValidated().equalsIgnoreCase("\u2714") && t.getRevisioned().equalsIgnoreCase("\u2714"))
-							control = true;
-						else
-							control = false;
-					} else if (checkConvalidated.isSelected() && !(checkRevisioned.isSelected())) {
-						if (t.getValidated().equalsIgnoreCase("\u2714") && t.getRevisioned().equalsIgnoreCase("\u2718"))
-							control = true;
-						else
-							control = false;
-					} else if (!(checkConvalidated.isSelected()) && checkRevisioned.isSelected()) {
-						if (t.getValidated().equalsIgnoreCase("\u2718") && t.getRevisioned().equalsIgnoreCase("\u2714"))
-							control = true;
-						else
-							control = false;
-					} else if (!(checkConvalidated.isSelected()) && !(checkRevisioned.isSelected())) {
-						if (t.getValidated().equalsIgnoreCase("\u2718") && t.getRevisioned().equalsIgnoreCase("\u2718"))
-							control = true;
-						else
-							control = false;
-					}
-
-					return control;
-				}
-			});
-
-			event.consume();
-		});
-
-		clearFilters.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-
-			pages.clear();
-			pageTable.refresh();
-
-			PageScanController.loadNewDocumentPages(documentList.getSelectionModel().getSelectedItem().getKey());
-
-			LinkedList<Page> p = PageScanController.getCurrentDocumentPages();
-
-			Collections.sort(p);
-
-			if (checkRevisioned.isSelected())
-				checkRevisioned.fire();
-			if (checkConvalidated.isSelected())
-				checkConvalidated.fire();
-
-			for (Page page : p) {
-				String rev = "";
-				if (page.getScan().getRevised()) {
-					rev = "\u2714";
-				} else {
-					rev = "\u2718";
-				}
-
-				String val = "";
-
-				if (page.getScan().getValidated()) {
-					val = "\u2714";
-				} else {
-					val = "\u2718";
-				}
-
-				Image img = LocalSession.loadImage(page.getScan().getImage().getUrl());
-
-				ImageView imgView = new ImageView();
-				imgView.setImage(img);
-				
-				Rows row=new Rows(page.getPageNumber().toString(), rev, val, page.getID(), img);
-				
-				pages.add(row);
-
-			}
-
-			pageTable.setItems(pages);
-
-			event.consume();
-		});
-	}
+	
 	
 	public void initRowClick() {
 		pageTable.setRowFactory(tv -> {
