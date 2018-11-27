@@ -4,9 +4,11 @@ import java.util.HashMap;
 
 import dao.DatabaseException;
 import dao.EditProfileQuerySet;
+import dao.TranscriptionReviserQuerySet;
 import dao.TranscriptionWorkProjectQuerySet;
 import model.TranscriptionWorkProject;
 import model.User;
+import vo.UUIDPage;
 import vo.UUIDTranscriptionWorkProject;
 import vo.UUIDUser;
 
@@ -64,5 +66,13 @@ public class TranscriptionProjectController {
 		
 	}
 	
+	public static void setTranscriptionComment(UUIDPage id , String comment) {
+		try{
+			TranscriptionReviserQuerySet.addTranscriptionRevisionComment(id, comment);
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+	}
 
 }

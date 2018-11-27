@@ -134,5 +134,44 @@ public class TranscriptionReviserQuerySet {
 		
 		return (result == 1);
 	}
+	
+	/**
+	 * Permette di aggiungere un commento all'ultima trascrizione della pagina in sede di revisione
+	 * @param id
+	 * @param comment
+	 * @throws DatabaseException
+	 */
+	public static void addTranscriptionRevisionComment(UUIDPage id, String comment) throws DatabaseException {
+
+		Connection con = null;
+		
+		try {
+			con = DBConnection.connect();
+		}catch(DatabaseException ex) {
+			throw new DatabaseException("Errore di connessione", ex);
+		}
+		
+		PreparedStatement ps = null;
+	
+		try {
+			ps = con.prepareStatement("UPDATE page SET transcription_reviser_comment=? WHERE ID=?");
+			ps.setString(1, comment);
+			ps.setInt(2, id.getValue());
+			
+			ps.executeUpdate();
+			
+		}catch(SQLException e) {
+			throw new DatabaseException("Errore di esecuzione query", e);
+		}finally {
+			try {
+				if(ps != null)
+					ps.close();
+				if(con != null)
+					con.close();
+			}catch(SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+		}
+	}
 
 }

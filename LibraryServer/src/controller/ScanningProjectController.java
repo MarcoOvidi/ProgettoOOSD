@@ -72,6 +72,15 @@ public class ScanningProjectController {
 			e.printStackTrace();
 		}
 	}
+	
+	public static void setScanningComment(UUIDPage id , String comment) {
+		try{
+			DigitalizationRevisorQuerySet.addScanningRevisionComment(id, comment);
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+	}
 
 	// FIXME questo non dovrebbe essere qui
 	public static User getUserProfile(UUIDUser user) {
