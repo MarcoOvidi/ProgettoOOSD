@@ -25,8 +25,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -197,10 +195,10 @@ public class ManageProject {
 	}	
 		
 	private void initNewDocumentButton() {
-		newDocumentButton.setFont(new Font(24));
+		newDocumentButton.setFont(new Font(14));
 		// dd.setPrefSize(20,50);
-		newDocumentButton.setMinSize(60, 45);
-		newDocumentButton.setMaxSize(60, 45);
+		newDocumentButton.setMinSize(170, 45);
+		//newDocumentButton.setMaxSize(60, 45);
 		newDocumentButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 			SceneController.loadScene("newDocument");
 		});

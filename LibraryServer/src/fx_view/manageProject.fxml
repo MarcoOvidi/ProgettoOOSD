@@ -30,9 +30,9 @@
 						</AnchorPane>
 					</children>
 				</AnchorPane>
-				<Button fx:id="newDocumentButton" text="+" layoutX="50.0" layoutY="120.0" />
-				<TableView fx:id="documentTable" layoutX="56.0"
-					layoutY="239.0" prefHeight="530.0" prefWidth="348.0">
+				<Button fx:id="newDocumentButton" text="Start new scanning project" layoutX="50.0" layoutY="55.0" />
+				<TableView fx:id="documentTable" layoutX="75.0"
+					layoutY="139.0" prefHeight="530.0" prefWidth="348.0">
 					<columns>
 						<TableColumn fx:id="Document" prefWidth="75.0"
 							text="Document" />
@@ -42,7 +42,7 @@
 							prefWidth="142.03311157226562" text="Scanning_PRJ" />
 					</columns>
 				</TableView>
-				<TabPane fx:id="pane" layoutX="461.0" layoutY="165.0"
+				<TabPane fx:id="pane" layoutX="461.0" layoutY="75.0"
 					prefHeight="566.0" prefWidth="738.0" tabClosingPolicy="UNAVAILABLE">
 					<tabs>
 						<Tab fx:id="transcriptionTab" text="Transcription PRJ">
