@@ -15,21 +15,8 @@
 	fx:controller="fx_view.ManageProject">
 	<center>
 		<AnchorPane prefHeight="800.0" prefWidth="1400.0"
-			style="-fx-background-color: #222;" BorderPane.alignment="CENTER">
+			BorderPane.alignment="CENTER">
 			<children>
-				<AnchorPane fx:id="topbar" layoutX="-3.0"
-					AnchorPane.leftAnchor="-3.0" AnchorPane.rightAnchor="3.0"
-					AnchorPane.topAnchor="0.0">
-					<children>
-						<AnchorPane layoutX="29.0" layoutY="17.0"
-							AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-							<children>
-								<fx:include source="topbar.fxml"
-									AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-							</children>
-						</AnchorPane>
-					</children>
-				</AnchorPane>
 				<Button fx:id="newDocumentButton" text="Start new scanning project" layoutX="50.0" layoutY="55.0" />
 				<TableView fx:id="documentTable" layoutX="75.0"
 					layoutY="139.0" prefHeight="530.0" prefWidth="348.0">

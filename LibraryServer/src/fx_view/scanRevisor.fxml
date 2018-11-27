@@ -16,17 +16,8 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fx_view.ScanRevisor">
     <top>
-        <AnchorPane prefHeight="800.0" prefWidth="1400.0" style="-fx-background-color: #222;" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="800.0" prefWidth="1400.0" BorderPane.alignment="CENTER">
             <children>
-                <AnchorPane prefHeight="45.0" prefWidth="1402.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-                    <children>
-                        <AnchorPane layoutX="29.0" layoutY="17.0">
-                            <children>
-                                <fx:include source="topbar.fxml" />
-                            </children>
-                        </AnchorPane>
-                    </children>
-                </AnchorPane>
                 <ScrollPane layoutX="41.0" layoutY="173.0" prefHeight="530.0" prefWidth="1182.0">
                     <content>
                         <VBox fx:id="scanList" prefHeight="202.0" prefWidth="1035.0">

@@ -17,40 +17,29 @@
 	xmlns:fx="http://javafx.com/fxml/1" fx:controller="fx_view.EditUserProfile">
 	<left>
 		<AnchorPane prefHeight="800.0" prefWidth="1400.0"
-			style="-fx-background-color: #222;" BorderPane.alignment="CENTER">
+			BorderPane.alignment="CENTER">
 			<children>
-				<AnchorPane fx:id="topbar" prefHeight="45.0"
-					prefWidth="1402.0" AnchorPane.leftAnchor="0.0"
-					AnchorPane.topAnchor="0.0">
-					<children>
-						<AnchorPane layoutX="29.0" layoutY="17.0">
-							<children>
-								<fx:include source="topbar.fxml" />
-							</children>
-						</AnchorPane>
-					</children>
-				</AnchorPane>
 				<HBox spacing="70" layoutX="49.0" layoutY="112.0">
 					<VBox spacing="20" prefWidth="240.0">
-						<Label text="Edit profile" textFill="#aaaaaa">
+						<Label text="Edit profile" styleClass="title">
 							<font>
 								<Font size="28.0" />
 							</font>
 						</Label>
 						<HBox>
-							<Label text="Username: " style="-fx-text-fill: #f87e1a" />
+							<Label text="Username: " styleClass="highlight2" />
 							<Label fx:id="username" />
 						</HBox>
 						<VBox>
-							<Label text="Name: " style="-fx-text-fill: #f87e1a" />
+							<Label text="Name: " styleClass="highlight2" />
 							<TextField fx:id="name" />
 						</VBox>
 						<VBox>
-							<Label text="Surname: " style="-fx-text-fill: #f87e1a" />
+							<Label text="Surname: " styleClass="highlight2" />
 							<TextField fx:id="surname" />
 						</VBox>
 						<VBox>
-							<Label text="Email: " style="-fx-text-fill: #f87e1a" />
+							<Label text="Email: " styleClass="highlight2" />
 							<TextField fx:id="email" />
 						</VBox>
 						<HBox/>
