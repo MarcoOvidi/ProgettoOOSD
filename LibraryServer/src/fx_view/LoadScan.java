@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.Map.Entry;
 import java.util.function.Predicate;
 
+import controller.ImageUploader;
 import controller.LocalSession;
 import controller.PageScanController;
 import dao.DatabaseException;
@@ -90,6 +91,8 @@ public class LoadScan {
 	@FXML
 	private Label loadScanTitle;
 
+	private UUIDDocument currentDocument;
+	
 	@FXML
 	public void initialize() {
 		imageUpload();
@@ -112,7 +115,6 @@ public class LoadScan {
 	private void initFileChooser() {
 		filechooser.setVisible(false);
 	}
-	
 	
 	
 	private void prepareDocument() {
@@ -148,6 +150,7 @@ public class LoadScan {
 			fileChooser.getExtensionFilters().add(extFilter);
 			File file = fileChooser.showOpenDialog(new Stage());
 
+			/*
 			VBox hbox = new VBox();
 			hbox.setAlignment(Pos.CENTER);
 			hbox.setPadding(new Insets(40));
@@ -157,24 +160,34 @@ public class LoadScan {
 					hbox.setStyle("-fx-background: #444;");
 				}
 			});
-
+			
+			*/
+			
 			Image pic = new Image(file.toURI().toString());
+			
+			/*
 			ImageView newscan = new ImageView(pic);
 			newscan.setFitWidth(600);
 			newscan.setFitHeight(350);
 
+			
 			hbox.getChildren().add(newscan);
 			hbox.getChildren().add(new TextField("1"));
 			Button send = new Button("Upload Page");
 
+	
 			send.addEventHandler(MouseEvent.MOUSE_CLICKED, sending -> {
 				// TODO chiama controller che chiama la query createPage di digitalizerQuerySET
 
 				sending.consume();
 			});
 			scanList.getChildren().add(hbox);
-
+			*/
+			PageScanController.createNewPage(pic, 0);			
+			loadDocument(currentDocument);
 			event.consume();
+			
+			
 		});
 	}
 
@@ -243,7 +256,8 @@ public class LoadScan {
 			public void changed(ObservableValue<? extends Number> observableValue, Number entry, Number entryNew) {
 				loadScanTitle.setVisible(true);
 				filechooser.setVisible(true);
-				loadDocument(documentList.getItems().get((Integer) entryNew).getKey());
+			  currentDocument=documentList.getItems().get((Integer) entryNew).getKey();
+				loadDocument(currentDocument);
 			}
 		});
 
