@@ -55,6 +55,8 @@ public class AdminPanel {
 	@FXML
 	private TableView<RequestRow> requests;
 	@FXML
+	private TableView<RequestRow> requests2;
+	@FXML
 	private ObservableList<RequestRow> requestsRows;
 	@FXML
 	private TableColumn<RequestRow, UUIDRequest> requestID;
@@ -132,25 +134,21 @@ public class AdminPanel {
 		RequestObject.setCellValueFactory(new PropertyValueFactory<RequestRow, String>("Object"));
 		requestID.setVisible(false);
 
-		initRequestTabs(0);
-
+		initRequestTabs();
+		
 		pending.getTabPane().setOnMouseClicked(event -> {
-			if (pending.getTabPane().getSelectionModel().getSelectedItem() == pending) {
-				pending.setContent(requests);
-				initRequestTabs(0);
-			} else {
-				old.setContent(requests);
-				initRequestTabs(1);
-			}
+			initRequestTabs();
+			initRequestTabs2();
 		});
+		
 
 		initRequestRowClick();
 	}
 
-	public void initRequestTabs(int i) {
+	public void initRequestTabs() {
 		requestsRows = FXCollections.observableArrayList();
 
-		LinkedList<vo.Request> requestsList = AdministrationController.getRequest(i);
+		LinkedList<vo.Request> requestsList = AdministrationController.getRequest(0);
 
 		for (Request request : requestsList) {
 			RequestRow row = new RequestRow(request.getId(), AdministrationController.loadUsername(request.getUser()),
@@ -158,7 +156,21 @@ public class AdminPanel {
 			requestsRows.add(row);
 		}
 		requests.setItems(requestsRows);
+		requests.refresh();
+	}
+	
+	public void initRequestTabs2() {
+		requestsRows = FXCollections.observableArrayList();
 
+		LinkedList<vo.Request> requestsList = AdministrationController.getRequest(1);
+
+		for (Request request : requestsList) {
+			RequestRow row = new RequestRow(request.getId(), AdministrationController.loadUsername(request.getUser()),
+					request.getObject());
+			requestsRows.add(row);
+		}
+		requests2.setItems(requestsRows);
+		requests2.refresh();
 	}
 
 	public void initRequestRowClick() {
