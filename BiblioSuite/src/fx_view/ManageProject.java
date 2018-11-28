@@ -38,14 +38,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import model.Page;
 import model.User;
-import vo.DocumentRow;
 import vo.PageScanningLog;
 import vo.PageTranscriptionLog;
-import vo.StaffRow;
 import vo.UUIDDocument;
 import vo.UUIDScanningWorkProject;
 import vo.UUIDTranscriptionWorkProject;
 import vo.UUIDUser;
+import vo.view.DocumentRow;
+import vo.view.StaffRow;
 
 public class ManageProject {
 

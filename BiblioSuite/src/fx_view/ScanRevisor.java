@@ -41,9 +41,9 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import model.Page;
-import vo.Rows;
 import vo.UUIDDocument;
 import vo.UUIDPage;
+import vo.view.Rows;
 
 public class ScanRevisor {
 

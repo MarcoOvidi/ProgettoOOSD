@@ -1,4 +1,8 @@
-package vo;
+package vo.view;
+
+import vo.UUIDDocument;
+import vo.UUIDScanningWorkProject;
+import vo.UUIDTranscriptionWorkProject;
 
 public class DocumentRow {
 	private String document;

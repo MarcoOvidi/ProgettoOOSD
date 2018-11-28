@@ -2,7 +2,7 @@ package controller;
 
 import java.util.HashMap;
 
-import dao.AdministratorQuerySet;
+import dao.AdministrationQuerySet;
 import dao.DatabaseException;
 import dao.ScanningWorkProjectQuerySet;
 import dao.TranscriptionWorkProjectQuerySet;
@@ -130,7 +130,7 @@ public class RoleController {
 		HashMap<UUIDUser,String> coord = new HashMap<UUIDUser , String>();
 		
 		try{
-			coord = AdministratorQuerySet.showCoordinatorList();
+			coord = AdministrationQuerySet.showCoordinatorList();
 		}catch(Exception e ) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());

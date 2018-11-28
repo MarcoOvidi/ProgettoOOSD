@@ -25,10 +25,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import model.User;
 import vo.Request;
-import vo.RequestRow;
 import vo.UUIDRequest;
 import vo.UUIDUser;
-import vo.UserRow;
+import vo.view.RequestRow;
+import vo.view.UserRow;
 
 public class AdminPanel {
 

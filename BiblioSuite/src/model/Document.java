@@ -1,8 +1,6 @@
 package model;
 
 import java.util.LinkedList;
-
-import controller.SessionDataHandler;
 import vo.DocumentMetadata;
 import vo.UUIDDocument;
 import vo.UUIDScanningWorkProject;
@@ -18,7 +16,6 @@ public class Document {
 	//variabili istanza
 	private String title;
 	private UUIDDocument id;
-	private SessionDataHandler session;
 	private DocumentMetadata metadata;
 	private LinkedList<Page> pageList ;
 	private UUIDScanningWorkProject scanningWorkProject;
@@ -116,7 +113,7 @@ public class Document {
 
 	@Override
 	public String toString() {
-		return "Document [title=" + title + ", id=" + id + ", session=" + session + ", metadata=" + metadata
+		return "Document [title=" + title + ", id=" + id + ", metadata=" + metadata
 				+ ", pageList=" + pageList + ", scanningWorkProject=" + scanningWorkProject
 				+ ", transcriptionWorkProject=" + transcriptionWorkProject + "]";
 	}

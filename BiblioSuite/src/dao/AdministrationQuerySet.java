@@ -16,7 +16,7 @@ import vo.UUIDUser;
 import vo.UserInformations;
 import vo.UserPermissions;
 
-public class AdministratorQuerySet { // tutto ok
+public class AdministrationQuerySet { // tutto ok
 
 	/**
 	 * Questo metodo cambia lo stato di un utente da attivo a inattivo e viceversa

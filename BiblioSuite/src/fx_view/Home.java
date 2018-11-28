@@ -26,10 +26,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import vo.DocumentRow;
 import vo.UUIDDocument;
 import vo.UUIDDocumentCollection;
 import vo.UUIDScanningWorkProject;
+import vo.view.DocumentRow;
 
 public class Home {
 

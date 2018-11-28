@@ -1,4 +1,6 @@
-package vo;
+package vo.view;
+
+import vo.UUIDRequest;
 
 public class RequestRow {
 	private UUIDRequest requestID;

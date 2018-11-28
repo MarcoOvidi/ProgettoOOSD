@@ -1,6 +1,6 @@
 package controller;
 
-import dao.AdministratorQuerySet;
+import dao.AdministrationQuerySet;
 import dao.DatabaseException;
 import dao.EditProfileQuerySet;
 import dao.UserAuthenticationQuerySet;
@@ -62,7 +62,7 @@ public class EditUserController {
 			// per ora aggiungo qui la chiamata all'altro ma forse dovrebbe farlo il metodo
 			// del dao?
 			EditProfileQuerySet.updateUserProfile(getToEditUser().getID(), getToEditUser());
-			AdministratorQuerySet.updateUserPermissions(getToEditUser().getID(), getToEditUser().getPermissions());
+			AdministrationQuerySet.updateUserPermissions(getToEditUser().getID(), getToEditUser().getPermissions());
 
 		} catch (DatabaseException e) {
 			// TODO Auto-generated catch block

@@ -21,7 +21,7 @@
 						<Font size="28.0" />
 					</font>
 				</Label>
-				<Button fx:id="filechooser" layoutX="198.0" layoutY="731.0" mnemonicParsing="false" text="Choose file" />
+				<Button fx:id="filechooser" layoutX="398.0" layoutY="31.0" mnemonicParsing="false" text="Scan New Page" />
 				<ScrollPane layoutX="41.0" layoutY="173.0" prefHeight="530.0" prefWidth="1182.0">
 					<content>
 						<VBox fx:id="scanList" prefWidth="1035.0">

@@ -3,7 +3,7 @@ package controller;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-import dao.AdministratorQuerySet;
+import dao.AdministrationQuerySet;
 import dao.DatabaseException;
 import dao.EditProfileQuerySet;
 import model.User;
@@ -16,7 +16,7 @@ public class AdministrationController {
 	public static LinkedList<Request> getRequest(Integer i){
 		LinkedList<Request> req = null;
 		try {
-			req = AdministratorQuerySet.loadRequestsList(i);
+			req = AdministrationQuerySet.loadRequestsList(i);
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -28,7 +28,7 @@ public class AdministrationController {
 	public static Request loadRequest(UUIDRequest id) {
 		Request r = null;
 		try {
-			r = AdministratorQuerySet.loadRequest(id);
+			r = AdministrationQuerySet.loadRequest(id);
 		} catch (NullPointerException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
@@ -47,7 +47,7 @@ public class AdministrationController {
 	public static LinkedList<User> loadUserList() {
 		LinkedList<User> res = null;
 		try {
-			res = AdministratorQuerySet.loadUserList();
+			res = AdministrationQuerySet.loadUserList();
 		} catch (DatabaseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -69,7 +69,7 @@ public class AdministrationController {
 	
 	public static void ignoreUserRequest(UUIDRequest id) {
 		try{
-			AdministratorQuerySet.ignoreRequest(id);
+			AdministrationQuerySet.ignoreRequest(id);
 		}catch(DatabaseException e ) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -78,7 +78,7 @@ public class AdministrationController {
 	
 	public static void answerUserRequest(UUIDRequest id, String answer) {
 		try{
-			AdministratorQuerySet.answerRequest(id, answer);
+			AdministrationQuerySet.answerRequest(id, answer);
 		}catch(DatabaseException e ) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());

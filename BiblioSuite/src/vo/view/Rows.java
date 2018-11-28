@@ -1,4 +1,8 @@
-package vo;
+package vo.view;
+
+import vo.TEItext;
+import vo.UUIDPage;
+import vo.UUIDUser;
 
 public class Rows {
 	private javafx.scene.image.Image image;

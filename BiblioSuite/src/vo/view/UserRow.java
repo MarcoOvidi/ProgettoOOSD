@@ -1,4 +1,7 @@
-package vo;
+package vo.view;
+
+import vo.Email;
+import vo.UUIDUser;
 
 public class UserRow {
 	private UUIDUser id ;

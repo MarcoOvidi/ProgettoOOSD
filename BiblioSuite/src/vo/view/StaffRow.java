@@ -1,4 +1,6 @@
-package vo;
+package vo.view;
+
+import vo.UUIDUser;
 
 public class StaffRow {
 	private String username;

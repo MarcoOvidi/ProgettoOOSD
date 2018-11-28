@@ -171,7 +171,7 @@ public class DigitalizerQuerySet { // COMPLETATA E VERIFICATA DEF
 
 		try {
 			con.setAutoCommit(false);
-			ps = con.prepareStatement("insert into page(number,image,ID_digitalizer,ID_document) values(?,?,?,?);");
+			ps = con.prepareStatement("insert into page(number,image,ID_digitalizer,ID_document) values(?,?,?,?);", new String[] { "ID" });
 			System.out.println(">> " + number + " " + img.getUrl() + " " + doc.getValue());
 			ps.setInt(1, number);
 			ps.setString(2, img.getUrl());
@@ -182,6 +182,7 @@ public class DigitalizerQuerySet { // COMPLETATA E VERIFICATA DEF
 			ps.executeBatch();
 
 			rs = ps.getGeneratedKeys();
+			
 			if (rs.next()) {
 				id = new UUIDPage(rs.getInt(1));
 			}

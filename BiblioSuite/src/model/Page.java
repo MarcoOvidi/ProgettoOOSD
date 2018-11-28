@@ -8,17 +8,14 @@ package model;
 
 import vo.UUIDPage;
 import vo.UUIDUser;
-
 import java.util.LinkedList;
 
-import controller.SessionDataHandler;
 
 
 public class Page implements Comparable<Page>{
 	
 	//variabili istanza
 	private UUIDPage id;
-	private SessionDataHandler session;
 	private Integer pageNumber;
 	private PageScan scan;
 	private PageTranscription transcription;
@@ -77,7 +74,7 @@ public class Page implements Comparable<Page>{
 
 	@Override
 	public String toString() {
-		return "Page [id=" + id + ", session=" + session + ", pageNumber=" + pageNumber + ", scan=" + scan
+		return "Page [id=" + id + ", pageNumber=" + pageNumber + ", scan=" + scan
 				+ ", transcription=" + transcription + "]";
 	}
 	

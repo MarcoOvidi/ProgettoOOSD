@@ -1,14 +1,9 @@
 package model;
 
 import vo.UUIDUser;
-import controller.SessionDataHandler;
 import java.util.Date;
 
 public class WorkProject {
-	
-	//variabili istanza
-	//TODO come risolviamo ?private UUID id;
-	private SessionDataHandler session;
 	private UUIDUser coordinator;
 	private Date publishingDate;
 	private Boolean completed;
@@ -55,7 +50,7 @@ public class WorkProject {
 
 	@Override
 	public String toString() {
-		return "WorkProject [session=" + session + ", coordinator=" + coordinator + ", publishingDate=" + publishingDate
+		return "WorkProject [ coordinator=" + coordinator + ", publishingDate=" + publishingDate
 				+ ", completed=" + completed + "]";
 	}
 	
