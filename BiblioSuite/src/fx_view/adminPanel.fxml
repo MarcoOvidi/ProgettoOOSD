@@ -54,10 +54,10 @@
 											<TableView fx:id="requests2" layoutX="56.0"
 												layoutY="239.0" prefHeight="530.0" prefWidth="700.0">
 												<columns>
-													<TableColumn fx:id="requestID" text="RequestID" />
-													<TableColumn fx:id="requestUsername"
+													<TableColumn fx:id="requestID2" text="RequestID" />
+													<TableColumn fx:id="requestUsername2"
 														text="Username" />
-													<TableColumn fx:id="RequestObject"
+													<TableColumn fx:id="RequestObject2"
 														text="Object" />
 												</columns>
 											</TableView>

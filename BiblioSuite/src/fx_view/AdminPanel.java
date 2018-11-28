@@ -55,8 +55,6 @@ public class AdminPanel {
 	@FXML
 	private TableView<RequestRow> requests;
 	@FXML
-	private TableView<RequestRow> requests2;
-	@FXML
 	private ObservableList<RequestRow> requestsRows;
 	@FXML
 	private TableColumn<RequestRow, UUIDRequest> requestID;
@@ -64,6 +62,17 @@ public class AdminPanel {
 	private TableColumn<RequestRow, String> requestUsername;
 	@FXML
 	private TableColumn<RequestRow, String> RequestObject;
+	@FXML
+	private TableView<RequestRow> requests2;
+	@FXML
+	private ObservableList<RequestRow> requestsRows2;
+	@FXML
+	private TableColumn<RequestRow, UUIDRequest> requestID2;
+	@FXML
+	private TableColumn<RequestRow, String> requestUsername2;
+	@FXML
+	private TableColumn<RequestRow, String> RequestObject2;
+
 
 	@FXML
 	public void initialize() throws DatabaseException, ParseException {
@@ -133,6 +142,10 @@ public class AdminPanel {
 		requestUsername.setCellValueFactory(new PropertyValueFactory<RequestRow, String>("Username"));
 		RequestObject.setCellValueFactory(new PropertyValueFactory<RequestRow, String>("Object"));
 		requestID.setVisible(false);
+		requestID2.setCellValueFactory(new PropertyValueFactory<RequestRow, UUIDRequest>("requestID"));
+		requestUsername2.setCellValueFactory(new PropertyValueFactory<RequestRow, String>("Username"));
+		RequestObject2.setCellValueFactory(new PropertyValueFactory<RequestRow, String>("Object"));
+		requestID2.setVisible(false);
 
 		initRequestTabs();
 		
@@ -157,19 +170,20 @@ public class AdminPanel {
 		}
 		requests.setItems(requestsRows);
 		requests.refresh();
+
 	}
 	
 	public void initRequestTabs2() {
-		requestsRows = FXCollections.observableArrayList();
+		requestsRows2 = FXCollections.observableArrayList();
 
 		LinkedList<vo.Request> requestsList = AdministrationController.getRequest(1);
 
 		for (Request request : requestsList) {
 			RequestRow row = new RequestRow(request.getId(), AdministrationController.loadUsername(request.getUser()),
 					request.getObject());
-			requestsRows.add(row);
+			requestsRows2.add(row);
 		}
-		requests2.setItems(requestsRows);
+		requests2.setItems(requestsRows2);
 		requests2.refresh();
 	}
 
