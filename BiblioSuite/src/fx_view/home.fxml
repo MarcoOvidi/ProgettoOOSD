@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
+	minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.171"
+	xmlns:fx="http://javafx.com/fxml/1" fx:controller="fx_view.Home">
+	<left>
+		<HBox layoutX="100.0" prefWidth="900" minWidth="900" spacing="1">
+			<VBox prefWidth="500" minWidth="500" spacing="20">
+				<Label layoutX="27.0" layoutY="89.0" text="News"
+					textFill="#aaaaaa">
+					<font>
+						<Font size="28.0" />
+					</font>
+				</Label>
+				<ScrollPane layoutX="27.0" layoutY="155.0"
+					prefHeight="257.0" prefWidth="963.0">
+					<content>
+						<AnchorPane>
+							<children>
+								<VBox fx:id="news" layoutX="14.0" layoutY="14.0" />
+							</children>
+						</AnchorPane>
+					</content>
+				</ScrollPane>
+				<TabPane layoutX="14.0" layoutY="441.0" prefHeight="346.0"
+					prefWidth="977.0" tabClosingPolicy="UNAVAILABLE">
+					<tabs>
+						<Tab text="Bookmarks">
+							<content>
+								<ScrollPane>
+									<content>
+										<AnchorPane minHeight="0.0" minWidth="0.0"
+											prefHeight="244.0" prefWidth="483.0">
+											<children>
+												<HBox fx:id="bookmarks" layoutX="22.0" layoutY="31.0"
+													prefHeight="100.0" prefWidth="200.0" />
+											</children>
+										</AnchorPane>
+									</content>
+								</ScrollPane>
+							</content>
+						</Tab>
+						<Tab fx:id="scanningTab" text="Scanning Project">
+							<content>
+								<ScrollPane prefHeight="318.0" prefWidth="978.0">
+									<content>
+										<AnchorPane prefHeight="223.0" prefWidth="557.0">
+											<children>
+												<HBox fx:id="sProjects" layoutX="14.0" layoutY="14.0"
+													prefHeight="162.0" prefWidth="406.0" />
+											</children>
+										</AnchorPane>
+									</content>
+								</ScrollPane>
+							</content>
+						</Tab>
+						<Tab fx:id="transcriptionTab" text="Transcription Projects">
+							<content>
+								<ScrollPane prefHeight="318.0" prefWidth="978.0">
+									<content>
+										<AnchorPane prefHeight="223.0" prefWidth="557.0">
+											<children>
+												<HBox fx:id="tProjects" layoutX="14.0" layoutY="14.0"
+													prefHeight="162.0" prefWidth="406.0" />
+											</children>
+										</AnchorPane>
+									</content>
+								</ScrollPane>
+							</content>
+						</Tab>
+					</tabs>
+				</TabPane>
+			</VBox>
+			<Separator
+				orientation="VERTICAL" prefHeight="675.0" prefWidth="17.0" />
+			<VBox prefWidth="398" spacing="20">
+				<Label text="Categories"
+					textFill="#aaaaaa">
+					<font>
+						<Font size="28.0" />
+					</font>
+				</Label>
+				<ScrollPane layoutX="1064.0" layoutY="155.0"
+					prefHeight="604.0" prefWidth="313.0">
+					<content>
+						<Accordion fx:id="documentCollections" />
+					</content>
+				</ScrollPane>
+			</VBox>
+
+		</HBox>
+	</left>
+</BorderPane>
