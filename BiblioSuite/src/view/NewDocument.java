@@ -1,4 +1,4 @@
-package fx_view;
+package view;
 
 import controller.CreateDocumentController;
 import javafx.beans.value.ChangeListener;

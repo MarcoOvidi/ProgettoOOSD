@@ -14,7 +14,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
 	minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.171"
-	xmlns:fx="http://javafx.com/fxml/1" fx:controller="fx_view.Home">
+	xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Home">
 	<left>
 		<HBox layoutX="100.0" prefWidth="900" minWidth="900" spacing="1">
 			<VBox prefWidth="500" minWidth="500" spacing="20">

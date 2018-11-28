@@ -17,7 +17,7 @@
 	minHeight="-Infinity" minWidth="-Infinity"
 	xmlns="http://javafx.com/javafx/8.0.171"
 	xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="fx_view.PageTranscription">
+	fx:controller="view.PageTranscription">
 	<top>
 		<Button layoutX="0.0" layoutY="0.0" mnemonicParsing="false"
 			prefHeight="250.0" prefWidth="150.0"

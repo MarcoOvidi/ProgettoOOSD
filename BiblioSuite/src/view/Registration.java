@@ -1,4 +1,4 @@
-package fx_view;
+package view;
 
 import java.sql.SQLException;
 import java.text.ParseException;

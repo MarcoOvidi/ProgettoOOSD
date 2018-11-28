@@ -13,7 +13,7 @@
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
 	minHeight="500" minWidth="720"
 	xmlns="http://javafx.com/javafx/8.0.171"
-	xmlns:fx="http://javafx.com/fxml/1" fx:controller="fx_view.LoginScene">
+	xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LoginScene">
 	<bottom>
 		<Pane prefHeight="21.0" prefWidth="800.0"
 			BorderPane.alignment="CENTER">
