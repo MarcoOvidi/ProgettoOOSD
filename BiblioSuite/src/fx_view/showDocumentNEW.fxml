@@ -23,9 +23,9 @@
 			prefHeight="250.0" prefWidth="150.0"
 			text="THE MAGICAL INVISIBLE BUTTON">
 		</Button>
-		<AnchorPane fx:id="topbar" prefHeight="90.0">
+		<AnchorPane prefHeight="40.0">
 			<children>
-				<AnchorPane layoutX="10.0" layoutY="17.0"
+				<AnchorPane layoutX="0.0" layoutY="0.0"
 					AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
 					<children>
 						<Button fx:id="backButton" layoutX="0.0" layoutY="0.0"

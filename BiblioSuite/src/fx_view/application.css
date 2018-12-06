@@ -404,3 +404,21 @@ AnchorPane {
 TabPane {
 	 -fx-background-color: #222;
 }
+
+#logout{
+    -fx-background-insets: 0.0 1.0 0.0 1.0,0.0,0.0;
+    -fx-background-color: #4440;
+    -fx-pref-height: 50.0;
+    -fx-alignment: CENTER;
+    -fx-text-fill: #aaa;
+    -fx-font-size: 16.0px;
+    -fx-border-color:#aaa0;
+    -fx-border-width: 0.0px 0.0px 2.0px 0.0px;
+    
+}
+
+#logout:hover { 
+    -fx-alignment: CENTER;
+    -fx-text-fill: #ccc;
+    -fx-border-color:#ccc;
+}

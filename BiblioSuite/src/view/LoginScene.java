@@ -89,7 +89,11 @@ public class LoginScene {
 		recover.setFocusTraversable(true);
 
 		username.getParent().addEventHandler(KeyEvent.KEY_PRESSED, event -> {
-			if (event.getCode() != KeyCode.SHIFT && event.getCode() != KeyCode.TAB) {
+			if (event.getCode() == KeyCode.ESCAPE) {
+				username.setText("");
+				password.setText("");
+				username.getParent().requestFocus();
+			} else if (event.getCode() != KeyCode.SHIFT && event.getCode() != KeyCode.TAB) {
 				username.setText(event.getCharacter());
 				username.requestFocus();
 			}
@@ -103,8 +107,6 @@ public class LoginScene {
 			if (event.getCode() == KeyCode.ENTER) {
 				password.requestFocus();
 			} else if (event.getCode() == KeyCode.ESCAPE) {
-				username.setText("");
-				password.setText("");
 				username.getParent().requestFocus();
 			}
 			if (event.getCode() != KeyCode.TAB && event.getCode() != KeyCode.BACK_SPACE
@@ -117,8 +119,6 @@ public class LoginScene {
 			if (event.getCode() == KeyCode.ENTER) {
 				go();
 			} else if (event.getCode() == KeyCode.ESCAPE) {
-				username.setText("");
-				password.setText("");
 				username.getParent().requestFocus();
 			}
 			if (event.getCode() != KeyCode.TAB && event.getCode() != KeyCode.BACK_SPACE

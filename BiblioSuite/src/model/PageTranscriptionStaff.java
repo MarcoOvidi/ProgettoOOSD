@@ -31,6 +31,10 @@ public class PageTranscriptionStaff {
 		return this.transcribers;
 	}
 	
+	public UUIDUser getLastTranscriber() {
+		return lastTranscriber;
+	}
+
 	public UUIDUser getReviser() {
 		return this.reviser;
 	}
@@ -41,9 +45,6 @@ public class PageTranscriptionStaff {
 	
 	public void setReviser(UUIDUser u) {
 		this.reviser=u;
-	}
-	public UUIDUser getLastTranscriber() {
-		return lastTranscriber;
 	}
 	public void setLastTranscriber(UUIDUser lastTranscriber) {
 		this.lastTranscriber = lastTranscriber;
