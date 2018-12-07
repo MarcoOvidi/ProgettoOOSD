@@ -165,5 +165,55 @@ public class UserPermissions {
 		return admin;
 	}
 	
+	public void grantUploader() {
+		setUploadPerm(true);
+	}
 	
+	public void grantTranscriber() {
+		setModifyTranscriptionPerm(true);
+	}
+	
+	public void grantUploadReviser() {
+		setReviewPagePerm(true);
+	}
+
+	public void grantTranscriptionReviser() {
+		setReviewTranscriptionPerm(true);
+	}
+	
+	public void grantCoordinator() {
+		setAddNewProjectPerm(true);
+		setAssignDigitalizationTaskPerm(true);
+		setAssignTranscriptionTaskPerm(true);
+		setEditMetaDataPerm(true);
+		setPublishDocumentPerm(true);
+	}
+	
+	public boolean isUploader() {
+		return getUploadPerm();
+	}
+	
+	public boolean isTranscriber() {
+		return getModifyTranscriptionPerm();
+	}
+	
+	public boolean isUploadReviser() {
+		return getReviewPagePerm();
+	}
+
+	public boolean isTranscriptionReviser() {
+		return getReviewTranscriptionPerm();
+	}
+	
+	public boolean isCoordinator() {
+		return (getAddNewProjectPerm() ||
+		getAssignDigitalizationTaskPerm() ||
+		getAssignTranscriptionTaskPerm() ||
+		getEditMetaDataPerm() ||
+		getPublishDocumentPerm());
+	}
+	
+	public boolean isAdmin() {
+		return getAdmin();
+	}
 }

@@ -8,7 +8,6 @@ import javafx.scene.image.Image;
 import model.Document;
 import model.User;
 import vo.UserInformations;
-import vo.UserPermissions;
 
 public final class LocalSession {
 	static User localUser;
@@ -61,7 +60,6 @@ public final class LocalSession {
 	}
 
 	private static void loadTopBarButtons() {
-		UserPermissions permissions = localUser.getPermissions();
 		// TODO admin?
 		/*
 		 * if (permissions.admin) not show Contact Admin
@@ -69,16 +67,15 @@ public final class LocalSession {
 		topBarButtons.add("Home");
 		topBarButtons.add("My Profile");
 
-		if (permissions.getPublishDocumentPerm() || permissions.getAssignDigitalizationTaskPerm()
-				|| permissions.getAssignTranscriptionTaskPerm() || permissions.getEditMetaDataPerm()) {
+		if (localUser.isCoordinator()) {
 			topBarButtons.add("Manage Projects");
-			if (permissions.getUploadPerm())
+			if (localUser.isUploader())
 				topBarButtons.add("Upload");
-			if (permissions.getModifyTranscriptionPerm())
+			if (localUser.isTranscriber())
 				topBarButtons.add("Transcription");
-			if (permissions.getReviewPagePerm() || permissions.getReviewPagePerm())
+			if (localUser.isUploadReviser() || localUser.isTranscriptionReviser())
 				topBarButtons.add("Review");
-			if (permissions.getAdmin())
+			if (localUser.isAdmin())
 				topBarButtons.add("Admin");
 
 		}

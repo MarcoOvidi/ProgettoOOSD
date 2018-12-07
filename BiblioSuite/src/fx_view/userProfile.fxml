@@ -18,7 +18,7 @@
 	<left>
 		<AnchorPane BorderPane.alignment="CENTER">
 			<children>
-				<HBox spacing="70" layoutX="49.0" layoutY="0">
+				<HBox spacing="70" layoutX="49.0" layoutY="20">
 					<VBox spacing="20" prefWidth="240.0">
 						<Label text="My profile" textFill="#aaaaaa">
 							<font>

@@ -129,8 +129,8 @@ public class SceneController extends Application {
 
 		// stage.setFullScreen(true);
 
-		stage.setMinHeight(480);
-		stage.setMinWidth(720);
+		stage.setMinHeight(560);
+		stage.setMinWidth(900);
 
 		stage.setTitle("Library - previous");
 

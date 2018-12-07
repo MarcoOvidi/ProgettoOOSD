@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.util.List;
 import java.util.TreeMap;
 
+import controller.EditUserController;
 import controller.LocalSession;
 import controller.LoginController;
 import dao.DatabaseException;
@@ -47,6 +48,14 @@ public class Container {
 		topbar.getTabs().add(tab);
 		if (link.equals(SceneController.getSceneName())) {
 			topbar.getSelectionModel().select(tab);
+		}
+		else if(label.equals("My Profile") && SceneController.getSceneName().equals("editUserProfile") &&
+				EditUserController.isSelfEditing()) {
+				topbar.getSelectionModel().select(tab);
+		}
+		else if(label.equals("Admin") && SceneController.getSceneName().equals("editUserProfile") &&
+				!EditUserController.isSelfEditing()) {
+				topbar.getSelectionModel().select(tab);
 		}
 			
 	}

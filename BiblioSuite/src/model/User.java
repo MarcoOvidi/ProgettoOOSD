@@ -131,4 +131,28 @@ public class User {
 				+ ", permissions=" + permissions + ", transcriptionProjects=" + transcriptionProjects
 				+ ", scanningProjects=" + scanningProjects + ", bookMarks=" + bookMarks + ", active=" + active + "]";
 	}	
+	
+	public boolean isUploader() {
+		return permissions.getUploadPerm();
+	}
+	
+	public boolean isTranscriber() {
+		return permissions.getModifyTranscriptionPerm();
+	}
+	
+	public boolean isUploadReviser() {
+		return permissions.getReviewPagePerm();
+	}
+
+	public boolean isTranscriptionReviser() {
+		return permissions.getReviewTranscriptionPerm();
+	}
+
+	public boolean isCoordinator() {
+		return permissions.isCoordinator();
+	}
+	
+	public boolean isAdmin() {
+		return permissions.isCoordinator();
+	}
 }

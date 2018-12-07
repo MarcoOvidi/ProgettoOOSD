@@ -90,4 +90,12 @@ public class EditUserController {
 	public static void startEditing() {
 		SceneController.loadScene("editUserProfile");
 	}
+	
+	public static boolean isSelfEditing() {
+		if (editingUser == null || toEditUser == null)
+			return false;
+		else {
+			return (editingUser.equals(toEditUser.getID()));
+		}
+	}
 }
