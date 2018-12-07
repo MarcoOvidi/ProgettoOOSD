@@ -41,8 +41,8 @@
 		<HBox BorderPane.alignment="CENTER">
 			<!-- <ScrollPane fx:id="pageListScroll" prefHeight="800.0"> <content> 
 				<VBox fx:id="pageList" prefHeight="200.0" /> </content> </ScrollPane> -->
-			<ListView fx:id="pageList" />
-			<StackPane>
+			<ListView fx:id="pageList" prefWidth="180.0"/>
+			<StackPane prefWidth="400.0">
 				<children>
 					<ImageView fx:id="currentPage" />
 					<Label fx:id="message" />
