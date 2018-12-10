@@ -13,6 +13,11 @@ import vo.UUIDUser;
 
 public class AdministrationController {
 
+	/**
+	 * Carica tutte le richieste inviate dagli utenti agli admin 
+	 * @param i i=0 request not read ; i=1 read request
+	 * @return LinkedList<Request> richieste presenti nel DB
+	 */
 	public static LinkedList<Request> getRequest(Integer i){
 		LinkedList<Request> req = null;
 		try {
