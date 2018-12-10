@@ -215,6 +215,7 @@ public class ManageProject {
 		TranscriptionProjectController.loadCoordinatedTranscriptionPRoject();
 
 		TreeMap<UUIDDocument, DocumentRow> document = new TreeMap<UUIDDocument, DocumentRow>();
+		// TODO credo che tutto ciò vada nel controller
 
 		// TODO credo che tutto ciò vada nel controller
 		for (Entry<UUIDScanningWorkProject, String[]> entry : ScanningProjectController.getCoordinatedScanningProject()
@@ -223,9 +224,9 @@ public class ManageProject {
 			// TODO chiamare tramite controller
 			String format = "";
 			if (array[1].equalsIgnoreCase("true"))
-				format = "\u2714";
+				format = "\u2714 Complete";
 			else if (array[1].equals("false"))
-				format = "\u2718";
+				format = "\u2718 In progress";
 			DocumentRow dr = new DocumentRow(array[0], format, entry.getKey());
 
 			document.put(ScanningWorkProjectQuerySet.loadUUIDDocument(entry.getKey()), dr);
@@ -240,9 +241,9 @@ public class ManageProject {
 			if (document.containsKey(TranscriptionWorkProjectQuerySet.loadUUIDDocument(entry.getKey()))) {
 				String format = "";
 				if (array[1].equalsIgnoreCase("true"))
-					format = "\u2714";
+					format = "\u2714 Complete";
 				else if (array[1].equals("false"))
-					format = "\u2718";
+					format = "\u2718 In progress";
 
 				DocumentRow dr = document.get(TranscriptionWorkProjectQuerySet.loadUUIDDocument(entry.getKey()));
 				dr.setTranscription_PRJ(format);
@@ -251,9 +252,9 @@ public class ManageProject {
 			} else {
 				String format = "";
 				if (array[1].equalsIgnoreCase("true"))
-					format = "\u2714";
+					format = "\u2714 Complete";
 				else if (array[1].equals("false"))
-					format = "\u2718";
+					format = "\u2718 In progress";
 				DocumentRow d = new DocumentRow(array[0], format, entry.getKey());
 				document.put(TranscriptionWorkProjectQuerySet.loadUUIDDocument(entry.getKey()), d);
 			}
@@ -263,22 +264,22 @@ public class ManageProject {
 			if (entry.getValue().getIdTPrj() == null)
 				if (TranscriptionWorkProjectQuerySet.ifExistTranscriptionProject(entry.getKey())) {
 					DocumentRow transcription = entry.getValue();
-					transcription.setTranscription_PRJ("Not allowed");
+					transcription.setTranscription_PRJ("\u2718 Not allowed");
 					entry.setValue(transcription);
 				} else {
 					DocumentRow transcription = entry.getValue();
-					transcription.setTranscription_PRJ("\u2204");
+					transcription.setTranscription_PRJ("\u2204 Doesn't exist");
 					entry.setValue(transcription);
 				}
 
 			if (entry.getValue().getIdSPrj() == null)
 				if (ScanningWorkProjectQuerySet.ifExistScanningProject(entry.getKey())) {
 					DocumentRow scanning = entry.getValue();
-					scanning.setScanning_PRJ("Not allowed");
+					scanning.setScanning_PRJ("\u2718 Not allowed");
 					entry.setValue(scanning);
 				} else {
 					DocumentRow scanning = entry.getValue();
-					scanning.setScanning_PRJ("\u2204");
+					scanning.setScanning_PRJ("\u2204 !!!");
 					entry.setValue(scanning);
 				}
 
