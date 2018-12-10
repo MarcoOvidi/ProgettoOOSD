@@ -16,35 +16,44 @@
          <children>
             <VBox prefHeight="690.0" prefWidth="154.0">
                <children>
-                  <JFXButton fx:id="newsButton" contentDisplay="TOP" graphicTextGap="8.0" minHeight="138.0" minWidth="138.0" text="News">
+                  <JFXButton fx:id="newsButton" contentDisplay="TOP" graphicTextGap="8.0" minHeight="120.0" minWidth="138.0" text="News">
                      <graphic>
-                        <ImageView fitHeight="65.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true">
                            <image>
-                              <Image url="@../../resources/favicon/256/feed.png" />
+                              <Image url="@../../resources/favicon/128/feed.png" />
                            </image></ImageView>
                      </graphic>
                   </JFXButton>
-                  <JFXButton fx:id="bookMarks" contentDisplay="TOP" graphicTextGap="8.0" minHeight="138.0" minWidth="138.0" text="BookMarks">
+                  <JFXButton fx:id="bookMarks" contentDisplay="TOP" graphicTextGap="8.0" minHeight="120.0" minWidth="138.0" text="BookMarks">
                      <graphic>
-                        <ImageView fitHeight="65.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true">
                            <image>
-                              <Image url="@../../resources/favicon/256/bookmark-o.png" />
+                              <Image url="@../../resources/favicon/128/bookmark-o.png" />
                            </image></ImageView>
                      </graphic>
                   </JFXButton>
-                  <JFXButton fx:id="categories" contentDisplay="TOP" graphicTextGap="8.0" minHeight="138.0" minWidth="138.0" text="Categories">
+                  <JFXButton fx:id="categories" contentDisplay="TOP" graphicTextGap="8.0" minHeight="120.0" minWidth="138.0" text="Categories">
                      <graphic>
-                        <ImageView fitHeight="65.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../../resources/favicon/128/folder-open-o.png" />
+                           </image></ImageView>
                      </graphic>
                   </JFXButton>
-                  <JFXButton fx:id="scanningProjects" contentDisplay="TOP" graphicTextGap="8.0" minHeight="138.0" minWidth="138.0" text="Scanning Project">
+                  <JFXButton fx:id="scanningProjects" contentDisplay="TOP" graphicTextGap="8.0" minHeight="120.0" minWidth="138.0" text="Scanning Project">
                      <graphic>
-                        <ImageView fitHeight="65.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../../resources/favicon/128/file-photo-o.png" />
+                           </image></ImageView>
                      </graphic>
                   </JFXButton>
-                  <JFXButton fx:id="transcriptionProjects" contentDisplay="TOP" graphicTextGap="8.0" minHeight="138.0" minWidth="138.0" text="Transcription Project">
+                  <JFXButton fx:id="transcriptionProjects" contentDisplay="TOP" graphicTextGap="8.0" minHeight="120.0" minWidth="138.0" text="Transcription Project">
                      <graphic>
-                        <ImageView fitHeight="65.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../../resources/favicon/128/pencil-square-o.png" />
+                           </image></ImageView>
                      </graphic>
                   </JFXButton>
                </children>
