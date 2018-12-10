@@ -1,46 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDrawer?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Home">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Home2">
    <top>
       <HBox prefHeight="100.0" prefWidth="1142.0" BorderPane.alignment="CENTER">
          <children>
             <VBox prefHeight="690.0" prefWidth="154.0">
                <children>
-                  <JFXButton contentDisplay="TOP" graphicTextGap="8.0" minHeight="138.0" minWidth="138.0" text="News">
+                  <JFXButton fx:id="newsButton" contentDisplay="TOP" graphicTextGap="8.0" minHeight="138.0" minWidth="138.0" text="News">
                      <graphic>
                         <ImageView fitHeight="65.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
                      </graphic>
                   </JFXButton>
-                  <JFXButton contentDisplay="TOP" graphicTextGap="8.0" minHeight="138.0" minWidth="138.0" text="BookMarks">
+                  <JFXButton fx:id="bookMarks" contentDisplay="TOP" graphicTextGap="8.0" minHeight="138.0" minWidth="138.0" text="BookMarks">
                      <graphic>
                         <ImageView fitHeight="65.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
                      </graphic>
                   </JFXButton>
-                  <JFXButton contentDisplay="TOP" graphicTextGap="8.0" minHeight="138.0" minWidth="138.0" text="Collections">
+                  <JFXButton fx:id="categories" contentDisplay="TOP" graphicTextGap="8.0" minHeight="138.0" minWidth="138.0" text="Categories">
                      <graphic>
                         <ImageView fitHeight="65.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
                      </graphic>
                   </JFXButton>
-                  <JFXButton contentDisplay="TOP" graphicTextGap="8.0" minHeight="138.0" minWidth="138.0" text="Scanning Project">
+                  <JFXButton fx:id="scanningProjects" contentDisplay="TOP" graphicTextGap="8.0" minHeight="138.0" minWidth="138.0" text="Scanning Project">
                      <graphic>
                         <ImageView fitHeight="65.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
                      </graphic>
                   </JFXButton>
-                  <JFXButton contentDisplay="TOP" graphicTextGap="8.0" minHeight="138.0" minWidth="138.0" text="Transcription Project">
+                  <JFXButton fx:id="transcriptionProjects" contentDisplay="TOP" graphicTextGap="8.0" minHeight="138.0" minWidth="138.0" text="Transcription Project">
                      <graphic>
                         <ImageView fitHeight="65.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
                      </graphic>
                   </JFXButton>
                </children>
             </VBox>
-            <AnchorPane prefWidth="1142.0" />
+            <AnchorPane prefWidth="1142.0">
+               <children>
+                  <JFXTextField layoutX="280.0" layoutY="360.0" prefHeight="16.0" prefWidth="450.0" />
+                  <JFXDrawer direction="RIGHT" prefHeight="690.0" prefWidth="1142.0" />
+               </children>
+            </AnchorPane>
          </children>
       </HBox>
    </top>
