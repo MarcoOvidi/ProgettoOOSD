@@ -70,7 +70,7 @@ public class SceneController extends Application {
 			}
 		}
 
-		//scene.getStylesheets().add(new RootCss().getCss());
+		scene.getStylesheets().add(new RootCss().getCss());
 		stage.setResizable(true);
 
 		// stage.setFullScreen(true);
