@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXLabel?>
+<?import javafx.scene.control.Label?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXCheckBox?>
@@ -20,26 +20,26 @@
 			<children>
 				<HBox spacing="70" layoutX="49.0" layoutY="20">
 					<VBox spacing="20" prefWidth="240.0">
-						<JFXLabel text="My profile" textFill="#aaaaaa">
+						<Label text="My profile" textFill="#aaaaaa">
 							<font>
 								<Font size="28.0" />
 							</font>
-						</JFXLabel>
+						</Label>
 						<HBox>
-							<JFXLabel text="Username: " style="-fx-text-fill: #f87e1a" />
-							<JFXLabel fx:id="username" />
+							<Label text="Username: " style="-fx-text-fill: #f87e1a" />
+							<Label fx:id="username" />
 						</HBox>
 						<HBox>
-							<JFXLabel text="Name: " style="-fx-text-fill: #f87e1a" />
-							<JFXLabel fx:id="name" />
+							<Label text="Name: " style="-fx-text-fill: #f87e1a" />
+							<Label fx:id="name" />
 						</HBox>
 						<HBox>
-							<JFXLabel text="Surname: " style="-fx-text-fill: #f87e1a" />
-							<JFXLabel fx:id="surname" />
+							<Label text="Surname: " style="-fx-text-fill: #f87e1a" />
+							<Label fx:id="surname" />
 						</HBox>
 						<HBox>
-							<JFXLabel text="Email: " style="-fx-text-fill: #f87e1a" />
-							<JFXLabel fx:id="email" />
+							<Label text="Email: " style="-fx-text-fill: #f87e1a" />
+							<Label fx:id="email" />
 						</HBox>
 						<HBox />
 						<HBox />
@@ -47,7 +47,7 @@
 
 					</VBox>
 					<VBox spacing="20">
-						<JFXLabel text="permissions: " />
+						<Label text="permissions: " />
 						<JFXCheckBox disable="true" fx:id="download" text="Download" />
 						<JFXCheckBox disable="true" fx:id="publishDocument"
 							text="PublishDocument" />

@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
-	minHeight="560" minWidth="900"
+	minHeight="720" minWidth="1280"
 	xmlns="http://javafx.com/javafx/9.0.1"
 	xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Container">
 	<top>

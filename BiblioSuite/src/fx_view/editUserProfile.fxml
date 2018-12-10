@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXLabel?>
+<?import javafx.scene.control.Label?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import com.jfoenix.controls.JFXMenuButton?>
+<?import javafx.scene.control.MenuButton?>
 <?import com.jfoenix.controls.JFXCheckBox?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -23,29 +23,29 @@
 			<children>
 				<HBox spacing="70" layoutX="49.0" layoutY="20.0">
 					<VBox spacing="20" prefWidth="240.0">
-						<JFXLabel text="Edit profile" styleClass="title">
+						<Label text="Edit profile" styleClass="title">
 							<font>
 								<Font size="28.0" />
 							</font>
-						</JFXLabel>
+						</Label>
 						<HBox>
-							<JFXLabel text="Username: " styleClass="highlight2" />
-							<JFXLabel fx:id="username" />
+							<Label text="Username: " styleClass="highlight2" />
+							<Label fx:id="username" />
 						</HBox>
 						<VBox>
-							<JFXLabel text="Name: " styleClass="highlight2" />
+							<Label text="Name: " styleClass="highlight2" />
 							<JFXTextField fx:id="name" />
 						</VBox>
 						<VBox>
-							<JFXLabel text="Surname: " styleClass="highlight2" />
+							<Label text="Surname: " styleClass="highlight2" />
 							<JFXTextField fx:id="surname" />
 						</VBox>
 						<VBox>
-							<JFXLabel text="Email: " styleClass="highlight2" />
+							<Label text="Email: " styleClass="highlight2" />
 							<JFXTextField fx:id="email" />
 						</VBox>
 						<HBox />
-						<JFXMenuButton fx:id="roleList" layoutX="326.0"
+						<MenuButton fx:id="roleList" layoutX="326.0"
 							layoutY="78.0" prefWidth="240.0" />
 						<HBox />
 						<JFXButton fx:id="done" text="Done" prefWidth="240.0" />
@@ -53,26 +53,26 @@
 
 					</VBox>
 					<VBox spacing="20">
-						<JFXLabel text="permissions: " />
-						<JFXMenuButton disable="true" fx:id="download" text="Download" />
-						<JFXMenuButton disable="true" fx:id="publishDocument"
+						<Label text="permissions: " />
+						<JFXCheckBox disable="true" fx:id="download" text="Download" />
+						<JFXCheckBox disable="true" fx:id="publishDocument"
 							text="PublishDocument" />
-						<JFXMenuButton disable="true" fx:id="editMetaData"
+						<JFXCheckBox disable="true" fx:id="editMetaData"
 							text="EditMetaData" />
-						<JFXMenuButton disable="true" fx:id="addNewProject"
+						<JFXCheckBox disable="true" fx:id="addNewProject"
 							text="AddNewProject" />
-						<JFXMenuButton disable="true" fx:id="assignDigitalizationTask"
+						<JFXCheckBox disable="true" fx:id="assignDigitalizationTask"
 							text="AssignDigitalizationTask" />
-						<JFXMenuButton disable="true" fx:id="upload" text="Upload" />
-						<JFXMenuButton disable="true" fx:id="requestTranscriptionTask"
+						<JFXCheckBox disable="true" fx:id="upload" text="Upload" />
+						<JFXCheckBox disable="true" fx:id="requestTranscriptionTask"
 							text="RequestTranscriptionTask" />
-						<JFXMenuButton disable="true" fx:id="assignTranscriptionTask"
+						<JFXCheckBox disable="true" fx:id="assignTranscriptionTask"
 							text="AssignTranscriptionTask" />
-						<JFXMenuButton disable="true" fx:id="modifyTranscription"
+						<JFXCheckBox disable="true" fx:id="modifyTranscription"
 							text="ModifyTranscription" />
-						<JFXMenuButton disable="true" fx:id="reviewPage"
+						<JFXCheckBox disable="true" fx:id="reviewPage"
 							text="ReviewPage" />
-						<JFXMenuButton disable="true" fx:id="reviewTranscription"
+						<JFXCheckBox disable="true" fx:id="reviewTranscription"
 							text="ReviewTranscription" />
 
 					</VBox>

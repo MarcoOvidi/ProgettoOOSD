@@ -8,7 +8,7 @@ import vo.UUIDDocument;
 
 public class SearchController {
 
-	public static LinkedList<UUIDDocument> searchByTitleAuthor(String expr) {
+	public static LinkedList<UUIDDocument> searchByAuthorTitle(String expr) {
 
 		LinkedList<UUIDDocument> documents = null;
 

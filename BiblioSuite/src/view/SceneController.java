@@ -70,13 +70,13 @@ public class SceneController extends Application {
 			}
 		}
 
-		//scene.getStylesheets().add(new RootCss().getCss());
+		scene.getStylesheets().add(new RootCss().getCss());
 		stage.setResizable(true);
 
 		// stage.setFullScreen(true);
 
-		stage.setMinHeight(560);
-		stage.setMinWidth(900);
+		stage.setMinHeight(720);
+		stage.setMinWidth(1280);
 
 		stage.setTitle("Library - " + name);
 
