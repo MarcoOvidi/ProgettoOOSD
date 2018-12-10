@@ -17,6 +17,7 @@ public class PageTranscriptionController {
 	private static LinkedList<Page> currentDocumentPages;
 	private static UUIDDocument currentDocument;
 	private static LinkedList<Page> transcriptionLog;
+	//private static int toEditPageNumber;
 	
 	
 	public static void loadTranscriptionLog(UUIDDocument doc) {
@@ -89,10 +90,37 @@ public class PageTranscriptionController {
 		}
 		if(doc != null) {
 			LocalSession.setOpenedDocumet(doc);
+			//PageTranscriptionController.setToEditPageNumber(0);
 			SceneController.loadScene("pageTranscription", false);
 		}
 		
 	}
+	
+	/*public static void transcribeDocument(UUIDDocument document, int page) throws LoadException {
+		Document doc = null;
+		try{
+			//doc = DocumentQuerySet.loadDocument(document);
+			//FIXME potrebbe causare problemi questa cosa?
+			doc = DocumentQuerySet.loadDocumentToView(document);
+		}catch(DatabaseException e) {
+			e.getMessage();
+			e.printStackTrace();
+		}
+		if(doc != null) {
+			LocalSession.setOpenedDocumet(doc);
+			PageTranscriptionController.setToEditPageNumber(page);
+			SceneController.loadScene("pageTranscription", false);
+		}
+		
+	}
+
+	public static int getToEditPageNumber() {
+		return toEditPageNumber;
+	}
+
+	public static void setToEditPageNumber(int toEditPageNumber) {
+		PageTranscriptionController.toEditPageNumber = toEditPageNumber;
+	}*/
 	
 	
 	

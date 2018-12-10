@@ -38,7 +38,7 @@ public class Container {
 		map.put("My Profile", "userProfile");
 		map.put("Manage Projects", "manageProject");
 		map.put("Upload", "loadScan");
-		map.put("Transcription", "");
+		map.put("Transcription", "transcription");
 		map.put("Review", "scanRevisor");
 		map.put("Admin", "adminPanel");
 	}
@@ -57,7 +57,6 @@ public class Container {
 				!EditUserController.isSelfEditing()) {
 				topbar.getSelectionModel().select(tab);
 		}
-			
 	}
 
 	public void initLogoutLink() {
@@ -93,7 +92,9 @@ public class Container {
 		topbar.setOnMouseClicked(event -> {
 			SceneController.loadScene(map.get(topbar.getSelectionModel().getSelectedItem().getText()));
 		});
-
+		
+		topbar.setTabMinWidth(100);
+		
 		initLogoutLink();
 		
 		/*for(Tab tab : topbar.getTabs()) {

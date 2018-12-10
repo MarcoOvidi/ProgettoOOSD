@@ -126,41 +126,44 @@ PasswordField:hover{
 }
 
 .tab{
-    -fx-background-insets: 0.0 1.0 0.0 1.0,0.0,0.0;
+    /*-fx-background-insets: 0.0 1.0 0.0 1.0,0.0,0.0;*/
     
     -fx-pref-height: 50.0;
+    -fx-border-color:#aaa0;
+
+    -fx-border-width: 0.0px 0.0px 2.0px 0.0px;
 }
 .tab-pane .tab
 {
     -fx-background-color: #4440;
-
 }
 
 .tab-pane .tab:selected
 {
-    -fx-background-color: #2220;
+    -fx-background-color: #222f;
 }
 
 .tab .tab-label { 
     -fx-alignment: CENTER;
     -fx-text-fill: #aaa;
     -fx-font-size: 16.0px;
-    
-    -fx-border-color:#aaa0;
+}
 
-    -fx-border-width: 0.0px 0.0px 2.0px 0.0px;
+.tab:hover {
+    -fx-border-color:#ccc;
 }
 
 .tab:hover .tab-label { 
     -fx-alignment: CENTER;
     -fx-text-fill: #ccc;
-    -fx-border-color:#ccc;
 }
 
+.tab:selected {
+    -fx-border-color:#e86e0a;
+}
 .tab:selected .tab-label { 
     -fx-alignment: CENTER;
     -fx-text-fill: #fff;
-    -fx-border-color:#e86e0a;
 }
 	
 .tab-pane>*.tab-header-area>*.tab-header-background {
@@ -342,7 +345,10 @@ TextArea:focused {
 }
 
 #topbar{
-	-fx-background-color: #111;
+	-fx-background-color: #333;
+	
+    -fx-border-width: 0.0px 0.0px 1.0px 0.0px;
+    -fx-border-color:#aaaa;
 }
 
 

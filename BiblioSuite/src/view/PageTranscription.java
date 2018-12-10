@@ -21,13 +21,15 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import model.Page;
-
+import vo.TEItext;
 
 public class PageTranscription {
 	public static boolean isEmpty = false;
 
 	@FXML
 	private Button backButton;
+	@FXML
+	private Button saveButton;
 
 	@FXML
 	private ListView<VBox> pageList;
@@ -61,14 +63,15 @@ public class PageTranscription {
 		loadPageList();
 		initBackButton();
 		if (isEmpty) {
-			message.setText("Empty Document");
+			message.setText("Empty Document?!");
 			transcription.setVisible(false);
 			pageList.setVisible(false);
 			next.setVisible(false);
 			previous.setVisible(false);
 			top.setVisible(false);
 			bottom.setVisible(false);
-			isEmpty=false; // for when opening the next document
+			message.toFront();
+			isEmpty = false; // for when opening the next document
 			return;
 		}
 		initNavigationButton();
@@ -124,6 +127,7 @@ public class PageTranscription {
 			vbox.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 				number.setText(page.getPageNumber().toString());
 				viewPage(pageIcon);
+				updateTranscription(vbox);
 				event.consume();
 			});
 
@@ -175,6 +179,7 @@ public class PageTranscription {
 		number.setText(((Label) pageList.getSelectionModel().getSelectedItem().getChildren().get(1)).getText());
 		pageList.scrollTo(pageList.getSelectionModel().getSelectedIndex());
 		updatePage();
+		updateTranscription();
 	}
 
 	private void updatePage() {
@@ -183,6 +188,32 @@ public class PageTranscription {
 
 	private void updatePage(int index) {
 		viewPage(((ImageView) pageList.getItems().get(index).getChildren().get(0)).getImage());
+		updateTranscription(index);
+	}
+
+	private void updateTranscription() {
+		//int index = Integer	.parseInt(((Label) pageList.getSelectionModel().getSelectedItem().getChildren().get(1)).getText());
+		int index = pageList.getSelectionModel().getSelectedIndex();
+		setTranscriptionText(LocalSession.getOpenedDocumet().getPageList().get(index).getTranscription().getText());
+	}
+
+	/*
+	 * @param index of the page in the pageList of which to load transcription
+	 */
+	private void updateTranscription(int index) {
+		index = Integer.parseInt(((Label) pageList.getItems().get(index).getChildren().get(1)).getText());
+		setTranscriptionText(LocalSession.getOpenedDocumet().getPageList().get(index-1).getTranscription().getText());
+	}
+
+	private void updateTranscription(VBox elem) {
+		updateTranscription(pageList.getItems().indexOf(elem));
+	}
+
+	private void setTranscriptionText(TEItext teiText) {
+		transcription.clear();
+		if (teiText.getText() != null) {
+			transcription.replaceText(0, 0, teiText.getText());
+		}
 	}
 
 	private void initKeyboardNavigation() {
@@ -268,17 +299,17 @@ public class PageTranscription {
 		pageList.getSelectionModel().selectLast();
 		updatePageNumber();
 	}
-	
-	
-	private void initTranscription() {
-        transcription.setParagraphGraphicFactory(LineNumberFactory.get(transcription));
 
-        transcription.textProperty().addListener((obs, oldText, newText) -> {
-            transcription.setStyleSpans(0, XmlSyntaxHighlight.computeHighlighting(newText));
-        });
-        transcription.replaceText(0, 0, "TRASCRIZIONE:\n\nSALVE, SONO BLENDER.\nPREGO, INSERIRE FLOPPINO\n\n\n(ancora non funziona)");
-        
-        
+	private void initTranscription() {
+		transcription.setParagraphGraphicFactory(LineNumberFactory.get(transcription));
+
+		transcription.textProperty().addListener((obs, oldText, newText) -> {
+			transcription.setStyleSpans(0, XmlSyntaxHighlight.computeHighlighting(newText));
+		});
+
+		transcription.setEditable(true);
+		transcription.setWrapText(true);
+		transcription.setFocusTraversable(false);
 	}
 
 }

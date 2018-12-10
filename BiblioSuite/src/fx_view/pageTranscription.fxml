@@ -11,6 +11,7 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.ImageView?>
 <?import org.fxmisc.richtext.CodeArea?>
+<?import javafx.scene.control.ToolBar?>
 
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
@@ -19,11 +20,25 @@
 	xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="view.PageTranscription">
 	<top>
-		<Button layoutX="0.0" layoutY="0.0" mnemonicParsing="false"
-			prefHeight="250.0" prefWidth="150.0"
-			text="THE MAGICAL INVISIBLE BUTTON">
-		</Button>
+		<AnchorPane prefHeight="40.0" layoutX="0.0" layoutY="0.0"
+			AnchorPane.rightAnchor="0.0">
+			<children>
+			<ToolBar AnchorPane.leftAnchor="0.0" style="-fx-background-color: #00000000">
+				<Button fx:id="backButton"
+					mnemonicParsing="false" prefHeight="24.0" prefWidth="170.0"
+					text="⬅   Back" >
+				</Button>
+				</ToolBar>
+				<ToolBar AnchorPane.RightAnchor="0.0" style="-fx-background-color: #00000000">
+				<Button fx:id="saveButton"
+					mnemonicParsing="false" prefHeight="24.0" prefWidth="170.0"
+					text="Save" >
+				</Button>
+				</ToolBar>
+			</children>
+		</AnchorPane>
 	</top>
+
 	<left>
 		<HBox BorderPane.alignment="CENTER">
 			<!-- <ScrollPane fx:id="pageListScroll" prefHeight="800.0"> <content> 

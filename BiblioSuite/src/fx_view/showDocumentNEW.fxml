@@ -19,10 +19,6 @@
 	xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="view.ShowDocumentNEW">
 	<top>
-		<Button layoutX="0.0" layoutY="0.0" mnemonicParsing="false"
-			prefHeight="250.0" prefWidth="150.0"
-			text="THE MAGICAL INVISIBLE BUTTON">
-		</Button>
 		<AnchorPane prefHeight="40.0">
 			<children>
 				<AnchorPane layoutX="0.0" layoutY="0.0"

@@ -88,7 +88,7 @@ public class SceneController extends Application {
 
 	public static void loadLogin() {
 		loadScene("login", false);
-		/*try {
+		/*try {00
 			previousScene = scene;
 			BorderPane root = (BorderPane) FXMLLoader.load(new Object() {
 			}.getClass().getResource("/fx_view/login.fxml"));

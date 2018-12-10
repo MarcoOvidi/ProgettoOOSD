@@ -16,11 +16,6 @@
 	<top>
 		<AnchorPane prefHeight="800.0" prefWidth="1400.0" BorderPane.alignment="CENTER">
 			<children>
-				<Label fx:id="loadScanTitle" layoutX="41.0" layoutY="725.0" text="Load scan:" styleClass="title">
-					<font>
-						<Font size="28.0" />
-					</font>
-				</Label>
 				<ScrollPane layoutX="41.0" layoutY="173.0" prefHeight="530.0" prefWidth="1182.0">
 					<content>
 						<VBox fx:id="scanList" prefWidth="1035.0">

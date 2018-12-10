@@ -1,30 +1,25 @@
 package view;
 
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.Map.Entry;
 import java.util.function.Predicate;
 
 import controller.LocalSession;
 import controller.PageScanController;
+import controller.PageTranscriptionController;
 import dao.DatabaseException;
-import dao.ScanningWorkProjectQuerySet;
+import dao.TranscriptionWorkProjectQuerySet;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
+import javafx.fxml.LoadException;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -33,9 +28,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
-import model.Page;
 import vo.UUIDDocument;
-import vo.UUIDScanningWorkProject;
+import vo.UUIDTranscriptionWorkProject;
 import vo.view.Rows;
 
 public class Transcription {
@@ -77,9 +71,6 @@ public class Transcription {
 
 	@FXML
 	private Button clearFilters;
-	
-	@FXML
-	private Label loadScanTitle;
 
 	private UUIDDocument currentDocument;
 	
@@ -89,14 +80,7 @@ public class Transcription {
 		initLoadDocument();
 		initfilterButtons();
 		initPageTable();
-		initLoadScanTitle();
 		prepareDocument();
-	}
-
-	
-	private void initLoadScanTitle(){
-		loadScanTitle.setVisible(false);
-		
 	}
 	
 	
@@ -116,10 +100,10 @@ public class Transcription {
 		number.setSortable(false); // Sorting as Strings. Not good. Nope.
 	}
 
-	public static void setToOpenDocumentFromScanningProject(UUIDScanningWorkProject swp)
+	public static void setToOpenDocumentFromTranscriptionProject(UUIDTranscriptionWorkProject swp)
 			throws NullPointerException, DatabaseException {
 		// FIXME andrebbe incapsulato in un metodo del controller
-		Transcription.toOpenDocument = ScanningWorkProjectQuerySet.loadUUIDDocument(swp);
+		Transcription.toOpenDocument = TranscriptionWorkProjectQuerySet.loadUUIDDocument(swp);
 	}
 
 	public static void setToOpenDocument(UUIDDocument toOpenDocument) {
@@ -181,8 +165,7 @@ public class Transcription {
 		documentList.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observableValue, Number entry, Number entryNew) {
-				loadScanTitle.setVisible(true);
-			  currentDocument=documentList.getItems().get((Integer) entryNew).getKey();
+				currentDocument=documentList.getItems().get((Integer) entryNew).getKey();
 				loadDocument(currentDocument);
 			}
 		});
@@ -194,6 +177,15 @@ public class Transcription {
 	}
 
 	public void loadDocument(UUIDDocument document) { // FIXME tutto da testare
+		
+		try {
+			PageTranscriptionController.transcribeDocument(document);
+		} catch (LoadException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		/*
 		PageScanController.loadNewDocumentPages(document);
 
 		LinkedList<Page> pL = PageScanController.getCurrentDocumentPages();
@@ -246,14 +238,7 @@ public class Transcription {
 				}
 				for (Page p : pL) {
 					if (p.getPageNumber() == Integer.parseInt(event.getNewValue())) {
-						/*
-						 * if (p.getScan().getValidated()) { Alert alt = new
-						 * Alert(AlertType.INFORMATION); alt.setTitle("Not Valid Operation");
-						 * alt.setHeaderText("Attention");
-						 * alt.setContentText("Cannot change number to a validated Page!"); alt.show();
-						 * event.getRowValue().setNumber(event.getOldValue()); pageTable.refresh();
-						 * return; } else {
-						 */
+						]
 						event.getRowValue().setNumber(event.getOldValue());
 						pageTable.refresh();
 						Alert alt = new Alert(AlertType.INFORMATION);
@@ -268,7 +253,7 @@ public class Transcription {
 				}
 				PageScanController.updatePageNumber(event.getRowValue().getId(), Integer.parseInt(event.getNewValue()));
 			}
-		});
+		});*/
 	}
 
 	@FXML
