@@ -4,8 +4,12 @@ import java.util.LinkedList;
 
 import dao.DatabaseException;
 import dao.DigitalizerQuerySet;
+import dao.DocumentQuerySet;
 import dao.TranscriberQuerySet;
+import javafx.fxml.LoadException;
+import model.Document;
 import model.Page;
+import view.SceneController;
 import vo.UUIDDocument;
 
 public class PageTranscriptionController {
@@ -73,6 +77,22 @@ public class PageTranscriptionController {
 		}
 	}
 	
+	public static void transcribeDocument(UUIDDocument document) throws LoadException {
+		Document doc = null;
+		try{
+			//doc = DocumentQuerySet.loadDocument(document);
+			//FIXME potrebbe causare problemi questa cosa?
+			doc = DocumentQuerySet.loadDocumentToView(document);
+		}catch(DatabaseException e) {
+			e.getMessage();
+			e.printStackTrace();
+		}
+		if(doc != null) {
+			LocalSession.setOpenedDocumet(doc);
+			SceneController.loadScene("pageTranscription", false);
+		}
+		
+	}
 	
 	
 	
