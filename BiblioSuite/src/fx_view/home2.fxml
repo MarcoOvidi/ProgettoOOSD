@@ -26,7 +26,10 @@
                   </JFXButton>
                   <JFXButton fx:id="bookMarks" contentDisplay="TOP" graphicTextGap="8.0" minHeight="138.0" minWidth="138.0" text="BookMarks">
                      <graphic>
-                        <ImageView fitHeight="65.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/favicon/256/bookmark-o.png" />
+                           </image></ImageView>
                      </graphic>
                   </JFXButton>
                   <JFXButton fx:id="categories" contentDisplay="TOP" graphicTextGap="8.0" minHeight="138.0" minWidth="138.0" text="Categories">
