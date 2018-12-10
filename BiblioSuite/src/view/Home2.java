@@ -1,5 +1,6 @@
 package view;
 
+import java.io.File;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -35,6 +36,7 @@ import vo.UUIDDocument;
 import vo.UUIDDocumentCollection;
 import vo.UUIDScanningWorkProject;
 import vo.view.DocumentRow;
+
 
 public class Home2 {
 
@@ -77,7 +79,9 @@ public class Home2 {
 
 	@FXML
 	private JFXDrawer drawer;
-	// _________
+	
+	
+     // _________
 
 	@FXML
 	public void initialize() throws DatabaseException, ParseException {

@@ -12,9 +12,10 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import com.jfoenix.controls.JFXButton?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
-	minHeight="560" minWidth="900"
+	minHeight="720" minWidth="1280"
 	xmlns="http://javafx.com/javafx/9.0.1"
 	xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Container">
 	<top>
@@ -22,7 +23,7 @@
 			<children>
 				<TabPane fx:id="topbar" AnchorPane.leftAnchor="0.0"
 					AnchorPane.rightAnchor="0.0" tabClosingPolicy="UNAVAILABLE" />
-				<Button fx:id="logout" mnemonicParsing="false" text="Logout"
+				<JFXButton fx:id="logout" mnemonicParsing="false" text="Logout"
 					AnchorPane.rightAnchor="10.0" layoutY="2.5" />
 			</children>
 		</AnchorPane>

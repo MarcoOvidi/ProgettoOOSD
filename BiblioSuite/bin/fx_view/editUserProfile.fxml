@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.CheckBox?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
@@ -34,45 +34,45 @@
 						</HBox>
 						<VBox>
 							<Label text="Name: " styleClass="highlight2" />
-							<TextField fx:id="name" />
+							<JFXTextField fx:id="name" />
 						</VBox>
 						<VBox>
 							<Label text="Surname: " styleClass="highlight2" />
-							<TextField fx:id="surname" />
+							<JFXTextField fx:id="surname" />
 						</VBox>
 						<VBox>
 							<Label text="Email: " styleClass="highlight2" />
-							<TextField fx:id="email" />
+							<JFXTextField fx:id="email" />
 						</VBox>
 						<HBox />
 						<MenuButton fx:id="roleList" layoutX="326.0"
 							layoutY="78.0" prefWidth="240.0" />
 						<HBox />
-						<Button fx:id="done" text="Done" prefWidth="240.0" />
-						<Button fx:id="discard" text="Discard" prefWidth="240.0" />
+						<JFXButton fx:id="done" text="Done" prefWidth="240.0" />
+						<JFXButton fx:id="discard" text="Discard" prefWidth="240.0" />
 
 					</VBox>
 					<VBox spacing="20">
 						<Label text="permissions: " />
-						<CheckBox disable="true" fx:id="download" text="Download" />
-						<CheckBox disable="true" fx:id="publishDocument"
+						<JFXCheckBox disable="true" fx:id="download" text="Download" />
+						<JFXCheckBox disable="true" fx:id="publishDocument"
 							text="PublishDocument" />
-						<CheckBox disable="true" fx:id="editMetaData"
+						<JFXCheckBox disable="true" fx:id="editMetaData"
 							text="EditMetaData" />
-						<CheckBox disable="true" fx:id="addNewProject"
+						<JFXCheckBox disable="true" fx:id="addNewProject"
 							text="AddNewProject" />
-						<CheckBox disable="true" fx:id="assignDigitalizationTask"
+						<JFXCheckBox disable="true" fx:id="assignDigitalizationTask"
 							text="AssignDigitalizationTask" />
-						<CheckBox disable="true" fx:id="upload" text="Upload" />
-						<CheckBox disable="true" fx:id="requestTranscriptionTask"
+						<JFXCheckBox disable="true" fx:id="upload" text="Upload" />
+						<JFXCheckBox disable="true" fx:id="requestTranscriptionTask"
 							text="RequestTranscriptionTask" />
-						<CheckBox disable="true" fx:id="assignTranscriptionTask"
+						<JFXCheckBox disable="true" fx:id="assignTranscriptionTask"
 							text="AssignTranscriptionTask" />
-						<CheckBox disable="true" fx:id="modifyTranscription"
+						<JFXCheckBox disable="true" fx:id="modifyTranscription"
 							text="ModifyTranscription" />
-						<CheckBox disable="true" fx:id="reviewPage"
+						<JFXCheckBox disable="true" fx:id="reviewPage"
 							text="ReviewPage" />
-						<CheckBox disable="true" fx:id="reviewTranscription"
+						<JFXCheckBox disable="true" fx:id="reviewTranscription"
 							text="ReviewTranscription" />
 
 					</VBox>

@@ -1,78 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
-	minHeight="500" minWidth="720"
-	xmlns="http://javafx.com/javafx/8.0.171"
-	xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LoginScene">
-	<bottom>
-		<Pane prefHeight="21.0" prefWidth="800.0"
-			BorderPane.alignment="CENTER">
-			<children>
-				<Label layoutX="10.0" layoutY="3.0"
-					maxHeight="1.7976931348623157E308" maxWidth="-1.0"
-					text="Server Connection: off">
-					<font>
-						<Font size="11.0" fx:id="x31" />
-					</font>
-					<textFill>
-						<Color blue="0.625" green="0.625" red="0.625" fx:id="x41" />
-					</textFill>
-				</Label>
-			</children>
-		</Pane>
-	</bottom>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="500" minWidth="720" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LoginScene">
 	<center>
 		<!-- <AnchorPane style=" -fx-background-image: url(images/lib.jpg); -fx-background-position: 
 			left top, center; -fx-background-repeat: stretch; -fx-background-size: contain, 
 			auto;" BorderPane.alignment="CENTER"> <AnchorPane -->
-		<AnchorPane
-			style="	-fx-background-image: url(images/lib.jpg);
-      			-fx-background-position: left top, center; 
-      			-fx-background-repeat: stretch;
-      			-fx-background-size: cover, auto;"
-			BorderPane.alignment="CENTER">
+		<AnchorPane style=" -fx-background-image: url(images/lib.jpg);          -fx-background-position: left top, center;           -fx-background-repeat: stretch;          -fx-background-size: cover, auto;" BorderPane.alignment="CENTER">
 			<children>
-				<AnchorPane layoutX="99.0" layoutY="117.0"
-					prefHeight="374.0" prefWidth="517.0"
-					style="-fx-background-color: rgba(0, 0, 0, 0.0);">
+				<AnchorPane layoutX="99.0" layoutY="117.0" prefHeight="374.0" prefWidth="517.0" style="-fx-background-color: rgba(0, 0, 0, 0.0);">
 					<children>
-						<Label alignment="CENTER" layoutX="125.0" layoutY="67.0"
-							prefHeight="58.0" prefWidth="268.0" style="&#10;"
-							text="Benvenuto" textAlignment="CENTER" textFill="#e86e0a"
-							wrapText="false">
+						<Label id="loginTitle" alignment="CENTER" layoutX="125.0" layoutY="67.0" prefHeight="58.0" prefWidth="268.0" text="BiblioSuite" textAlignment="CENTER" textFill="#e86e0a" wrapText="false">
 							<font>
 								<Font size="40.0" fx:id="x1" />
 							</font>
 						</Label>
-						<TextField fx:id="username" layoutX="184.0"
-							layoutY="134.0" prefHeight="26.0" prefWidth="150.0"
-							promptText="Username"/>
-						<PasswordField fx:id="password" layoutX="183.0"
-							layoutY="187.0" prefHeight="26.0" prefWidth="150.0"
-							promptText="Password"/>
-						<Button fx:id="login" layoutX="183.0" layoutY="239.0"
-							mnemonicParsing="false" onMouseClicked="#loginButtonPushed"
-							prefHeight="26.0" prefWidth="150.0" text="Login" />
-						<Button fx:id="recover" cancelButton="true" layoutX="183.0" layoutY="288.0"
-							mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0"
-							text="Recupera Password" />
-						<Button fx:id="register" cancelButton="true" layoutX="183.0" layoutY="327.0"
-							mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0"
-							text="Registrati" />
+						<JFXTextField fx:id="username" focusColor="#e86e0a" labelFloat="true" layoutX="184.0" layoutY="134.0" prefHeight="26.0" prefWidth="150.0" promptText="Username" style="-fx-textfill: #cccccc;" unFocusColor="#cccccc" />
+						<JFXPasswordField fx:id="password" focusColor="#e86e0a" labelFloat="true" layoutX="183.0" layoutY="187.0" prefHeight="26.0" prefWidth="150.0" promptText="Password" unFocusColor="#cccccc" />
+						<JFXButton fx:id="login" layoutX="183.0" layoutY="239.0" mnemonicParsing="false" onMouseClicked="#loginButtonPushed" prefHeight="26.0" prefWidth="150.0" ripplerFill="#e86e0a" text="Login" />
+						<JFXButton fx:id="recover" cancelButton="true" layoutX="183.0" layoutY="288.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" text="Recupera Password" />
+						<JFXButton fx:id="register" cancelButton="true" layoutX="183.0" layoutY="327.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" text="Registrati" />
 					</children>
 				</AnchorPane>
-				<Label fx:id="message" textFill="#f70303"
-					AnchorPane.bottomAnchor="0.0" />
+				<Label fx:id="message" textFill="#f70303" AnchorPane.bottomAnchor="0.0" />
 			</children>
 		</AnchorPane>
 	</center>

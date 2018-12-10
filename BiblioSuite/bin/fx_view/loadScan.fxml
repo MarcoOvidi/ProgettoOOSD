@@ -38,7 +38,7 @@
 						</VBox>
 					</content>
 				</ScrollPane>
-				<Label layoutX="41.0" layoutY="72.0" prefHeight="40.0" prefWidth="285.0" text="Seleziona documento" styleClass="title">
+				<Label layoutX="41.0" layoutY="72.0" prefHeight="40.0" prefWidth="285.0" text="Select document:" styleClass="title">
 					<font>
 						<Font size="28.0" />
 					</font>
