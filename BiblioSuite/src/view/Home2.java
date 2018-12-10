@@ -11,6 +11,7 @@ import com.jfoenix.controls.JFXListView;
 
 import controller.HomePageController;
 import controller.PageViewController;
+import controller.ScanningProjectController;
 import dao.DatabaseException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -90,6 +91,8 @@ public class Home2 {
 		 * loadTranscriptionProjects(); loadBookmarks();
 		 */
 		newsButtonHandler();
+		scanningProjectButtonHandler();
+		transcriptionProjectButtonHandler();
 	}
 
 	// _____
@@ -113,6 +116,16 @@ public class Home2 {
 			}
 
 		});
+	}
+	
+	public void scanningProjectButtonHandler() {
+		if(! (HomePageController.checkIsDigitalizer()))
+			scanningProjects.setVisible(false);
+	}
+	
+	public void transcriptionProjectButtonHandler() {
+		if(! (HomePageController.checkIsTranscriber()))
+			transcriptionProjects.setVisible(false);
 	}
 
 	// _____
