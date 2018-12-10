@@ -45,7 +45,7 @@
             <AnchorPane prefWidth="1142.0">
                <children>
                   <JFXTextField layoutX="280.0" layoutY="360.0" prefHeight="16.0" prefWidth="450.0" />
-                  <JFXDrawer direction="RIGHT" prefHeight="690.0" prefWidth="1142.0" />
+                  <JFXDrawer fx:id="drawer" direction="RIGHT" minHeight="690.0" minWidth="1142.0" prefHeight="690.0" prefWidth="1142.0" />
                </children>
             </AnchorPane>
          </children>
