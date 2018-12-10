@@ -427,3 +427,9 @@ TabPane {
     -fx-text-fill: #ccc;
     -fx-border-color:#ccc;
 }
+
+
+
+.list-view .list-cell{
+	-fx-text-fill: yellow;
+}

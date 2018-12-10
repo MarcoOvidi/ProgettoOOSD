@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
+import com.jfoenix.controls.JFXListView;
 
 import controller.HomePageController;
 import controller.PageViewController;
@@ -14,6 +15,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.LoadException;
 import javafx.scene.control.Accordion;
@@ -47,10 +49,7 @@ public class Home2 {
 
 	@FXML
 	private HBox bookmarks;
-
-	@FXML
-	private VBox news;
-
+	
 	@FXML
 	private VBox collections;
 
@@ -75,42 +74,40 @@ public class Home2 {
 	private JFXButton scanningProjects;
 	@FXML
 	private JFXButton transcriptionProjects;
-	
+
 	@FXML
 	private JFXDrawer drawer;
-	//_________
+	// _________
 
 	@FXML
 	public void initialize() throws DatabaseException, ParseException {
-		/*loadNews();
-		loadCollections();
-		loadScanningProjects();
-		loadTranscriptionProjects();
-		loadBookmarks();*/
+		/*
+		 * loadNews(); loadCollections(); loadScanningProjects();
+		 * loadTranscriptionProjects(); loadBookmarks();
+		 */
+		newsButtonHandler();
 	}
 
 	// _____
 	public void newsButtonHandler() {
 		newsButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 			try {
-	              
-				loadNews();
-	              drawer.setMinSize(1142, 690);
-	              drawer.setSidePane(news);
-	          
+				drawer.setMinSize(1142, 690);
+				drawer.setSidePane(loadNews());
+
 			} catch (DatabaseException | ParseException ex) {
-	             ex.printStackTrace();
-	             System.out.println(ex.getMessage());
-	          }
-	    
-	    if (drawer.isOpened()) {
-	      drawer.setDisable(true);
-	            drawer.close();
-	        } else {
-	          drawer.setDisable(false);
-	            drawer.open();
-	        }
-			
+				ex.printStackTrace();
+				System.out.println(ex.getMessage());
+			}
+
+			if (drawer.isOpened()) {
+				drawer.setDisable(true);
+				drawer.close();
+			} else {
+				drawer.setDisable(false);
+				drawer.open();
+			}
+
 		});
 	}
 
@@ -213,26 +210,26 @@ public class Home2 {
 	}
 
 	@FXML
-	public void loadNews() throws DatabaseException, ParseException {
+	public ListView<Label> loadNews() throws DatabaseException, ParseException {
+		
+		ListView<Label> result = new ListView<Label>();
+		result.setMinSize(1142.0, 690.0);
 		try {
 			HomePageController.loadNews();
 			HashMap<UUIDDocument, String[]> newsMap = HomePageController.getNews();
-			int c = 0;
-
+			
+			ObservableList<Label> resultSet = FXCollections.observableArrayList();
+			
 			for (Entry<UUIDDocument, String[]> entry : newsMap.entrySet()) {
 
 				Label title = new Label(entry.getValue()[0] + "               ( " + entry.getValue()[1] + " giorni fa) "
 						+ entry.getValue()[2]);
-
-				HBox row = new HBox();
-
-				if (c % 2 == 0)
-					row.setId("news-row");
-				else
-					row.setId("news-row1");
-				row.getChildren().add(title);
-
-				row.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+				
+				title.setId(String.valueOf(entry.getKey().getValue()));
+				
+				resultSet.add(title);
+				
+				/*title.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 					try {
 						PageViewController.showDocument(entry.getKey());
 					} catch (LoadException e) {
@@ -243,16 +240,39 @@ public class Home2 {
 						e.printStackTrace();
 					}
 					event.consume();
-				});
+				});*/
+				
+				
 
-				news.getChildren().add(row);
-				c++;
 			}
-		} catch (DatabaseException e) {
-			Label label = new Label(e.getMessage());
-			news.getChildren().add(label);
+			
+			
+			result.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
+		        @Override
+		        public void handle(MouseEvent event) {
+		            try {
+						PageViewController.showDocument(new UUIDDocument(Integer.parseInt(result.getSelectionModel().getSelectedItem().getId())));
+					} catch (LoadException e) {
+						Alert alert = new Alert(Alert.AlertType.ERROR);
+						alert.setTitle("Error");
+						alert.setContentText(e.getMessage());
+						alert.show();
+						e.printStackTrace();
+					}
+		        }
+		    });
+			
+			result.setItems(resultSet);
+			
+			
+			
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+			
 		}
+		
+		return result;
 	}
 
 	@FXML
