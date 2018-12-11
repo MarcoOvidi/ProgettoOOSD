@@ -71,8 +71,8 @@ AnchorPane,HBox, VBox, FlowPane{-fx-background:#222; -fx-border-width:0.0px;}
 #categories{
 	-fx-alignment:center;
 	-fx-padding:4.0px;
-	
 	}
+	
 #categories>Label{
 	-fx-alignment: CENTER;
     -fx-text-fill: #aaa;
@@ -120,10 +120,6 @@ PasswordField:hover{
 #password:focused{
 	-fx-border-color:#e86e0a;
 }
-
-
-
-
 
 .jfx-tab-pane, .tab-pane
 {
@@ -174,6 +170,12 @@ PasswordField:hover{
 .tab:selected .tab-label { 
     -fx-alignment: CENTER;
     -fx-text-fill: #fff;
+}
+
+tab-pane > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
+
+    -fx-border-color: transparent;
+
 }
 	
 .jfx-tab-pane> *.tab-header-area> *.tab-header-background, *.tab-pane> *.tab-header-area> *.tab-header-background {
@@ -262,6 +264,62 @@ TextArea:focused {
 
 
 /*-----------------------------------------------MANAGE PROJECT--------------------------------------*/
+
+.tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {-fx-border-color: transparent;}
+
+.tab1{
+	-fx-background-color: #222;
+	-fx-border-radius: 8px 8px 0px 0px;
+	-fx-border-width: 1px 1px 0px 1px;
+}
+
+.tab1:hover{
+	-fx-background-color:#555;
+	}
+
+
+#transcriptionTabPane > .tab-header{
+
+    -fx-border-color: #8aa;
+
+}
+
+#scanningTabPane > .tab-header {
+
+    -fx-border-color: #aa8;
+
+}
+
+
+#scanningTab{
+	-fx-background-radius: 0px 16px 16px 0px;
+	-fx-background-color: #555;
+	-fx-pref-width: 375px;
+	-fx-border-color: transparent;
+	
+    	}
+    	
+
+	
+#scanningTab:hover, #scanningTab:selected{
+	-fx-background-color: #88c;
+}	
+
+	
+#transcriptionTab:hover, #transcriptionTab:selected{
+	-fx-background-color: #c88;
+}	
+	
+	
+
+#transcriptionTab{
+	-fx-background-radius: 16px 0px 0px 16px;
+	-fx-background-color: #555;
+	-fx-pref-width: 375px;	
+	-fx-border-color: transparent ;
+
+}
+
 
 #newDocumentButton{
 	-fx-background-color:#655;
@@ -486,6 +544,11 @@ TabPane {
 
 
 
+
+
 .list-view .list-cell{
 	-fx-text-fill: yellow;
 }
+
+
+
