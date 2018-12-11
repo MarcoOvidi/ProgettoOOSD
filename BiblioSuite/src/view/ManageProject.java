@@ -95,6 +95,9 @@ public class ManageProject {
 	private Tab scanningDigitalizersTab;
 
 	@FXML
+	private AnchorPane manageContainer;
+	
+	@FXML
 	private AnchorPane transcriptionPagesAnchor;
 
 	@FXML
@@ -183,7 +186,7 @@ public class ManageProject {
 
 	public void initialize() {
 		initNewDocumentButton();
-
+		initPane();
 		try {
 			tableDocumentFiller();
 			rowClick();
@@ -194,6 +197,10 @@ public class ManageProject {
 		}
 	}	
 		
+	public void initPane() {
+		pane.setVisible(false);
+	}
+	
 	private void initNewDocumentButton() {
 		newDocumentButton.setFont(new Font(14));
 		// dd.setPrefSize(20,50);
@@ -305,6 +312,10 @@ public class ManageProject {
 	}
 
 	public void loadClickedDocumentProjects() {
+		
+		manageContainer.getChildren().clear();
+		manageContainer.getChildren().add(pane);
+		pane.setVisible(true);
 
 		selectedDocumentScanningProject = clickedDocument.getIdSPrj();
 		selectedDocumentTranscriptionProject = clickedDocument.getIdTPrj();
