@@ -12,7 +12,7 @@
    <left>
       <AnchorPane prefHeight="800.0" prefWidth="1400.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="label" layoutX="420.0" layoutY="291.0" text="Inserisci il titolo del nuovo documento" textFill="#aaaaaa">
+            <Label fx:id="label" layoutX="571.0" layoutY="294.0" text="Insert title" textFill="#aaaaaa">
                <font>
                   <Font size="28.0" />
                </font>
@@ -20,7 +20,7 @@
             <Button fx:id="next" layoutX="923.0" layoutY="359.0" mnemonicParsing="false" text="&gt;" />
             <Pane fx:id="container" layoutX="352.0" layoutY="346.0" prefHeight="56.0" prefWidth="562.0">
                <children>
-                  <TextField fx:id="intext" layoutX="7.0" layoutY="14.0" prefHeight="27.0" prefWidth="549.0" promptText="Titolo" />
+                  <TextField fx:id="intext" layoutX="7.0" layoutY="14.0" prefHeight="27.0" prefWidth="549.0" promptText="Titolo" text="Title" />
                </children>
             </Pane>
          </children>

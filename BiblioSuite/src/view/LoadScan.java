@@ -84,8 +84,11 @@ public class LoadScan {
 	@FXML
 	private Button clearFilters;
 	
+	//@FXML
+	//private Label loadScanTitle;
+	
 	@FXML
-	private Label loadScanTitle;
+	private Label filtersLabel;
 
 	private UUIDDocument currentDocument;
 	
@@ -104,7 +107,7 @@ public class LoadScan {
 
 	
 	private void initLoadScanTitle(){
-		loadScanTitle.setVisible(false);
+		//loadScanTitle.setVisible(false);
 		
 	}
 	
@@ -121,6 +124,14 @@ public class LoadScan {
 	}
 
 	private void initPageTable() {
+		//
+		checkConvalidated.setVisible(false);
+		checkRevisioned.setVisible(false);;
+		filterPages.setVisible(false);;
+		pageTable.setVisible(false);
+		clearFilters.setVisible(false);
+		filtersLabel.setVisible(false);
+		//
 		number.setResizable(false);
 		image.setResizable(true);
 		revisioned.setResizable(false);
@@ -250,8 +261,16 @@ public class LoadScan {
 		documentList.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observableValue, Number entry, Number entryNew) {
-				loadScanTitle.setVisible(true);
+				//
+				//loadScanTitle.setVisible(true);
 				filechooser.setVisible(true);
+				checkConvalidated.setVisible(true);
+				checkRevisioned.setVisible(true);;
+				filterPages.setVisible(true);;
+				pageTable.setVisible(true);
+				clearFilters.setVisible(true);
+				filtersLabel.setVisible(true);
+				//-
 			  currentDocument=documentList.getItems().get((Integer) entryNew).getKey();
 				loadDocument(currentDocument);
 			}
@@ -264,6 +283,8 @@ public class LoadScan {
 	}
 
 	public void loadDocument(UUIDDocument document) { // FIXME tutto da testare
+		
+
 		PageScanController.loadNewDocumentPages(document);
 
 		LinkedList<Page> pL = PageScanController.getCurrentDocumentPages();
