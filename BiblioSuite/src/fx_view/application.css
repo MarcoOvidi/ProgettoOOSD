@@ -277,7 +277,6 @@ TextArea:focused {
 	-fx-background-color:#555;
 	}
 
-
 #transcriptionTabPane > .tab-header{
 
     -fx-border-color: #8aa;
@@ -296,7 +295,6 @@ TextArea:focused {
 	-fx-background-color: #555;
 	-fx-pref-width: 375px;
 	-fx-border-color: transparent;
-	
     	}
     	
 
@@ -380,11 +378,10 @@ TextArea:focused {
     -fx-background-color: -fx-table-cell-border-color, #333;
     -fx-background-radius:4px;
     -fx-background-insets: 1.0, 1.0 1.0 1.0 1.0;
-    -fx-padding: 10.0; /* 0 */
+    -fx-padding: 0.0; /* 0 */
     /*-fx-border-color: 2px 0px 2px 0px black;*/
     -fx-border-color: transparent;
 	-fx-min-height:60px;
-
     -fx-table-cell-border-color: transparent;
 }
 
@@ -397,7 +394,7 @@ TextArea:focused {
     -fx-background-color: -fx-table-cell-border-color, #3a3a3a;
     -fx-background-insets: 1.0, 1.0 1.0 1.0 1.0;
     -fx-min-height:60px;
-    -fx-padding: 10.0; /* 0 */  
+    -fx-padding: 0.0; /* 0 */  
 }
 
 .table-row-cell:selected {
