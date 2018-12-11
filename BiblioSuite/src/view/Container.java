@@ -11,11 +11,14 @@ import controller.LoginController;
 import dao.DatabaseException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.Tooltip;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Font;
+import javafx.util.Pair;
 
 public class Container {
 
@@ -29,25 +32,42 @@ public class Container {
 	private BorderPane content;
 	
 	@FXML
-	private Button logout;
+	private Tab logout;
 
-	private static TreeMap<String, String> map = new TreeMap<String, String>();
+	private static TreeMap<String, Pair<String,String>> map = new TreeMap<String, Pair<String,String>>();
 
 	static {
-		map.put("Home", "home2");
-		map.put("My Profile", "userProfile");
-		map.put("Manage Projects", "manageProject");
-		map.put("Upload", "loadScan");
-		map.put("Transcription", "transcription");
-		map.put("Review", "scanRevisor");
-		map.put("Admin", "adminPanel");
+		map.put("Home", new Pair<String,String>("home2","home"));
+		map.put("My Profile", new Pair<String,String>("userProfile","user-circle"));
+		map.put("Manage Projects", new Pair<String,String>("manageProject","group"));
+		map.put("Upload", new Pair<String,String>("loadScan","image"));
+		map.put("Transcription", new Pair<String,String>("transcription","file-text"));
+		map.put("Review", new Pair<String,String>("scanRevisor","edit"));
+		map.put("Admin", new Pair<String,String>("adminPanel","briefcase"));
+	}
+	
+	private String genFavIconURL(String str) {
+		return ("file:resources/favicon/32/" + str + ".png");
 	}
 
 	public void initButtonLink(String label, String link) {
-		Tab tab = new Tab(label);
+
+		javafx.scene.image.Image image = new javafx.scene.image.Image(genFavIconURL(map.get(label).getValue()));
+		ImageView imageView = new ImageView(image);
+		imageView.setFitHeight(32);
+		imageView.setFitWidth(32);
+		Tooltip tooltip = new Tooltip(label);
+		tooltip.setFont(new Font(14));
+		
+		Tab tab = new Tab();
+		tab.setGraphic(imageView);
+		tab.setTooltip(tooltip);
+		
 		topbar.getTabs().add(tab);
+		
 		if (link.equals(SceneController.getSceneName())) {
 			topbar.getSelectionModel().select(tab);
+			//tab.setText(tab.getTooltip().getText());
 		}
 		else if(label.equals("My Profile") && SceneController.getSceneName().equals("editUserProfile") &&
 				EditUserController.isSelfEditing()) {
@@ -60,9 +80,9 @@ public class Container {
 	}
 
 	public void initLogoutLink() {
+		
 
-		logout.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-
+		logout.getTabPane().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 			// SceneController.loadScene("login");
 			LoginController.logout();
 			event.consume();
@@ -85,15 +105,14 @@ public class Container {
 		List<String> buttons = LocalSession.getTopBarButtons();
 
 		for (String str : buttons) {
-			initButtonLink(str, map.get(str));
+			initButtonLink(str, map.get(str).getKey());
 		}
-		
 
 		topbar.setOnMouseClicked(event -> {
-			SceneController.loadScene(map.get(topbar.getSelectionModel().getSelectedItem().getText()));
+			SceneController.loadScene(map.get(topbar.getSelectionModel().getSelectedItem().getTooltip().getText()).getKey());
 		});
 		
-		topbar.setTabMinWidth(100);
+		//topbar.setTabMinWidth(100);
 		
 		initLogoutLink();
 		

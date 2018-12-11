@@ -120,7 +120,8 @@ PasswordField:hover{
 
 .tab-pane
 {
-    -fx-tab-min-width:90.0px;
+    -fx-tab-min-width:120.0px;
+    -fx-open-tab-animation: grow;
     
     -fx-background-color: #222;
 }
@@ -346,7 +347,13 @@ TextArea:focused {
 
 #topbar{
 	-fx-background-color: #333;
-	
+    -fx-border-width: 0.0px 0.0px 1.0px 0.0px;
+    -fx-border-color:#aaaa;
+    -fx-tab-max-width:49.0px;
+}
+
+#rightbar{
+	-fx-background-color: #333;
     -fx-border-width: 0.0px 0.0px 1.0px 0.0px;
     -fx-border-color:#aaaa;
 }
@@ -424,8 +431,7 @@ TabPane {
     -fx-text-fill: #aaa;
     -fx-font-size: 16.0px;
     -fx-border-color:#aaa0;
-    -fx-border-width: 0.0px 0.0px 2.0px 0.0px;
-    
+    -fx-border-width: 0.0px 0.0px 2.0px 0.0px;  
 }
 
 #logout:hover { 
