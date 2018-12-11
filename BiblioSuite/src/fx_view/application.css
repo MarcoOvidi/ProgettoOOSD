@@ -118,12 +118,16 @@ PasswordField:hover{
 }
 
 
-.tab-pane
+
+
+
+.jfx-tab-pane, .tab-pane
 {
     -fx-tab-min-width:120.0px;
     -fx-open-tab-animation: grow;
     
     -fx-background-color: #222;
+    
 }
 
 .tab{
@@ -134,12 +138,13 @@ PasswordField:hover{
 
     -fx-border-width: 0.0px 0.0px 2.0px 0.0px;
 }
-.tab-pane .tab
+.jfx-tab-pane .tab, .tab-pane .tab
 {
     -fx-background-color: #4440;
+    
 }
 
-.tab-pane .tab:selected
+.jfx-tab-pane .tab:selected, .tab-pane .tab:selected
 {
     -fx-background-color: #222f;
 }
@@ -167,15 +172,11 @@ PasswordField:hover{
     -fx-text-fill: #fff;
 }
 	
-.tab-pane>*.tab-header-area>*.tab-header-background {
+.jfx-tab-pane> *.tab-header-area> *.tab-header-background, *.tab-pane> *.tab-header-area> *.tab-header-background {
      -fx-opacity: 0.0;
-}
-		
-
-.tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
-    -fx-border-color: #2220;
-}
-
+     }
+     
+ .jfx-tab-pane .tab-header-background { -fx-background-color: #333; }
 
 #gotoprofile{
 	
@@ -256,54 +257,74 @@ TextArea:focused {
 
 
 .table-view{
-   -fx-background-color: #202020;
+   -fx-background-color: transparent;
+   -fx-table-cell-border-color: transparent;
+	-fx-font-size: 16px;
 }
 
+
 .table-view .filler{
-   -fx-background-color: #111;
+   -fx-background-color: transparent;
 }
 
 .table-view:focused{
-    -fx-background-color: #202020;
+    -fx-background-color: transparent;
 }
 
-/* SpaltenkÃ¶pfe
+/* Spaltenköpfe
     Struktur column-header-background -> column-header */
 
 .table-view .column-header-background{
-    -fx-background-color: #111;
+    -fx-background-color: #222;
+    -fx-background-radius: 8px;
 }
 
 .table-view .column-header-background .label{
     -fx-background-color: transparent;
-    -fx-text-fill: white;
+    -fx-text-fill: #eee;
 }
 
 .table-view .column-header {
     -fx-background-color: transparent;
+    -fx-alignment:left;
 }
 
 .table-view .table-cell{
-    -fx-text-fill: white;
+    -fx-text-fill: #ddd;
 }
 
+
+
 .table-row-cell{
-    -fx-background-color: -fx-table-cell-border-color, #616161;
-    -fx-background-insets: 0.0, 0.0 0.0 1.0 0.0;
-    -fx-padding: 0.0em; /* 0 */
+    -fx-background-color: -fx-table-cell-border-color, #333;
+    -fx-background-radius:4px;
+    -fx-background-insets: 1.0, 1.0 1.0 1.0 1.0;
+    -fx-padding: 10.0; /* 0 */
+    /*-fx-border-color: 2px 0px 2px 0px black;*/
+    -fx-border-color: transparent;
+	-fx-min-height:60px;
+
+    -fx-table-cell-border-color: transparent;
+}
+
+.table-row-cell:odd:hover, .table-row-cell:hover{
+	-fx-background-color: #e86e2a;
 }
 
 .table-row-cell:odd{
-    -fx-background-color: -fx-table-cell-border-color, #424242;
-    -fx-background-insets: 0.0, 0.0 0.0 1.0 0.0;
-    -fx-padding: 0.0em; /* 0 */  
+	-fx-background-radius:4px;
+    -fx-background-color: -fx-table-cell-border-color, #3a3a3a;
+    -fx-background-insets: 1.0, 1.0 1.0 1.0 1.0;
+    -fx-min-height:60px;
+    -fx-padding: 10.0; /* 0 */  
 }
 
 .table-row-cell:selected {
-    -fx-background-color: #005797;
+	-fx-background-color: #777;
     -fx-background-insets: 0.0;
-    -fx-background-radius: 1.0;
-}
+    -fx-background-radius: 4px;
+    }
+
 
 .table-view > .virtual-flow > .scroll-bar:vertical,
 .table-view > .virtual-flow > .scroll-bar:vertical > .track,
