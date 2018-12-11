@@ -51,6 +51,10 @@ JFXButton,TextField, PasswordField{
 
 AnchorPane,HBox, VBox, FlowPane{-fx-background:#222; -fx-border-width:0.0px;}
 
+.table-view .column-header .label{
+    -fx-alignment:CENTER_LEFT
+}
+
 .scroll-pane {
     -fx-background-insets: 0.0;
     -fx-padding: 0.0;
@@ -114,7 +118,7 @@ PasswordField:hover{
 }
 
 #password:focused{
-	
+	-fx-border-color:#e86e0a;
 }
 
 
@@ -173,8 +177,7 @@ PasswordField:hover{
 }
 	
 .jfx-tab-pane> *.tab-header-area> *.tab-header-background, *.tab-pane> *.tab-header-area> *.tab-header-background {
-     -fx-opacity: 0.0;
-     }
+     -fx-opacity: 0.0;     }
      
  .jfx-tab-pane .tab-header-background { -fx-background-color: #333; }
 
@@ -256,6 +259,26 @@ TextArea:focused {
 .choice-box .menu-item:focused > .label { -fx-text-fill: black; }
 
 
+
+
+/*-----------------------------------------------MANAGE PROJECT--------------------------------------*/
+
+#newDocumentButton{
+	-fx-background-color:#655;
+	-fx-background-radius:#10px;
+	-fx-pref-width: 900px;
+	-fx-pref-height: 40px;
+	-fx-text-fill: #eee;
+	}
+	
+#newDocumentButton:hover{
+	-fx-text-fill: #fff;
+	-fx-background-color:#e86e0a;	
+	}	
+	
+
+
+
 .table-view{
    -fx-background-color: transparent;
    -fx-table-cell-border-color: transparent;
@@ -275,7 +298,7 @@ TextArea:focused {
     Struktur column-header-background -> column-header */
 
 .table-view .column-header-background{
-    -fx-background-color: #222;
+    -fx-background-color: #202020;
     -fx-background-radius: 8px;
 }
 
@@ -466,5 +489,3 @@ TabPane {
 .list-view .list-cell{
 	-fx-text-fill: yellow;
 }
-
-
