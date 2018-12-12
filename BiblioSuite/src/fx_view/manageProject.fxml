@@ -21,7 +21,7 @@
                         <Font size="28.0" />
                      </font>
                   </Label>
-      				<TableView fx:id="documentTable" layoutX="36.0" layoutY="78.0" prefHeight="400.0" prefWidth="900.0">
+      				<TableView fx:id="documentTable" layoutX="36.0" layoutY="78.0" prefHeight="411.0" prefWidth="903.0">
       					<columns>
       						<TableColumn fx:id="Document" prefWidth="300.0" resizable="false" text="Document" />
       						<TableColumn fx:id="Transcription_PRJ" prefWidth="300.0" resizable="false" text="Transcription Project" />
@@ -31,19 +31,19 @@
       				<Button fx:id="newDocumentButton" layoutX="34.0" layoutY="515.0" text="Create new document" />
                </children>
             </AnchorPane>
-				<TabPane fx:id="pane" prefHeight="520.0" prefWidth="970.0" tabClosingPolicy="UNAVAILABLE">
+				<TabPane fx:id="pane" prefHeight="630.0" prefWidth="1015.0" tabClosingPolicy="UNAVAILABLE">
 					<tabs>
 						<Tab fx:id="transcriptionTab" text="Transcription Project">
 							<content>
 								<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="488.0" prefWidth="979.0">
 									<children>
-										<TabPane fx:id="transcriptionTabPane" layoutY="50.0" prefHeight="466.0" prefWidth="937.0" tabClosingPolicy="UNAVAILABLE">
+										<TabPane fx:id="transcriptionTabPane" layoutY="50.0" prefHeight="545.0" prefWidth="953.0" tabClosingPolicy="UNAVAILABLE">
 											<tabs>
 												<Tab fx:id="transcriptionPagesTab" styleClass="tab1" text="Pages">
 													<content>
 														<AnchorPane fx:id="transcriptionPagesAnchor" minHeight="0.0" minWidth="0.0" prefHeight="524.0" prefWidth="900.0">
 															<children>
-																<TableView fx:id="transcriptionLog" prefHeight="500.0" prefWidth="900.0">
+																<TableView fx:id="transcriptionLog" prefHeight="438.0" prefWidth="902.0">
 																	<columns>
 																		<TableColumn fx:id="pageNumber" prefWidth="150.0" text="Page" />
 																		<TableColumn fx:id="transcriptionReviser" prefWidth="150.0" text="Reviser" />
@@ -58,14 +58,15 @@
 												</Tab>
 												<Tab fx:id="transcriptionTranscribersTab" styleClass="tab1" text="Transcribers">
 													<content>
-														<AnchorPane fx:id="transcriptionTranscriberAnchor" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+														<AnchorPane fx:id="addTranscriber" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="937.0">
 															<children>
-																<TableView fx:id="transcriptionStaff" prefHeight="425.0" prefWidth="902.0">
+																<TableView fx:id="transcriptionStaff" prefHeight="374.0" prefWidth="902.0">
 																	<columns>
 																		<TableColumn fx:id="usernameTranscriber" prefWidth="300.0" text="User" />
 																		<TableColumn fx:id="roleTranscriber" prefWidth="300.0" text="Role" />
 																	</columns>
 																</TableView>
+                                                <Button fx:id="addTrascriber" layoutX="89.0" layoutY="401.0" mnemonicParsing="false" text="Add Transcriber" />
 															</children>
 														</AnchorPane>
 													</content>
@@ -86,7 +87,7 @@
 													<content>
 														<AnchorPane fx:id="scanningPagesAnchor" minHeight="0.0" minWidth="0.0" prefHeight="484.0" prefWidth="750.0">
 															<children>
-																<TableView fx:id="scanningLog" prefHeight="500.0" prefWidth="900.0">
+																<TableView fx:id="scanningLog" prefHeight="420.0" prefWidth="901.0">
 																	<columns>
 																		<TableColumn fx:id="pageScanNumber" prefWidth="150.0" text="Page " />
 																		<TableColumn fx:id="scanningReviser" prefWidth="150.0" text="Reviser" />
@@ -103,12 +104,13 @@
 													<content>
 														<AnchorPane fx:id="scanningDigitalizersAnchor" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
 															<children>
-																<TableView fx:id="scanningStaff" prefHeight="500.0" prefWidth="900.0">
+																<TableView fx:id="scanningStaff" prefHeight="365.0" prefWidth="902.0">
 																	<columns>
 																		<TableColumn fx:id="usernameDigitalizer" prefWidth="300.0" text="User" />
 																		<TableColumn fx:id="roleDigitalizer" prefWidth="300.0" text="Role" />
 																	</columns>
 																</TableView>
+                                                <Button fx:id="addDigitalizer" layoutX="93.0" layoutY="395.0" mnemonicParsing="false" text="Add Digitalizer" />
 															</children>
 														</AnchorPane>
 													</content>
