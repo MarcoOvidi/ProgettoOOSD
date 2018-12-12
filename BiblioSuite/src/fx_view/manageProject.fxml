@@ -60,13 +60,13 @@
 													<content>
 														<AnchorPane fx:id="addTranscriber" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="937.0">
 															<children>
-																<TableView fx:id="transcriptionStaff" prefHeight="374.0" prefWidth="902.0">
+																<TableView fx:id="transcriptionStaff" prefHeight="381.0" prefWidth="902.0">
 																	<columns>
 																		<TableColumn fx:id="usernameTranscriber" prefWidth="300.0" text="User" />
 																		<TableColumn fx:id="roleTranscriber" prefWidth="300.0" text="Role" />
 																	</columns>
 																</TableView>
-                                                <Button fx:id="addTranscriber" layoutY="401.0" mnemonicParsing="false" text="Add Transcriber" />
+                                                <Button fx:id="addTranscriberButton" layoutY="401.0" mnemonicParsing="false" text="Add Transcriber" />
 															</children>
 														</AnchorPane>
 													</content>
@@ -104,13 +104,13 @@
 													<content>
 														<AnchorPane fx:id="scanningDigitalizersAnchor" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
 															<children>
-																<TableView fx:id="scanningStaff" prefHeight="365.0" prefWidth="902.0">
+																<TableView fx:id="scanningStaff" prefHeight="387.0" prefWidth="902.0">
 																	<columns>
 																		<TableColumn fx:id="usernameDigitalizer" prefWidth="300.0" text="User" />
 																		<TableColumn fx:id="roleDigitalizer" prefWidth="300.0" text="Role" />
 																	</columns>
 																</TableView>
-                                                <Button fx:id="addDigitalizer" layoutY="401.0" mnemonicParsing="false" text="Add Digitalizer" />
+                                                <Button fx:id="addDigitalizerButton" layoutY="401.0" mnemonicParsing="false" text="Add Digitalizer" />
 															</children>
 														</AnchorPane>
 													</content>

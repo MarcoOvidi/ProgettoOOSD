@@ -353,7 +353,7 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 }
 
 
-#newDocumentButton, #addTranscriber, #addDigitalizer{
+#newDocumentButton, #addTranscriberButton, #addDigitalizerButton{
 	-fx-background-color:#555;
 	-fx-background-radius:#10px;
 	-fx-pref-width: 900px;
@@ -361,7 +361,7 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 	-fx-text-fill: #eee;
 	}
 	
-#newDocumentButton:hover, #addTranscriber:hover, #addDigitalizer:hover {
+#newDocumentButton:hover, #addTranscriberButton:hover, #addDigitalizerButton:hover {
 	-fx-text-fill: #fff;
 	-fx-background-color:#e86e0a;	
 	}	
