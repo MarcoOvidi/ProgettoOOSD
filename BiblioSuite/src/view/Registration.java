@@ -32,7 +32,7 @@ public class Registration {
 	private Button back;
 	@FXML
 	private Button register;
-	
+
 	@FXML
 	public void initialize() throws DatabaseException, ParseException {
 		initRegisterButton();
@@ -41,46 +41,48 @@ public class Registration {
 
 	private void initRegisterButton() {
 		register.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-			if(username.getText().isEmpty() ||
-					password1.getText().isEmpty() ||
-					password2.getText().isEmpty() ||
-					email.getText().isEmpty() ||
-					name.getText().isEmpty() ||
-					surname.getText().isEmpty()) {
+			if (username.getText().isEmpty() || password1.getText().isEmpty() || password2.getText().isEmpty()
+					|| email.getText().isEmpty() || name.getText().isEmpty() || surname.getText().isEmpty()) {
 				alert("No field can be left blank.");
 			}
 			try {
-				if(RegistrationController.checkUsername(username.getText()))
+				if (!RegistrationController.checkValidUsername(username.getText())) {
 					alert("Username already taken.");
+					return;
+				}
+				if (!RegistrationController.checkUsername(username.getText())) {
+					alert("Username already taken.");
+					return;
+				}
 			} catch (SQLException | DatabaseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			if(password1.getText().equals(password2.getText())) {
+
+			if (!password1.getText().equals(password2.getText())) {
 				alert("Inserted passwords do not match.");
 				event.consume();
-			
-			String res = RegistrationController.register(username.getText(),
-					password1.getText(), email.getText(), name.getText(), surname.getText());
-			
-			alert(res);
-				
+
+				String res = RegistrationController.register(username.getText(), password1.getText(), email.getText(),
+						name.getText(), surname.getText());
+
+				alert(res);
+
 			}
 		});
 	}
-	
+
 	private void initBackButton() {
 		back.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 			SceneController.loadPreviousScene();
 		});
 	}
-	
-	private void alert (String text) {
+
+	private void alert(String text) {
 		Alert al = new Alert(AlertType.INFORMATION);
 		al.setContentText(text);
 		al.setTitle("Attention");
 		al.show();
 	}
-	
+
 }

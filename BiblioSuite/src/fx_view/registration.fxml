@@ -10,6 +10,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.layout.HBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXButton?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
 	minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0"
@@ -35,23 +38,24 @@
 						</Label>
 						<HBox spacing="70" AnchorPane.topAnchor="75.0">
 							<VBox spacing="20">
-								<TextField fx:id="username" promptText="Username" />
-								<PasswordField fx:id="password1"
+								<JFXTextField fx:id="username" promptText="Username" />
+								<JFXPasswordField fx:id="password1"
 									promptText="Password" />
-								<PasswordField fx:id="password2"
+								<JFXPasswordField fx:id="password2"
 									promptText="confirm Password" />
 
 							</VBox>
 							<VBox spacing="20">
-								<TextField fx:id="name" promptText="Name" />
-								<TextField fx:id="surname" promptText="Surname" />
-								<TextField fx:id="email" promptText="Email" />
+								<JFXTextField fx:id="name" promptText="Name" />
+								<JFXTextField fx:id="surname" promptText="Surname" />
+								<JFXTextField fx:id="email" promptText="Email" />
 							</VBox>
 						</HBox>
 
 						<HBox spacing="100" AnchorPane.bottomAnchor="0.0">
-							<Button fx:id="back" text="Back" prefWidth="240.0" />
-							<Button fx:id="register" text="Register" prefWidth="240.0" />
+
+							<JFXButton fx:id="back" text="Back" prefWidth="240.0" />
+							<JFXButton fx:id="register" text="Register" prefWidth="240.0" />
 
 						</HBox>
 					</children>
