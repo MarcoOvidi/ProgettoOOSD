@@ -4,6 +4,11 @@
 }
 
 
+#searchbar{
+	-fx-border-radius:4px;
+}
+
+
 Button{
 	-fx-background-color:#555;
 	-fx-text-fill:#fff;	 
@@ -45,6 +50,11 @@ JFXTextField, JFXPasswordField{
 	-fx-opacity: 1.0;
 } 
 
+#news{
+	-fx-border-width: 1px 0px 0px 0px;
+	-fx-border-color: #e86e0a;
+}
+
 #news-row{
 	-fx-background-color:#202020;
 	-fx-padding:4.0px;
@@ -59,11 +69,16 @@ JFXTextField, JFXPasswordField{
 	}
 	
 #news-row>Label{
-	-fx-text-fill:#aaa;
+	-fx-text-fill:#eee;
 }	
 #news-row1>Label{
-	-fx-text-fill:#aaa;
+	-fx-text-fill:#eee;
 }	
+
+#news-row:hover, #news-row1:hover{
+	-fx-background-color:#e86e0a;
+	-fx-text-fill:#eee;
+}
 
 
 AnchorPane,HBox, VBox, FlowPane{-fx-background:#222; -fx-border-width:0.0px;}
@@ -325,7 +340,7 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 
 
 
-
+/* 
 #scanningTab{
 	-fx-background-radius: 0px 16px 16px 0px;
 	-fx-background-color: #555;
@@ -352,7 +367,10 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 	-fx-pref-width: 375px;	
 	-fx-border-color: transparent ;
 
-}
+}*/
+
+
+
 
 
 #newDocumentButton, #addTranscriberButton, #addDigitalizerButton, #addDReviserButton, #addTReviserButton{
