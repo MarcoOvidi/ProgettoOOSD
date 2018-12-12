@@ -18,15 +18,36 @@
 							<Tab fx:id="leftTab" text="Manage Users">
                         <AnchorPane>
                            <children>
-      									<TableView fx:id="users" layoutY="53.0" prefHeight="530.0" prefWidth="900.0">
-      										<columns>
-      											<TableColumn fx:id="userID" prefWidth="150.0" text="ID" />
-      											<TableColumn fx:id="username" prefWidth="200.0" text="Username" />
-      											<TableColumn fx:id="name" prefWidth="200.0" text="Name" />
-      											<TableColumn fx:id="surname" prefWidth="150.0" text="Surname" />
-      											<TableColumn fx:id="email" prefWidth="200.0" text="Email" />
-      										</columns>
-      									</TableView>
+                              <TabPane>
+                                 <tabs>
+                                    <Tab fx:id="active" closable="false" text="Active User">
+                                       <content>
+                  									<TableView fx:id="users" prefHeight="530.0" prefWidth="900.0">
+                  										<columns>
+                  											<TableColumn fx:id="userID" prefWidth="150.0" text="ID" />
+                  											<TableColumn fx:id="username" prefWidth="200.0" text="Username" />
+                  											<TableColumn fx:id="name" prefWidth="200.0" text="Name" />
+                  											<TableColumn fx:id="surname" prefWidth="150.0" text="Surname" />
+                  											<TableColumn fx:id="email" prefWidth="200.0" text="Email" />
+                  										</columns>
+                  									</TableView>
+                                       </content>
+                                    </Tab>
+                                    <Tab fx:id="inactive" closable="false" text="Inactive User">
+                                       <content>
+                                          <TableView fx:id="users1" prefHeight="530.0" prefWidth="900.0">
+                                             <columns>
+                                                <TableColumn fx:id="userID1" prefWidth="150.0" text="ID" />
+                                                <TableColumn fx:id="username1" prefWidth="200.0" text="Username" />
+                                                <TableColumn fx:id="name1" prefWidth="200.0" text="Name" />
+                                                <TableColumn fx:id="surname1" prefWidth="150.0" text="Surname" />
+                                                <TableColumn fx:id="email1" prefWidth="200.0" text="Email" />
+                                             </columns>
+                                          </TableView>
+                                       </content>
+                                    </Tab>
+                                 </tabs>
+                              </TabPane>
                            </children>
                         </AnchorPane>
 							</Tab>
