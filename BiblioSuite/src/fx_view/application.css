@@ -353,15 +353,15 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 }
 
 
-#newDocumentButton{
-	-fx-background-color:#655;
+#newDocumentButton, #addTranscriber, #addDigitalizer{
+	-fx-background-color:#555;
 	-fx-background-radius:#10px;
 	-fx-pref-width: 900px;
 	-fx-pref-height: 40px;
 	-fx-text-fill: #eee;
 	}
 	
-#newDocumentButton:hover{
+#newDocumentButton:hover, #addTranscriber:hover, #addDigitalizer:hover {
 	-fx-text-fill: #fff;
 	-fx-background-color:#e86e0a;	
 	}	

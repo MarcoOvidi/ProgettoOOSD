@@ -66,7 +66,7 @@
 																		<TableColumn fx:id="roleTranscriber" prefWidth="300.0" text="Role" />
 																	</columns>
 																</TableView>
-                                                <Button fx:id="addTrascriber" layoutX="89.0" layoutY="401.0" mnemonicParsing="false" text="Add Transcriber" />
+                                                <Button fx:id="addTranscriber" layoutY="401.0" mnemonicParsing="false" text="Add Transcriber" />
 															</children>
 														</AnchorPane>
 													</content>
@@ -110,7 +110,7 @@
 																		<TableColumn fx:id="roleDigitalizer" prefWidth="300.0" text="Role" />
 																	</columns>
 																</TableView>
-                                                <Button fx:id="addDigitalizer" layoutX="93.0" layoutY="395.0" mnemonicParsing="false" text="Add Digitalizer" />
+                                                <Button fx:id="addDigitalizer" layoutY="401.0" mnemonicParsing="false" text="Add Digitalizer" />
 															</children>
 														</AnchorPane>
 													</content>
