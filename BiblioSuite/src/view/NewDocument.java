@@ -127,7 +127,7 @@ public class NewDocument {
 	@FXML
 	public void caseZero() {
 		title = intext.getText();
-		label.setText("Inserisci autore/i");
+		label.setText("Insert author/s");
 		next.setVisible(false);
 //    	intext.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 //    		event.consume();
@@ -136,13 +136,13 @@ public class NewDocument {
 //		});
 
 		intext.setText("");
-		intext.setPromptText("Autore/i");
+		intext.setPromptText("Author/s");
 	}
 
 	@FXML
 	public void caseOne() {
 		author = intext.getText();
-		label.setText("Inserisci descrizione");
+		label.setText("Insert description");
 		container.getChildren().clear();
 		inarea = new TextArea();
 		container.getChildren().add(inarea);
@@ -153,12 +153,12 @@ public class NewDocument {
 	public void caseTwo() {
 		description = inarea.getText();
 		inarea.getText();
-		label.setText("Riguardo la composizione dell'opera si conosce");
+		label.setText("What do you know about the creation of the work");
 		System.out.println(c);
 		next.setVisible(false);
 		container.getChildren().clear();
-		definita = new Button("la data precisa");
-		indefinita = new Button("il periodo storico");
+		definita = new Button("A date");
+		indefinita = new Button("A period");
 
 		definita.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 			event.consume();
@@ -190,7 +190,7 @@ public class NewDocument {
 
 		next.setVisible(false);
 
-		label.setText("Digita l'anno in cui Ã¨ stato composto il manoscritto");
+		label.setText("Enter the year in which the document was composed");
 		container.getChildren().clear();
 
 		year.textProperty().addListener(new ChangeListener<String>() {
@@ -288,7 +288,7 @@ public class NewDocument {
 				year2var = "-" + year2var;
 		}
 
-		label.setText("Indicare lo stato di conservazione");
+		label.setText("Indicate the state of conservation");
 
 		container.getChildren().clear();
 
@@ -317,8 +317,8 @@ public class NewDocument {
 		if (author.isEmpty())
 			author = "Unknown";
 
-		label.setText("Il tuo documento e' stato creato");
-		next.setText(" Torna indietro.\n Dove sara'ï¿½ tutto nuovamente in inglese.\n Magico.");
+		label.setText("Your document has been created");
+		next.setText("Go back");
 		container.getChildren().clear();
 		System.out.println(title + author + description + yearvar + year1var + year2var + preservState);
 		CreateDocumentController.createDocument(title, author, description, yearvar, year1var, year2var, preservState);
