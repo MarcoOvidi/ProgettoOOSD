@@ -179,7 +179,7 @@ public class ManageProject {
 	private ObservableList<PageScanningLog> listScanLog;
 
 	@FXML
-	private Button addDigitalizer;
+	private Button addDigitalizerButton;
 
 	private UUIDScanningWorkProject selectedDocumentScanningProject;
 
@@ -316,7 +316,7 @@ public class ManageProject {
 	}
 
 	public void addDigitalizerEvent() {
-		addDigitalizer.setOnMouseClicked(event -> {
+		addDigitalizerButton.setOnMouseClicked(event -> {
 			if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
 
 				List<Formatter> choices = new ArrayList<>();
