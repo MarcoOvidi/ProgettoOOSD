@@ -23,12 +23,12 @@
 		<AnchorPane BorderPane.alignment="CENTER">
 			<children>
 				<AnchorPane layoutX="99.0" layoutY="117.0"
-					prefHeight="274.0" prefWidth="517.0" maxHeight="274.0"
+					prefHeight="320.0" prefWidth="517.0" maxHeight="384.0"
 					maxWidth="517.0" BorderPane.alignment="CENTER"
 					style="-fx-background-color: transparent">
 					<children>
 						<Label text="Registration" alignment="CENTER"
-							AnchorPane.topAnchor="10.0" AnchorPane.leftAnchor="75.0"
+							AnchorPane.topAnchor="10.0"
 							prefHeight="58.0"
 							prefWidth="268.0" style="&#10;" textAlignment="CENTER"
 							textFill="#e86e0a">
@@ -36,26 +36,26 @@
 								<Font size="28.0" />
 							</font>
 						</Label>
-						<HBox spacing="70" AnchorPane.topAnchor="75.0">
-							<VBox spacing="20">
-								<JFXTextField fx:id="username" promptText="Username" />
+						<HBox spacing="100" AnchorPane.topAnchor="75.0">
+							<VBox spacing="40">
+								<JFXTextField fx:id="username" promptText="Username" focusColor="#e86e0a" style="-fx-textfill: #eee;" unFocusColor="#cccccc" labelFloat="true" prefWidth="200.0"/>
 								<JFXPasswordField fx:id="password1"
-									promptText="Password" />
+									promptText="Password" focusColor="#e86e0a" style="-fx-textfill: #eee;" unFocusColor="#cccccc" labelFloat="true" prefWidth="200.0"/>
 								<JFXPasswordField fx:id="password2"
-									promptText="confirm Password" />
+									promptText="confirm Password" focusColor="#e86e0a" style="-fx-textfill: #eee;" unFocusColor="#cccccc" labelFloat="true" prefWidth="200.0"/>
 
 							</VBox>
-							<VBox spacing="20">
-								<JFXTextField fx:id="name" promptText="Name" />
-								<JFXTextField fx:id="surname" promptText="Surname" />
-								<JFXTextField fx:id="email" promptText="Email" />
+							<VBox spacing="40">
+								<JFXTextField fx:id="name" promptText="Name" focusColor="#e86e0a" style="-fx-textfill: #eee;" unFocusColor="#cccccc" labelFloat="true" prefWidth="200.0"/>
+								<JFXTextField fx:id="surname" promptText="Surname" focusColor="#e86e0a" style="-fx-textfill: #eee;" unFocusColor="#cccccc" labelFloat="true" prefWidth="200.0"/>
+								<JFXTextField fx:id="email" promptText="Email" focusColor="#e86e0a" style="-fx-textfill: #eee;" unFocusColor="#cccccc" labelFloat="true" prefWidth="200.0"/>
 							</VBox>
 						</HBox>
 
 						<HBox spacing="100" AnchorPane.bottomAnchor="0.0">
 
-							<JFXButton fx:id="back" text="Back" prefWidth="240.0" />
-							<JFXButton fx:id="register" text="Register" prefWidth="240.0" />
+							<JFXButton fx:id="back" text="Back" prefWidth="200.0" />
+							<JFXButton fx:id="register" text="Register" prefWidth="200.0" />
 
 						</HBox>
 					</children>
