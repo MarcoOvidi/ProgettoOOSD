@@ -4,6 +4,11 @@
 }
 
 
+#searchbar{
+	-fx-border-radius:4px;
+}
+
+
 Button{
 	-fx-background-color:#555;
 	-fx-text-fill:#fff;	 
@@ -20,13 +25,17 @@ JFXButton, TextField, PasswordField{
 	-fx-border-color:#aaa;
 	-fx-border-radius: 0.0px;
 	-fx-border-width: 0.0px 0.0px 1.5px 0.0px ;
-	-fx-text-fill:#aaa;	  
+	-fx-text-fill:#aaa;
     -fx-highlight-fill: #f87e1a;
     -fx-highlight-text-fill: #222;
 }
   
-JFXTextField, JFXPassword{
-	-fx-text-fill:#eee;
+JFXTextField, JFXPasswordField{
+    -fx-alignment: CENTER;
+	-fx-text-fill: #eee;
+	-fx-text-alignment: CENTER;
+    -fx-highlight-fill: #f87e1a;
+    -fx-highlight-text-fill: #222;
 }  
   
   
@@ -35,13 +44,16 @@ JFXTextField, JFXPassword{
  	-fx-border-width:1.0px;
  	-fx-border-color:#777;
  } 
- #username,#password{
- 	-fx-text-fill: #CCC;
- }
+
 #pageContainer{
 	-fx-background-color: #111;
 	-fx-opacity: 1.0;
 } 
+
+#news{
+	-fx-border-width: 1px 0px 0px 0px;
+	-fx-border-color: #e86e0a;
+}
 
 #news-row{
 	-fx-background-color:#202020;
@@ -57,11 +69,16 @@ JFXTextField, JFXPassword{
 	}
 	
 #news-row>Label{
-	-fx-text-fill:#aaa;
+	-fx-text-fill:#eee;
 }	
 #news-row1>Label{
-	-fx-text-fill:#aaa;
+	-fx-text-fill:#eee;
 }	
+
+#news-row:hover, #news-row1:hover{
+	-fx-background-color:#e86e0a;
+	-fx-text-fill:#eee;
+}
 
 
 AnchorPane,HBox, VBox, FlowPane{-fx-background:#222; -fx-border-width:0.0px;}
@@ -323,7 +340,7 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 
 
 
-
+/* 
 #scanningTab{
 	-fx-background-radius: 0px 16px 16px 0px;
 	-fx-background-color: #555;
@@ -350,7 +367,10 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 	-fx-pref-width: 375px;	
 	-fx-border-color: transparent ;
 
-}
+}*/
+
+
+
 
 
 #newDocumentButton, #addTranscriberButton, #addDigitalizerButton, #addDReviserButton, #addTReviserButton{
@@ -388,7 +408,7 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
     -fx-background-color: transparent;
 }
 
-/* Spaltenköpfe
+/* Spaltenkï¿½pfe
     Struktur column-header-background -> column-header */
 
 .table-view .column-header-background{

@@ -132,13 +132,22 @@ public class LoginScene {
 				go();
 		});
 
+		recover.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+			if (event.getCode() == KeyCode.ENTER)
+				SceneController.loadScene("passwordRecovery",false);
+		});
+
+		recover.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+			SceneController.loadScene("passwordRecovery",false);
+		});
+		
 		register.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
 			if (event.getCode() == KeyCode.ENTER)
-				SceneController.loadScene("registration");
+				SceneController.loadScene("registration",false);
 		});
 
 		register.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-			SceneController.loadScene("registration");
+			SceneController.loadScene("registration",false);
 		});
 
 		Platform.runLater(() -> username.getParent().requestFocus());

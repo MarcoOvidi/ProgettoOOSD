@@ -37,7 +37,7 @@ public class Container {
 	private static TreeMap<String, Pair<String,String>> map = new TreeMap<String, Pair<String,String>>();
 
 	static {
-		map.put("Home", new Pair<String,String>("home2","home"));
+		map.put("Home", new Pair<String,String>("home","home"));
 		map.put("My Profile", new Pair<String,String>("userProfile","user-circle"));
 		map.put("Manage Projects", new Pair<String,String>("manageProject","group"));
 		map.put("Upload", new Pair<String,String>("loadScan","image"));
