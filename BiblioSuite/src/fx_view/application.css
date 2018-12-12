@@ -4,9 +4,14 @@
 }
 
 
-#searchbar{
-	-fx-border-radius:4px;
-}
+#searchBar{
+	-fx-border-radius:20px;
+	-fx-background-radius:20px;
+	-fx-background-color:#555;
+	-fx-border-width:1px 1px 1px 1px;
+	-fx-border-color: #e86e0a;
+	-fx-text-fill:#aaa;
+	}
 
 
 Button{
@@ -340,7 +345,7 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 
 
 
-/* 
+
 #scanningTab{
 	-fx-background-radius: 0px 16px 16px 0px;
 	-fx-background-color: #555;
@@ -367,7 +372,7 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 	-fx-pref-width: 375px;	
 	-fx-border-color: transparent ;
 
-}*/
+}
 
 
 
