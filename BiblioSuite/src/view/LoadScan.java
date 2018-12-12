@@ -265,8 +265,8 @@ public class LoadScan {
 				//loadScanTitle.setVisible(true);
 				filechooser.setVisible(true);
 				checkConvalidated.setVisible(true);
-				checkRevisioned.setVisible(true);;
-				filterPages.setVisible(true);;
+				checkRevisioned.setVisible(true);
+				filterPages.setVisible(true);
 				pageTable.setVisible(true);
 				clearFilters.setVisible(true);
 				filtersLabel.setVisible(true);

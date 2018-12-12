@@ -4,7 +4,17 @@
 }
 
 
-JFXButton,TextField, PasswordField{
+Button{
+	-fx-background-color:#555;
+	-fx-text-fill:#fff;	 
+	-fx-border-radius: 4px;
+	}
+	
+Button:hover{
+	-fx-background-color:#888;
+	}
+
+JFXButton, TextField, PasswordField{
     -fx-alignment: CENTER;
 	-fx-background-color: transparent;
 	-fx-border-color:#aaa;
@@ -14,6 +24,11 @@ JFXButton,TextField, PasswordField{
     -fx-highlight-fill: #f87e1a;
     -fx-highlight-text-fill: #222;
 }
+  
+JFXTextField, JFXPassword{
+	-fx-text-fill:#eee;
+}  
+  
   
  #pageContainer{
  	-fx-background-color: #222;
@@ -249,16 +264,15 @@ TextArea:focused {
       -fx-background-color: #e86e0a;
 }
 
-.choice-box {
+.choice-box, MenuButton {
   -fx-background-color: #111;
-  -fx-mark-color: darkorange;
-}
+  -fx-mark-color: darkorange;}
 
-.choice-box > .label { -fx-text-fill: white; }
-.choice-box .context-menu { -fx-background-color: #111; }
-.choice-box .menu-item:focused { -fx-background-color: darkorange; }
-.choice-box .menu-item > .label { -fx-text-fill: white; }
-.choice-box .menu-item:focused > .label { -fx-text-fill: black; }
+MenuButton > .label { -fx-text-fill: white; }
+MenuButton .context-menu { -fx-background-color: #111; }
+MenuButton .menu-item:focused { -fx-background-color: darkorange; }
+MenuButton .menu-item > .label { -fx-text-fill: white; }
+MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 
 
 
@@ -288,6 +302,26 @@ TextArea:focused {
     -fx-border-color: #aa8;
 
 }
+
+#rightTab{
+	-fx-background-radius: 0px 16px 16px 0px;
+	-fx-background-color: #555;
+	-fx-pref-width: 375px;
+	-fx-border-color: transparent;
+}
+
+#leftTab{
+	-fx-background-radius: 16px 0px 0px 16px;
+	-fx-background-color: #555;
+	-fx-pref-width: 375px;
+	-fx-border-color: transparent;
+}
+
+#leftTab:hover, #leftTab:selected, #rightTab:hover, #rightTab:selected{
+	-fx-background-color: #888;
+}	
+
+
 
 
 #scanningTab{

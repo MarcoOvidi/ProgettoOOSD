@@ -1,64 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.Tab?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
-	minHeight="-Infinity" minWidth="-Infinity"
-	xmlns="http://javafx.com/javafx/8.0.171"
-	xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.AdminPanel">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.AdminPanel">
 	<left>
-		<AnchorPane prefHeight="800.0" prefWidth="1400.0"
-			BorderPane.alignment="CENTER">
+		<AnchorPane prefHeight="800.0" prefWidth="1400.0" BorderPane.alignment="CENTER">
 			<children>
-				<HBox spacing="70" layoutX="49.0" layoutY="10.0">
-					<TabPane tabClosingPolicy="UNAVAILABLE">
+				<HBox layoutX="49.0" layoutY="10.0" spacing="70">
+					<TabPane prefHeight="630.0" prefWidth="978.0" tabClosingPolicy="UNAVAILABLE">
 						<tabs>
-							<Tab text="manage users">
-								<VBox>
-									<TableView fx:id="users" layoutX="56.0"
-										layoutY="239.0" prefHeight="530.0" prefWidth="700.0">
-										<columns>
-											<TableColumn fx:id="userID" text="ID" />
-											<TableColumn fx:id="username" text="Username" />
-											<TableColumn fx:id="name" text="Name" />
-											<TableColumn fx:id="surname" text="Surname" />
-											<TableColumn fx:id="email" text="Email" />
-										</columns>
-									</TableView>
-									<!-- <Button fx:id="done" text="Done" prefWidth="240.0"/> -->
-								</VBox>
+							<Tab fx:id="leftTab" text="Manage Users">
+                        <AnchorPane>
+                           <children>
+      									<TableView fx:id="users" layoutY="53.0" prefHeight="530.0" prefWidth="900.0">
+      										<columns>
+      											<TableColumn fx:id="userID" prefWidth="150.0" text="ID" />
+      											<TableColumn fx:id="username" prefWidth="200.0" text="Username" />
+      											<TableColumn fx:id="name" prefWidth="200.0" text="Name" />
+      											<TableColumn fx:id="surname" prefWidth="150.0" text="Surname" />
+      											<TableColumn fx:id="email" prefWidth="200.0" text="Email" />
+      										</columns>
+      									</TableView>
+                           </children>
+                        </AnchorPane>
 							</Tab>
-							<Tab text="requests">
+							<Tab fx:id="rightTab" text="Requests">
 								<TabPane tabClosingPolicy="UNAVAILABLE">
 									<tabs>
-										<Tab fx:id="pending" text="Pending">
-											<TableView fx:id="requests" layoutX="56.0"
-												layoutY="239.0" prefHeight="530.0" prefWidth="700.0">
+										<Tab fx:id="pending" styleClass="tab1" text="Pending">
+											<TableView fx:id="requests" layoutX="56.0" layoutY="239.0" prefHeight="568.0" prefWidth="1032.0">
 												<columns>
-													<TableColumn fx:id="requestID" text="RequestID" />
-													<TableColumn fx:id="requestUsername"
-														text="Username" />
-													<TableColumn fx:id="RequestObject"
-														text="Object" />
+													<TableColumn fx:id="requestID" minWidth="150.0" text="RequestID" />
+													<TableColumn fx:id="requestUsername" minWidth="300.0" text="Username" />
+													<TableColumn fx:id="RequestObject" minWidth="300.0" text="Object" />
 												</columns>
 											</TableView>
 										</Tab>
-										<Tab fx:id="old" text="Already Read">
-											<TableView fx:id="requests2" layoutX="56.0"
-												layoutY="239.0" prefHeight="530.0" prefWidth="700.0">
+										<Tab fx:id="old" styleClass="tab1" text="Already Read">
+											<TableView fx:id="requests2" layoutX="56.0" layoutY="239.0" prefHeight="530.0" prefWidth="700.0">
 												<columns>
-													<TableColumn fx:id="requestID2" text="RequestID" />
-													<TableColumn fx:id="requestUsername2"
-														text="Username" />
-													<TableColumn fx:id="RequestObject2"
-														text="Object" />
+													<TableColumn fx:id="requestID2" prefWidth="150.0" text="RequestID" />
+													<TableColumn fx:id="requestUsername2" prefWidth="300.0" text="Username" />
+													<TableColumn fx:id="RequestObject2" prefWidth="300.0" text="Object" />
 												</columns>
 											</TableView>
 										</Tab>

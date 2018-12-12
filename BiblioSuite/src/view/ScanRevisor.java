@@ -8,6 +8,8 @@ import java.util.Map.Entry;
 import controller.LocalSession;
 import controller.PageScanController;
 import controller.ScanningProjectController;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -163,8 +165,9 @@ public class ScanRevisor {
 
 		for (Entry<UUIDDocument, String> e : PageScanController.getUncompletedDocument().entrySet()) {
 			documentList.getItems().add(e);
-		}
+		}	
 	}
+		
 
 
 

@@ -18,6 +18,7 @@ import javafx.fxml.LoadException;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -70,6 +71,9 @@ public class Transcription {
 	private Button filterPages;
 
 	@FXML
+	private Label filtersLabel;
+	
+	@FXML
 	private Button clearFilters;
 
 	private UUIDDocument currentDocument;
@@ -92,6 +96,17 @@ public class Transcription {
 	}
 
 	private void initPageTable() {
+		
+		//
+		checkConvalidated.setVisible(false);
+		checkRevisioned.setVisible(false);;
+		filterPages.setVisible(false);;
+		pageTable.setVisible(false);
+		clearFilters.setVisible(false);
+		filtersLabel.setVisible(false);
+		//
+		
+		
 		number.setResizable(false);
 		image.setResizable(true);
 		revisioned.setResizable(false);
@@ -165,6 +180,15 @@ public class Transcription {
 		documentList.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observableValue, Number entry, Number entryNew) {
+				//
+				checkConvalidated.setVisible(true);
+				checkRevisioned.setVisible(true);
+				filterPages.setVisible(true);
+				pageTable.setVisible(true);
+				clearFilters.setVisible(true);
+				filtersLabel.setVisible(true);
+				//
+				
 				currentDocument=documentList.getItems().get((Integer) entryNew).getKey();
 				loadDocument(currentDocument);
 			}

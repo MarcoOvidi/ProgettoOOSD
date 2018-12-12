@@ -16,7 +16,7 @@
 	<top>
 		<AnchorPane prefHeight="800.0" prefWidth="1400.0" BorderPane.alignment="CENTER">
 			<children>
-				<ScrollPane layoutX="41.0" layoutY="173.0" prefHeight="530.0" prefWidth="1182.0">
+				<ScrollPane layoutX="14.0" layoutY="115.0" prefHeight="530.0" prefWidth="1182.0">
 					<content>
 						<VBox fx:id="scanList" prefWidth="1035.0">
 							<children>
@@ -32,21 +32,21 @@
 						</VBox>
 					</content>
 				</ScrollPane>
-				<Label layoutX="41.0" layoutY="72.0" prefHeight="40.0" prefWidth="285.0" text="Select document:" styleClass="title">
+				<Label layoutX="14.0" layoutY="14.0" prefHeight="40.0" prefWidth="285.0" styleClass="title" text="Select document:">
 					<font>
 						<Font size="28.0" />
 					</font>
 				</Label>
-				<ChoiceBox fx:id="documentList" layoutX="326.0" layoutY="78.0" prefWidth="150.0" />
-				<Label layoutX="43.0" layoutY="125.0" text="Filter: " styleClass="title">
+				<ChoiceBox fx:id="documentList" layoutX="240.0" layoutY="23.0" prefWidth="150.0" />
+				<Label fx:id="filtersLabel" layoutX="146.0" layoutY="56.0" styleClass="title" text="Filters: ">
 					<font>
 						<Font size="28.0" />
 					</font>
 				</Label>
-				<CheckBox fx:id="checkRevisioned" layoutX="144.0" layoutY="130.0" mnemonicParsing="false" text="Revisioned" styleClass="highlight"/>
-				<CheckBox fx:id="checkConvalidated" layoutX="260.0" layoutY="133.0" mnemonicParsing="false" text="Convalidated" styleClass="highlight" />
-				<Button fx:id="filterPages" layoutX="405.0" layoutY="129.0" mnemonicParsing="false" text="Filter Pages" />
-				<Button fx:id="clearFilters" layoutX="523.0" layoutY="129.0" mnemonicParsing="false" text="No Filter" />
+				<CheckBox fx:id="checkRevisioned" layoutX="251.0" layoutY="70.0" mnemonicParsing="false" styleClass="highlight" text="Revisioned" />
+				<CheckBox fx:id="checkConvalidated" layoutX="359.0" layoutY="70.0" mnemonicParsing="false" styleClass="highlight" text="Convalidated" />
+				<Button fx:id="filterPages" layoutX="475.0" layoutY="65.0" mnemonicParsing="false" text="Filter Pages" />
+				<Button fx:id="clearFilters" layoutX="581.0" layoutY="65.0" mnemonicParsing="false" text="No Filter" />
 			</children>
 		</AnchorPane>
 	</top>
