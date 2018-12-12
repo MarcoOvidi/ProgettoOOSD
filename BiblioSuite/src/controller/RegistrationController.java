@@ -41,8 +41,13 @@ public class RegistrationController {
 		return true;
 	}
 
+	/*
+	 * Checks if the inserted username is valid and not already taken
+	 * @return true
+	 */
 	public static boolean checkUsername(String username) throws SQLException, DatabaseException {
-		if (username.length() < 5)
+		//TODO da completare
+		if (checkValidUsername(username))
 			return false;
 		return (!UserAuthenticationQuerySet.checkIfUsernameExists(username));
 	}
