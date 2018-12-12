@@ -44,6 +44,7 @@ public class Registration {
 			if (username.getText().isEmpty() || password1.getText().isEmpty() || password2.getText().isEmpty()
 					|| email.getText().isEmpty() || name.getText().isEmpty() || surname.getText().isEmpty()) {
 				alert("No field can be left blank.");
+				return;
 			}
 			try {
 				if (!RegistrationController.checkValidUsername(username.getText())) {

@@ -15,12 +15,12 @@
 <?import com.jfoenix.controls.JFXButton?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
-	minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0"
-	prefWidth="1400.0" xmlns="http://javafx.com/javafx/9.0.1"
+	minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0"
+	prefWidth="1280.0" xmlns="http://javafx.com/javafx/9.0.1"
 	xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="view.Registration">
 	<center>
-		<AnchorPane BorderPane.alignment="CENTER">
+		<AnchorPane BorderPane.alignment="CENTER" style=" -fx-background-image: url(images/lib.jpg); -fx-background-position: left top, center; -fx-background-repeat: stretch; -fx-background-size: cover, auto;">
 			<children>
 				<AnchorPane layoutX="99.0" layoutY="117.0"
 					prefHeight="320.0" prefWidth="517.0" maxHeight="384.0"
@@ -55,7 +55,7 @@
 						<HBox spacing="100" AnchorPane.bottomAnchor="0.0">
 
 							<JFXButton fx:id="back" text="Back" prefWidth="200.0" />
-							<JFXButton fx:id="register" text="Register" prefWidth="200.0" />
+							<JFXButton fx:id="register" text="Register" prefWidth="200.0" style="-fx-background-color: #e86e0a40;"/>
 
 						</HBox>
 					</children>
