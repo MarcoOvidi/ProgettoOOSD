@@ -181,6 +181,7 @@ public class ManageProject {
 	@FXML
 	private Button addDigitalizerButton;
 
+
 	private UUIDScanningWorkProject selectedDocumentScanningProject;
 
 	private UUIDTranscriptionWorkProject selectedDocumentTranscriptionProject;
@@ -339,6 +340,7 @@ public class ManageProject {
 						RoleController.addDigitalizerUserInScanningProject(risultato.get().idUser,
 								selectedDocumentScanningProject);
 					}
+					loadClickedDocumentProjects();
 				} else {
 					Alert alert = new Alert(AlertType.WARNING);
 					alert.setTitle("Warning");
