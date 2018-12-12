@@ -96,7 +96,7 @@ public class ManageProject {
 
 	@FXML
 	private AnchorPane manageContainer;
-	
+
 	@FXML
 	private AnchorPane transcriptionPagesAnchor;
 
@@ -178,6 +178,9 @@ public class ManageProject {
 	@FXML
 	private ObservableList<PageScanningLog> listScanLog;
 
+	@FXML
+	private Button addDigitalizer;
+
 	private UUIDScanningWorkProject selectedDocumentScanningProject;
 
 	private UUIDTranscriptionWorkProject selectedDocumentTranscriptionProject;
@@ -187,6 +190,7 @@ public class ManageProject {
 	public void initialize() {
 		initNewDocumentButton();
 		initPane();
+		addDigitalizerEvent();
 		try {
 			tableDocumentFiller();
 			rowClick();
@@ -195,17 +199,17 @@ public class ManageProject {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
 		}
-	}	
-		
+	}
+
 	public void initPane() {
 		pane.setVisible(false);
 	}
-	
+
 	private void initNewDocumentButton() {
 		newDocumentButton.setFont(new Font(14));
 		// dd.setPrefSize(20,50);
 		newDocumentButton.setMinSize(170, 45);
-		//newDocumentButton.setMaxSize(60, 45);
+		// newDocumentButton.setMaxSize(60, 45);
 		newDocumentButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 			SceneController.loadScene("newDocument");
 		});
@@ -311,8 +315,43 @@ public class ManageProject {
 		});
 	}
 
+	public void addDigitalizerEvent() {
+		addDigitalizer.setOnMouseClicked(event -> {
+			if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
+
+				List<Formatter> choices = new ArrayList<>();
+				for (UUIDUser user : ScanningProjectController
+						.getAvailadbleDigitalizers(selectedDocumentScanningProject)) {
+					choices.add(new Formatter(user, ScanningProjectController.getUserProfile(user).getUsername()));
+				}
+
+				if (!choices.isEmpty()) {
+
+					ChoiceDialog<Formatter> dialog = new ChoiceDialog<>(choices.get(0), choices);
+					dialog.setTitle("Add new Digitalizer");
+					dialog.setHeaderText(
+							"Add a new Digitalizer for the project: "/* + selectedDocumentScanningProject */);
+					dialog.setContentText("Choose a digitalizer user:");
+
+					Optional<Formatter> risultato = dialog.showAndWait();
+
+					if (risultato.isPresent()) {
+						RoleController.addDigitalizerUserInScanningProject(risultato.get().idUser,
+								selectedDocumentScanningProject);
+					}
+				} else {
+					Alert alert = new Alert(AlertType.WARNING);
+					alert.setTitle("Warning");
+					alert.setHeaderText("No Available Digitalizers");
+					alert.setContentText("There aren not avalaible users that you can add to this project!");
+					alert.showAndWait();
+				}
+			}
+		});
+	}
+
 	public void loadClickedDocumentProjects() {
-		
+
 		manageContainer.getChildren().clear();
 		manageContainer.getChildren().add(pane);
 		pane.setVisible(true);
@@ -367,8 +406,8 @@ public class ManageProject {
 						choices.add("Transcriber");
 						choices.add("Reviser");
 						choices.add("Remove user from project");
-						if (RoleController.controlUserPermission(12, LocalSession.getLocalUser().getID()) &&
-								RoleController.controlUserPermission(8, row.getItem().getId())) {
+						if (RoleController.controlUserPermission(12, LocalSession.getLocalUser().getID())
+								&& RoleController.controlUserPermission(8, row.getItem().getId())) {
 							choices.add("Coordinator");
 						}
 
@@ -497,7 +536,7 @@ public class ManageProject {
 
 								if (!(scelta.isEmpty())) {
 
-									RoleController.changeTransriptionProjectCoordinator(row.getItem().getId() ,
+									RoleController.changeTransriptionProjectCoordinator(row.getItem().getId(),
 											selectedDocumentTranscriptionProject);
 
 								} else {
@@ -664,8 +703,8 @@ public class ManageProject {
 						choices.add("Digitalizer");
 						choices.add("Reviser");
 						choices.add("Remove user from project");
-						if (RoleController.controlUserPermission(12, LocalSession.getLocalUser().getID()) &&
-								RoleController.controlUserPermission(8, row.getItem().getId())) {
+						if (RoleController.controlUserPermission(12, LocalSession.getLocalUser().getID())
+								&& RoleController.controlUserPermission(8, row.getItem().getId())) {
 							choices.add("Coordinator");
 						}
 
@@ -714,8 +753,8 @@ public class ManageProject {
 											Formatter f = dialogo.getResult();
 											RoleController.changeScanningProjectCoordinator(f.getIdUser(),
 													selectedDocumentScanningProject);
-											RoleController.addDigitalizerUserInScanningProject(
-													row.getItem().getId(), selectedDocumentScanningProject);
+											RoleController.addDigitalizerUserInScanningProject(row.getItem().getId(),
+													selectedDocumentScanningProject);
 										}
 									} else {
 										Alert alert = new Alert(AlertType.WARNING);
@@ -794,7 +833,7 @@ public class ManageProject {
 
 								if (!(scelta.isEmpty())) {
 
-									RoleController.changeScanningProjectCoordinator(row.getItem().getId() ,
+									RoleController.changeScanningProjectCoordinator(row.getItem().getId(),
 											selectedDocumentScanningProject);
 
 								} else {
@@ -946,7 +985,6 @@ public class ManageProject {
 			return row;
 
 		});
-
 
 	}
 

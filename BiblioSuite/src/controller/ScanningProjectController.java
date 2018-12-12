@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import dao.DatabaseException;
 import dao.DigitalizationRevisorQuerySet;
@@ -93,6 +94,16 @@ public class ScanningProjectController {
 		}
 		return u;
 
+	}
+	
+	public static LinkedList<UUIDUser> getAvailadbleDigitalizers(UUIDScanningWorkProject ids){
+		try {
+			return ScanningWorkProjectQuerySet.getAvailableDigitalizers(ids);
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			return null;
+		}
 	}
 
 }
