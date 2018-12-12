@@ -20,7 +20,7 @@
                            <children>
                               <TabPane>
                                  <tabs>
-                                    <Tab fx:id="active" closable="false" text="Active User">
+                                    <Tab fx:id="active" closable="false" styleClass="tab1" text="Active User">
                                        <content>
                   									<TableView fx:id="users" prefHeight="530.0" prefWidth="900.0">
                   										<columns>
@@ -33,7 +33,7 @@
                   									</TableView>
                                        </content>
                                     </Tab>
-                                    <Tab fx:id="inactive" closable="false" text="Inactive User">
+                                    <Tab fx:id="inactive" closable="false" styleClass="tab1" text="Inactive User">
                                        <content>
                                           <TableView fx:id="users1" prefHeight="530.0" prefWidth="900.0">
                                              <columns>
