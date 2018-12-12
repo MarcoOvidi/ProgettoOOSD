@@ -19,9 +19,10 @@ public class UserPermissions {
 	private Boolean assignTranscriptionTask; //like 10
 	private Boolean publishDocument; //like 11
 	private Boolean admin; //like 12
+	private Boolean active; //like 13
 	
 	//costruttore
-	public UserPermissions(Boolean a, Boolean b, Boolean c, Boolean d, Boolean e, Boolean f, Boolean g, Boolean h, Boolean i, Boolean l, Boolean m, Boolean administrator) {
+	public UserPermissions(Boolean a, Boolean b, Boolean c, Boolean d, Boolean e, Boolean f, Boolean g, Boolean h, Boolean i, Boolean l, Boolean m, Boolean administrator , Boolean active) {
 		this.download = a;
 		this.upload = b;
 		this.editMetadata = c;
@@ -34,6 +35,7 @@ public class UserPermissions {
 		this.assignTranscriptionTask = l;
 		this.publishDocument = m;
 		this.setAdmin(administrator);
+		this.active=active;
 	}
 	
 	public UserPermissions() {
@@ -48,6 +50,7 @@ public class UserPermissions {
 		this.assignDigitalizationTask =
 		this.assignTranscriptionTask =
 		this.publishDocument = 
+		this.active =
 		this.setAdmin(false); 
 	}
 	
@@ -95,6 +98,10 @@ public class UserPermissions {
 	public void setPublishDocumentPerm(Boolean b) {
 		this.publishDocument=b;
 	}
+	
+	public void setActive(Boolean b) {
+		this.active=b;
+	}
 	 //metodi get
 	
 	public Boolean getDownloadPerm() {
@@ -141,6 +148,10 @@ public class UserPermissions {
 		return this.publishDocument;
 	}
 	
+	public Boolean getActive() {
+		return this.active;
+	}
+	
 	public void updatePermission(Boolean[] p){
 		this.download=p[1];
 		this.upload=p[2];
@@ -154,6 +165,7 @@ public class UserPermissions {
 		this.assignTranscriptionTask=p[10];
 		this.publishDocument=p[11];
 		this.admin=p[12];
+		this.active=p[13];
 	}
 
 	public Boolean getAdmin() {
@@ -179,6 +191,10 @@ public class UserPermissions {
 
 	public void grantTranscriptionReviser() {
 		setReviewTranscriptionPerm(true);
+	}
+	
+	public void grantActive() {
+		setActive(true);
 	}
 	
 	public void grantCoordinator() {
@@ -215,5 +231,9 @@ public class UserPermissions {
 	
 	public boolean isAdmin() {
 		return getAdmin();
+	}
+	
+	public boolean isActive() {
+		return getActive();
 	}
 }

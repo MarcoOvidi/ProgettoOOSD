@@ -48,6 +48,7 @@
 					</VBox>
 					<VBox spacing="20">
 						<Label text="permissions: " />
+						<JFXCheckBox disable="true" fx:id="active" text="Active User" />
 						<JFXCheckBox disable="true" fx:id="download" text="Download" />
 						<JFXCheckBox disable="true" fx:id="publishDocument"
 							text="PublishDocument" />

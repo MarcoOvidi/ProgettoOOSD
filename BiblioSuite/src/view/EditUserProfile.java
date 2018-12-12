@@ -32,7 +32,6 @@ public class EditUserProfile {
 
 	@FXML
 	private MenuButton roleList;
-
 	@FXML
 	private CheckBox download;
 	@FXML

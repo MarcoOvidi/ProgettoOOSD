@@ -177,7 +177,9 @@ public class UserAuthenticationQuerySet { //COMPLETATA E TUTTA FUNZIONANTE
 		UserPermissions usrPerm = null;
 		
 		try {			
-			ps = con.prepareStatement("SELECT * FROM perm_authorization WHERE ID_user=?");
+			ps = con.prepareStatement("SELECT pa.*, user.status FROM perm_authorization as pa "
+					+ "JOIN user on pa.ID_user=user.ID "
+					+ "WHERE ID_user=?");
 		
 			ps.setInt(1, usr.getValue());
 			rs = ps.executeQuery();
@@ -194,7 +196,8 @@ public class UserAuthenticationQuerySet { //COMPLETATA E TUTTA FUNZIONANTE
 						rs.getBoolean("assignDigitalizationTask"), 
 						rs.getBoolean("assignTranscriptionTask"), 
 						rs.getBoolean("publishDocument"),
-						rs.getBoolean("admin"));
+						rs.getBoolean("admin"),
+						rs.getBoolean("status"));
 				
 				return usrPerm;
 			}else {
@@ -257,6 +260,8 @@ public class UserAuthenticationQuerySet { //COMPLETATA E TUTTA FUNZIONANTE
 			return control("publishDocument",id);
 		case 12 :
 			return control("admin",id);
+		case 13 :
+			return control("active",id);
 		default :
 			throw new Exception("Permesso non riconosciuto");
 		}
@@ -277,7 +282,7 @@ public class UserAuthenticationQuerySet { //COMPLETATA E TUTTA FUNZIONANTE
 			ResultSet rs = null;
 		
 			try {			
-				ps = con.prepareStatement("SELECT * FROM perm_authorization WHERE ID_user=? ");
+				ps = con.prepareStatement("SELECT pa.*, user.status FROM perm_authorization as pa JOIN user on pa.ID_user=user.ID WHERE ID_user=?;");
 		
 				ps.setInt(1, userID.getValue());
 				

@@ -23,7 +23,8 @@ public class UserProfile {
 	private Label surname;
 	@FXML
 	private Label email;
-
+	@FXML
+	private CheckBox active;
 	@FXML
 	private CheckBox download;
 	@FXML
@@ -68,6 +69,8 @@ public class UserProfile {
 	
 	private void loadPermissions() {
 		UserPermissions up = LocalSession.getLocalUser().getPermissions();
+		if(up.getActive())
+			active.setSelected(true);
 		if (up.getAddNewProjectPerm())
 			addNewProject.setSelected(true);
 		if(up.getAssignDigitalizationTaskPerm())
