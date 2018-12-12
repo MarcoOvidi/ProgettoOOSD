@@ -10,6 +10,7 @@ import dao.UserAuthenticationQuerySet;
 import vo.UUIDScanningWorkProject;
 import vo.UUIDTranscriptionWorkProject;
 import vo.UUIDUser;
+import vo.UserPermissions;
 
 public class RoleController {
 
@@ -137,5 +138,15 @@ public class RoleController {
 		}
 		
 		return coord;
+	}
+	
+	public static UserPermissions getUserPermission(UUIDUser id) {
+		try {
+			return UserAuthenticationQuerySet.getUSerPermission(id);
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			return null;
+		}
 	}
 }

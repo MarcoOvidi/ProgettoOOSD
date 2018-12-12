@@ -46,6 +46,7 @@ import vo.UUIDTranscriptionWorkProject;
 import vo.UUIDUser;
 import vo.view.DocumentRow;
 import vo.view.StaffRow;
+import vo.view.Formatter;
 
 public class ManageProject {
 
@@ -349,7 +350,7 @@ public class ManageProject {
 					Optional<Formatter> risultato = dialog.showAndWait();
 
 					if (risultato.isPresent()) {
-						RoleController.addDigitalizerUserInScanningProject(risultato.get().idUser,
+						RoleController.addDigitalizerUserInScanningProject(risultato.get().getIdUser(),
 								selectedDocumentScanningProject);
 					}
 				} else {
@@ -383,7 +384,7 @@ public class ManageProject {
 					Optional<Formatter> risultato = dialog.showAndWait();
 
 					if (risultato.isPresent()) {
-						RoleController.addReviserUserInScanningProject(risultato.get().idUser,
+						RoleController.addReviserUserInScanningProject(risultato.get().getIdUser(),
 								selectedDocumentScanningProject);
 					}
 				} else {
@@ -418,7 +419,7 @@ public class ManageProject {
 					Optional<Formatter> risultato = dialog.showAndWait();
 
 					if (risultato.isPresent()) {
-						RoleController.addReviserUserInTrascriptionProject(risultato.get().idUser,
+						RoleController.addReviserUserInTrascriptionProject(risultato.get().getIdUser(),
 								selectedDocumentTranscriptionProject);
 					}
 				} else {
@@ -454,7 +455,7 @@ public class ManageProject {
 					Optional<Formatter> risultato = dialog.showAndWait();
 
 					if (risultato.isPresent()) {
-						RoleController.addTranscriberUserInTrascriptionProject(risultato.get().idUser,
+						RoleController.addTranscriberUserInTrascriptionProject(risultato.get().getIdUser(),
 								selectedDocumentTranscriptionProject);
 					}
 				} else {
@@ -522,8 +523,11 @@ public class ManageProject {
 									|| RoleController.controlUserPermission(12, LocalSession.getLocalUser().getID()))) {
 
 						List<String> choices = new ArrayList<>();
-						choices.add("Transcriber");
-						choices.add("Reviser");
+						
+						if(RoleController.controlUserPermission(5, row.getItem().getId()))
+							choices.add("Transcriber");
+						if(RoleController.controlUserPermission(7, row.getItem().getId()))
+							choices.add("Reviser");
 						choices.add("Remove user from project");
 						if (RoleController.controlUserPermission(12, LocalSession.getLocalUser().getID())
 								&& RoleController.controlUserPermission(8, row.getItem().getId())) {
@@ -673,9 +677,14 @@ public class ManageProject {
 					} else if (row.getItem().getRole().equals("Coordinator")
 							&& RoleController.controlUserPermission(12, LocalSession.getLocalUser().getID())) {
 						List<String> choices = new ArrayList<>();
-						choices.add("Transcriber");
-						choices.add("Reviser");
-						choices.add("Coordinator");
+						
+						if(RoleController.controlUserPermission(5, row.getItem().getId()))
+							choices.add("Transcriber");
+						if(RoleController.controlUserPermission(7, row.getItem().getId()))
+							choices.add("Reviser");
+						if(RoleController.controlUserPermission(8, row.getItem().getId()))
+							choices.add("Coordinator");
+						
 						choices.add("Remove user from project");
 
 						ChoiceDialog<String> dialog = new ChoiceDialog<>(row.getItem().getRole(), choices);
@@ -819,8 +828,10 @@ public class ManageProject {
 									|| RoleController.controlUserPermission(12, LocalSession.getLocalUser().getID()))) {
 
 						List<String> choices = new ArrayList<>();
-						choices.add("Digitalizer");
-						choices.add("Reviser");
+						if(RoleController.controlUserPermission(2, row.getItem().getId()))
+							choices.add("Digitalizer");
+						if(RoleController.controlUserPermission(4, row.getItem().getId()))
+							choices.add("Reviser");
 						choices.add("Remove user from project");
 						if (RoleController.controlUserPermission(12, LocalSession.getLocalUser().getID())
 								&& RoleController.controlUserPermission(8, row.getItem().getId())) {
@@ -970,9 +981,13 @@ public class ManageProject {
 					} else if (row.getItem().getRole().equals("Coordinator")
 							&& RoleController.controlUserPermission(12, LocalSession.getLocalUser().getID())) {
 						List<String> choices = new ArrayList<>();
-						choices.add("Digitalizer");
-						choices.add("Reviser");
-						choices.add("Coordinator");
+						
+						if(RoleController.controlUserPermission(2, row.getItem().getId()))
+							choices.add("Digitalizer");
+						if(RoleController.controlUserPermission(4, row.getItem().getId()))
+							choices.add("Reviser");
+						if(RoleController.controlUserPermission(8, row.getItem().getId()))
+							choices.add("Coordinator");
 						choices.add("Remove user from project");
 
 						ChoiceDialog<String> dialog = new ChoiceDialog<>(row.getItem().getRole(), choices);
@@ -1317,36 +1332,5 @@ public class ManageProject {
 	 */
 
 	// ___
-	final class Formatter {
-		UUIDUser idUser;
-		String username;
-
-		public UUIDUser getIdUser() {
-			return idUser;
-		}
-
-		public void setIdUser(UUIDUser idUser) {
-			this.idUser = idUser;
-		}
-
-		public String getUsername() {
-			return username;
-		}
-
-		public void setUsername(String username) {
-			this.username = username;
-		}
-
-		public Formatter(UUIDUser idUser, String username) {
-			super();
-			this.idUser = idUser;
-			this.username = username;
-		}
-
-		@Override
-		public String toString() {
-			return username;
-		}
-
-	}
+	
 }
