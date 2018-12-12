@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import dao.DatabaseException;
 import dao.EditProfileQuerySet;
@@ -72,6 +73,26 @@ public class TranscriptionProjectController {
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
+		}
+	}
+	
+	public static LinkedList<UUIDUser> getAvailadbleTranscribers(UUIDTranscriptionWorkProject ids){
+		try {
+			return TranscriptionWorkProjectQuerySet.getAvailableDigitalizers(ids);
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
+	
+	public static LinkedList<UUIDUser> getAvailadbleRevisers(UUIDTranscriptionWorkProject ids){
+		try {
+			return TranscriptionWorkProjectQuerySet.getAvailableRevisers(ids);
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			return null;
 		}
 	}
 

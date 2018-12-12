@@ -1002,7 +1002,7 @@ public class ScanningWorkProjectQuerySet {
 	}
 	
 	/**
-	 * Recupera tutti gli utenti attivi, che sini digitalizzatori e che non fanno già parte del progetto sia come digitalizzatori che come trascrittori
+	 * Recupera tutti gli utenti attivi, che soni digitalizzatori e che non fanno già parte del progetto sia come digitalizzatori che come revisori che come coordinatori 
 	 * @param ids
 	 * @return
 	 * @throws DatabaseException
@@ -1033,6 +1033,68 @@ public class ScanningWorkProjectQuerySet {
 					+ "WHERE upload=1 and status = 1 "
 					+ "and u.ID not in( select ID_digitalizer_user from scanning_project_digitalizer_partecipant where ID_scanning_project=?) "
 					+ "AND u.ID not in( select ID_reviser_user from scanning_project_reviser_partecipant where ID_scanning_project=?)"
+					+ "AND u.ID not in( select ID_coordinator from scanning_project where ID=?) ;");
+			ps.setInt(1, ids.getValue());
+			ps.setInt(2, ids.getValue());
+			ps.setInt(3, ids.getValue());
+
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				availableStaff.add(new UUIDUser(rs.getInt("ID")));
+			}
+			
+			
+		} catch (SQLException e) {
+			throw new DatabaseException("Errore di esecuzione query", e);
+		} finally {
+
+			try {
+				if(rs != null)
+					rs.close();
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+		}
+		return availableStaff;
+	}
+	
+	/**
+	 * Recupera tutti gli utenti attivi, che sono revisori e che non fanno già parte del progetto sia come digitalizzatori che come revisori e coordinatori
+	 * @param ids
+	 * @return
+	 * @throws DatabaseException
+	 * @throws NullPointerException
+	 */
+	public static LinkedList<UUIDUser> getAvailableRevisers(UUIDScanningWorkProject ids)
+			throws DatabaseException, NullPointerException {
+		if (ids == null)
+			throw new NullPointerException("Id Progetto non valido");
+
+
+		Connection con = null;
+		LinkedList<UUIDUser> availableStaff = new LinkedList<UUIDUser>();
+		
+		try {
+			con = DBConnection.connect();
+		} catch (DatabaseException ex) {
+			throw new DatabaseException("Errore di connessione", ex);
+		}
+
+		PreparedStatement ps = null;
+		
+		ResultSet rs = null;
+
+		try {
+			ps = con.prepareStatement("select u.ID from user as u join perm_authorization as perm "
+					+ "on u.ID=perm.ID_user "
+					+ "WHERE reviewPage=1 and status = 1 and "
+					+ "u.ID not in( select ID_digitalizer_user from scanning_project_digitalizer_partecipant where ID_scanning_project=?) "
+					+ "AND u.ID not in( select ID_reviser_user from scanning_project_reviser_partecipant where ID_scanning_project=?) "
 					+ "AND u.ID not in( select ID_coordinator from scanning_project where ID=?) ;");
 			ps.setInt(1, ids.getValue());
 			ps.setInt(2, ids.getValue());

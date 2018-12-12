@@ -181,6 +181,15 @@ public class ManageProject {
 	@FXML
 	private Button addDigitalizerButton;
 
+	@FXML
+	private Button addTranscriberButton;
+
+	@FXML
+	private Button addDReviserButton;
+
+	@FXML
+	private Button addTReviserButton;
+
 	private UUIDScanningWorkProject selectedDocumentScanningProject;
 
 	private UUIDTranscriptionWorkProject selectedDocumentTranscriptionProject;
@@ -191,6 +200,10 @@ public class ManageProject {
 		initNewDocumentButton();
 		initPane();
 		addDigitalizerEvent();
+		addTranscriberEvent();
+		addDReviserEvent();
+		addTReviserEvent();
+
 		try {
 			tableDocumentFiller();
 			rowClick();
@@ -343,10 +356,116 @@ public class ManageProject {
 					Alert alert = new Alert(AlertType.WARNING);
 					alert.setTitle("Warning");
 					alert.setHeaderText("No Available Digitalizers");
-					alert.setContentText("There aren not avalaible users that you can add to this project!");
+					alert.setContentText("There are not avalaible users that you can add to this project!");
 					alert.showAndWait();
 				}
 			}
+			loadClickedDocumentProjects();
+		});
+	}
+
+	public void addDReviserEvent() {
+		addDReviserButton.setOnMouseClicked(event -> {
+			if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
+
+				List<Formatter> choices = new ArrayList<>();
+				for (UUIDUser user : ScanningProjectController.getAvailadbleRevisers(selectedDocumentScanningProject)) {
+					choices.add(new Formatter(user, ScanningProjectController.getUserProfile(user).getUsername()));
+				}
+
+				if (!choices.isEmpty()) {
+
+					ChoiceDialog<Formatter> dialog = new ChoiceDialog<>(choices.get(0), choices);
+					dialog.setTitle("Add new Reviser");
+					dialog.setHeaderText("Add a new Reviser for the project: "/* + selectedDocumentScanningProject */);
+					dialog.setContentText("Choose a Reviser user:");
+
+					Optional<Formatter> risultato = dialog.showAndWait();
+
+					if (risultato.isPresent()) {
+						RoleController.addReviserUserInScanningProject(risultato.get().idUser,
+								selectedDocumentScanningProject);
+					}
+				} else {
+					Alert alert = new Alert(AlertType.WARNING);
+					alert.setTitle("Warning");
+					alert.setHeaderText("No Available Reviser");
+					alert.setContentText("There are not avalaible users that you can add to this project!");
+					alert.showAndWait();
+				}
+			}
+			loadClickedDocumentProjects();
+		});
+	}
+
+	public void addTReviserEvent() {
+		addTReviserButton.setOnMouseClicked(event -> {
+			if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
+
+				List<Formatter> choices = new ArrayList<>();
+				for (UUIDUser user : TranscriptionProjectController
+						.getAvailadbleRevisers(selectedDocumentTranscriptionProject)) {
+					choices.add(new Formatter(user, TranscriptionProjectController.getUserProfile(user).getUsername()));
+				}
+
+				if (!choices.isEmpty()) {
+
+					ChoiceDialog<Formatter> dialog = new ChoiceDialog<>(choices.get(0), choices);
+					dialog.setTitle("Add new Reviser");
+					dialog.setHeaderText("Add a new Reviser for the project: "/* + selectedDocumentScanningProject */);
+					dialog.setContentText("Choose a Reviser user:");
+
+					Optional<Formatter> risultato = dialog.showAndWait();
+
+					if (risultato.isPresent()) {
+						RoleController.addReviserUserInTrascriptionProject(risultato.get().idUser,
+								selectedDocumentTranscriptionProject);
+					}
+				} else {
+					Alert alert = new Alert(AlertType.WARNING);
+					alert.setTitle("Warning");
+					alert.setHeaderText("No Available Reviser");
+					alert.setContentText("There are not avalaible users that you can add to this project!");
+					alert.showAndWait();
+				}
+			}
+			loadClickedDocumentProjects();
+		});
+	}
+
+	public void addTranscriberEvent() {
+		addTranscriberButton.setOnMouseClicked(event -> {
+			if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
+
+				List<Formatter> choices = new ArrayList<>();
+				for (UUIDUser user : TranscriptionProjectController
+						.getAvailadbleTranscribers(selectedDocumentTranscriptionProject)) {
+					choices.add(new Formatter(user, TranscriptionProjectController.getUserProfile(user).getUsername()));
+				}
+
+				if (!choices.isEmpty()) {
+
+					ChoiceDialog<Formatter> dialog = new ChoiceDialog<>(choices.get(0), choices);
+					dialog.setTitle("Add new Transcriber");
+					dialog.setHeaderText(
+							"Add a new Transcriber for the project: "/* + selectedDocumentScanningProject */ );
+					dialog.setContentText("Choose a transcriber user:");
+
+					Optional<Formatter> risultato = dialog.showAndWait();
+
+					if (risultato.isPresent()) {
+						RoleController.addTranscriberUserInTrascriptionProject(risultato.get().idUser,
+								selectedDocumentTranscriptionProject);
+					}
+				} else {
+					Alert alert = new Alert(AlertType.WARNING);
+					alert.setTitle("Warning");
+					alert.setHeaderText("No Available Transcriber");
+					alert.setContentText("There are not avalaible users that you can add to this project!");
+					alert.showAndWait();
+				}
+			}
+			loadClickedDocumentProjects();
 		});
 	}
 

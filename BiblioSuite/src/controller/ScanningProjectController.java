@@ -105,5 +105,15 @@ public class ScanningProjectController {
 			return null;
 		}
 	}
+	
+	public static LinkedList<UUIDUser> getAvailadbleRevisers(UUIDScanningWorkProject ids){
+		try {
+			return ScanningWorkProjectQuerySet.getAvailableRevisers(ids);
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
 
 }
