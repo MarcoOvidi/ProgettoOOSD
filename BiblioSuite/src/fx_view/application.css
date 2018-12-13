@@ -7,12 +7,17 @@
 #searchBar{
 	-fx-border-radius:20px;
 	-fx-background-radius:20px;
-	-fx-background-color:#555;
+	-fx-background-color:#222;
 	-fx-border-width:1px 1px 1px 1px;
 	-fx-border-color: #e86e0a;
 	-fx-text-fill:#aaa;
 	}
 
+#homeTabPane>Tab>ScrollPane{
+	-fx-background-color: white;
+	-fx-border-width:2px 0px 0px 0px;
+	-fx-border-color: #e86e0a;
+}
 
 Button{
 	-fx-background-color:#555;
@@ -61,12 +66,14 @@ JFXTextField, JFXPasswordField{
 }
 
 #news-row{
+	
 	-fx-background-color:#202020;
 	-fx-padding:4.0px;
 	-fx-border-width:0.0px 0.0px 1.0px 0.0px;
 	-fx-border-color:#191919;
 	}
 #news-row1{
+	
 	-fx-background-color:#222;
 	-fx-padding:4.0px;
 	-fx-border-width:0.0px 0.0px 0.0px 0.0px;
@@ -82,7 +89,9 @@ JFXTextField, JFXPasswordField{
 
 #news-row:hover, #news-row1:hover{
 	-fx-background-color:#e86e0a;
+	-fx-background-radius: 8px;
 	-fx-text-fill:#eee;
+	-fx-font-size:18px;
 }
 
 

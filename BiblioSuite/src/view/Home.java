@@ -19,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -52,13 +53,16 @@ public class Home {
 	private VBox collections;
 
 	@FXML
-	private Tab transcriptionTab;
+	private Tab transcriptionTabHome;
 
 	@FXML
-	private Tab scanningTab;
+	private Tab scanningTabHome;
 
 	@FXML
 	private Accordion documentCollections;
+	
+	@FXML
+	private TextField searchBar;
 
 	@FXML
 	public void initialize() throws DatabaseException, ParseException {
@@ -67,6 +71,30 @@ public class Home {
 		loadScanningProjects();
 		loadTranscriptionProjects();
 		loadBookmarks();
+		initSearchBar();
+	}
+	
+	@FXML
+	public void initSearchBar() {
+		searchBar.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				int l=newValue.length();
+				/*if(l>1) {
+					if (newValue.substring(l-1,l).equals(" ") && newValue.replaceAll("\\s","").length()>0)
+						System.out.println("doca");
+				}*/
+				
+				/*if(l>1) {
+					if (newValue.substring(l-1,l).equals(" ") && !(newValue.replaceAll("\\s","").length()>0))
+					{
+						searchBar.setText("");
+						System.out.println("tuc");
+					}
+					
+				}*/
+			}
+		});
 	}
 
 	@FXML
@@ -99,7 +127,7 @@ public class Home {
 				sProjects.getChildren().add(elem);
 			}
 		} else {
-			scanningTab.setDisable(true);
+			scanningTabHome.setDisable(true);
 		}
 	}
 
@@ -123,7 +151,7 @@ public class Home {
 				tProjects.getChildren().add(elem);
 			}
 		} else {
-			transcriptionTab.setDisable(true);
+			transcriptionTabHome.setDisable(true);
 		}
 	}
 
@@ -165,6 +193,7 @@ public class Home {
 
 	}
 
+	
 	@FXML
 	public void loadNews() throws DatabaseException, ParseException {
 		try {
@@ -174,16 +203,28 @@ public class Home {
 
 			for (Entry<UUIDDocument, String[]> entry : newsMap.entrySet()) {
 
-				Label title = new Label(entry.getValue()[0] + "               ( " + entry.getValue()[1] + " giorni fa) "
-						+ entry.getValue()[2]);
-
+				Label title1 = new Label(entry.getValue()[0]);
+				title1.setPrefWidth(150);
+				Label title2 =  new Label("( " + entry.getValue()[1] + " giorni fa )");
+				title2.setPrefWidth(150);
+				Label title3 = new Label(entry.getValue()[2]);
+				
+				String s=title1.getText();
+				char first = Character.toUpperCase(s.charAt(0));
+				String s1 = first + s.substring(1);
+				title1.setText(s1);
+			
+		
 				HBox row = new HBox();
 
 				if (c % 2 == 0)
 					row.setId("news-row");
 				else
 					row.setId("news-row1");
-				row.getChildren().add(title);
+				row.getChildren().add(title1);
+				row.getChildren().add(title2);
+				row.getChildren().add(title3);
+
 
 				row.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 					try {
