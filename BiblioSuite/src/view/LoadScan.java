@@ -85,15 +85,15 @@ public class LoadScan {
 
 	@FXML
 	private Button clearFilters;
-	
-	//@FXML
-	//private Label loadScanTitle;
-	
+
+	// @FXML
+	// private Label loadScanTitle;
+
 	@FXML
 	private Label filtersLabel;
 
 	private UUIDDocument currentDocument;
-	
+
 	@FXML
 	public void initialize() {
 		imageUpload();
@@ -107,17 +107,15 @@ public class LoadScan {
 		prepareDocument();
 	}
 
-	
-	private void initLoadScanTitle(){
-		//loadScanTitle.setVisible(false);
-		
+	private void initLoadScanTitle() {
+		// loadScanTitle.setVisible(false);
+
 	}
-	
+
 	private void initFileChooser() {
 		filechooser.setVisible(false);
 	}
-	
-	
+
 	private void prepareDocument() {
 		if (toOpenDocument != null) {
 			loadDocument(toOpenDocument);
@@ -128,8 +126,10 @@ public class LoadScan {
 	private void initPageTable() {
 		//
 		checkConvalidated.setVisible(false);
-		checkRevisioned.setVisible(false);;
-		filterPages.setVisible(false);;
+		checkRevisioned.setVisible(false);
+		;
+		filterPages.setVisible(false);
+		;
 		pageTable.setVisible(false);
 		clearFilters.setVisible(false);
 		filtersLabel.setVisible(false);
@@ -158,67 +158,96 @@ public class LoadScan {
 			FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Images", "*.jpg", "*.png");
 			fileChooser.getExtensionFilters().add(extFilter);
 			File file = fileChooser.showOpenDialog(new Stage());
+			if (file == null)
+				return;
 
 			/*
-			VBox hbox = new VBox();
-			hbox.setAlignment(Pos.CENTER);
-			hbox.setPadding(new Insets(40));
-			hbox.focusedProperty().addListener((ov, oldV, newV) -> {
-				if (!newV) { // focus lost
-					// Your code
-					hbox.setStyle("-fx-background: #444;");
-				}
-			});
-			
-			*/
-			
+			 * VBox hbox = new VBox(); hbox.setAlignment(Pos.CENTER); hbox.setPadding(new
+			 * Insets(40)); hbox.focusedProperty().addListener((ov, oldV, newV) -> { if
+			 * (!newV) { // focus lost // Your code hbox.setStyle("-fx-background: #444;");
+			 * } });
+			 * 
+			 */
+
 			Image pic = new Image(file.toURI().toString());
-			
+
 			/*
-			ImageView newscan = new ImageView(pic);
-			newscan.setFitWidth(600);
-			newscan.setFitHeight(350);
+			 * ImageView newscan = new ImageView(pic); newscan.setFitWidth(600);
+			 * newscan.setFitHeight(350);
+			 * 
+			 * 
+			 * hbox.getChildren().add(newscan); hbox.getChildren().add(new TextField("1"));
+			 * Button send = new Button("Upload Page");
+			 * 
+			 * 
+			 * send.addEventHandler(MouseEvent.MOUSE_CLICKED, sending -> { // TODO chiama
+			 * controller che chiama la query createPage di digitalizerQuerySET
+			 * 
+			 * sending.consume(); }); scanList.getChildren().add(hbox);
+			 */
 
-			
-			hbox.getChildren().add(newscan);
-			hbox.getChildren().add(new TextField("1"));
-			Button send = new Button("Upload Page");
-
-	
-			send.addEventHandler(MouseEvent.MOUSE_CLICKED, sending -> {
-				// TODO chiama controller che chiama la query createPage di digitalizerQuerySET
-
-				sending.consume();
-			});
-			scanList.getChildren().add(hbox);
-			*/
-			
-			PageScanController.createNewPage(pic, askForPageNumber());	
+			Integer pageNumber = askForPageNumber();
+			if (pageNumber == null)
+				return;
+			PageScanController.createNewPage(pic, pageNumber);
 			loadDocument(currentDocument);
 			event.consume();
-			
-			
+
 		});
 	}
-	
-	private int askForPageNumber() {
+
+	/*
+	 * Dialog to choose a page number, null if cancel is clicked
+	 */
+	private Integer askForPageNumber() {
+
 		int res = 0;
 		boolean b = true;
+
 		TextInputDialog dialog = new TextInputDialog();
 		dialog.setHeaderText("Choose new page number:");
 		dialog.setTitle("Page number");
-		while(b) {
-			Optional<String> str = dialog.showAndWait();
-			if(str.isPresent()) {
-				try {
-				res = Integer.parseInt(str.get());
-				b=false;
-				} catch (NumberFormatException e) {
-					continue;
+		dialog.getEditor().textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if (!newValue.matches("\\d*")) {
+					dialog.getEditor().setText(newValue.replaceAll("[^\\d]", ""));
 				}
+			}
+		});
+
+		while (b) {
+			Optional<String> str = dialog.showAndWait();
+			if (!str.isPresent())
+				return null;
+			try {
+				res = Integer.parseInt(str.get());
+				if (isPageNumberAlreadyPresent(res))
+					continue;
+				if (res <= 0)
+					continue;
+
+				b = false;
+			} catch (NumberFormatException e) {
+				continue;
 			}
 		}
 		return res;
+	}
+
+	private boolean isPageNumberAlreadyPresent(int number) {
+		/*
+		 * non funziona se le qualche pagina non è stata caricata for (Rows row :
+		 * pageTable.getItems()) { if (row.getNumber().equals(number)) return true; }
+		 * return false;
+		 */
+
+		LinkedList<Page> pL = PageScanController.getCurrentDocumentPages();
+		for (Page p : pL) {
+			if (p.getPageNumber() == number)
+				return true;
+		}
+		return false;
 	}
 
 	@FXML
@@ -282,10 +311,11 @@ public class LoadScan {
 		validated.setCellValueFactory(new PropertyValueFactory<Rows, String>("Validated"));
 
 		documentList.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+
 			@Override
 			public void changed(ObservableValue<? extends Number> observableValue, Number entry, Number entryNew) {
 				//
-				//loadScanTitle.setVisible(true);
+				// loadScanTitle.setVisible(true);
 				filechooser.setVisible(true);
 				checkConvalidated.setVisible(true);
 				checkRevisioned.setVisible(true);
@@ -293,10 +323,11 @@ public class LoadScan {
 				pageTable.setVisible(true);
 				clearFilters.setVisible(true);
 				filtersLabel.setVisible(true);
-				//-
-			  currentDocument=documentList.getItems().get((Integer) entryNew).getKey();
+				// -
+				currentDocument = documentList.getItems().get((Integer) entryNew).getKey();
 				loadDocument(currentDocument);
 			}
+
 		});
 
 	}
@@ -306,7 +337,6 @@ public class LoadScan {
 	}
 
 	public void loadDocument(UUIDDocument document) { // FIXME tutto da testare
-		
 
 		PageScanController.loadNewDocumentPages(document);
 
@@ -358,27 +388,18 @@ public class LoadScan {
 				if (event.getOldValue() == event.getNewValue()) {
 					return;
 				}
-				for (Page p : pL) {
-					if (p.getPageNumber() == Integer.parseInt(event.getNewValue())) {
-						/*
-						 * if (p.getScan().getValidated()) { Alert alt = new
-						 * Alert(AlertType.INFORMATION); alt.setTitle("Not Valid Operation");
-						 * alt.setHeaderText("Attention");
-						 * alt.setContentText("Cannot change number to a validated Page!"); alt.show();
-						 * event.getRowValue().setNumber(event.getOldValue()); pageTable.refresh();
-						 * return; } else {
-						 */
-						event.getRowValue().setNumber(event.getOldValue());
-						pageTable.refresh();
-						Alert alt = new Alert(AlertType.INFORMATION);
-						alt.setTitle("Not Valid Operation");
-						alt.setHeaderText("Attention");
-						alt.setContentText("Cannot change number to an existing Page!");
-						alt.show();
+				
+				if (isPageNumberAlreadyPresent(Integer.parseInt(event.getNewValue()))) {
+					
+					event.getRowValue().setNumber(event.getOldValue());
+					pageTable.refresh();
+					Alert alt = new Alert(AlertType.INFORMATION);
+					alt.setTitle("Not Valid Operation");
+					alt.setHeaderText("Attention");
+					alt.setContentText("Cannot change number to an existing Page!");
+					alt.show();
 
-						return;
-					}
-
+					return;
 				}
 				PageScanController.updatePageNumber(event.getRowValue().getId(), Integer.parseInt(event.getNewValue()));
 			}
