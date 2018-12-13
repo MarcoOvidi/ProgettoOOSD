@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -122,6 +123,16 @@ public class PageScanController {
 			DigitalizerQuerySet.updatePage(page, img);
 		} catch (DatabaseException e) {
 			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.err.println(">>> Error creating file: Reverting changes to database...");
+			try {
+				DigitalizerQuerySet.deletePage(page);
+				System.err.println("Done.");
+			} catch (DatabaseException e1) {
+				e1.printStackTrace();
+				System.err.println(">>> Cannot revert changes, leaving database in an unsafe state!");
+			}
 		}
 		return page;
 	}

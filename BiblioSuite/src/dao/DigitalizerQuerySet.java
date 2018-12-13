@@ -212,4 +212,39 @@ public class DigitalizerQuerySet { // COMPLETATA E VERIFICATA DEF
 		}
 		return id;
 	}
+
+	public static void deletePage(UUIDPage page) throws DatabaseException {
+
+		Connection con = null;
+		
+		try {
+			con = DBConnection.connect();
+		}catch(DatabaseException ex) {
+			throw new DatabaseException("Errore di connessione", ex);
+		}
+		
+		PreparedStatement ps = null;
+		
+		try {
+			ps = con.prepareStatement("DELETE FROM page WHERE ID=?");
+			
+			ps.setInt(1, page.getValue());
+			
+			
+			ps.executeUpdate();
+			
+		}catch(SQLException e) {
+			throw new DatabaseException("Errore di esecuzione query", e);
+		}finally {
+			try {
+				if(ps != null)
+					ps.close();
+				if(con != null)
+					con.close();
+			}catch(SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+		}
+	}
+
 }

@@ -85,7 +85,7 @@ public class PageViewQuerySet {
 			ps.setInt(1, ID_bm.getValue());
 			
 			
-			ps.executeQuery();
+			ps.executeUpdate();
 			
 		}catch(SQLException e) {
 			throw new DatabaseException("Errore di esecuzione query", e);

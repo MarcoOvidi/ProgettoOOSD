@@ -10,26 +10,24 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 
 public class ImageUploader {
-	
+
 	private ImageUploader() {
 	}
 
 	/*
 	 * Carica un'immagine e restituisce il nuovo URL
+	 * 
 	 * @return String URL della nuova immagine
 	 */
-	public static String uploadImage (Image image, String subpath) {
+	public static String uploadImage(Image image, String subpath) throws IOException {
 		String resultingURL = "images/" + subpath;
 		File outputFile = new File(resultingURL);
+		outputFile.createNewFile();
 		BufferedImage bImage = SwingFXUtils.fromFXImage(image, null);
-		try {
-			ImageIO.write(bImage, "png", outputFile);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+		ImageIO.write(bImage, "png", outputFile);
 		return resultingURL;
 	}
-	
-	//TODO delete image
+
+	// TODO delete image
 
 }
