@@ -170,6 +170,7 @@ public class EditUserProfile {
 	private void initAdminOptions() {
 		boolean adminEditing = !EditUserController.isSelfEditing();
 		setEditableUserData(!adminEditing);
+		setInactivable(!adminEditing);
 		setRolesVisible(adminEditing);
 
 		discard.setVisible(adminEditing);
@@ -181,7 +182,11 @@ public class EditUserProfile {
 			});
 		}
 	}
-
+	
+	private void setInactivable(boolean value) {
+		deactivate.setVisible(!value);
+	}
+	
 	private void setEditableUserData(boolean value) {
 		name.setDisable(!value);
 		surname.setDisable(!value);
