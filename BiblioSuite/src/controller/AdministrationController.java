@@ -49,10 +49,10 @@ public class AdministrationController {
 		return users;
 	}
 
-	public static LinkedList<User> loadUserList() {
+	public static LinkedList<User> loadUserList(Boolean status) {
 		LinkedList<User> res = null;
 		try {
-			res = AdministrationQuerySet.loadUserList();
+			res = AdministrationQuerySet.loadUserList(status);
 		} catch (DatabaseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -85,6 +85,15 @@ public class AdministrationController {
 		try{
 			AdministrationQuerySet.answerRequest(id, answer);
 		}catch(DatabaseException e ) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public static void modifyUserStatus(UUIDUser id , Boolean status) {
+		try {
+			AdministrationQuerySet.modifyUserStatus(id, status);
+		}catch(Exception e ) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
 		}

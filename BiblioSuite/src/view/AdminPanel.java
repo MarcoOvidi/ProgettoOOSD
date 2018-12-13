@@ -35,7 +35,11 @@ public class AdminPanel {
 	@FXML
 	private TableView<UserRow> users;
 	@FXML
+	private TableView<UserRow> users1;
+	@FXML
 	private ObservableList<UserRow> userRows;
+	@FXML
+	private ObservableList<UserRow> userRows1;
 	@FXML
 	private TableColumn<UserRow, UUIDUser> userID;
 	@FXML
@@ -46,6 +50,17 @@ public class AdminPanel {
 	private TableColumn<UserRow, String> surname;
 	@FXML
 	private TableColumn<UserRow, String> email;
+
+	@FXML
+	private TableColumn<UserRow, UUIDUser> userID1;
+	@FXML
+	private TableColumn<UserRow, String> username1;
+	@FXML
+	private TableColumn<UserRow, String> name1;
+	@FXML
+	private TableColumn<UserRow, String> surname1;
+	@FXML
+	private TableColumn<UserRow, String> email1;
 
 	@FXML
 	private Tab pending;
@@ -73,15 +88,16 @@ public class AdminPanel {
 	@FXML
 	private TableColumn<RequestRow, String> RequestObject2;
 
-
 	@FXML
 	public void initialize() throws DatabaseException, ParseException {
-		initUserList();
+		initActiveUserList();
+		initInactiveUserList();
 		initUserRowClick();
 		initRequests();
+		initUserRowClick1();
 	}
 
-	private void initUserList() {
+	private void initActiveUserList() {
 		userID.setCellValueFactory(new PropertyValueFactory<UserRow, UUIDUser>("userID"));
 		username.setCellValueFactory(new PropertyValueFactory<UserRow, String>("username"));
 		name.setCellValueFactory(new PropertyValueFactory<UserRow, String>("name"));
@@ -91,13 +107,32 @@ public class AdminPanel {
 
 		userRows = FXCollections.observableArrayList();
 
-		for (User user : AdministrationController.loadUserList()) {
+		for (User user : AdministrationController.loadUserList(true)) {
 			UserRow row = new UserRow(user.getID(), user.getUsername(), user.getInformations().getName(),
 					user.getInformations().getSurname(), user.getInformations().getMail());
 			userRows.add(row);
 		}
 
 		users.setItems(userRows);
+	}
+
+	private void initInactiveUserList() {
+		userID1.setCellValueFactory(new PropertyValueFactory<UserRow, UUIDUser>("userID"));
+		username1.setCellValueFactory(new PropertyValueFactory<UserRow, String>("username"));
+		name1.setCellValueFactory(new PropertyValueFactory<UserRow, String>("name"));
+		surname1.setCellValueFactory(new PropertyValueFactory<UserRow, String>("surname"));
+		email1.setCellValueFactory(new PropertyValueFactory<UserRow, String>("email"));
+		userID1.setVisible(false);
+
+		userRows1 = FXCollections.observableArrayList();
+
+		for (User user : AdministrationController.loadUserList(false)) {
+			UserRow row = new UserRow(user.getID(), user.getUsername(), user.getInformations().getName(),
+					user.getInformations().getSurname(), user.getInformations().getMail());
+			userRows1.add(row);
+		}
+
+		users1.setItems(userRows1);
 	}
 
 	public void initUserRowClick() {
@@ -121,6 +156,37 @@ public class AdminPanel {
 
 			});
 			return row;
+		});
+	}
+
+	public void initUserRowClick1() {
+		users1.setRowFactory(tv -> {
+			TableRow<UserRow> row1 = new TableRow<>();
+			row1.setOnMouseClicked(event -> {
+				if (!row1.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
+					users.refresh();
+
+					Alert alert = new Alert(AlertType.CONFIRMATION);
+					alert.setTitle("User Status");
+					alert.setHeaderText("Gestione Stato Utente");
+					alert.setContentText("Vuoi rendere attivo l'utente: " + row1.getItem().getUsername() + " ?");
+
+					Optional<ButtonType> result = alert.showAndWait();
+					
+					if (result.get() == ButtonType.OK) {
+						AdministrationController.modifyUserStatus(row1.getItem().getId(), true);
+					}
+
+					try {
+						refreshRow(row1);
+					} catch (DatabaseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+
+			});
+			return row1;
 		});
 	}
 
@@ -148,12 +214,11 @@ public class AdminPanel {
 		requestID2.setVisible(false);
 
 		initRequestTabs();
-		
+
 		pending.getTabPane().setOnMouseClicked(event -> {
 			initRequestTabs();
 			initRequestTabs2();
 		});
-		
 
 		initRequestRowClick();
 	}
@@ -172,7 +237,7 @@ public class AdminPanel {
 		requests.refresh();
 
 	}
-	
+
 	public void initRequestTabs2() {
 		requestsRows2 = FXCollections.observableArrayList();
 
@@ -217,10 +282,11 @@ public class AdminPanel {
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == buttonAnswer) {
-			
+
 			TextInputDialog dialog = new TextInputDialog("answer");
 			dialog.setTitle("Request Answer");
-			dialog.setHeaderText("Answer for the request " + requestID.getValue() + " commited by" + AdministrationController.loadUsername(request.getUser()) + ".");
+			dialog.setHeaderText("Answer for the request " + requestID.getValue() + " commited by"
+					+ AdministrationController.loadUsername(request.getUser()) + ".");
 			dialog.setContentText("Please enter answer:");
 
 			Optional<String> result2 = dialog.showAndWait();
@@ -229,7 +295,6 @@ public class AdminPanel {
 				initRequests();
 			}
 
-			
 		} else if (result.get() == buttonIgnore) {
 			AdministrationController.ignoreUserRequest(requestID);
 			initRequests();

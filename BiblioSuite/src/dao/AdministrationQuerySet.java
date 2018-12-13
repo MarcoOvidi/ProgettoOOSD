@@ -348,7 +348,7 @@ public class AdministrationQuerySet { // tutto ok
 	 * @exception SQLException in caso di errori relativi al database
 	 */
 
-	public static LinkedList<User> loadUserList() throws DatabaseException {
+	public static LinkedList<User> loadUserList(Boolean b) throws DatabaseException {
 		Connection con = null;
 
 		try {
@@ -362,8 +362,9 @@ public class AdministrationQuerySet { // tutto ok
 		LinkedList<User> result = new LinkedList<User>();
 
 		try {
-			ps = con.prepareStatement("SELECT * FROM user");
-
+			ps = con.prepareStatement("SELECT * FROM user WHERE status=?");
+			ps.setBoolean(1, b);
+			
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				UUIDUser id = new UUIDUser(rs.getInt("ID"));
