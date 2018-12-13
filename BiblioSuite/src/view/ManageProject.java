@@ -204,7 +204,7 @@ public class ManageProject {
 		addTranscriberEvent();
 		addDReviserEvent();
 		addTReviserEvent();
-
+		addDigitalizerEvent();
 		try {
 			tableDocumentFiller();
 			rowClick();

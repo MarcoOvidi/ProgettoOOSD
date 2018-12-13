@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import controller.LocalSession;
@@ -27,6 +28,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
@@ -190,12 +192,33 @@ public class LoadScan {
 			});
 			scanList.getChildren().add(hbox);
 			*/
-			PageScanController.createNewPage(pic, 0);			
+			
+			PageScanController.createNewPage(pic, askForPageNumber());	
 			loadDocument(currentDocument);
 			event.consume();
 			
 			
 		});
+	}
+	
+	private int askForPageNumber() {
+		int res = 0;
+		boolean b = true;
+		TextInputDialog dialog = new TextInputDialog();
+		dialog.setHeaderText("Choose new page number:");
+		dialog.setTitle("Page number");
+		while(b) {
+			Optional<String> str = dialog.showAndWait();
+			if(str.isPresent()) {
+				try {
+				res = Integer.parseInt(str.get());
+				b=false;
+				} catch (NumberFormatException e) {
+					continue;
+				}
+			}
+		}
+		return res;
 	}
 
 	@FXML

@@ -33,6 +33,7 @@ public class PasswordRecovery {
 				return;
 			}
 			alert("Mail with password recover instructions sent to " + email.getText());
+			SceneController.loadPreviousScene();
 		});
 	}
 

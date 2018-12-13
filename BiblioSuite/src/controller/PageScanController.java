@@ -121,6 +121,7 @@ public class PageScanController {
 			img = new vo.Image(URL);
 			
 			DigitalizerQuerySet.updatePage(page, img);
+			DigitalizerQuerySet.updatePageNumber(page, num);
 		} catch (DatabaseException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

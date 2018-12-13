@@ -172,7 +172,7 @@ public class DigitalizerQuerySet { // COMPLETATA E VERIFICATA DEF
 		try {
 			con.setAutoCommit(false);
 			ps = con.prepareStatement("insert into page(number,image,ID_digitalizer,ID_document) values(?,?,?,?);", new String[] { "ID" });
-			System.out.println(">> " + number + " " + img.getUrl() + " " + digitalizer + " " + doc.getValue());
+			//System.out.println(">> " + number + " " + img.getUrl() + " " + digitalizer + " " + doc.getValue());
 			ps.setInt(1, number);
 			ps.setString(2, img.getUrl());
 			ps.setInt(3, digitalizer.getValue());

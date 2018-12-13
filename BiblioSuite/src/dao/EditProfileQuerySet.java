@@ -134,7 +134,6 @@ public class EditProfileQuerySet {
 	 */
 	
 	public void deleteUserProfile() {
-		
 	}
 	
 	

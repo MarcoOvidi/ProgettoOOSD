@@ -20,12 +20,25 @@ public class ImageUploader {
 	 * @return String URL della nuova immagine
 	 */
 	public static String uploadImage(Image image, String subpath) throws IOException {
-		String resultingURL = "images/" + subpath;
+
+		String resultingURL = "data/" + subpath;
+		setupDataDirectory();
+		
 		File outputFile = new File(resultingURL);
 		outputFile.createNewFile();
+		
 		BufferedImage bImage = SwingFXUtils.fromFXImage(image, null);
 		ImageIO.write(bImage, "png", outputFile);
+		
 		return resultingURL;
+	}
+	
+	/*
+	 * Creates a data directory for the images if it doesn't exist
+	 */
+	private static void setupDataDirectory() {
+		File dataDir = new File("data");
+		dataDir.mkdirs();
 	}
 
 	// TODO delete image
