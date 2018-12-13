@@ -50,6 +50,7 @@
 						<HBox />
 						<JFXButton fx:id="done" text="Done" prefWidth="240.0" />
 						<JFXButton fx:id="discard" text="Discard" prefWidth="240.0" />
+						<JFXButton fx:id="deactivate" text="Deactivate User" prefWidth="240.0" />
 
 					</VBox>
 					<VBox spacing="20">

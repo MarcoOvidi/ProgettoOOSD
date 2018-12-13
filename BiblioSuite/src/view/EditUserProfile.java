@@ -2,12 +2,17 @@ package view;
 
 import java.text.ParseException;
 import java.util.LinkedList;
+import java.util.Optional;
 
+import controller.AdministrationController;
 import controller.EditUserController;
 import dao.DatabaseException;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Label;
@@ -59,6 +64,9 @@ public class EditUserProfile {
 	private Button done;
 	@FXML
 	private Button discard;
+	@FXML
+	private Button deactivate;
+	
 
 	@FXML
 	public void initialize() throws DatabaseException, ParseException {
@@ -66,6 +74,7 @@ public class EditUserProfile {
 		loadPermissions();
 		initDoneButton();
 		initAdminOptions();
+		initDeactivateButton();
 	}
 
 	private void loadInfo() {
@@ -76,6 +85,23 @@ public class EditUserProfile {
 		email.setText(info.getMail().getEmail());
 	}
 
+	private void initDeactivateButton() {
+		deactivate.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Confirmation Dialog");
+			alert.setHeaderText("Look, a Confirmation Dialog");
+			alert.setContentText("Are you ok with this?");
+
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == ButtonType.OK){
+				
+				User editedUser = EditUserController.getToEditUser();	
+				AdministrationController.modifyUserStatus(editedUser.getID(), false);
+				SceneController.loadPreviousScene();
+				
+			}
+		});
+	}
 	private void loadPermissions() {
 		UserPermissions up = EditUserController.getToEditUser().getPermissions();
 		addNewProject.setSelected(up.getAddNewProjectPerm());
