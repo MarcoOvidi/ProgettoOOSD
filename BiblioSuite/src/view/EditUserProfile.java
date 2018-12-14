@@ -179,12 +179,10 @@ public class EditUserProfile {
 						List<Formatter> scelta = new LinkedList<Formatter>();
 
 						for (Map.Entry<UUIDUser, String> e : RoleController.showCoordinatorUsers().entrySet()) {
-							if(e.getKey().getValue() != editedUser.getID().getValue() || RoleController.controlUserPermission(12, e.getKey()) ) {
+							if (e.getKey().getValue() != editedUser.getID().getValue()) {
 								scelta.add(new Formatter(e.getKey(), e.getValue()));
 							}
 						}
-						
-						
 
 						if (!(scelta.isEmpty())) {
 
@@ -217,7 +215,7 @@ public class EditUserProfile {
 							alert3.showAndWait();
 							SceneController.loadPreviousScene();
 						}
-					}else {
+					} else {
 						RoleController.removeUserFromAllProjects(editedUser.getID());
 						AdministrationController.modifyUserStatus(editedUser.getID(), false);
 						SceneController.loadPreviousScene();
@@ -325,6 +323,8 @@ public class EditUserProfile {
 			discard.setOnMouseClicked(event -> {
 				SceneController.loadPreviousScene();
 			});
+			if (EditUserController.getToEditUser().isAdmin())
+				deactivate.setDisable(true);
 		}
 	}
 
