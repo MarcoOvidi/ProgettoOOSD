@@ -7,8 +7,8 @@ public class DocumentMetadata {
 	//variabili istanza
 	private String author;
 	private String description;
-	private Integer composingDate;
-	private VagueDate composingPeriod;
+	private Integer compositionDate;
+	private VagueDate compositionPeriod;
 	private Integer preservationState;
 	private ArrayList<Tag> tags = new ArrayList<Tag>();
 	
@@ -16,8 +16,8 @@ public class DocumentMetadata {
 	public DocumentMetadata(String auth, String descr,Integer compDate,VagueDate period,Integer preserv) {
 		this.author=auth;
 		this.description=descr;
-		this.composingDate=compDate;
-		this.composingPeriod=period;
+		this.compositionDate=compDate;
+		this.compositionPeriod=period;
 		this.preservationState=preserv;
 	}
 	
@@ -32,10 +32,13 @@ public class DocumentMetadata {
 		return this.description;
 	}
 	
-	public Integer getComposingDate() {
-		return this.composingDate;
+	public Integer getCompositionDate() {
+		return this.compositionDate;
 	}
 	
+	public VagueDate getCompositionPeriod() {
+		return compositionPeriod;
+	}
 
 	public Integer getPreservationState() {
 		return this.preservationState;
@@ -53,12 +56,12 @@ public class DocumentMetadata {
 		this.description=d;
 	}
 	
-	public void setComposingDate(Integer d) {
-		this.composingDate=d;
+	public void setCompositionDate(Integer d) {
+		this.compositionDate=d;
 	}
 	
-	public void setComposingPeriod(VagueDate d) {
-		this.composingPeriod=d;
+	public void setCompositionPeriod(VagueDate d) {
+		this.compositionPeriod=d;
 	}
 	//TODO ci serve un'eccezione per controllare il valore inserito...
 	public void setPreservationState(Integer s) {
@@ -86,7 +89,7 @@ public class DocumentMetadata {
 	@Override
 	public String toString() {
 		return "DocumentMetadata [author=" + author + ", description=" + description + ", composingDate="
-				+ composingDate + ", composingPeriod=" + composingPeriod + ", preservationState=" + preservationState
+				+ compositionDate + ", composingPeriod=" + compositionPeriod + ", preservationState=" + preservationState
 				+ ", tags=" + tags + "]";
 	}
 	
