@@ -421,7 +421,7 @@ public class AdministrationQuerySet { // tutto ok
 
 		try {
 			ps = con.prepareStatement(
-					"select u.id,u.username from user as u join perm_authorization as pA on u.ID=pA.ID_user WHERE addNewProject=1;");
+					"select u.id,u.username from user as u join perm_authorization as pA on u.ID=pA.ID_user WHERE addNewProject=1 and status=1;");
 
 			rs = ps.executeQuery();
 
@@ -446,5 +446,124 @@ public class AdministrationQuerySet { // tutto ok
 		}
 
 		return coordinators;
+	}
+	
+	/**
+	 * Controlla se un utente fa parte in qualche modo di un progetto di digitalizzazione e/o trascrizione
+	 * @param id
+	 * @return
+	 * @throws DatabaseException
+	 */
+	public static HashMap<String, Integer> userIsInvolved(UUIDUser id) throws DatabaseException {
+		Connection con = null;
+
+		try {
+			con = DBConnection.connect();
+		} catch (DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		HashMap<String,Integer> envolved = new HashMap<String,Integer>();
+
+		try {
+		
+			ps = con.prepareStatement(
+					"select count(ID) as number from scanning_project where ID_coordinator=?;");
+			ps.setInt(1, id.getValue());
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				envolved.put("ScanningProjectCoordinator", rs.getInt("number"));
+			}
+
+			if(ps != null)
+				ps.close();
+			if(rs != null)
+				rs.close();
+			
+			ps = con.prepareStatement(
+					"select count(ID) as number from scanning_project_digitalizer_partecipant where ID_digitalizer_user=?;");
+			ps.setInt(1, id.getValue());
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				envolved.put("ScanningProjectDigitalizer", rs.getInt("number"));
+			}
+
+			if(ps != null)
+				ps.close();
+			if(rs != null)
+				rs.close();
+			
+			ps = con.prepareStatement(
+					"select count(ID) as number from scanning_project_reviser_partecipant where ID_reviser_user=?;");
+			ps.setInt(1, id.getValue());
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				envolved.put("ScanningProjectReviser", rs.getInt("number"));
+			}
+			
+			if(ps != null)
+				ps.close();
+			if(rs != null)
+				rs.close();
+			
+			ps = con.prepareStatement(
+					"select count(ID) as number from transcription_project where ID_coordinator=?;");
+			ps.setInt(1, id.getValue());
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				envolved.put("TranscriptionProjectCoordinator", rs.getInt("number"));
+			}
+
+			if(ps != null)
+				ps.close();
+			if(rs != null)
+				rs.close();
+			
+			ps = con.prepareStatement(
+					"select count(ID) as number from transcription_project_transcriber_partecipant where ID_transcriber_user=?;");
+			ps.setInt(1, id.getValue());
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				envolved.put("TranscriptionProjectTranscriber", rs.getInt("number"));
+			}
+
+			if(ps != null)
+				ps.close();
+			if(rs != null)
+				rs.close();
+			
+			ps = con.prepareStatement(
+					"select count(ID) as number from transcription_project_reviser_partecipant where ID_reviser_user=?;");
+			ps.setInt(1, id.getValue());
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				envolved.put("TranscriptionProjectReviser", rs.getInt("number"));
+			}
+			
+			
+
+		} catch (SQLException e) {
+			throw new DatabaseException("Errore di esecuzione della query", e);
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+
+		}
+
+		return envolved;
 	}
 }

@@ -98,4 +98,14 @@ public class AdministrationController {
 			System.out.println(e.getMessage());
 		}
 	}
+	
+	public static HashMap<String, Integer> getInvolvedUser(UUIDUser u){
+		try {
+			return AdministrationQuerySet.userIsInvolved(u);
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

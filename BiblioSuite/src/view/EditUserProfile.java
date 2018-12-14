@@ -2,6 +2,7 @@ package view;
 
 import java.text.ParseException;
 import java.util.LinkedList;
+import java.util.Map.Entry;
 import java.util.Optional;
 
 import controller.AdministrationController;
@@ -66,7 +67,6 @@ public class EditUserProfile {
 	private Button discard;
 	@FXML
 	private Button deactivate;
-	
 
 	@FXML
 	public void initialize() throws DatabaseException, ParseException {
@@ -87,21 +87,67 @@ public class EditUserProfile {
 
 	private void initDeactivateButton() {
 		deactivate.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+			Boolean[] controlli = new Boolean[6];
+
+			User editedUser = EditUserController.getToEditUser();
 			Alert alert = new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("Confirmation Dialog");
-			alert.setHeaderText("Look, a Confirmation Dialog");
-			alert.setContentText("Are you ok with this?");
+			alert.setTitle("User Status");
+			alert.setHeaderText("User status management");
+			alert.setContentText("Are you sure that you want deactivate user: " + editedUser.getUsername() + " ?");
 
 			Optional<ButtonType> result = alert.showAndWait();
-			if (result.get() == ButtonType.OK){
-				
-				User editedUser = EditUserController.getToEditUser();	
+			if (result.get() == ButtonType.OK) {
+
+				for (Entry<String, Integer> entry : AdministrationController.getInvolvedUser(editedUser.getID())
+						.entrySet()) {
+					if (entry.getKey().equals("ScanningProjectCoordinator") && entry.getValue() == 0) {
+						controlli[0] = true;
+
+					}
+					if (entry.getKey().equals("ScanningProjectDigitalizer") && entry.getValue() == 0) {
+						controlli[0] = true;
+
+					}
+					if (entry.getKey().equals("ScanningProjectReviser") && entry.getValue() == 0) {
+						controlli[0] = true;
+
+					}
+					if (entry.getKey().equals("TranscriptionProjectCoordinator") && entry.getValue() == 0) {
+						controlli[0] = true;
+
+					}
+					if (entry.getKey().equals("TranscriptionProjectTranscriber") && entry.getValue() == 0) {
+						controlli[0] = true;
+
+					}
+					if (entry.getKey().equals("TranscriptionProjectReviser") && entry.getValue() == 0) {
+						controlli[0] = true;
+
+					}
+
+				}
+
 				AdministrationController.modifyUserStatus(editedUser.getID(), false);
 				SceneController.loadPreviousScene();
-				
+
 			}
+
+			/*
+			 * Alert avviso = new Alert(AlertType.CONFIRMATION);
+			 * avviso.setTitle("User Status");
+			 * avviso.setHeaderText("User status management");
+			 * avviso.setContentText("User: " + editedUser.getUsername() +
+			 * " is involved like Coordinator in a scanning project do you want to pick up a new Admin ?"
+			 * );
+			 * 
+			 * Optional<ButtonType> risultato = avviso.showAndWait();
+			 * 
+			 * if (result.get() == ButtonType.OK){ //scegli un nuovo admin }else { //mostra
+			 * avviso operazione annullata //torna indietro }
+			 */
 		});
 	}
+
 	private void loadPermissions() {
 		UserPermissions up = EditUserController.getToEditUser().getPermissions();
 		addNewProject.setSelected(up.getAddNewProjectPerm());
@@ -182,11 +228,11 @@ public class EditUserProfile {
 			});
 		}
 	}
-	
+
 	private void setInactivable(boolean value) {
 		deactivate.setVisible(!value);
 	}
-	
+
 	private void setEditableUserData(boolean value) {
 		name.setDisable(!value);
 		surname.setDisable(!value);
@@ -203,24 +249,23 @@ public class EditUserProfile {
 			roles.add("Upload reviser");
 			roles.add("Transcription reviser");
 			roles.add("Coordinator");
-			
+
 			for (String str : roles) {
 				CheckMenuItem item = new CheckMenuItem();
 				item.setText(str);
 				item.onActionProperty().set(event -> {
 					if (!item.isSelected()) {
 						revokeRole(str);
-					}
-					else {
+					} else {
 						grantRole(str);
 					}
 				});
 				roleList.getItems().add(item);
 			}
-			
+
 			roleList.setText("Roles");
 			roleList.setAlignment(Pos.CENTER);
-			
+
 		}
 	}
 
@@ -246,7 +291,7 @@ public class EditUserProfile {
 			break;
 		}
 	}
-	
+
 	private void revokeRole(String str) {
 		switch (str) {
 		case "Uploader":
@@ -294,7 +339,7 @@ public class EditUserProfile {
 		editMetaData.setSelected(true);
 		publishDocument.setSelected(true);
 	}
-	
+
 	private void revokeUploader() {
 		upload.setSelected(false);
 	}
