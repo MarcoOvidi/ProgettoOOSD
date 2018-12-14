@@ -2,11 +2,14 @@ package view;
 
 import java.text.ParseException;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 
 import controller.AdministrationController;
 import controller.EditUserController;
+import controller.RoleController;
 import dao.DatabaseException;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -16,14 +19,20 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.CheckMenuItem;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import model.User;
 import vo.Email;
+import vo.UUIDUser;
 import vo.UserInformations;
 import vo.UserPermissions;
+import vo.view.Formatter;
 
 public class EditUserProfile {
 
@@ -87,7 +96,6 @@ public class EditUserProfile {
 
 	private void initDeactivateButton() {
 		deactivate.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-			Boolean[] controlli = new Boolean[6];
 
 			User editedUser = EditUserController.getToEditUser();
 			Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -97,38 +105,112 @@ public class EditUserProfile {
 
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == ButtonType.OK) {
+				Alert alert1 = new Alert(AlertType.ERROR);
+				alert1.setTitle("Error");
+				alert1.setHeaderText("User " + editedUser.getUsername() + " is involved in some projects !");
+				alert1.setContentText(
+						"Is it ok to remove him from all projects and eventually choose a new coordinator?");
+
+				String exceptionText = "";
 
 				for (Entry<String, Integer> entry : AdministrationController.getInvolvedUser(editedUser.getID())
 						.entrySet()) {
-					if (entry.getKey().equals("ScanningProjectCoordinator") && entry.getValue() == 0) {
-						controlli[0] = true;
+
+					if (entry.getKey().equals("ScanningProjectCoordinator") && entry.getValue() != 0) {
+						exceptionText = exceptionText + "\n " + "Scanning Project Coordinator: " + entry.getValue();
+					}
+
+					if (entry.getKey().equals("ScanningProjectDigitalizer") && entry.getValue() != 0) {
+						exceptionText = exceptionText + "\n " + "Scanning Project Digitalizer: " + entry.getValue();
 
 					}
-					if (entry.getKey().equals("ScanningProjectDigitalizer") && entry.getValue() == 0) {
-						controlli[0] = true;
+					if (entry.getKey().equals("ScanningProjectReviser") && entry.getValue() != 0) {
+						exceptionText = exceptionText + "\n " + "Scanning Project Reviser: " + entry.getValue();
 
 					}
-					if (entry.getKey().equals("ScanningProjectReviser") && entry.getValue() == 0) {
-						controlli[0] = true;
+					if (entry.getKey().equals("TranscriptionProjectCoordinator") && entry.getValue() != 0) {
+						exceptionText = exceptionText + "\n " + "Transcription Project Coordinator: "
+								+ entry.getValue();
 
 					}
-					if (entry.getKey().equals("TranscriptionProjectCoordinator") && entry.getValue() == 0) {
-						controlli[0] = true;
+					if (entry.getKey().equals("TranscriptionProjectTranscriber") && entry.getValue() != 0) {
+						exceptionText = exceptionText + "\n " + "Transcription Project Transcriber: "
+								+ entry.getValue();
 
 					}
-					if (entry.getKey().equals("TranscriptionProjectTranscriber") && entry.getValue() == 0) {
-						controlli[0] = true;
-
-					}
-					if (entry.getKey().equals("TranscriptionProjectReviser") && entry.getValue() == 0) {
-						controlli[0] = true;
+					if (entry.getKey().equals("TranscriptionProjectReviser") && entry.getValue() != 0) {
+						exceptionText = exceptionText + "\n " + "Transcription Project Reviser: " + entry.getValue();
 
 					}
 
 				}
 
-				AdministrationController.modifyUserStatus(editedUser.getID(), false);
-				SceneController.loadPreviousScene();
+				Label label = new Label("User in involved in:");
+
+				TextArea textArea = new TextArea(exceptionText);
+				textArea.setEditable(false);
+				textArea.setWrapText(true);
+
+				textArea.setMaxWidth(Double.MAX_VALUE);
+				textArea.setMaxHeight(Double.MAX_VALUE);
+				GridPane.setVgrow(textArea, Priority.ALWAYS);
+				GridPane.setHgrow(textArea, Priority.ALWAYS);
+
+				GridPane expContent = new GridPane();
+				expContent.setMaxWidth(Double.MAX_VALUE);
+				expContent.add(label, 0, 0);
+				expContent.add(textArea, 0, 1);
+
+				// Set expandable Exception into the dialog pane.
+				alert1.getDialogPane().setExpandableContent(expContent);
+				alert1.getButtonTypes().add(ButtonType.NO);
+
+				Optional<ButtonType> result1 = alert1.showAndWait();
+
+				if (result1.get() == ButtonType.OK) {
+					List<Formatter> scelta = new LinkedList<Formatter>();
+
+					for (Map.Entry<UUIDUser, String> e : RoleController.showCoordinatorUsers().entrySet()) {
+						scelta.add(new Formatter(e.getKey(), e.getValue()));
+					}
+
+					if (!(scelta.isEmpty())) {
+
+						ChoiceDialog<Formatter> dialogo = new ChoiceDialog<>(scelta.get(0), scelta);
+						dialogo.setTitle("User Role Management");
+						dialogo.setHeaderText("You must choose a new Coordinator");
+						dialogo.setContentText("Available Coordinators:");
+
+						Optional<Formatter> risultato = dialogo.showAndWait();
+
+						if (risultato.isPresent()) {
+
+							// cambia a cascata inserendo il nuovo coordinatore
+							RoleController.replaceCoordinator(editedUser.getID(), dialogo.getResult().getIdUser());
+
+							// cancellalo come trascrittore/digitalizzatore da tutti i prj in cui è
+							// coinvolto
+							RoleController.removeUserFromAllProjects(editedUser.getID());
+							SceneController.loadPreviousScene();
+
+						}
+					} else {
+						Alert alert3 = new Alert(AlertType.WARNING);
+						alert3.setTitle("Warning");
+						alert3.setHeaderText("No Staff");
+						alert3.setContentText(
+								"Add coordinators to your staff, you can't deactivate " + editedUser.getUsername());
+
+						alert3.showAndWait();
+						SceneController.loadPreviousScene();
+					}
+
+				} else if (result1.get() == ButtonType.NO) {
+					SceneController.loadPreviousScene();
+
+				}
+
+				// AdministrationController.modifyUserStatus(editedUser.getID(), false);
 
 			}
 
@@ -146,6 +228,7 @@ public class EditUserProfile {
 			 * avviso operazione annullata //torna indietro }
 			 */
 		});
+
 	}
 
 	private void loadPermissions() {

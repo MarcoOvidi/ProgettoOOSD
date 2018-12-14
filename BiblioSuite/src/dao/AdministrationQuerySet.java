@@ -295,11 +295,11 @@ public class AdministrationQuerySet { // tutto ok
 		return (result == 1);
 
 	}
-	
+
 	/**
 	 * Aggiorna a non pending lo stato di una richiesta che è stata scartata
 	 * 
-	 * @param id     UUIDRequest della richiesta a cui rispondere
+	 * @param id UUIDRequest della richiesta a cui rispondere
 	 *
 	 * @return Boolean true se l'operazione è andata a buon fine , false altrimenti
 	 * 
@@ -364,7 +364,7 @@ public class AdministrationQuerySet { // tutto ok
 		try {
 			ps = con.prepareStatement("SELECT * FROM user WHERE status=?");
 			ps.setBoolean(1, b);
-			
+
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				UUIDUser id = new UUIDUser(rs.getInt("ID"));
@@ -447,9 +447,11 @@ public class AdministrationQuerySet { // tutto ok
 
 		return coordinators;
 	}
-	
+
 	/**
-	 * Controlla se un utente fa parte in qualche modo di un progetto di digitalizzazione e/o trascrizione
+	 * Controlla se un utente fa parte in qualche modo di un progetto di
+	 * digitalizzazione e/o trascrizione
+	 * 
 	 * @param id
 	 * @return
 	 * @throws DatabaseException
@@ -465,88 +467,138 @@ public class AdministrationQuerySet { // tutto ok
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		HashMap<String,Integer> envolved = new HashMap<String,Integer>();
+		HashMap<String, Integer> envolved = new HashMap<String, Integer>();
 
 		try {
-		
-			ps = con.prepareStatement(
-					"select count(ID) as number from scanning_project where ID_coordinator=?;");
+
+			ps = con.prepareStatement("select count(ID) as number from scanning_project where ID_coordinator=?;");
 			ps.setInt(1, id.getValue());
 			rs = ps.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				envolved.put("ScanningProjectCoordinator", rs.getInt("number"));
 			}
 
-			if(ps != null)
+			if (ps != null)
 				ps.close();
-			if(rs != null)
+			if (rs != null)
 				rs.close();
-			
+
 			ps = con.prepareStatement(
 					"select count(ID) as number from scanning_project_digitalizer_partecipant where ID_digitalizer_user=?;");
 			ps.setInt(1, id.getValue());
 			rs = ps.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				envolved.put("ScanningProjectDigitalizer", rs.getInt("number"));
 			}
 
-			if(ps != null)
+			if (ps != null)
 				ps.close();
-			if(rs != null)
+			if (rs != null)
 				rs.close();
-			
+
 			ps = con.prepareStatement(
 					"select count(ID) as number from scanning_project_reviser_partecipant where ID_reviser_user=?;");
 			ps.setInt(1, id.getValue());
 			rs = ps.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				envolved.put("ScanningProjectReviser", rs.getInt("number"));
 			}
-			
-			if(ps != null)
+
+			if (ps != null)
 				ps.close();
-			if(rs != null)
+			if (rs != null)
 				rs.close();
-			
-			ps = con.prepareStatement(
-					"select count(ID) as number from transcription_project where ID_coordinator=?;");
+
+			ps = con.prepareStatement("select count(ID) as number from transcription_project where ID_coordinator=?;");
 			ps.setInt(1, id.getValue());
 			rs = ps.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				envolved.put("TranscriptionProjectCoordinator", rs.getInt("number"));
 			}
 
-			if(ps != null)
+			if (ps != null)
 				ps.close();
-			if(rs != null)
+			if (rs != null)
 				rs.close();
-			
+
 			ps = con.prepareStatement(
 					"select count(ID) as number from transcription_project_transcriber_partecipant where ID_transcriber_user=?;");
 			ps.setInt(1, id.getValue());
 			rs = ps.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				envolved.put("TranscriptionProjectTranscriber", rs.getInt("number"));
 			}
 
-			if(ps != null)
+			if (ps != null)
 				ps.close();
-			if(rs != null)
+			if (rs != null)
 				rs.close();
-			
+
 			ps = con.prepareStatement(
 					"select count(ID) as number from transcription_project_reviser_partecipant where ID_reviser_user=?;");
 			ps.setInt(1, id.getValue());
 			rs = ps.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				envolved.put("TranscriptionProjectReviser", rs.getInt("number"));
 			}
+
+		} catch (SQLException e) {
+			throw new DatabaseException("Errore di esecuzione della query", e);
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+
+		}
+
+		return envolved;
+	}
+
+	/**
+	 * Sostituisce un coordinatore in tutti i progetti in cui è convolto
+	 * 
+	 * @return
+	 * @throws DatabaseException
+	 */
+	public static void replaceCoordinator(UUIDUser oldCoordinator, UUIDUser newCoordinator) throws DatabaseException {
+		Connection con = null;
+
+		try {
+			con = DBConnection.connect();
+		} catch (DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+
+		PreparedStatement ps = null;
+
+		try {
+			ps = con.prepareStatement("update scanning_project set ID_coordinator=? where ID_coordinator=?;");
+
+			ps.setInt(1, newCoordinator.getValue());
+			ps.setInt(2, oldCoordinator.getValue());
+
+			ps.executeUpdate();
+			
+			if(ps!= null)
+				ps.close();
+			
+			ps = con.prepareStatement("update transcription_project set ID_coordinator=? where ID_coordinator=?;");
+
+			ps.setInt(1, newCoordinator.getValue());
+			ps.setInt(2, oldCoordinator.getValue());
+
+			ps.executeUpdate();
 			
 			
 
@@ -564,6 +616,5 @@ public class AdministrationQuerySet { // tutto ok
 
 		}
 
-		return envolved;
 	}
 }

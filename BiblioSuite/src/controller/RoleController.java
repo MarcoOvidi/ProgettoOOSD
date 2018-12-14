@@ -149,4 +149,22 @@ public class RoleController {
 			return null;
 		}
 	}
+	
+	public static void replaceCoordinator(UUIDUser oldCoordinator , UUIDUser newCoordinator) {
+		try {
+			AdministrationQuerySet.replaceCoordinator(oldCoordinator, newCoordinator);
+		}catch(DatabaseException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public static void removeUserFromAllProjects(UUIDUser id) {
+		try {
+			AdministrationQuerySet.removeUserFromAllProjects(id);
+		}catch(DatabaseException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+	}
 }
