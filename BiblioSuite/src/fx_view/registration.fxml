@@ -55,7 +55,7 @@
 						<HBox spacing="100" AnchorPane.bottomAnchor="0.0">
 
 							<JFXButton fx:id="back" text="Back" prefWidth="200.0" />
-							<JFXButton fx:id="register" text="Register" prefWidth="200.0" style="-fx-background-color: #e86e0a40;"/>
+							<JFXButton fx:id="register" text="Register" prefWidth="200.0" />
 
 						</HBox>
 					</children>

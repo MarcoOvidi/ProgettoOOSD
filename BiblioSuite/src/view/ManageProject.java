@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Toolkit;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -22,6 +23,7 @@ import dao.TranscriptionWorkProjectQuerySet;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -35,6 +37,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import model.Page;
 import model.User;
@@ -71,6 +74,12 @@ public class ManageProject {
 	@FXML
 	private TabPane pane;
 
+	@FXML
+	private Tab propertiesTab;
+	
+	@FXML
+	BorderPane documentProperties;
+	
 	@FXML
 	private Tab transcriptionTab;
 
@@ -215,7 +224,7 @@ public class ManageProject {
 		}
 	}
 
-	public void initPane() {
+	private void initPane() {
 		pane.setVisible(false);
 	}
 
@@ -229,7 +238,7 @@ public class ManageProject {
 		});
 	}
 
-	public void tableDocumentFiller() throws NullPointerException, DatabaseException {
+	private void tableDocumentFiller() throws NullPointerException, DatabaseException {
 		Document.setCellValueFactory(new PropertyValueFactory<DocumentRow, String>("Document"));
 		Transcription_PRJ.setCellValueFactory(new PropertyValueFactory<DocumentRow, String>("Transcription_PRJ"));
 		Scanning_PRJ.setCellValueFactory(new PropertyValueFactory<DocumentRow, String>("Scanning_PRJ"));
@@ -307,6 +316,8 @@ public class ManageProject {
 					scanning.setScanning_PRJ("\u2204 !!!");
 					entry.setValue(scanning);
 				}
+			
+			entry.getValue().setId(entry.getKey());
 
 			rows.add(entry.getValue());
 		}
@@ -315,7 +326,7 @@ public class ManageProject {
 	}
 
 	// TODO controllare gli eventconsume
-	public void rowClick() {
+	private void rowClick() {
 		documentTable.setRowFactory(tv -> {
 			TableRow<DocumentRow> row = new TableRow<>();
 			row.setOnMouseClicked(event -> {
@@ -329,7 +340,7 @@ public class ManageProject {
 		});
 	}
 
-	public void addDigitalizerEvent() {
+	private void addDigitalizerEvent() {
 		addDigitalizerButton.setOnMouseClicked(event -> {
 			if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
 
@@ -365,7 +376,7 @@ public class ManageProject {
 		});
 	}
 
-	public void addDReviserEvent() {
+	private void addDReviserEvent() {
 		addDReviserButton.setOnMouseClicked(event -> {
 			if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
 
@@ -399,7 +410,7 @@ public class ManageProject {
 		});
 	}
 
-	public void addTReviserEvent() {
+	private void addTReviserEvent() {
 		addTReviserButton.setOnMouseClicked(event -> {
 			if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
 
@@ -434,7 +445,7 @@ public class ManageProject {
 		});
 	}
 
-	public void addTranscriberEvent() {
+	private void addTranscriberEvent() {
 		addTranscriberButton.setOnMouseClicked(event -> {
 			if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
 
@@ -470,11 +481,19 @@ public class ManageProject {
 		});
 	}
 
-	public void loadClickedDocumentProjects() {
+	private void loadClickedDocumentProjects() {
 
 		manageContainer.getChildren().clear();
 		manageContainer.getChildren().add(pane);
 		pane.setVisible(true);
+		DocumentProperties.setToShowDocument(clickedDocument.getId());
+		try {
+			documentProperties = (FXMLLoader.load(new
+					Object(){}.getClass().getResource("/fx_view/"+"documentProperties"+".fxml")));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		selectedDocumentScanningProject = clickedDocument.getIdSPrj();
 		selectedDocumentTranscriptionProject = clickedDocument.getIdTPrj();
@@ -511,7 +530,7 @@ public class ManageProject {
 
 	}
 
-	public void userRowClick() {
+	private void userRowClick() {
 		transcriptionStaff.setRowFactory(tv -> {
 			TableRow<StaffRow> row = new TableRow<StaffRow>();
 			row.setOnMouseClicked(event -> {
@@ -1122,7 +1141,7 @@ public class ManageProject {
 
 	}
 
-	public void loadTranscriptionPagesLog(DocumentRow dR) {
+	private void loadTranscriptionPagesLog(DocumentRow dR) {
 
 		pageNumber.setCellValueFactory(new PropertyValueFactory<PageTranscriptionLog, String>("pageNumber"));
 		transcriptionReviser
@@ -1182,7 +1201,7 @@ public class ManageProject {
 
 	}
 
-	public void loadScanningPagesLog(DocumentRow dR) {
+	private void loadScanningPagesLog(DocumentRow dR) {
 
 		pageScanNumber.setCellValueFactory(new PropertyValueFactory<PageScanningLog, String>("pageNumber"));
 		scanningReviser.setCellValueFactory(new PropertyValueFactory<PageScanningLog, String>("scanningReviser"));
@@ -1237,7 +1256,7 @@ public class ManageProject {
 
 	}
 
-	public void loadTranscriptionProjectStaff(DocumentRow dR) {
+	private void loadTranscriptionProjectStaff(DocumentRow dR) {
 		TranscriptionProjectController.loadTranscriptionProject(dR.getIdTPrj());
 
 		usernameTranscriber.setCellValueFactory(new PropertyValueFactory<StaffRow, String>("username"));
@@ -1263,7 +1282,7 @@ public class ManageProject {
 		transcriptionStaff.setItems(transcriptionProjectStaff);
 	}
 
-	public void loadScanningProjectStaff(DocumentRow dR) {
+	private void loadScanningProjectStaff(DocumentRow dR) {
 		ScanningProjectController.loadScanningProject(dR.getIdSPrj());
 
 		usernameDigitalizer.setCellValueFactory(new PropertyValueFactory<StaffRow, String>("username"));

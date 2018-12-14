@@ -16,7 +16,7 @@
 	minHeight="-Infinity" minWidth="-Infinity"
 	xmlns="http://javafx.com/javafx/9.0.1"
 	xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.DocumentProperties">
-	<center>
+	<left>
 		<AnchorPane BorderPane.alignment="CENTER">
 			<children>
 				<HBox spacing="70" layoutX="49.0" layoutY="20">

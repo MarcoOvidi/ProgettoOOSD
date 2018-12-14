@@ -33,6 +33,9 @@
             </AnchorPane>
 				<TabPane fx:id="pane" prefHeight="630.0" prefWidth="1015.0" tabClosingPolicy="UNAVAILABLE">
 					<tabs>
+						<Tab fx:id="propertiesTab" text="Document properties">
+						<BorderPane fx:id="documentProperties"/>
+						</Tab>
 						<Tab fx:id="transcriptionTab" text="Transcription Project">
 							<content>
 								<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="488.0" prefWidth="979.0">

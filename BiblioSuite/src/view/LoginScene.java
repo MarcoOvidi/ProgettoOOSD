@@ -47,10 +47,10 @@ public class LoginScene {
 	private Button login;
 
 	@FXML
-	private Button recover;
+	private Button recoverButton;
 
 	@FXML
-	private Button register;
+	private Button registerButton;
 
 	@FXML
 	private Label message;
@@ -84,11 +84,11 @@ public class LoginScene {
 			Platform.runLater(() -> go());
 			autoLogin = false;
 		}
-
+		
 		login.setFocusTraversable(true);
-		recover.setFocusTraversable(true);
+		recoverButton.setFocusTraversable(true);
 
-		username.getParent().addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+		username.getParent().addEventHandler(KeyEvent.KEY_PRESSED, event -> {			
 			if (event.getCode() == KeyCode.ESCAPE) {
 				username.setText("");
 				password.setText("");
@@ -104,6 +104,8 @@ public class LoginScene {
 			 * if (event.isShiftDown() && event.getCode() == KeyCode.TAB) {
 			 * recover.requestFocus(); }
 			 */
+			message.setVisible(false);
+			
 			if (event.getCode() == KeyCode.ENTER) {
 				password.requestFocus();
 			} else if (event.getCode() == KeyCode.ESCAPE) {
@@ -111,8 +113,9 @@ public class LoginScene {
 			}
 			if (event.getCode() != KeyCode.TAB && event.getCode() != KeyCode.BACK_SPACE
 					&& event.getCode() != KeyCode.DELETE && event.getCode() != KeyCode.RIGHT
-					&& event.getCode() != KeyCode.LEFT)
+					&& event.getCode() != KeyCode.LEFT) {
 				event.consume();
+			}
 		});
 
 		password.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
@@ -132,21 +135,21 @@ public class LoginScene {
 				go();
 		});
 
-		recover.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+		recoverButton.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
 			if (event.getCode() == KeyCode.ENTER)
 				SceneController.loadScene("passwordRecovery",false);
 		});
 
-		recover.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+		recoverButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 			SceneController.loadScene("passwordRecovery",false);
 		});
 		
-		register.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+		registerButton.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
 			if (event.getCode() == KeyCode.ENTER)
 				SceneController.loadScene("registration",false);
 		});
 
-		register.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+		registerButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 			SceneController.loadScene("registration",false);
 		});
 
@@ -155,6 +158,7 @@ public class LoginScene {
 
 	public void displayMessage(String msg) {
 		message.setText(msg);
+		message.setVisible(true);
 	}
 
 }

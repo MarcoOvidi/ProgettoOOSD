@@ -21,7 +21,7 @@ public class LoginController {
 	 * @return 
 	 */
 	public static void login(LoginScene lscene, String usr, String psw) throws DatabaseException {
-		lscene.displayMessage("Verifico identità...");
+		lscene.displayMessage("Checking identity...");
 
 		try {
 			UUIDUser id = loginDB(usr, psw);
@@ -35,10 +35,10 @@ public class LoginController {
 				lscene.displayMessage("Done. Loading scene");
 				SceneController.loadScene("home2");
 			} else {
-				lscene.displayMessage("Username o/e password non validi");
+				lscene.displayMessage("Invalid username or password");
 			}
 		} catch (DatabaseException e) {
-			lscene.displayMessage("Ops qualcosa � andato storto");
+			lscene.displayMessage("Invalid username or password");
 			throw e;
 		}
 

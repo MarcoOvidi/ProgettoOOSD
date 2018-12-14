@@ -17,7 +17,8 @@ public final class LocalSession {
 	public static Image loadImage(String url) {
 		Image image;
 		try {
-			image = new Image ("file://"+url);
+			image = new Image ("file:"+url);
+			System.out.println(image.impl_getUrl());
 		} catch (IllegalArgumentException e) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Error");

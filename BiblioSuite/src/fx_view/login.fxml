@@ -7,29 +7,54 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="720" minWidth="1280" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LoginScene">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
+	minHeight="720" minWidth="1280"
+	xmlns="http://javafx.com/javafx/8.0.171"
+	xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LoginScene">
 	<center>
 		<!-- <AnchorPane style=" -fx-background-image: url(images/lib.jpg); -fx-background-position: 
 			left top, center; -fx-background-repeat: stretch; -fx-background-size: contain, 
 			auto;" BorderPane.alignment="CENTER"> <AnchorPane -->
-		<AnchorPane style=" -fx-background-image: url(images/lib.jpg);          -fx-background-position: left top, center;           -fx-background-repeat: stretch;          -fx-background-size: cover, auto;" BorderPane.alignment="CENTER">
+		<AnchorPane
+			style=" -fx-background-image: url(images/lib.jpg);          -fx-background-position: left top, center;           -fx-background-repeat: stretch;          -fx-background-size: cover, auto;"
+			BorderPane.alignment="CENTER">
 			<children>
-				<AnchorPane layoutX="99.0" layoutY="117.0" prefHeight="374.0" prefWidth="517.0" style="-fx-background-color: rgba(0, 0, 0, 0.0);">
+				<AnchorPane layoutX="99.0" layoutY="117.0"
+					prefHeight="374.0" prefWidth="517.0"
+					style="-fx-background-color: rgba(0, 0, 0, 0.0);">
 					<children>
-						<Label id="loginTitle" alignment="CENTER" layoutX="125.0" layoutY="67.0" prefHeight="58.0" prefWidth="268.0" text="BiblioSuite" textAlignment="CENTER" textFill="#e86e0a" wrapText="false">
+						<Label id="loginTitle" alignment="CENTER" layoutX="125.0"
+							layoutY="67.0" prefHeight="58.0" prefWidth="268.0"
+							text="BiblioSuite" textAlignment="CENTER" textFill="#e86e0a"
+							wrapText="false">
 							<font>
 								<Font size="40.0" fx:id="x1" />
 							</font>
 						</Label>
-						<JFXTextField fx:id="username" focusColor="#e86e0a" labelFloat="true" layoutX="184.0" layoutY="134.0" prefHeight="26.0" prefWidth="150.0" promptText="Username" style="-fx-textfill: #cccccc;" unFocusColor="#cccccc" />
-						<JFXPasswordField fx:id="password" focusColor="#e86e0a" labelFloat="true" layoutX="183.0" layoutY="187.0" prefHeight="26.0" prefWidth="150.0" promptText="Password" unFocusColor="#cccccc" />
-						<JFXButton fx:id="login" layoutX="183.0" layoutY="239.0" mnemonicParsing="false" onMouseClicked="#loginButtonPushed" prefHeight="26.0" prefWidth="150.0" ripplerFill="#e86e0a" text="Login" />
-						<JFXButton fx:id="recover" cancelButton="true" layoutX="183.0" layoutY="288.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" text="Recupera Password" />
-						<JFXButton fx:id="register" cancelButton="true" layoutX="183.0" layoutY="327.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" text="Registrati" />
+						<VBox spacing="34" layoutX="160.0" layoutY="134.0"
+							prefWidth="200.0">
+							<JFXTextField fx:id="username" labelFloat="true"
+								promptText="Username" />
+							<JFXPasswordField fx:id="password"
+								focusColor="#e86e0a" labelFloat="true" promptText="Password" />
+							<JFXButton fx:id="login" mnemonicParsing="false"
+								prefWidth="200.0" onMouseClicked="#loginButtonPushed"
+								text="Login" />
+							<JFXButton fx:id="recoverButton" cancelButton="true"
+								mnemonicParsing="false" prefWidth="200.0" text="Forgot Password" />
+							<JFXButton fx:id="registerButton" cancelButton="true"
+								mnemonicParsing="false" prefWidth="200.0" text="Register" />
+						</VBox>
 					</children>
 				</AnchorPane>
-				<Label fx:id="message" textFill="#f70303" AnchorPane.bottomAnchor="0.0" />
+				<Label fx:id="message" textFill="#f70303"
+					AnchorPane.bottomAnchor="0.0" visible="false">
+					<font>
+						<Font size="14.0" />
+					</font>
+				</Label>
 			</children>
 		</AnchorPane>
 	</center>

@@ -134,7 +134,7 @@ public class UserAuthenticationQuerySet { //COMPLETATA E TUTTA FUNZIONANTE
 		ResultSet rs = null;
 		
 		try {			
-			ps = con.prepareStatement("SELECT id FROM user WHERE username=? AND password=?");
+			ps = con.prepareStatement("SELECT id FROM user WHERE username=? AND password=? AND status=1");
 		
 			ps.setString(1, usr);
 			ps.setString(2, psw);

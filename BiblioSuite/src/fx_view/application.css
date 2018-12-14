@@ -19,6 +19,16 @@
 	-fx-border-color: #e86e0a;
 }
 
+#message{
+	-fx-background-color:#f00;
+	-fx-border-color:#f00;
+	-fx-border-width: 3px 10px 3px 3px;
+	-fx-border-radius: 0px 20px 0px 0px;
+	-fx-background-radius: 0px 8px 0px 0px;
+	-fx-text-fill:#fff;
+    -fx-font-weight: bold;
+}
+
 Button{
 	-fx-background-color:#555;
 	-fx-text-fill:#fff;	 
@@ -37,7 +47,7 @@ JFXButton, TextField, PasswordField{
 	-fx-border-width: 0.0px 0.0px 1.5px 0.0px ;
 	-fx-text-fill:#aaa;
     -fx-highlight-fill: #f87e1a;
-    -fx-highlight-text-fill: #222;
+    -fx-highlight-text-fill: #222
 }
   
 JFXTextField, JFXPasswordField{
@@ -46,8 +56,24 @@ JFXTextField, JFXPasswordField{
 	-fx-text-alignment: CENTER;
     -fx-highlight-fill: #f87e1a;
     -fx-highlight-text-fill: #222;
-}  
-  
+    -jfx-unfocus-color: #ccc;
+    -jfx-focus-color: "#e86e0a";
+}
+
+#login {
+ 	-fx-background-color: #e86e0a20;
+ 	-jfx-rippler-fill: #e86e0a;
+}
+
+#register {
+ 	-fx-background-color: #e86e0a20;
+ 	-jfx-rippler-fill: #e86e0a;
+}
+
+#recover {
+ 	-fx-background-color: #e86e0a20;
+ 	-jfx-rippler-fill: #e86e0a;
+}
   
  #pageContainer{
  	-fx-background-color: #222;
@@ -161,10 +187,6 @@ PasswordField:focused{
 PasswordField:hover{
 	-fx-border-color:#e86e0a;
 	-fx-text-fill:#fff;	  
-}
-
-#password:focused{
-	-fx-border-color:#e86e0a;
 }
 
 .jfx-tab-pane, .tab-pane
