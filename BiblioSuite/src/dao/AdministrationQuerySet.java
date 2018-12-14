@@ -589,18 +589,16 @@ public class AdministrationQuerySet { // tutto ok
 			ps.setInt(2, oldCoordinator.getValue());
 
 			ps.executeUpdate();
-			
-			if(ps!= null)
+
+			if (ps != null)
 				ps.close();
-			
+
 			ps = con.prepareStatement("update transcription_project set ID_coordinator=? where ID_coordinator=?;");
 
 			ps.setInt(1, newCoordinator.getValue());
 			ps.setInt(2, oldCoordinator.getValue());
 
 			ps.executeUpdate();
-			
-			
 
 		} catch (SQLException e) {
 			throw new DatabaseException("Errore di esecuzione della query", e);
@@ -616,5 +614,70 @@ public class AdministrationQuerySet { // tutto ok
 
 		}
 
+	}
+
+	/**
+	 * Elimina un utente da tutti i progetti in cui è coinvolto come
+	 * digitalizzatore/revisore/trascrittore
+	 * 
+	 * @param id
+	 * @throws DatabaseException
+	 */
+	public static void removeUserFromAllProjects(UUIDUser id) throws DatabaseException {
+		Connection con = null;
+
+		try {
+			con = DBConnection.connect();
+		} catch (DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+
+		PreparedStatement ps = null;
+
+		try {
+
+			ps = con.prepareStatement("DELETE FROM scanning_project_reviser_partecipant WHERE ID_reviser_user=?;");
+			ps.setInt(1, id.getValue());
+
+			ps.executeUpdate();
+
+			if (ps != null)
+				ps.close();
+
+			ps = con.prepareStatement(
+					"DELETE FROM scanning_project_digitalizer_partecipant WHERE ID_digitalizer_user=?;");
+			ps.setInt(1, id.getValue());
+			ps.executeUpdate();
+
+			if (ps != null)
+				ps.close();
+
+			ps = con.prepareStatement("DELETE FROM transcription_project_reviser_partecipant WHERE ID_reviser_user=?;");
+			ps.setInt(1, id.getValue());
+
+			ps.executeUpdate();
+
+			if (ps != null)
+				ps.close();
+
+			ps = con.prepareStatement(
+					"DELETE FROM transcription_project_transcriber_partecipant WHERE ID_transcriber_user=?;");
+			ps.setInt(1, id.getValue());
+
+			ps.executeUpdate();
+
+		} catch (SQLException e) {
+			throw new DatabaseException("Errore di esecuzione della query", e);
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+
+		}
 	}
 }

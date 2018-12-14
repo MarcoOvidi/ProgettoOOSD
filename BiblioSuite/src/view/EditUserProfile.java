@@ -1,6 +1,7 @@
 package view;
 
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -104,12 +105,13 @@ public class EditUserProfile {
 			alert.setContentText("Are you sure that you want deactivate user: " + editedUser.getUsername() + " ?");
 
 			Optional<ButtonType> result = alert.showAndWait();
+
 			if (result.get() == ButtonType.OK) {
 				Alert alert1 = new Alert(AlertType.ERROR);
 				alert1.setTitle("Error");
-				alert1.setHeaderText("User " + editedUser.getUsername() + " is involved in some projects !");
+				alert1.setHeaderText("User " + editedUser.getUsername() + " can be involved in some projects !");
 				alert1.setContentText(
-						"Is it ok to remove him from all projects and eventually choose a new coordinator?");
+						"Is it eventually ok to remove him from all projects and choose a new coordinator?");
 
 				String exceptionText = "";
 
@@ -168,40 +170,52 @@ public class EditUserProfile {
 				Optional<ButtonType> result1 = alert1.showAndWait();
 
 				if (result1.get() == ButtonType.OK) {
-					List<Formatter> scelta = new LinkedList<Formatter>();
+					HashMap<String, Integer> map = AdministrationController.getInvolvedUser(editedUser.getID());
 
-					for (Map.Entry<UUIDUser, String> e : RoleController.showCoordinatorUsers().entrySet()) {
-						scelta.add(new Formatter(e.getKey(), e.getValue()));
-					}
+					if ((map.containsKey("ScanningProjectCoordinator") && map.get("ScanningProjectCoordinator") != 0)
+							|| (map.containsKey("ScanningProjectCoordinator")
+									&& map.get("TranscriptionProjectCoordinator") != 0)) {
 
-					if (!(scelta.isEmpty())) {
+						List<Formatter> scelta = new LinkedList<Formatter>();
 
-						ChoiceDialog<Formatter> dialogo = new ChoiceDialog<>(scelta.get(0), scelta);
-						dialogo.setTitle("User Role Management");
-						dialogo.setHeaderText("You must choose a new Coordinator");
-						dialogo.setContentText("Available Coordinators:");
-
-						Optional<Formatter> risultato = dialogo.showAndWait();
-
-						if (risultato.isPresent()) {
-
-							// cambia a cascata inserendo il nuovo coordinatore
-							RoleController.replaceCoordinator(editedUser.getID(), dialogo.getResult().getIdUser());
-
-							// cancellalo come trascrittore/digitalizzatore da tutti i prj in cui è
-							// coinvolto
-							RoleController.removeUserFromAllProjects(editedUser.getID());
-							SceneController.loadPreviousScene();
-
+						for (Map.Entry<UUIDUser, String> e : RoleController.showCoordinatorUsers().entrySet()) {
+							scelta.add(new Formatter(e.getKey(), e.getValue()));
 						}
-					} else {
-						Alert alert3 = new Alert(AlertType.WARNING);
-						alert3.setTitle("Warning");
-						alert3.setHeaderText("No Staff");
-						alert3.setContentText(
-								"Add coordinators to your staff, you can't deactivate " + editedUser.getUsername());
 
-						alert3.showAndWait();
+						if (!(scelta.isEmpty())) {
+
+							ChoiceDialog<Formatter> dialogo = new ChoiceDialog<>(scelta.get(0), scelta);
+							dialogo.setTitle("User Role Management");
+							dialogo.setHeaderText("You must choose a new Coordinator");
+							dialogo.setContentText("Available Coordinators:");
+
+							Optional<Formatter> risultato = dialogo.showAndWait();
+
+							if (risultato.isPresent()) {
+
+								// cambia a cascata inserendo il nuovo coordinatore
+								RoleController.replaceCoordinator(editedUser.getID(), dialogo.getResult().getIdUser());
+
+								// cancellalo come trascrittore/digitalizzatore da tutti i prj in cui è
+								// coinvolto
+								RoleController.removeUserFromAllProjects(editedUser.getID());
+								AdministrationController.modifyUserStatus(editedUser.getID(), false);
+								SceneController.loadPreviousScene();
+
+							}
+						} else {
+							Alert alert3 = new Alert(AlertType.WARNING);
+							alert3.setTitle("Warning");
+							alert3.setHeaderText("No Staff");
+							alert3.setContentText(
+									"Add coordinators to your staff, you can't deactivate " + editedUser.getUsername());
+
+							alert3.showAndWait();
+							SceneController.loadPreviousScene();
+						}
+					}else {
+						RoleController.removeUserFromAllProjects(editedUser.getID());
+						AdministrationController.modifyUserStatus(editedUser.getID(), false);
 						SceneController.loadPreviousScene();
 					}
 
@@ -209,8 +223,6 @@ public class EditUserProfile {
 					SceneController.loadPreviousScene();
 
 				}
-
-				// AdministrationController.modifyUserStatus(editedUser.getID(), false);
 
 			}
 
