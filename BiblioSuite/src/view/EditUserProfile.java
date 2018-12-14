@@ -173,14 +173,18 @@ public class EditUserProfile {
 					HashMap<String, Integer> map = AdministrationController.getInvolvedUser(editedUser.getID());
 
 					if ((map.containsKey("ScanningProjectCoordinator") && map.get("ScanningProjectCoordinator") != 0)
-							|| (map.containsKey("ScanningProjectCoordinator")
+							|| (map.containsKey("TrascriptionProjectCoordinator")
 									&& map.get("TranscriptionProjectCoordinator") != 0)) {
 
 						List<Formatter> scelta = new LinkedList<Formatter>();
 
 						for (Map.Entry<UUIDUser, String> e : RoleController.showCoordinatorUsers().entrySet()) {
-							scelta.add(new Formatter(e.getKey(), e.getValue()));
+							if(e.getKey().getValue() != editedUser.getID().getValue() || RoleController.controlUserPermission(12, e.getKey()) ) {
+								scelta.add(new Formatter(e.getKey(), e.getValue()));
+							}
 						}
+						
+						
 
 						if (!(scelta.isEmpty())) {
 
