@@ -60,7 +60,7 @@ public class Home {
 
 	@FXML
 	private Accordion documentCollections;
-	
+
 	@FXML
 	private TextField searchBar;
 
@@ -73,26 +73,25 @@ public class Home {
 		loadBookmarks();
 		initSearchBar();
 	}
-	
+
 	@FXML
 	public void initSearchBar() {
 		searchBar.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				int l=newValue.length();
-				/*if(l>1) {
-					if (newValue.substring(l-1,l).equals(" ") && newValue.replaceAll("\\s","").length()>0)
-						System.out.println("doca");
-				}*/
-				
-				/*if(l>1) {
-					if (newValue.substring(l-1,l).equals(" ") && !(newValue.replaceAll("\\s","").length()>0))
-					{
-						searchBar.setText("");
-						System.out.println("tuc");
-					}
-					
-				}*/
+				int l = newValue.length();
+				/*
+				 * if(l>1) { if (newValue.substring(l-1,l).equals(" ") &&
+				 * newValue.replaceAll("\\s","").length()>0) System.out.println("doca"); }
+				 */
+
+				/*
+				 * if(l>1) { if (newValue.substring(l-1,l).equals(" ") &&
+				 * !(newValue.replaceAll("\\s","").length()>0)) { searchBar.setText("");
+				 * System.out.println("tuc"); }
+				 * 
+				 * }
+				 */
 			}
 		});
 	}
@@ -193,7 +192,6 @@ public class Home {
 
 	}
 
-	
 	@FXML
 	public void loadNews() throws DatabaseException, ParseException {
 		try {
@@ -205,16 +203,20 @@ public class Home {
 
 				Label title1 = new Label(entry.getValue()[0]);
 				title1.setPrefWidth(150);
-				Label title2 =  new Label("( " + entry.getValue()[1] + " giorni fa )");
+				Label title2 = new Label("( " + entry.getValue()[1] + " giorni fa )");
 				title2.setPrefWidth(150);
-				Label title3 = new Label(entry.getValue()[2]);
-				
-				String s=title1.getText();
+				ImageView title3;
+				if (entry.getValue()[2].equals("sn")) {
+					title3 = new ImageView(new Image("file://resources/favicon/32/document-scanning.png"));
+				} else {
+					title3 = new ImageView(new Image("file://resources/favicon/32/xml.png"));
+				}
+
+				String s = title1.getText();
 				char first = Character.toUpperCase(s.charAt(0));
 				String s1 = first + s.substring(1);
 				title1.setText(s1);
-			
-		
+
 				HBox row = new HBox();
 
 				if (c % 2 == 0)
@@ -224,7 +226,6 @@ public class Home {
 				row.getChildren().add(title1);
 				row.getChildren().add(title2);
 				row.getChildren().add(title3);
-
 
 				row.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 					try {
@@ -278,7 +279,7 @@ public class Home {
 				@Override
 				public void changed(ObservableValue<? extends DocumentRow> observable, DocumentRow oldValue,
 						DocumentRow newValue) {
-					
+
 					try {
 						PageViewController.showDocument(newValue.getId());
 					} catch (LoadException e) {

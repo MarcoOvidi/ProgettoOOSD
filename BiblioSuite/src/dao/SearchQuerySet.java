@@ -12,6 +12,7 @@ public class SearchQuerySet {
 
 	/**
 	 * Cerca un'opera per autore o titolo
+	 * 
 	 * @param match
 	 * @return
 	 * @throws DatabaseException
@@ -36,19 +37,19 @@ public class SearchQuerySet {
 					+ "dm.author LIKE (CONCAT('%' , ? , '%')) " + "group by doc.ID;");
 			ps.setString(1, match);
 			ps.setString(2, match);
-			
+
 			rs = ps.executeQuery();
-			
-			while(rs.next()) {
+
+			while (rs.next()) {
 				documents.add(new UUIDDocument(rs.getInt("doc.ID")));
 			}
 
 		} catch (SQLException e) {
-			throw new DatabaseException("Errore di esecuzione della query" , e);
-			
+			throw new DatabaseException("Errore di esecuzione della query", e);
+
 		} finally {
 			try {
-				if(rs != null)
+				if (rs != null)
 					rs.close();
 				if (ps != null)
 					ps.close();
@@ -59,12 +60,13 @@ public class SearchQuerySet {
 			}
 
 		}
-		
+
 		return documents;
 	}
-	
+
 	/**
 	 * Cerca un'opera per tag
+	 * 
 	 * @param match
 	 * @return
 	 * @throws DatabaseException
@@ -87,21 +89,21 @@ public class SearchQuerySet {
 			ps = con.prepareStatement("SELECT ID_document FROM document_metadata AS dm JOIN tag_metadata AS tm "
 					+ "JOIN tag ON tm.ID_tag=tag.ID AND tm.ID_document_metadata=dm.ID "
 					+ "WHERE tag.name LIKE (CONCAT('%' ,?, '%')) group by ID_document;");
-			
+
 			ps.setString(1, match);
-			
+
 			rs = ps.executeQuery();
-			
-			while(rs.next()) {
+
+			while (rs.next()) {
 				documents.add(new UUIDDocument(rs.getInt("ID_document")));
 			}
 
 		} catch (SQLException e) {
-			throw new DatabaseException("Errore di esecuzione della query" , e);
-			
+			throw new DatabaseException("Errore di esecuzione della query", e);
+
 		} finally {
 			try {
-				if(rs != null)
+				if (rs != null)
 					rs.close();
 				if (ps != null)
 					ps.close();
@@ -112,7 +114,7 @@ public class SearchQuerySet {
 			}
 
 		}
-		
+
 		return documents;
 	}
 
