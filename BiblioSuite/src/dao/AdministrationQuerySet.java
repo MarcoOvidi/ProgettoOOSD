@@ -680,4 +680,98 @@ public class AdministrationQuerySet { // tutto ok
 
 		}
 	}
+
+	/**
+	 * Modifica il livello del trascrittore
+	 * 
+	 * @param id
+	 * @return
+	 * @throws DatabaseException
+	 */
+	public static void changeTranscriberLevel(UUIDUser id, int level) throws DatabaseException {
+		Connection con = null;
+
+		try {
+			con = DBConnection.connect();
+		} catch (DatabaseException ex) {
+			throw new DatabaseException("Errore di connessione", ex);
+		}
+
+		if (level < 0 || level > 5)
+			throw new DatabaseException("Inserire livello da 0 a 5 !");
+
+		PreparedStatement ps = null;
+
+		try {
+			ps = con.prepareStatement("UPDATE user SET level=? WHERE ID=?;");
+			ps.setInt(1, level);
+			ps.setInt(2, id.getValue());
+
+			ps.executeUpdate();
+
+		} catch (SQLException e) {
+			throw new DatabaseException("Errore nella query", e);
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException ex) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", ex));
+			}
+		}
+
+	}
+	
+	/**
+	 * Recupera il livello del trascrittore
+	 * 
+	 * @param id
+	 * @return
+	 * @throws DatabaseException
+	 */
+	public static int getTranscriberLevel(UUIDUser id) throws DatabaseException {
+		Connection con = null;
+
+		try {
+			con = DBConnection.connect();
+		} catch (DatabaseException ex) {
+			throw new DatabaseException("Errore di connessione", ex);
+		}
+
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Integer result ;
+		
+		try {
+			ps = con.prepareStatement("SELECT level FROM user WHERE ID=?;");
+			ps.setInt(1, id.getValue());
+
+			rs = ps.executeQuery();
+			
+			rs.next();
+			
+			result = rs.getInt("level");
+
+		} catch (SQLException e) {
+			throw new DatabaseException("Errore nella query", e);
+		} finally {
+			try {
+				if(rs != null)
+					rs.close();
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException ex) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", ex));
+			}
+		}
+		
+		return result;
+
+	}
+
 }

@@ -30,6 +30,11 @@ public class AdministrationController {
 		return req;
 	}
 
+	/**
+	 * Carica integralmente una richiesta mandata da un utente
+	 * @param id
+	 * @return
+	 */
 	public static Request loadRequest(UUIDRequest id) {
 		Request r = null;
 		try {
@@ -44,11 +49,22 @@ public class AdministrationController {
 		return r;
 	}
 
+	
+	/**
+	 * Carica tutti gli utenti registrati alla biblioteca
+	 * @return HashMap<UUIDUser, String[]> 
+	 */
 	public static HashMap<UUIDUser, String[]> loadAllUsers() {
 		HashMap<UUIDUser, String[]> users = new HashMap<UUIDUser, String[]>();
 		return users;
 	}
 
+	
+	/**
+	 * Carica gli utenti con un determinato stato 
+	 * @param status 1=attivi 0=non attivi
+	 * @return LinkedList<User>
+	 */
 	public static LinkedList<User> loadUserList(Boolean status) {
 		LinkedList<User> res = null;
 		try {
@@ -61,6 +77,11 @@ public class AdministrationController {
 		return res;
 	}
 	
+	/**
+	 * Ritorna l'usernamen di un utente
+	 * @param id utente
+	 * @return String username
+	 */
 	public static String loadUsername(UUIDUser id) {
 		String u = null;
 		try {
@@ -72,6 +93,10 @@ public class AdministrationController {
 		return u;
 	}
 	
+	/**
+	 * Archivia una richiesta senza rispondere
+	 * @param id richiesta
+	 */
 	public static void ignoreUserRequest(UUIDRequest id) {
 		try{
 			AdministrationQuerySet.ignoreRequest(id);
@@ -81,6 +106,11 @@ public class AdministrationController {
 		}
 	}
 	
+	/**
+	 * Risponde alla richiesta di un utente
+	 * @param id richiesta
+	 * @param answer
+	 */
 	public static void answerUserRequest(UUIDRequest id, String answer) {
 		try{
 			AdministrationQuerySet.answerRequest(id, answer);
@@ -90,6 +120,11 @@ public class AdministrationController {
 		}
 	}
 	
+	/**
+	 * Rende un utente inattivo attivo e viceversa
+	 * @param id utente
+	 * @param status 0=disattivo 1=attivo
+	 */
 	public static void modifyUserStatus(UUIDUser id , Boolean status) {
 		try {
 			AdministrationQuerySet.modifyUserStatus(id, status);
@@ -99,6 +134,11 @@ public class AdministrationController {
 		}
 	}
 	
+	/**
+	 * Ritorna tutti i progetti in cui l'utente è partecipe in qualsiasi ruolo
+	 * @param u id user
+	 * @return HashMap<String, Integer>
+	 */
 	public static HashMap<String, Integer> getInvolvedUser(UUIDUser u){
 		try {
 			return AdministrationQuerySet.userIsInvolved(u);
@@ -106,6 +146,35 @@ public class AdministrationController {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 			return null;
+		}
+	}
+	
+	/**
+	 * Cambia il livello di un trascrittore
+	 * @param idUSer
+	 * @param level
+	 */
+	public static void changeTranscriberLevel(UUIDUser idUSer, int level) {
+		try {
+			AdministrationQuerySet.changeTranscriberLevel(idUSer, level);
+		}catch(DatabaseException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	/**
+	 * Seleziona il livello di un trascrittore
+	 * @param idUSer
+	 * @param level
+	 */
+	public static int getTranscriberLevel(UUIDUser idUSer) {
+		try {
+			return AdministrationQuerySet.getTranscriberLevel(idUSer);
+		}catch(DatabaseException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			return -1;
 		}
 	}
 }
