@@ -10,8 +10,11 @@ import java.util.Optional;
 
 import controller.AdministrationController;
 import controller.EditUserController;
+import controller.LocalSession;
 import controller.RoleController;
 import dao.DatabaseException;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
@@ -20,6 +23,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.CheckMenuItem;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
@@ -30,12 +34,14 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import model.User;
 import vo.Email;
+import vo.Level;
 import vo.UUIDUser;
 import vo.UserInformations;
 import vo.UserPermissions;
 import vo.view.Formatter;
 
 public class EditUserProfile {
+	private int transcriberLevel = 0;
 
 	@FXML
 	private Label username;
@@ -45,7 +51,13 @@ public class EditUserProfile {
 	private TextField surname;
 	@FXML
 	private TextField email;
+	@FXML
+	private Label level;
+	@FXML
+	private Label levelT;
 
+	@FXML
+	private ChoiceBox<Integer> levelChoose;
 	@FXML
 	private MenuButton roleList;
 	@FXML
@@ -93,6 +105,14 @@ public class EditUserProfile {
 		name.setText(info.getName());
 		surname.setText(info.getSurname());
 		email.setText(info.getMail().getEmail());
+
+		if (LocalSession.getLocalUser().isTranscriber()) {
+			level.setText(
+					String.valueOf(AdministrationController.getTranscriberLevel(LocalSession.getLocalUser().getID())));
+		} else {
+			levelT.setVisible(false);
+			level.setVisible(false);
+		}
 	}
 
 	private void initDeactivateButton() {
@@ -280,7 +300,8 @@ public class EditUserProfile {
 			User editedUser = EditUserController.getToEditUser();
 			editedUser.setPermissions(getUpdatedPermissions());
 			editedUser.setInformations(getUpdatedInformations(editedUser.getInformations()));
-
+			editedUser.setLevel(new Level(transcriberLevel));
+			
 			EditUserController.setModifications(editedUser);
 			EditUserController.commitModifications();
 			SceneController.loadPreviousScene();
@@ -325,6 +346,21 @@ public class EditUserProfile {
 			});
 			if (EditUserController.getToEditUser().isAdmin())
 				deactivate.setDisable(true);
+
+			//transcriber level
+			for (int i = 1; i < 6; ++i) {
+				levelChoose.getItems().add(i);
+			}
+			levelChoose.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+				@Override
+				public void changed(ObservableValue<? extends Number> observableValue, Number entry, Number entryNew) {
+					transcriberLevel = levelChoose.getSelectionModel().getSelectedIndex()+1;
+				}
+			});
+			levelChoose.getSelectionModel().select(AdministrationController.getTranscriberLevel(LocalSession.getLocalUser().getID()));
+			levelChoose.setVisible(true);
+			levelT.setVisible(true);
+			level.setVisible(false);
 		}
 	}
 
@@ -361,7 +397,7 @@ public class EditUserProfile {
 				});
 				roleList.getItems().add(item);
 			}
-
+			
 			roleList.setText("Roles");
 			roleList.setAlignment(Pos.CENTER);
 

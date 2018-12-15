@@ -64,6 +64,10 @@ public class EditUserController {
 			EditProfileQuerySet.updateUserProfile(getToEditUser().getID(), getToEditUser());
 			AdministrationQuerySet.updateUserPermissions(getToEditUser().getID(), getToEditUser().getPermissions());
 
+			//System.out.println(getToEditUser().getID());
+			//System.out.println(getToEditUser().getLevel());
+			AdministrationController.changeTranscriberLevel(getToEditUser().getID(), getToEditUser().getLevel().getValue());
+			
 		} catch (DatabaseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

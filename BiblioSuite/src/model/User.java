@@ -3,6 +3,7 @@ package model;
 import java.util.LinkedList;
 import vo.UUIDUser;
 import vo.UUIDTranscriptionWorkProject;
+import vo.Level;
 import vo.UUIDBookMark;
 import vo.UUIDScanningWorkProject;
 import vo.UserInformations;
@@ -20,6 +21,7 @@ public class User {
 	private LinkedList<UUIDScanningWorkProject> scanningProjects;
 	private LinkedList<UUIDBookMark> bookMarks;
 	private Boolean active;
+	private Level level;
 	
 	//costruttore usato dalla query che recupera i soli dati anagrafici di un utente
 
@@ -154,5 +156,13 @@ public class User {
 	
 	public boolean isAdmin() {
 		return permissions.isCoordinator();
+	}
+
+	public Level getLevel() {
+		return level;
+	}
+
+	public void setLevel(Level level) {
+		this.level = level;
 	}
 }
