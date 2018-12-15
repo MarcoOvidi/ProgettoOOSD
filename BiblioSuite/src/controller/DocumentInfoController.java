@@ -95,33 +95,44 @@ public class DocumentInfoController {
 		}
 		return res;
 	}
-	
-	public static HashMap<Integer, Tag> getAvailableTags(){
+
+	public static HashMap<Integer, Tag> getAvailableTags() {
 		try {
 			return DocumentQuerySet.loadAvailableTag();
-		}catch(DatabaseException e) {
+		} catch (DatabaseException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
 			return null;
 		}
 	}
-	
-	public static void setAvailableTagsToDocument(UUIDDocumentMetadata id , HashMap<Integer, Tag> tags){
+
+	public static void setAvailableTagsToDocument(UUIDDocumentMetadata id, HashMap<Integer, Tag> tags) {
 		try {
 			DocumentQuerySet.addTagToDocument(id, tags);
-		}catch(DatabaseException e) {
+		} catch (DatabaseException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
 		}
 	}
-	
+
 	public static UUIDDocumentMetadata getUUIDDocumentMetadata(UUIDDocument id) {
 		try {
 			return DocumentQuerySet.getDocumentMetadataOfDocument(id);
-		}catch (DatabaseException e ) {
+		} catch (DatabaseException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
 			return null;
 		}
 	}
+
+	public static Integer insertNewTag(Tag tag) {
+		try {
+			return DocumentQuerySet.insertNewTag(tag);
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
+
 }

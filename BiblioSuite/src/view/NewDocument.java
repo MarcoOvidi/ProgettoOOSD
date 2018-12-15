@@ -46,7 +46,7 @@ public class NewDocument {
 	private TextArea inarea;
 
 	@FXML
-	private Button indefinita;
+	private Button indefinita;	
 
 	@FXML
 	private ChoiceBox<String> choiceBox = new ChoiceBox<String>();
@@ -70,7 +70,8 @@ public class NewDocument {
 	private String title, author, description;
 	private String yearvar, year1var, year2var;
 	private String preservState;
-	HashMap<Integer, Tag> toAddTags = new HashMap<Integer,Tag>();
+	HashMap<Integer, Tag> existingTags = new HashMap<Integer, Tag>();
+	LinkedList<Tag> notExistingTags = new LinkedList<Tag>();
 
 	@FXML
 	public void initialize() {
@@ -131,6 +132,15 @@ public class NewDocument {
 			case 7:
 				caseSeven();
 				break;
+			case 8:
+				caseEight();
+				break;
+			case 9:
+				caseNine();
+				break;
+			case 10:
+				caseTen();
+				break;
 
 			default:
 				finalCase();
@@ -171,7 +181,6 @@ public class NewDocument {
 		description = inarea.getText();
 		inarea.getText();
 		label.setText("What do you know about the creation of the work");
-		System.out.println(c);
 		next.setVisible(false);
 		container.getChildren().clear();
 		definita = new Button("A date");
@@ -326,7 +335,7 @@ public class NewDocument {
 	}
 
 	public void caseSix() {
-		
+
 		preservState = choiceBox.getSelectionModel().getSelectedItem();
 		label.setText("Choose tags that describe the Opera");
 
@@ -352,20 +361,20 @@ public class NewDocument {
 		roles.add("Transcription reviser");
 		roles.add("Coordinator");
 		roleList = new MenuButton();
-		toAddTags = new HashMap<Integer, Tag>();
-		
+		existingTags = new HashMap<Integer, Tag>();
+
 		for (Entry<Integer, Tag> tag : DocumentInfoController.getAvailableTags().entrySet()) {
 			CheckMenuItem item = new CheckMenuItem();
 			item.setText(tag.getValue().getTag());
 			item.setId(String.valueOf(tag.getKey()));
 			item.onActionProperty().set(event -> {
 				if (!item.isSelected()) {
-					toAddTags.remove(Integer.valueOf(item.getId()));
+					existingTags.remove(Integer.valueOf(item.getId()));
 				} else {
-					toAddTags.put(Integer.valueOf(item.getId()), new Tag(item.getText()));
+					existingTags.put(Integer.valueOf(item.getId()), new Tag(item.getText()));
 				}
 			});
-			
+
 			roleList.getItems().add(item);
 		}
 
@@ -377,21 +386,87 @@ public class NewDocument {
 	}
 
 	public void caseSeven() {
+		c = 7 ; //loop finchè l'utente non vuole uscire
+		label.setText("Do you need any other Tag?");
+		next.setVisible(false);
+		container.getChildren().clear();
+		definita = new Button("Yes");
+		indefinita = new Button("No");
+
+		definita.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+			event.consume();
+			caseEight();
 		
-		// TODO idee migliori per questi sono ben accette
+		});
+
+		indefinita.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+			event.consume();
+			//non ne ha bisogno vado avanti e completo la creazione
+			c=11;
+			caseTen();
+			
+		});
+
+		HBox hb = new HBox();
+		container.getChildren().add(hb);
+		hb.getChildren().add(new Label("                  "));
+		hb.getChildren().add(definita);
+		hb.getChildren().add(new Label("     /     "));
+		hb.getChildren().add(indefinita);
+
+
+	}
+	
+	public void caseEight() {
+		c=9;	
+		definita.setVisible(false);
+		indefinita.setVisible(false);
+		container.getChildren().clear();
+		container.getChildren().add(intext);
+		label.setText("Insert ONLY 1 tag (Remeber: not allowed spaces and commas!)");
+		intext.setText("");
+		intext.setPromptText("Tag");
+	}
+	
+	public void caseNine() {
+		notExistingTags.add(new Tag(intext.getText()));
+		c=7;
+		caseSeven();
+		
+	}
+
+	public void caseTen() {
 		if (title.isEmpty())
 			title = "Unknown";
 		if (author.isEmpty())
 			author = "Unknown";
-
-		UUIDDocument creato = CreateDocumentController.createDocument(title, author, description, yearvar, year1var, year2var, preservState);
-		DocumentInfoController.setAvailableTagsToDocument(DocumentInfoController.getUUIDDocumentMetadata(creato), toAddTags);
+		
+		UUIDDocument creato = CreateDocumentController.createDocument(title, author, description, yearvar, year1var,
+				year2var, preservState);
+		DocumentInfoController.setAvailableTagsToDocument(DocumentInfoController.getUUIDDocumentMetadata(creato),
+				existingTags);
+		
+		if(!notExistingTags.isEmpty()) {
+			HashMap<Integer, Tag> inserted = new HashMap<Integer, Tag>();
+			
+			//aggiungi i tag nuovi al DB
+			for(Tag t : notExistingTags) {
+				inserted.put(DocumentInfoController.insertNewTag(t), t);
+			}
+			
+			//aggiungi i nuovi tag relazionati al document che stiamo creando
+			
+			DocumentInfoController.setAvailableTagsToDocument(DocumentInfoController.getUUIDDocumentMetadata(creato),inserted);
+			
+		}
 		label.setText("Your document has been created");
+		next.setVisible(true);
 		next.setText("Go back");
 		container.getChildren().clear();
-		System.out.println(title + author + description + yearvar + year1var + year2var + preservState + toAddTags);
+		System.out.println(title + author + description + yearvar + year1var + year2var + preservState + existingTags + notExistingTags);
 
 	}
+	
 
 	public void finalCase() {
 		SceneController.loadPreviousScene();

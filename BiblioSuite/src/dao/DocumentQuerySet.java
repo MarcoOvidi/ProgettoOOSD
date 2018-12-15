@@ -43,7 +43,7 @@ public class DocumentQuerySet {
 	public static UUIDDocument insertDocument(String title, String author, String description, String composition_date,
 			String composition_period_from, String composition_period_to, String preservation_state)
 			throws DatabaseException, ParseException {
-		System.out.println("Descrizione: " + description + "...FINE");
+
 		Connection con = null;
 
 		try {
@@ -652,11 +652,67 @@ public class DocumentQuerySet {
 		return idDm;
 	}
 
-	/*
-	 * public static void main(String[] args) { try {
-	 * DocumentQuerySet.loadDocument(new UUIDDocument(142));
+	/**
+	 * Inserisce un nuovo tag nel db
 	 * 
-	 * } catch (Exception e) { System.out.println(e); } }
+	 * @param t Tag
+	 * @return
+	 * @throws DatabaseException
 	 */
+	public static Integer insertNewTag(Tag t) throws DatabaseException {
+
+		Connection con = null;
+
+		try {
+			con = DBConnection.connect();
+		} catch (DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Integer tagID = null;
+
+		try {
+			con.setAutoCommit(false);
+			
+			ps = con.prepareStatement("insert into tag(name) value( ? );", new String[] { "ID" });
+			ps.setString(1, t.getTag());
+
+			ps.addBatch();
+			ps.executeBatch();
+
+			rs = ps.getGeneratedKeys();
+
+			if (rs.next()) {
+				tagID = rs.getInt(1);
+			}
+
+			con.commit();
+
+			con.setAutoCommit(true);
+		
+		} catch (SQLException e) {
+			try {
+				con.abort(null);
+			} catch (SQLException f) {
+				DBConnection.logDatabaseException(new DatabaseException("Duplicato", f));
+			}
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+		}
+		return tagID;
+	}
+
+	
 
 }
