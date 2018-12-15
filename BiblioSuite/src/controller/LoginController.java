@@ -33,7 +33,7 @@ public class LoginController {
 				//LocalSession.setLocalUser(user);
 				LocalSession.setLocalUser(user);
 				lscene.displayMessage("Done. Loading scene");
-				SceneController.loadScene("home2");
+				SceneController.loadScene("home");
 			} else {
 				lscene.displayMessage("Invalid username or password");
 			}
