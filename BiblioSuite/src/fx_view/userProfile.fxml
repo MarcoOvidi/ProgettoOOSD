@@ -41,6 +41,10 @@
 							<Label text="Email: " style="-fx-text-fill: #f87e1a" />
 							<Label fx:id="email" />
 						</HBox>
+						<HBox>
+							<Label fx:id="levelT" text="TranscriberLevel: " style="-fx-text-fill: #f87e1a" />
+							<Label fx:id="level" />
+						</HBox>
 						<HBox />
 						<HBox />
 						<JFXButton fx:id="edit" text="Edit Profile" />
