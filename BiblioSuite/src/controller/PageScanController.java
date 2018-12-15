@@ -82,6 +82,16 @@ public class PageScanController {
 			e.printStackTrace();
 		}
 	}
+	
+	public static void loadNewDocumentPagesOnlyToRevise(UUIDDocument doc) {
+		try {
+			currentDocumentPages = DigitalizerQuerySet.loadDocument(doc, false, false);;
+			currentDocument = doc;
+		} catch (DatabaseException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+		}
+	}
 
 	public static void loadUncompletedDocumentPagesFilters(UUIDDocument doc, Boolean revised, Boolean validated) {
 		try {

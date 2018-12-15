@@ -7,6 +7,14 @@ public class Tag {
 		this.name=n;
 	}
 	
+	public String getTag() {
+		return this.name;
+	}
+	
+	public void setTag(String name) {
+		this.name=name;
+	}
+	
 	@Override
 	public String toString() {
 		return this.name;

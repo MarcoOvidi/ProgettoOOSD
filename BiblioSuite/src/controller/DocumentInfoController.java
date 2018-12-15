@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import dao.DatabaseException;
 import dao.DocumentQuerySet;
@@ -8,6 +9,7 @@ import javafx.fxml.LoadException;
 import model.Document;
 import vo.Tag;
 import vo.UUIDDocument;
+import vo.UUIDDocumentMetadata;
 import vo.VagueDate;
 
 public class DocumentInfoController {
@@ -92,5 +94,34 @@ public class DocumentInfoController {
 			// FIXME manca
 		}
 		return res;
+	}
+	
+	public static HashMap<Integer, Tag> getAvailableTags(){
+		try {
+			return DocumentQuerySet.loadAvailableTag();
+		}catch(DatabaseException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
+	
+	public static void setAvailableTagsToDocument(UUIDDocumentMetadata id , HashMap<Integer, Tag> tags){
+		try {
+			DocumentQuerySet.addTagToDocument(id, tags);
+		}catch(DatabaseException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public static UUIDDocumentMetadata getUUIDDocumentMetadata(UUIDDocument id) {
+		try {
+			return DocumentQuerySet.getDocumentMetadataOfDocument(id);
+		}catch (DatabaseException e ) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			return null;
+		}
 	}
 }

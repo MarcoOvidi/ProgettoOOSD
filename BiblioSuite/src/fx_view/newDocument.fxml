@@ -12,7 +12,7 @@
    <left>
       <AnchorPane prefHeight="800.0" prefWidth="1400.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="label" layoutX="571.0" layoutY="294.0" text="Insert title" textFill="#aaaaaa">
+            <Label fx:id="label" layoutX="371.0" layoutY="294.0" text="Insert title" textFill="#aaaaaa">
                <font>
                   <Font size="28.0" />
                </font>

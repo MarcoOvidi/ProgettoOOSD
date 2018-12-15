@@ -6,7 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map.Entry;
 
 import controller.LocalSession;
 import javafx.fxml.LoadException;
@@ -19,7 +21,9 @@ import model.PageTranscriptionStaff;
 import vo.DocumentMetadata;
 import vo.Image;
 import vo.TEItext;
+import vo.Tag;
 import vo.UUIDDocument;
+import vo.UUIDDocumentMetadata;
 import vo.UUIDPage;
 import vo.UUIDScanningWorkProject;
 import vo.UUIDTranscriptionWorkProject;
@@ -39,9 +43,8 @@ public class DocumentQuerySet {
 	public static UUIDDocument insertDocument(String title, String author, String description, String composition_date,
 			String composition_period_from, String composition_period_to, String preservation_state)
 			throws DatabaseException, ParseException {
-		System.out.println("Descrizione: "+ description + "...FINE");
+		System.out.println("Descrizione: " + description + "...FINE");
 		Connection con = null;
-		
 
 		try {
 			con = DBConnection.connect();
@@ -170,7 +173,7 @@ public class DocumentQuerySet {
 				ps.executeUpdate();
 
 				new File("resources/documents/" + id.getValue()).mkdirs();
-				
+
 				if (ps != null)
 					ps.close();
 
@@ -513,6 +516,142 @@ public class DocumentQuerySet {
 	public void downloadFileDocument() {
 
 	}
+
+	/**
+	 * Carica tutti i tag disponibili in DB
+	 * 
+	 * @return
+	 * @throws DatabaseException
+	 */
+	public static HashMap<Integer, Tag> loadAvailableTag() throws DatabaseException {
+		Connection con = null;
+
+		try {
+			con = DBConnection.connect();
+		} catch (DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		HashMap<Integer, Tag> tags = new HashMap<Integer, Tag>();
+
+		try {
+			ps = con.prepareStatement("SELECT * from tag;");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				tags.put(rs.getInt("ID"), new Tag(rs.getString("name")));
+			}
+
+		} catch (SQLException e) {
+			throw new DatabaseException("Errore di esecuzione della query", e);
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+
+		}
+
+		return tags;
+
+	}
+
+	/**
+	 * Associa tags ad un document
+	 * 
+	 * @return
+	 * @throws DatabaseException
+	 */
+	public static void addTagToDocument(UUIDDocumentMetadata id, HashMap<Integer, Tag> tags) throws DatabaseException {
+		Connection con = null;
+
+		try {
+			con = DBConnection.connect();
+		} catch (DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+
+		PreparedStatement ps = null;
+
+		try {
+
+			ps = con.prepareStatement("INSERT INTO tag_metadata (ID_document_metadata ,ID_tag) VALUES (?,?);");
+
+			for (Entry<Integer, Tag> tag : tags.entrySet()) {
+				ps.setInt(1, id.getValue());
+				ps.setInt(2, tag.getKey());
+
+				ps.addBatch();
+
+			}
+
+			ps.executeBatch();
+
+		} catch (SQLException e) {
+			throw new DatabaseException("Errore di esecuzione della query", e);
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+
+		}
+	}
+
+	/**
+	 * Recupera UUIDDocumentMetadata da un UUIDDocument
+	 * 
+	 * @return
+	 * @throws DatabaseException
+	 */
+	public static UUIDDocumentMetadata getDocumentMetadataOfDocument(UUIDDocument id) throws DatabaseException {
+		Connection con = null;
+
+		try {
+			con = DBConnection.connect();
+		} catch (DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		UUIDDocumentMetadata idDm = null;
+
+		try {
+			ps = con.prepareStatement("SELECT ID FROM document_metadata WHERE ID_document = ?;");
+			ps.setInt(1, id.getValue());
+			rs = ps.executeQuery();
+
+			if (rs.next())
+				idDm = new UUIDDocumentMetadata(rs.getInt("ID"));
+
+		} catch (SQLException e) {
+			throw new DatabaseException("Errore di esecuzione della query", e);
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+
+		}
+		return idDm;
+	}
+
 	/*
 	 * public static void main(String[] args) { try {
 	 * DocumentQuerySet.loadDocument(new UUIDDocument(142));

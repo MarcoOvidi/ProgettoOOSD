@@ -78,6 +78,18 @@ public class PageTranscriptionController {
 		}
 	}
 	
+	public static void loadNewDocumentPagesOnlyNotRevised(UUIDDocument doc) {
+		try {
+			currentDocumentPages = DigitalizerQuerySet.loadDocument(doc, false, false); // c'è un errore 
+			
+			
+			currentDocument = doc;
+		} catch (DatabaseException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
 	public static void transcribeDocument(UUIDDocument document) throws LoadException {
 		Document doc = null;
 		try{

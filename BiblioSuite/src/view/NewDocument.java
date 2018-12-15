@@ -1,19 +1,31 @@
 package view;
 
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map.Entry;
+
 import controller.CreateDocumentController;
+import controller.DocumentInfoController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import vo.Tag;
+import vo.UUIDDocument;
 
 public class NewDocument {
+
+	@FXML
+	private MenuButton roleList;
 
 	@FXML
 	private Label label;
@@ -58,6 +70,7 @@ public class NewDocument {
 	private String title, author, description;
 	private String yearvar, year1var, year2var;
 	private String preservState;
+	HashMap<Integer, Tag> toAddTags = new HashMap<Integer,Tag>();
 
 	@FXML
 	public void initialize() {
@@ -113,6 +126,10 @@ public class NewDocument {
 
 			case 6:
 				caseSix();
+				break;
+
+			case 7:
+				caseSeven();
 				break;
 
 			default:
@@ -219,8 +236,8 @@ public class NewDocument {
 		HBox hbox = new HBox();
 		next.setVisible(false);
 
-		year1.setPromptText("Anno inizio");
-		year2.setPromptText("Anno fine");
+		year1.setPromptText("From year");
+		year2.setPromptText("To year");
 
 		choiceBox1.getItems().add("d.C.");
 		choiceBox1.getItems().add("a.C.");
@@ -231,7 +248,7 @@ public class NewDocument {
 		choiceBox1.getSelectionModel().select(0);
 		choiceBox2.getSelectionModel().select(0);
 
-		label.setText("Inserisci il periodo di composizione dell'opera");
+		label.setText("Isert opera's composition period");
 		container.getChildren().clear();
 
 		year1.textProperty().addListener(new ChangeListener<String>() {
@@ -309,20 +326,71 @@ public class NewDocument {
 	}
 
 	public void caseSix() {
+		
 		preservState = choiceBox.getSelectionModel().getSelectedItem();
+		label.setText("Choose tags that describe the Opera");
 
+		container.getChildren().clear();
+		/*
+		 * 
+		 * choiceBox = new ChoiceBox<String>();
+		 * 
+		 * choiceBox.getItems().add("1"); choiceBox.getItems().add("2");
+		 * choiceBox.getItems().add("3"); choiceBox.getItems().add("4");
+		 * choiceBox.getItems().add("5");
+		 * 
+		 * choiceBox.getSelectionModel().select(2);
+		 * 
+		 * // choiceBox.
+		 * 
+		 */
+		////
+		LinkedList<String> roles = new LinkedList<String>();
+		roles.add("Uploader");
+		roles.add("Transcriber");
+		roles.add("Upload reviser");
+		roles.add("Transcription reviser");
+		roles.add("Coordinator");
+		roleList = new MenuButton();
+		toAddTags = new HashMap<Integer, Tag>();
+		
+		for (Entry<Integer, Tag> tag : DocumentInfoController.getAvailableTags().entrySet()) {
+			CheckMenuItem item = new CheckMenuItem();
+			item.setText(tag.getValue().getTag());
+			item.setId(String.valueOf(tag.getKey()));
+			item.onActionProperty().set(event -> {
+				if (!item.isSelected()) {
+					toAddTags.remove(Integer.valueOf(item.getId()));
+				} else {
+					toAddTags.put(Integer.valueOf(item.getId()), new Tag(item.getText()));
+				}
+			});
+			
+			roleList.getItems().add(item);
+		}
+
+		roleList.setText("Available Tags");
+		// roleList.setAlignment(Pos.CENTER);
+
+		container.getChildren().add(roleList);
+
+	}
+
+	public void caseSeven() {
+		
 		// TODO idee migliori per questi sono ben accette
 		if (title.isEmpty())
 			title = "Unknown";
 		if (author.isEmpty())
 			author = "Unknown";
 
+		UUIDDocument creato = CreateDocumentController.createDocument(title, author, description, yearvar, year1var, year2var, preservState);
+		DocumentInfoController.setAvailableTagsToDocument(DocumentInfoController.getUUIDDocumentMetadata(creato), toAddTags);
 		label.setText("Your document has been created");
 		next.setText("Go back");
 		container.getChildren().clear();
-		System.out.println(title + author + description + yearvar + year1var + year2var + preservState);
-		CreateDocumentController.createDocument(title, author, description, yearvar, year1var, year2var, preservState);
-		
+		System.out.println(title + author + description + yearvar + year1var + year2var + preservState + toAddTags);
+
 	}
 
 	public void finalCase() {

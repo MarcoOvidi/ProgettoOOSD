@@ -3,8 +3,10 @@ package vo.view;
 import vo.UUIDUser;
 
 public class Formatter {
-	UUIDUser idUser;
-	String username;
+	private UUIDUser idUser;
+	private String username;
+	private int id;  // serve per i tag
+	private String Tag;
 
 	public UUIDUser getIdUser() {
 		return idUser;
@@ -31,6 +33,22 @@ public class Formatter {
 	@Override
 	public String toString() {
 		return username;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getTag() {
+		return Tag;
+	}
+
+	public void setTag(String tag) {
+		Tag = tag;
 	}
 
 }

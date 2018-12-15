@@ -1,7 +1,6 @@
 package view;
 
 import java.util.Map.Entry;
-import java.util.function.Predicate;
 
 import controller.LocalSession;
 import controller.PageScanController;
@@ -12,13 +11,9 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.LoadException;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -26,7 +21,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 import vo.UUIDDocument;
@@ -61,20 +55,20 @@ public class Transcription {
 	@FXML
 	private ObservableList<Rows> pages;
 
-	@FXML
-	private CheckBox checkConvalidated;
+	//@FXML
+	//private CheckBox checkConvalidated;
 
-	@FXML
-	private CheckBox checkRevisioned;
+	//@FXML
+	//private CheckBox checkRevisioned;
 
-	@FXML
-	private Button filterPages;
+	//@FXML
+	//private Button filterPages;
 
-	@FXML
-	private Label filtersLabel;
+	//@FXML
+	//private Label filtersLabel;
 	
-	@FXML
-	private Button clearFilters;
+	//@FXML
+	//private Button clearFilters;
 
 	private UUIDDocument currentDocument;
 	
@@ -82,7 +76,7 @@ public class Transcription {
 	public void initialize() {
 		insertDocument();
 		initLoadDocument();
-		initfilterButtons();
+		//initfilterButtons();
 		initPageTable();
 		prepareDocument();
 	}
@@ -98,12 +92,12 @@ public class Transcription {
 	private void initPageTable() {
 		
 		//
-		checkConvalidated.setVisible(false);
-		checkRevisioned.setVisible(false);;
-		filterPages.setVisible(false);;
+		//checkConvalidated.setVisible(false);
+		//checkRevisioned.setVisible(false);;
+		//filterPages.setVisible(false);;
 		pageTable.setVisible(false);
-		clearFilters.setVisible(false);
-		filtersLabel.setVisible(false);
+		//clearFilters.setVisible(false);
+		//filtersLabel.setVisible(false);
 		//
 		
 		
@@ -181,12 +175,12 @@ public class Transcription {
 			@Override
 			public void changed(ObservableValue<? extends Number> observableValue, Number entry, Number entryNew) {
 				//
-				checkConvalidated.setVisible(true);
-				checkRevisioned.setVisible(true);
-				filterPages.setVisible(true);
+				//checkConvalidated.setVisible(true);
+				//checkRevisioned.setVisible(true);
+				//filterPages.setVisible(true);
 				pageTable.setVisible(true);
-				clearFilters.setVisible(true);
-				filtersLabel.setVisible(true);
+				//clearFilters.setVisible(true);
+				//filtersLabel.setVisible(true);
 				//
 				
 				currentDocument=documentList.getItems().get((Integer) entryNew).getKey();
@@ -279,7 +273,7 @@ public class Transcription {
 			}
 		});*/
 	}
-
+/*
 	@FXML
 	public void initfilterButtons() {
 		filterPages.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -324,6 +318,6 @@ public class Transcription {
 			loadDocument(documentList.getSelectionModel().getSelectedItem().getKey());
 			event.consume();
 		});
-	}
+	}*/
 
 }

@@ -772,6 +772,6 @@ public class AdministrationQuerySet { // tutto ok
 		
 		return result;
 
-	}
+	}	
 
 }

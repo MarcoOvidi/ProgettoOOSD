@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Map.Entry;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 import controller.LocalSession;
 import controller.PageScanController;
@@ -15,15 +14,12 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
@@ -74,23 +70,23 @@ public class LoadScan {
 	@FXML
 	private ObservableList<Rows> pages;
 
-	@FXML
-	private CheckBox checkConvalidated;
+	//@FXML
+	//private CheckBox checkConvalidated;
 
-	@FXML
-	private CheckBox checkRevisioned;
+	//@FXML
+	//private CheckBox checkRevisioned;
 
-	@FXML
-	private Button filterPages;
+	//@FXML
+	//private Button filterPages;
 
-	@FXML
-	private Button clearFilters;
+	//@FXML
+	//private Button clearFilters;
 
 	// @FXML
 	// private Label loadScanTitle;
 
-	@FXML
-	private Label filtersLabel;
+	//@FXML
+	//private Label filtersLabel;
 
 	private UUIDDocument currentDocument;
 
@@ -100,7 +96,7 @@ public class LoadScan {
 		insertDocument();
 		initButtonChoice();
 		initLoadDocument();
-		initfilterButtons();
+		//initfilterButtons();
 		initPageTable();
 		initLoadScanTitle();
 		initFileChooser();
@@ -125,14 +121,14 @@ public class LoadScan {
 
 	private void initPageTable() {
 		//
-		checkConvalidated.setVisible(false);
-		checkRevisioned.setVisible(false);
-		;
-		filterPages.setVisible(false);
-		;
+		//checkConvalidated.setVisible(false);
+		//checkRevisioned.setVisible(false);
+		//;
+		//filterPages.setVisible(false);
+		//;
 		pageTable.setVisible(false);
-		clearFilters.setVisible(false);
-		filtersLabel.setVisible(false);
+		//clearFilters.setVisible(false);
+		//filtersLabel.setVisible(false);
 		//
 		number.setResizable(false);
 		image.setResizable(true);
@@ -317,12 +313,12 @@ public class LoadScan {
 				//
 				// loadScanTitle.setVisible(true);
 				filechooser.setVisible(true);
-				checkConvalidated.setVisible(true);
-				checkRevisioned.setVisible(true);
-				filterPages.setVisible(true);
+				//checkConvalidated.setVisible(true);
+				//checkRevisioned.setVisible(true);
+				//filterPages.setVisible(true);
 				pageTable.setVisible(true);
-				clearFilters.setVisible(true);
-				filtersLabel.setVisible(true);
+				//clearFilters.setVisible(true);
+				//filtersLabel.setVisible(true);
 				// -
 				currentDocument = documentList.getItems().get((Integer) entryNew).getKey();
 				loadDocument(currentDocument);
@@ -338,7 +334,7 @@ public class LoadScan {
 
 	public void loadDocument(UUIDDocument document) { // FIXME tutto da testare
 
-		PageScanController.loadNewDocumentPages(document);
+		PageScanController.loadNewDocumentPagesOnlyToRevise(document);
 
 		LinkedList<Page> pL = PageScanController.getCurrentDocumentPages();
 		pageTable.setEditable(true);
@@ -348,11 +344,11 @@ public class LoadScan {
 		pages.clear();
 		pageTable.refresh();
 
-		if (checkRevisioned.isSelected())
+		/*if (checkRevisioned.isSelected())
 			checkRevisioned.fire();
 		if (checkConvalidated.isSelected())
 			checkConvalidated.fire();
-
+*/
 		for (Page page : pL) {
 			String rev = "";
 			if (page.getScan().getRevised()) {
@@ -406,6 +402,7 @@ public class LoadScan {
 		});
 	}
 
+	/*
 	@FXML
 	public void initfilterButtons() {
 		filterPages.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -450,6 +447,6 @@ public class LoadScan {
 			loadDocument(documentList.getSelectionModel().getSelectedItem().getKey());
 			event.consume();
 		});
-	}
+	}*/
 
 }

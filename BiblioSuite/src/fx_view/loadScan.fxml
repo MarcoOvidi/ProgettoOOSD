@@ -39,15 +39,7 @@
 					</font>
 				</Label>
 				<ChoiceBox fx:id="documentList" layoutX="240.0" layoutY="23.0" prefWidth="150.0" />
-				<Label fx:id="filtersLabel" layoutX="148.0" layoutY="53.0" styleClass="title" text="Filters: ">
-					<font>
-						<Font size="28.0" />
-					</font>
-				</Label>
-				<CheckBox fx:id="checkRevisioned" layoutX="250.0" layoutY="65.0" mnemonicParsing="false" styleClass="highlight" text="Revisioned" />
-				<CheckBox fx:id="checkConvalidated" layoutX="350.0" layoutY="65.0" mnemonicParsing="false" styleClass="highlight" text="Convalidated" />
-				<Button fx:id="filterPages" layoutX="462.0" layoutY="60.0" mnemonicParsing="false" text="Filter Pages" />
-				<Button fx:id="clearFilters" layoutX="560.0" layoutY="60.0" mnemonicParsing="false" text="No Filter" />
+				
 			</children>
 		</AnchorPane>
 	</top>
