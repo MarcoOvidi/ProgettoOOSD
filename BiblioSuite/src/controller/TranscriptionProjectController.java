@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 import dao.DatabaseException;
+import dao.DigitalizationRevisorQuerySet;
 import dao.EditProfileQuerySet;
 import dao.TranscriptionReviserQuerySet;
 import dao.TranscriptionWorkProjectQuerySet;
@@ -93,6 +94,16 @@ public class TranscriptionProjectController {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
 			return null;
+		}
+	}
+	
+	public String getTranscriptionComment(UUIDPage id) {
+		try {
+			return TranscriptionReviserQuerySet.getTranscriptionRevisionComment(id);
+		}catch(DatabaseException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			return "No Comment available";
 		}
 	}
 

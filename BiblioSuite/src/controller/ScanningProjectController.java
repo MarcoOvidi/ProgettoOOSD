@@ -115,5 +115,15 @@ public class ScanningProjectController {
 			return null;
 		}
 	}
+	
+	public String getDigitalizationComment(UUIDPage id) {
+		try {
+			return DigitalizationRevisorQuerySet.getScanningRevisionComment(id);
+		}catch(DatabaseException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			return "No Comment available";
+		}
+	}
 
 }

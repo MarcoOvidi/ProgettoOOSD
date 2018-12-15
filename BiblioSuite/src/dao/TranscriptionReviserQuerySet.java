@@ -2,6 +2,7 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import vo.UUIDPage;
@@ -172,6 +173,55 @@ public class TranscriptionReviserQuerySet {
 				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
 			}
 		}
+	}
+	
+	/**
+	 * Permette di accedere al commento dell'ultima trascrizione della pagina
+	 * 
+	 * @param id
+	 * @param comment
+	 * @throws DatabaseException
+	 */
+	public static String getTranscriptionRevisionComment(UUIDPage id) throws DatabaseException {
+
+		Connection con = null;
+
+		try {
+			con = DBConnection.connect();
+		} catch (DatabaseException ex) {
+			throw new DatabaseException("Errore di connessione", ex);
+		}
+
+		PreparedStatement ps = null;
+		String comment = "Comment Not Found";
+		ResultSet rs = null;
+		
+		try {
+			ps = con.prepareStatement("SELECT transcription_reviser_comment FROM page WHERE ID=?");
+			ps.setInt(1, id.getValue());
+
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				comment = rs.getString("transcription_reviser_comment");
+			}
+			
+
+		} catch (SQLException e) {
+			throw new DatabaseException("Errore di esecuzione query", e);
+		} finally {
+			try {
+				if(rs != null)
+					rs.close();
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+		}
+		return comment;
 	}
 
 }

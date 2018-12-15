@@ -751,10 +751,10 @@ public class AdministrationQuerySet { // tutto ok
 
 			rs = ps.executeQuery();
 			
-			rs.next();
-			
-			result = rs.getInt("level");
-
+			if(rs.next())
+				result = rs.getInt("level");
+			else
+				result = -1;
 		} catch (SQLException e) {
 			throw new DatabaseException("Errore nella query", e);
 		} finally {
