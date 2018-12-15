@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 import dao.DatabaseException;
-import dao.DigitalizationRevisorQuerySet;
 import dao.EditProfileQuerySet;
 import dao.TranscriptionReviserQuerySet;
 import dao.TranscriptionWorkProjectQuerySet;
@@ -77,9 +76,9 @@ public class TranscriptionProjectController {
 		}
 	}
 	
-	public static LinkedList<UUIDUser> getAvailadbleTranscribers(UUIDTranscriptionWorkProject ids){
+	public static LinkedList<UUIDUser> getAvailableTranscribers(UUIDTranscriptionWorkProject ids , int level){
 		try {
-			return TranscriptionWorkProjectQuerySet.getAvailableDigitalizers(ids);
+			return TranscriptionWorkProjectQuerySet.getAvailableTranscribers(ids,level);
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -87,7 +86,7 @@ public class TranscriptionProjectController {
 		}
 	}
 	
-	public static LinkedList<UUIDUser> getAvailadbleRevisers(UUIDTranscriptionWorkProject ids){
+	public static LinkedList<UUIDUser> getAvailableRevisers(UUIDTranscriptionWorkProject ids){
 		try {
 			return TranscriptionWorkProjectQuerySet.getAvailableRevisers(ids);
 		}catch(Exception e) {

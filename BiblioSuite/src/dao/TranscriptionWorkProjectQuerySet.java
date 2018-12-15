@@ -933,7 +933,7 @@ public class TranscriptionWorkProjectQuerySet {
 	 * @throws DatabaseException
 	 * @throws NullPointerException
 	 */
-	public static LinkedList<UUIDUser> getAvailableDigitalizers(UUIDTranscriptionWorkProject ids)
+	public static LinkedList<UUIDUser> getAvailableTranscribers(UUIDTranscriptionWorkProject ids, int level)
 			throws DatabaseException, NullPointerException {
 		if (ids == null)
 			throw new NullPointerException("Id Progetto non valido");
@@ -955,13 +955,14 @@ public class TranscriptionWorkProjectQuerySet {
 		try {
 			ps = con.prepareStatement("select u.ID from user as u join perm_authorization as perm "
 					+ "on u.ID=perm.ID_user "
-					+ "WHERE modifyTranscription=1 and status = 1 "
+					+ "WHERE modifyTranscription=1 and status = 1 and level=? "
 					+ "and u.ID not in( select ID_transcriber_user from transcription_project_transcriber_partecipant where ID_transcription_project=?) "
 					+ "AND u.ID not in( select ID_reviser_user from transcription_project_reviser_partecipant where ID_transcription_project=?) "
 					+ "AND u.ID not in( select ID_coordinator from transcription_project where ID=?);");
-			ps.setInt(1, ids.getValue());
+			ps.setString(1, String.valueOf(level));
 			ps.setInt(2, ids.getValue());
 			ps.setInt(3, ids.getValue());
+			ps.setInt(4, ids.getValue());
 
 			rs = ps.executeQuery();
 			
@@ -1050,5 +1051,6 @@ public class TranscriptionWorkProjectQuerySet {
 		return availableStaff;
 	}
 	
+
 
 }

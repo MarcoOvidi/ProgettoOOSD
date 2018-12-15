@@ -704,7 +704,7 @@ public class AdministrationQuerySet { // tutto ok
 
 		try {
 			ps = con.prepareStatement("UPDATE user SET level=? WHERE ID=?;");
-			ps.setInt(1, level);
+			ps.setString(1, String.valueOf(level));
 			ps.setInt(2, id.getValue());
 
 			ps.executeUpdate();

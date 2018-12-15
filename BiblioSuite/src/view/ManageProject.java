@@ -76,10 +76,10 @@ public class ManageProject {
 
 	@FXML
 	private Tab propertiesTab;
-	
+
 	@FXML
 	BorderPane documentProperties;
-	
+
 	@FXML
 	private Tab transcriptionTab;
 
@@ -316,7 +316,7 @@ public class ManageProject {
 					scanning.setScanning_PRJ("\u2204 !!!");
 					entry.setValue(scanning);
 				}
-			
+
 			entry.getValue().setId(entry.getKey());
 
 			rows.add(entry.getValue());
@@ -416,7 +416,7 @@ public class ManageProject {
 
 				List<Formatter> choices = new ArrayList<>();
 				for (UUIDUser user : TranscriptionProjectController
-						.getAvailadbleRevisers(selectedDocumentTranscriptionProject)) {
+						.getAvailableRevisers(selectedDocumentTranscriptionProject)) {
 					choices.add(new Formatter(user, TranscriptionProjectController.getUserProfile(user).getUsername()));
 				}
 
@@ -449,32 +449,53 @@ public class ManageProject {
 		addTranscriberButton.setOnMouseClicked(event -> {
 			if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
 
-				List<Formatter> choices = new ArrayList<>();
-				for (UUIDUser user : TranscriptionProjectController
-						.getAvailadbleTranscribers(selectedDocumentTranscriptionProject)) {
-					choices.add(new Formatter(user, TranscriptionProjectController.getUserProfile(user).getUsername()));
-				}
+				List<Integer> choices1 = new ArrayList<>();
+				choices1.add(1);
+				choices1.add(2);
+				choices1.add(3);
+				choices1.add(4);
+				choices1.add(5);
 
-				if (!choices.isEmpty()) {
+				ChoiceDialog<Integer> dialog1 = new ChoiceDialog<>(1, choices1);
 
-					ChoiceDialog<Formatter> dialog = new ChoiceDialog<>(choices.get(0), choices);
-					dialog.setTitle("Add new Transcriber");
-					dialog.setHeaderText(
-							"Add a new Transcriber for the project: "/* + selectedDocumentScanningProject */ );
-					dialog.setContentText("Choose a transcriber user:");
+				dialog1.setTitle("Transcriber Level");
+				dialog1.setHeaderText("Choose a transcriber level");
+				dialog1.setContentText("Available level:");
 
-					Optional<Formatter> risultato = dialog.showAndWait();
+				// Traditional way to get the response value.
+				Optional<Integer> result1 = dialog1.showAndWait();
+				if (result1.isPresent()) {
+					System.out.println("Your choice: " + result1.get());
 
-					if (risultato.isPresent()) {
-						RoleController.addTranscriberUserInTrascriptionProject(risultato.get().getIdUser(),
-								selectedDocumentTranscriptionProject);
+					List<Formatter> choices = new ArrayList<>();
+					for (UUIDUser user : TranscriptionProjectController
+							.getAvailableTranscribers(selectedDocumentTranscriptionProject, result1.get())) {
+
+						choices.add(
+								new Formatter(user, TranscriptionProjectController.getUserProfile(user).getUsername()));
 					}
-				} else {
-					Alert alert = new Alert(AlertType.WARNING);
-					alert.setTitle("Warning");
-					alert.setHeaderText("No Available Transcriber");
-					alert.setContentText("There are not avalaible users that you can add to this project!");
-					alert.showAndWait();
+
+					if (!choices.isEmpty()) {
+
+						ChoiceDialog<Formatter> dialog = new ChoiceDialog<>(choices.get(0), choices);
+						dialog.setTitle("Add new Transcriber");
+						dialog.setHeaderText(
+								"Add a new Transcriber for the project: "/* + selectedDocumentScanningProject */ );
+						dialog.setContentText("Choose a transcriber user:");
+
+						Optional<Formatter> risultato = dialog.showAndWait();
+
+						if (risultato.isPresent()) {
+							RoleController.addTranscriberUserInTrascriptionProject(risultato.get().getIdUser(),
+									selectedDocumentTranscriptionProject);
+						}
+					} else {
+						Alert alert = new Alert(AlertType.WARNING);
+						alert.setTitle("Warning");
+						alert.setHeaderText("No Available Transcriber for the choosen level");
+						alert.setContentText("There are not avalaible transcriber that you can add to this project!");
+						alert.showAndWait();
+					}
 				}
 			}
 			loadClickedDocumentProjects();
@@ -488,8 +509,8 @@ public class ManageProject {
 		pane.setVisible(true);
 		DocumentProperties.setToShowDocument(clickedDocument.getId());
 		try {
-			documentProperties = (FXMLLoader.load(new
-					Object(){}.getClass().getResource("/fx_view/"+"documentProperties"+".fxml")));
+			documentProperties = (FXMLLoader.load(new Object() {
+			}.getClass().getResource("/fx_view/" + "documentProperties" + ".fxml")));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -542,10 +563,10 @@ public class ManageProject {
 									|| RoleController.controlUserPermission(12, LocalSession.getLocalUser().getID()))) {
 
 						List<String> choices = new ArrayList<>();
-						
-						if(RoleController.controlUserPermission(5, row.getItem().getId()))
+
+						if (RoleController.controlUserPermission(5, row.getItem().getId()))
 							choices.add("Transcriber");
-						if(RoleController.controlUserPermission(7, row.getItem().getId()))
+						if (RoleController.controlUserPermission(7, row.getItem().getId()))
 							choices.add("Reviser");
 						choices.add("Remove user from project");
 						if (RoleController.controlUserPermission(12, LocalSession.getLocalUser().getID())
@@ -696,14 +717,14 @@ public class ManageProject {
 					} else if (row.getItem().getRole().equals("Coordinator")
 							&& RoleController.controlUserPermission(12, LocalSession.getLocalUser().getID())) {
 						List<String> choices = new ArrayList<>();
-						
-						if(RoleController.controlUserPermission(5, row.getItem().getId()))
+
+						if (RoleController.controlUserPermission(5, row.getItem().getId()))
 							choices.add("Transcriber");
-						if(RoleController.controlUserPermission(7, row.getItem().getId()))
+						if (RoleController.controlUserPermission(7, row.getItem().getId()))
 							choices.add("Reviser");
-						if(RoleController.controlUserPermission(8, row.getItem().getId()))
+						if (RoleController.controlUserPermission(8, row.getItem().getId()))
 							choices.add("Coordinator");
-						
+
 						choices.add("Remove user from project");
 
 						ChoiceDialog<String> dialog = new ChoiceDialog<>(row.getItem().getRole(), choices);
@@ -847,9 +868,9 @@ public class ManageProject {
 									|| RoleController.controlUserPermission(12, LocalSession.getLocalUser().getID()))) {
 
 						List<String> choices = new ArrayList<>();
-						if(RoleController.controlUserPermission(2, row.getItem().getId()))
+						if (RoleController.controlUserPermission(2, row.getItem().getId()))
 							choices.add("Digitalizer");
-						if(RoleController.controlUserPermission(4, row.getItem().getId()))
+						if (RoleController.controlUserPermission(4, row.getItem().getId()))
 							choices.add("Reviser");
 						choices.add("Remove user from project");
 						if (RoleController.controlUserPermission(12, LocalSession.getLocalUser().getID())
@@ -1000,12 +1021,12 @@ public class ManageProject {
 					} else if (row.getItem().getRole().equals("Coordinator")
 							&& RoleController.controlUserPermission(12, LocalSession.getLocalUser().getID())) {
 						List<String> choices = new ArrayList<>();
-						
-						if(RoleController.controlUserPermission(2, row.getItem().getId()))
+
+						if (RoleController.controlUserPermission(2, row.getItem().getId()))
 							choices.add("Digitalizer");
-						if(RoleController.controlUserPermission(4, row.getItem().getId()))
+						if (RoleController.controlUserPermission(4, row.getItem().getId()))
 							choices.add("Reviser");
-						if(RoleController.controlUserPermission(8, row.getItem().getId()))
+						if (RoleController.controlUserPermission(8, row.getItem().getId()))
 							choices.add("Coordinator");
 						choices.add("Remove user from project");
 
@@ -1351,5 +1372,5 @@ public class ManageProject {
 	 */
 
 	// ___
-	
+
 }
