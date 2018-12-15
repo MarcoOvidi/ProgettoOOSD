@@ -4,17 +4,22 @@ import java.text.ParseException;
 
 import controller.LoginController;
 import dao.DatabaseException;
+import javafx.animation.FadeTransition;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.Glow;
+import javafx.scene.effect.Reflection;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.util.Duration;
 
 public class LoginScene {
 
@@ -36,6 +41,9 @@ public class LoginScene {
 
 	@FXML
 	private Color x2;
+
+	@FXML
+	private Label loginTitle;
 
 	@FXML
 	private TextField username;
@@ -84,11 +92,11 @@ public class LoginScene {
 			Platform.runLater(() -> go());
 			autoLogin = false;
 		}
-		
+
 		login.setFocusTraversable(true);
 		recoverButton.setFocusTraversable(true);
 
-		username.getParent().addEventHandler(KeyEvent.KEY_PRESSED, event -> {			
+		username.getParent().addEventHandler(KeyEvent.KEY_PRESSED, event -> {
 			if (event.getCode() == KeyCode.ESCAPE) {
 				username.setText("");
 				password.setText("");
@@ -105,7 +113,7 @@ public class LoginScene {
 			 * recover.requestFocus(); }
 			 */
 			message.setVisible(false);
-			
+
 			if (event.getCode() == KeyCode.ENTER) {
 				password.requestFocus();
 			} else if (event.getCode() == KeyCode.ESCAPE) {
@@ -137,23 +145,53 @@ public class LoginScene {
 
 		recoverButton.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
 			if (event.getCode() == KeyCode.ENTER)
-				SceneController.loadScene("passwordRecovery",false);
+				SceneController.loadScene("passwordRecovery", false);
 		});
 
 		recoverButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-			SceneController.loadScene("passwordRecovery",false);
+			SceneController.loadScene("passwordRecovery", false);
 		});
-		
+
 		registerButton.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
 			if (event.getCode() == KeyCode.ENTER)
-				SceneController.loadScene("registration",false);
+				SceneController.loadScene("registration", false);
 		});
 
 		registerButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-			SceneController.loadScene("registration",false);
+			SceneController.loadScene("registration", false);
 		});
 
+		initEffects();
+
 		Platform.runLater(() -> username.getParent().requestFocus());
+	}
+
+	private void initEffects() {
+		Glow glow = new Glow();
+		glow.setLevel(0.6);
+		username.setEffect(glow);
+
+		Glow glow2 = new Glow();
+		glow2.setLevel(0.4);
+		password.setEffect(glow2);
+
+		Reflection reflection = new Reflection();
+		reflection.setTopOffset(-10.1);
+		reflection.setFraction(0.5);
+		loginTitle.setEffect(reflection);
+
+		TranslateTransition translate = new TranslateTransition();
+		translate.setDuration(Duration.millis(800));
+		translate.setNode(loginTitle);
+		translate.setByY(10);
+		translate.play();
+		FadeTransition fade = new FadeTransition(Duration.millis(600));
+		fade.setNode(loginTitle);
+		fade.setNode(username.getParent());
+		fade.setFromValue(0.0);
+		fade.setToValue(1.0);
+		fade.play();
+
 	}
 
 	public void displayMessage(String msg) {

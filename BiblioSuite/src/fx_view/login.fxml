@@ -25,8 +25,8 @@
 					prefHeight="374.0" prefWidth="517.0"
 					style="-fx-background-color: rgba(0, 0, 0, 0.0);">
 					<children>
-						<Label id="loginTitle" alignment="CENTER" layoutX="125.0"
-							layoutY="67.0" prefHeight="58.0" prefWidth="268.0"
+						<Label fx:id="loginTitle" alignment="CENTER" layoutX="125.0"
+							layoutY="27.0" prefHeight="58.0" prefWidth="268.0"
 							text="BiblioSuite" textAlignment="CENTER" textFill="#e86e0a"
 							wrapText="false">
 							<font>
