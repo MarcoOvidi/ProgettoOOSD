@@ -12,7 +12,7 @@ public class WorkProject {
 	public WorkProject(Date date,UUIDUser coordinator, Boolean completed) {
 		this.publishingDate=date;
 		this.coordinator=coordinator;
-		this.completed=completed;
+		this.setCompleted(completed);
 		
 	}
 	
@@ -51,7 +51,15 @@ public class WorkProject {
 	@Override
 	public String toString() {
 		return "WorkProject [ coordinator=" + coordinator + ", publishingDate=" + publishingDate
-				+ ", completed=" + completed + "]";
+				+ ", completed=" + getCompleted() + "]";
+	}
+
+	public Boolean getCompleted() {
+		return completed;
+	}
+
+	public void setCompleted(Boolean completed) {
+		this.completed = completed;
 	}
 	
 	

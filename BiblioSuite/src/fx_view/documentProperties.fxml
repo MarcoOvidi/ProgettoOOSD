@@ -11,11 +11,14 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.ScrollPane?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
 	minHeight="-Infinity" minWidth="-Infinity"
 	xmlns="http://javafx.com/javafx/9.0.1"
-	xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.DocumentProperties">
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="view.DocumentProperties">
 	<left>
 		<AnchorPane BorderPane.alignment="CENTER">
 			<children>
@@ -45,9 +48,11 @@
 
 					</VBox>
 					<VBox spacing="20">
-						<HBox/>
-						<JFXCheckBox disable="true" fx:id="scanningComplete" text="Scanning Complete" />
-						<JFXCheckBox disable="true" fx:id="transcriptionComplete" text="Transcription Complete" />
+						<HBox />
+						<JFXCheckBox disable="true" fx:id="scanningComplete"
+							text="Scanning Complete" />
+						<JFXCheckBox disable="true"
+							fx:id="transcriptionComplete" text="Transcription Complete" />
 						<Label text="Categories: " style="-fx-text-fill: #f87e1a" />
 						<TextArea fx:id="categories" editable="false" />
 						<Label text="Tags: " style="-fx-text-fill: #f87e1a" />

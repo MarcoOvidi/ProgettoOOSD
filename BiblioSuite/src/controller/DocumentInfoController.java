@@ -12,7 +12,7 @@ import vo.VagueDate;
 
 public class DocumentInfoController {
 	private Document document;
-	
+
 	public DocumentInfoController(UUIDDocument document) throws LoadException, DatabaseException {
 		loadDocument(document);
 	}
@@ -48,10 +48,9 @@ public class DocumentInfoController {
 				res += document.getMetaData().getCompositionDate();
 			}
 		}
-		
+
 		return res;
 	}
-	
 
 	public String getDescription() {
 		String res = "";
@@ -71,4 +70,27 @@ public class DocumentInfoController {
 		return res;
 	}
 
+	public boolean getScanningComplete() {
+		if (document.getScanningWorkProject() != null) {
+			ScanningProjectController.loadScanningProject(document.getScanningWorkProject());
+			return ScanningProjectController.isCompleted();
+		}
+		return false;
+	}
+
+	public boolean getTranscriptionComplete() {
+		if (document.getTranscriptionWorkProject() != null) {
+			TranscriptionProjectController.loadTranscriptionProject(document.getTranscriptionWorkProject());
+			return TranscriptionProjectController.isCompleted();
+		}
+		return false;
+	}
+
+	public ArrayList<String> getCategories() {
+		ArrayList<String> res = new ArrayList<String>();
+		if (document != null) {
+			// FIXME manca
+		}
+		return res;
+	}
 }

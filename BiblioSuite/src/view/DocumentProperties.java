@@ -69,10 +69,14 @@ public class DocumentProperties {
 	}
 
 	private void loadProjectStatus() {
+		if(documentInfoController.getScanningComplete())
+			scanningComplete.arm();
+		if(documentInfoController.getTranscriptionComplete())
+			transcriptionComplete.arm();
 	}
 	
 	private void loadCategories() {
-		
+				
 	}
 
 	public static UUIDDocument getToShowDocument() {

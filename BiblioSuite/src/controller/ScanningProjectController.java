@@ -125,5 +125,9 @@ public class ScanningProjectController {
 			return "No Comment available";
 		}
 	}
+	
+	public static boolean isCompleted() {
+		return sPrj.getCompleted();
+	}
 
 }

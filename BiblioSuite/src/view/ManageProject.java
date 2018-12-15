@@ -509,8 +509,9 @@ public class ManageProject {
 		pane.setVisible(true);
 		DocumentProperties.setToShowDocument(clickedDocument.getId());
 		try {
-			documentProperties = (FXMLLoader.load(new Object() {
-			}.getClass().getResource("/fx_view/" + "documentProperties" + ".fxml")));
+			//documentProperties = (FXMLLoader.load(new Object() {}.getClass().getResource("/fx_view/" + "documentProperties" + ".fxml")));
+			//documentProperties = FXMLLoader.load(new Object().getClass().getResource("/fx_view/documentProperties.fxml"));
+			documentProperties.getChildren().setAll(((BorderPane)FXMLLoader.load(new Object(){}.getClass().getResource("/fx_view/documentProperties.fxml"))));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

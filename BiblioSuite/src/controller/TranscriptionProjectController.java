@@ -106,4 +106,8 @@ public class TranscriptionProjectController {
 		}
 	}
 
+	public static boolean isCompleted() {
+		return tPrj.getCompleted();
+	}
+	
 }
