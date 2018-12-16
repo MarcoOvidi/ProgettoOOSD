@@ -1,99 +1,115 @@
 package controller;
 
-
-import com.itextpdf.io.image.ImageData; 
-import com.itextpdf.io.image.ImageDataFactory; 
-
-import com.itextpdf.kernel.pdf.PdfDocument; 
-import com.itextpdf.kernel.pdf.PdfWriter; 
-
-import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.AreaBreak;
-import com.itextpdf.layout.element.Image;
-import com.itextpdf.layout.element.Paragraph;  
-
-public class Prova {      
-   public static void main(String args[]) throws Exception{              
-//      // Creating a PdfWriter       
-//      String dest = "/users/Marco/Desktop/provissima.pdf";       
-//      PdfWriter writer = new PdfWriter(dest);               
-//      
-//      // Creating a PdfDocument       
-//      PdfDocument pdfDoc = new PdfDocument(writer);              
-//      
-//      // Creating a Document        
-//      Document document = new Document(pdfDoc);              
-//      
-//      // Creating an ImageData object       
-//      //String imFile = "/users/Marco/Desktop/pippo.jpg";       
-//      //ImageData data = ImageDataFactory.create(imFile);              
-//      
-//      // Creating an Image object        
-//      //Image image = new Image(data);                
-//      
-//      // Setting the position of the image to the center of the page       
-//      //image.setFixedPosition(100,250); 
-//      
-//      image.setAutoScale(true);
-//      document.on
-//      // Adding image to the document       
-//      document.add(image);              
-//      
-//      // Closing the document       
-//      document.close();
-//      System.out.println("Image Scaled");    
-	  
-	   
-	   // Creating a PdfWriter       
-	      String dest = "/users/Marco/Desktop/provissima.pdf";       
-	      PdfWriter writer = new PdfWriter(dest);           
-	      
-	      // Creating a PdfDocument       
-	      PdfDocument pdf = new PdfDocument(writer);              
-	      
-	      // Creating a Document        
-	      Document document = new Document(pdf);   
-	      
-	      String para1 = "UNIVAQ-BIBLIO SUITE  DOCUMENT:PROVIAMO  PAGINA 1/1";  
-	      
-	      String para2 = "Questa è la trascrizione della pagina jfhskjhfjvhjhwjfhxrhhxkewhfxjhewjxw"
-	      		+ "jwqxdqwdhxjkwhqdxjkqwehdjxkhweqjkdxhewjqkdxhjwekqhdx"
-	      		+ "xjdheqwdhxjkewhdxjkwehqdjkxehwqjkdxhwejkqdhxjkeqwhdxjkhjkewhdjxkwqhexd"
-	      		+ "xwjkdhjwekqdhxjkeqwhdxjkweqhdjxkeqwjdxhjekqwdhxjkd"
-	      		+ "jekwhdxjkewdhxjkewhdxjkehqwjkdxhjekqwdhxjkhq"
-	      		+ "xjkeqwhxdjkewhdxjkehwqdjxqw";              
-	      
-	      // Creating Paragraphs       
-	      Paragraph paragraph1 = new Paragraph(para1);             
-	      Paragraph paragraph2 = new Paragraph(para2);  
-	      
-	    //Creating an ImageData object       
-	      String imFile = "/users/Marco/Desktop/pippo.jpg";       
-	      ImageData data = ImageDataFactory.create(imFile);              
-	      
-	      // Creating an Image object        
-	      Image image = new Image(data);                
-	      
-	      // Setting the position of the image to the center of the page       
-	      image.setFixedPosition(100,250); 
-	      
-	      image.setAutoScale(true);
-	      
-	      // Adding image to the document       
-	      document.add(image);              
-	      
-	      // Adding paragraphs to document       
-	      document.add(paragraph1);       
-	      document.add(paragraph2);   
-	      
-	      document.add(new AreaBreak());
-	      
-	      document.add(paragraph1);       
-	      document.add(paragraph2);
-	      document.add(image);
-	      
-	      
-	      // Closing the document       
-	      document.close();              
-   } 
-}  
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBuilder;
+import javafx.scene.layout.VBox;
+import javafx.scene.layout.VBoxBuilder;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextBuilder;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+ 
+/**
+ *
+ * @web http://java-buddy.blogspot.com/
+ */
+public class Prova extends Application {
+ 
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        launch(args);
+    }
+     
+    @Override
+    public void start(final Stage primaryStage) {
+        primaryStage.setTitle("java-buddy.blogspot.com");
+        Group root = new Group();
+         
+        final String Santa_Claus_Is_Coming_To_Town =
+                "You better watch out\n"
+                + "You better not cry\n"
+                + "Better not pout\n"
+                + "I'm telling you why\n"
+                + "Santa Claus is coming to town\n"
+                + "\n"
+                + "He's making a list\n"
+                + "And checking it twice;\n"
+                + "Gonna find out Who's naughty and nice\n"
+                + "Santa Claus is coming to town\n"
+                + "\n"
+                + "He sees you when you're sleeping\n"
+                + "He knows when you're awake\n"
+                + "He knows if you've been bad or good\n"
+                + "So be good for goodness sake!\n"
+                + "\n"
+                + "O! You better watch out!\n"
+                + "You better not cry\n"
+                + "Better not pout\n"
+                + "I'm telling you why\n"
+                + "Santa Claus is coming to town\n"
+                + "Santa Claus is coming to town\n";
+         
+        Text textSong = TextBuilder.create()
+                .text(Santa_Claus_Is_Coming_To_Town)
+                .build();                
+         
+        Button buttonSave = ButtonBuilder.create()
+                .text("Save")
+                .build();
+         
+        buttonSave.setOnAction(new EventHandler<ActionEvent>() {
+  
+          @Override
+          public void handle(ActionEvent event) {
+              FileChooser fileChooser = new FileChooser();
+  
+              //Set extension filter
+              FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
+              fileChooser.getExtensionFilters().add(extFilter);
+              
+              //Show save file dialog
+              File file = fileChooser.showSaveDialog(primaryStage);
+              
+              if(file != null){
+                  SaveFile(Santa_Claus_Is_Coming_To_Town, file);
+                  System.out.println(file);
+              }
+          }
+      });
+         
+        VBox vBox = VBoxBuilder.create()
+                .children(textSong, buttonSave)
+                .build();
+                 
+        root.getChildren().add(vBox);
+   
+        primaryStage.setScene(new Scene(root, 500, 400));
+        primaryStage.show();
+ 
+    }
+     
+    private void SaveFile(String content, File file){
+        try {
+            FileWriter fileWriter = null;
+             
+            fileWriter = new FileWriter(file);
+            fileWriter.write(content);
+            fileWriter.close();
+        } catch (IOException ex) {
+           ex.printStackTrace();
+        }
+         
+    }
+}

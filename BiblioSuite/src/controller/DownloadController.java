@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.util.Collections;
@@ -19,20 +20,23 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 
 import dao.DatabaseException;
+import dao.DocumentQuerySet;
 import dao.TranscriptionWorkProjectQuerySet;
+import javafx.fxml.LoadException;
 import model.Page;
 import model.TranscriptionWorkProject;
+import vo.UUIDDocument;
 import vo.UUIDUser;
 
 public class DownloadController {
 
-	public static Document getOperaTranscription(model.Document doc, String destination) {
+	public static Document getOperaTranscription(model.Document doc, File destPath) {
 		
 		// destinazione del file
 		PdfWriter writer = null;
 		
 		try {
-			writer = new PdfWriter("/users/Marco/Desktop/provainit.pdf");
+			writer = new PdfWriter(destPath);
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -197,12 +201,17 @@ public class DownloadController {
 		return document;
 	}
 
-	/*
+	
 	  public static void main(String[] args) {
 	 
+		
+		
 		model.Document d = null;
+		
+		
 		try {
 			d = DocumentQuerySet.loadDocument(new UUIDDocument(80));
+			System.out.println(d);
 		} catch (LoadException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -210,6 +219,6 @@ public class DownloadController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		getOperaTranscription(d, null);
-	}*/
+		getOperaTranscription(d, new File("/users/Marco/Desktop/vaffancuolo.pdf"));
+	}
 }

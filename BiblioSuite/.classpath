@@ -42,5 +42,18 @@
 	<classpathentry kind="lib" path="iText/svg-7.1.4-sources.jar"/>
 	<classpathentry kind="lib" path="iText/svg-7.1.4.jar"/>
 	<classpathentry kind="lib" path="controlsfx-8.40.14.jar"/>
+	<classpathentry kind="lib" path="libreriaEsterna/jcl-over-slf4j-1.7.25-sources.jar"/>
+	<classpathentry kind="lib" path="libreriaEsterna/jcl-over-slf4j-1.7.25.jar"/>
+	<classpathentry kind="lib" path="libreriaEsterna/jul-to-slf4j-1.7.25-sources.jar"/>
+	<classpathentry kind="lib" path="libreriaEsterna/jul-to-slf4j-1.7.25.jar"/>
+	<classpathentry kind="lib" path="libreriaEsterna/log4j-over-slf4j-1.7.25-sources.jar"/>
+	<classpathentry kind="lib" path="libreriaEsterna/log4j-over-slf4j-1.7.25.jar"/>
+	<classpathentry kind="lib" path="libreriaEsterna/osgi-over-slf4j-1.7.25-sources.jar"/>
+	<classpathentry kind="lib" path="libreriaEsterna/osgi-over-slf4j-1.7.25.jar"/>
+	<classpathentry kind="lib" path="libreriaEsterna/slf4j-api-1.7.25-sources.jar"/>
+	<classpathentry kind="lib" path="libreriaEsterna/slf4j-api-1.7.25.jar"/>
+	<classpathentry kind="lib" path="libreriaEsterna/slf4j-ext-1.7.25-sources.jar"/>
+	<classpathentry kind="lib" path="libreriaEsterna/slf4j-ext-1.7.25.jar"/>
+	<classpathentry kind="lib" path="libreriaEsterna/slf4j-migrator-1.7.25.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

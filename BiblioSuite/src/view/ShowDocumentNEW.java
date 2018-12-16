@@ -1,8 +1,10 @@
 package view;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.LinkedList;
+import java.util.Optional;
 
 import org.controlsfx.control.PopOver;
 import org.controlsfx.control.PopOver.ArrowLocation;
@@ -11,6 +13,7 @@ import org.fxmisc.richtext.LineNumberFactory;
 
 import com.jfoenix.controls.JFXButton;
 
+import controller.DownloadController;
 import controller.LocalSession;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -18,7 +21,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -30,6 +36,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import model.Page;
 import vo.TEItext;
 
@@ -200,9 +208,43 @@ public class ShowDocumentNEW {
 	}
 	
 	private void startDownload() {
-		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setContentText("TODO");
-		alert.show();		
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Download");
+		alert.setHeaderText("What do you want to download ?");
+		alert.setContentText("Choose your option.");
+
+		ButtonType buttonTypeOne = new ButtonType("Transcriptions");
+		ButtonType buttonTypeTwo = new ButtonType("Digitalizations");
+		ButtonType buttonTypeThree = new ButtonType("Both");
+		ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+
+		alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeThree, buttonTypeCancel);
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == buttonTypeOne){
+		    //scegli url
+			FileChooser fileChooser = new FileChooser();
+			  
+            //Set extension filter
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
+            fileChooser.getExtensionFilters().add(extFilter);
+            
+            //Show save file dialog
+            Stage t = new Stage();
+            t.setTitle("");
+            
+            File file = fileChooser.showSaveDialog(t);
+            if(file != null){
+                DownloadController.getOperaTranscription(LocalSession.getOpenedDocumet(), file);
+            }
+			//chiama controller
+		} else if (result.get() == buttonTypeTwo) {
+			//scegli url
+			//chiama controller
+		} else if (result.get() == buttonTypeThree) {
+			//scegli url
+			//chiama controller
+		} 
 	}
 
 	private void initNavigationButton() {
