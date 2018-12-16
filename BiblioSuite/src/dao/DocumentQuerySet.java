@@ -305,9 +305,9 @@ public class DocumentQuerySet {
 				if (rs != null)
 					rs.close();
 
-				ps = con.prepareStatement("SELECT sp.ID AS scan_prj_ID, tp.ID AS trans_prj_ID "
-						+ "FROM document AS d JOIN scanning_project AS sp JOIN transcription_project AS tp "
-						+ "ON d.ID=sp.ID_document and d.ID=tp.ID_document WHERE d.ID=?;");
+				ps = con.prepareStatement("SELECT sp.ID AS scan_prj_ID "
+						+ "FROM document AS d JOIN scanning_project AS sp  "
+						+ "ON d.ID=sp.ID_document  WHERE d.ID=?;");
 
 				ps.setInt(1, id.getValue());
 				rs = ps.executeQuery();
@@ -316,13 +316,35 @@ public class DocumentQuerySet {
 
 				if (rs.getRow() == 1) {
 					d.setScanningProject(new UUIDScanningWorkProject(rs.getInt("scan_prj_ID")));
-					d.setTranscriptionWorkProject(new UUIDTranscriptionWorkProject(rs.getInt("trans_prj_ID")));
 				} else if (rs.getRow() == 0) {
 					d.setScanningProject(null);
+				} else {
+					throw new LoadException("Errore: è stata trova più di una corrispondenza per i project");
+				}
+				
+				if (ps != null)
+					ps.close();
+				if (rs != null)
+					rs.close();
+
+				ps = con.prepareStatement("SELECT tp.ID AS trans_prj_ID "
+						+ "FROM document AS d JOIN transcription_project AS tp  "
+						+ "ON d.ID=tp.ID_document  WHERE d.ID=?;");
+
+				ps.setInt(1, id.getValue());
+				rs = ps.executeQuery();
+
+				rs.last();
+
+				if (rs.getRow() == 1) {
+					d.setTranscriptionWorkProject(new UUIDTranscriptionWorkProject(rs.getInt("trans_prj_ID")));
+				} else if (rs.getRow() == 0) {
 					d.setTranscriptionWorkProject(null);
 				} else {
 					throw new LoadException("Errore: è stata trova più di una corrispondenza per i project");
 				}
+				
+				
 
 			} else if (rs.getRow() == 0) {
 				throw new LoadException("Non è stato trovato un documento corrispondente\n" + id
@@ -454,9 +476,9 @@ public class DocumentQuerySet {
 				if (rs != null)
 					rs.close();
 
-				ps = con.prepareStatement("SELECT sp.ID AS scan_prj_ID, tp.ID AS trans_prj_ID "
-						+ "FROM document AS d JOIN scanning_project AS sp JOIN transcription_project AS tp "
-						+ "ON d.ID=sp.ID_document and d.ID=tp.ID_document WHERE d.ID=?;");
+				ps = con.prepareStatement("SELECT sp.ID AS scan_prj_ID "
+						+ "FROM document AS d JOIN scanning_project AS sp  "
+						+ "ON d.ID=sp.ID_document  WHERE d.ID=?;");
 
 				ps.setInt(1, id.getValue());
 				rs = ps.executeQuery();
@@ -465,21 +487,34 @@ public class DocumentQuerySet {
 
 				if (rs.getRow() == 1) {
 					d.setScanningProject(new UUIDScanningWorkProject(rs.getInt("scan_prj_ID")));
-					d.setTranscriptionWorkProject(new UUIDTranscriptionWorkProject(rs.getInt("trans_prj_ID")));
 				} else if (rs.getRow() == 0) {
 					d.setScanningProject(null);
+				} else {
+					throw new LoadException("Errore: è stata trova più di una corrispondenza per i project");
+				}
+				
+				if (ps != null)
+					ps.close();
+				if (rs != null)
+					rs.close();
+
+				ps = con.prepareStatement("SELECT tp.ID AS trans_prj_ID "
+						+ "FROM document AS d JOIN transcription_project AS tp  "
+						+ "ON d.ID=tp.ID_document  WHERE d.ID=?;");
+
+				ps.setInt(1, id.getValue());
+				rs = ps.executeQuery();
+
+				rs.last();
+
+				if (rs.getRow() == 1) {
+					d.setTranscriptionWorkProject(new UUIDTranscriptionWorkProject(rs.getInt("trans_prj_ID")));
+				} else if (rs.getRow() == 0) {
 					d.setTranscriptionWorkProject(null);
 				} else {
 					throw new LoadException("Errore: è stata trova più di una corrispondenza per i project");
 				}
-
-			} else if (rs.getRow() == 0) {
-				throw new LoadException("Non è stato trovato un documento corrispondente\n" + id
-						+ "\nCheck you database, motherfucker");
-			} else {
-
-				throw new LoadException("È stata rilevata più di una corrispondenza per l'id\n" + id.getValue()
-						+ "\nCheck your database, motherfucker");
+				
 			}
 
 		} catch (SQLException e) {

@@ -243,8 +243,8 @@ public class DownloadController {
 		image.setWidth(100);
 		image.setHeight(100);
 		String data = "Document: " + doc.getTitle() + "\n Author: " + doc.getMetaData().getAuthor() + "\n";
-
-		if (doc.getMetaData().getCompositionDate().equals("0"))
+		
+		if (doc.getMetaData().getCompositionPeriod().getFrom() == 0 && doc.getMetaData().getCompositionPeriod().getTo() == 0)
 			data = data + "Composition Date : " + String.valueOf(doc.getMetaData().getCompositionDate()) + "\n";
 		else
 			data = data + "Composition From : " + String.valueOf(doc.getMetaData().getCompositionPeriod().getFrom())
@@ -282,6 +282,7 @@ public class DownloadController {
 
 		ScanningWorkProject sPrj = null;
 		try {
+			System.out.println(doc.getUUID());
 			sPrj = ScanningWorkProjectQuerySet.loadScanningWorkProject(doc.getScanningWorkProject());
 		} catch (NullPointerException e) {
 			// TODO Auto-generated catch block
@@ -354,6 +355,7 @@ public class DownloadController {
 
 		for (Page p : list) {
 			String path = p.getScan().getImage().getUrl();
+			System.out.println(path);
 			ImageData imgData = null;
 
 			try {

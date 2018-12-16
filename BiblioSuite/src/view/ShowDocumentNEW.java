@@ -251,6 +251,7 @@ public class ShowDocumentNEW {
             
             File file = fileChooser.showSaveDialog(t);
             if(file != null){
+            	System.out.println(LocalSession.getOpenedDocumet());
                 DownloadController.getOperaDigitalization(LocalSession.getOpenedDocumet(), file);
             }
 		} else if (result.get() == buttonTypeThree) {
