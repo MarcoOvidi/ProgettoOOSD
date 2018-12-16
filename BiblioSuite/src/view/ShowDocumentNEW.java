@@ -211,14 +211,18 @@ public class ShowDocumentNEW {
 		alert.setTitle("Download");
 		alert.setHeaderText("What do you want to download ?");
 		alert.setContentText("Choose your option.");
-
-		ButtonType buttonTypeOne = new ButtonType("Transcriptions");
 		ButtonType buttonTypeTwo = new ButtonType("Digitalizations");
+		ButtonType buttonTypeOne = new ButtonType("Transcriptions");
 		ButtonType buttonTypeThree = new ButtonType("Both");
 		ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
 
-		alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeThree, buttonTypeCancel);
-
+		if(LocalSession.getOpenedDocumet().getScanningWorkProject() != null && LocalSession.getOpenedDocumet().getTranscriptionWorkProject() != null)
+			alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeThree, buttonTypeCancel);
+		else if(LocalSession.getOpenedDocumet().getScanningWorkProject() != null && LocalSession.getOpenedDocumet().getTranscriptionWorkProject() == null)
+			alert.getButtonTypes().setAll(buttonTypeTwo, buttonTypeCancel);
+		else if(LocalSession.getOpenedDocumet().getScanningWorkProject() == null && LocalSession.getOpenedDocumet().getTranscriptionWorkProject() != null)
+			alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeCancel);
+		
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == buttonTypeOne){
 		    //scegli url
@@ -251,12 +255,24 @@ public class ShowDocumentNEW {
             
             File file = fileChooser.showSaveDialog(t);
             if(file != null){
-            	System.out.println(LocalSession.getOpenedDocumet());
                 DownloadController.getOperaDigitalization(LocalSession.getOpenedDocumet(), file);
             }
 		} else if (result.get() == buttonTypeThree) {
 			//scegli url
-			//chiama controller
+			FileChooser fileChooser = new FileChooser();
+			  
+            //Set extension filter
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
+            fileChooser.getExtensionFilters().add(extFilter);
+            
+            //Show save file dialog
+            Stage t = new Stage();
+            t.setTitle("");
+            
+            File file = fileChooser.showSaveDialog(t);
+            if(file != null){
+                DownloadController.getOpera(LocalSession.getOpenedDocumet(), file);
+            }
 		} 
 	}
 
