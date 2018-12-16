@@ -152,8 +152,8 @@ public class ShowDocumentNEW {
 			pageList.getItems().add(vbox);
 
 		}
-
-		viewPage(new Image(pages.get(0).getScan().getImage().getUrl()));
+		//TODO ho aggiunto file:
+		viewPage(new Image("file:"+pages.get(0).getScan().getImage().getUrl()));
 	}
 
 	private void viewPage(Image pageImage) {
