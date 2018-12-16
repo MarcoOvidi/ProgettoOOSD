@@ -185,7 +185,7 @@ public class LoginScene {
 		translate.setNode(loginTitle);
 		translate.setByY(10);
 		translate.play();
-		FadeTransition fade = new FadeTransition(Duration.millis(600));
+		FadeTransition fade = new FadeTransition(Duration.millis(1000));
 		fade.setNode(loginTitle);
 		fade.setNode(username.getParent());
 		fade.setFromValue(0.0);

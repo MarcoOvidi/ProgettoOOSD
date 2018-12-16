@@ -9,7 +9,7 @@ import org.controlsfx.control.PopOver.ArrowLocation;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 
-import com.jfoenix.controls.JFXPopup;
+import com.jfoenix.controls.JFXButton;
 
 import controller.LocalSession;
 import javafx.application.Platform;
@@ -17,7 +17,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
@@ -170,18 +172,37 @@ public class ShowDocumentNEW {
 		moreButton.setOnMouseClicked(event -> {
 			//FIXME andrebbero modificati view e controller per evitare di dover ricaricare tutto dal db
 			PopOver popOver = new PopOver();
-			//AnchorPane popOverPane = new AnchorPane();
+			AnchorPane popOverPane = new AnchorPane();
 			DocumentProperties.setToShowDocument(LocalSession.getOpenedDocumet().getUUID());
 			try {
-				popOver.setContentNode(((BorderPane)FXMLLoader.load(new Object(){}.getClass().getResource("/fx_view/documentProperties.fxml"))));
+				popOverPane.getChildren().setAll(((BorderPane)FXMLLoader.load(new Object(){}.getClass().getResource("/fx_view/documentProperties.fxml"))));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
+			JFXButton downloadButton = new JFXButton("Download");
+			downloadButton.setOnMouseClicked(downloadEvent -> {
+				startDownload();
+			});
+			
+			//only show donwload button if user as right permisison
+			if(LocalSession.getLocalUser().canDownload())
+				popOverPane.getChildren().add(downloadButton);
+			
+			AnchorPane.setBottomAnchor(downloadButton, 15.0);
+			AnchorPane.setLeftAnchor(downloadButton, 45.0);
+			
+			popOver.setContentNode(popOverPane);			
 			popOver.setArrowLocation(ArrowLocation.TOP_RIGHT);
 			popOver.show(moreButton);
 		});
+	}
+	
+	private void startDownload() {
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setContentText("TODO");
+		alert.show();		
 	}
 
 	private void initNavigationButton() {

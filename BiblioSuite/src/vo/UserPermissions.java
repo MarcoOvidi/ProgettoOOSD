@@ -236,4 +236,8 @@ public class UserPermissions {
 	public boolean isActive() {
 		return getActive();
 	}
+	
+	public boolean canDownload() {
+		return getDownloadPerm();
+	}
 }

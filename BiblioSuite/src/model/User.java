@@ -157,6 +157,10 @@ public class User {
 	public boolean isAdmin() {
 		return permissions.isCoordinator();
 	}
+	
+	public boolean canDownload() {
+		return permissions.canDownload();
+	}
 
 	public Level getLevel() {
 		return level;
