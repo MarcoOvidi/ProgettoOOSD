@@ -1,14 +1,20 @@
 package view;
 
+import java.io.IOException;
 import java.util.Comparator;
 import java.util.LinkedList;
 
+import org.controlsfx.control.PopOver;
+import org.controlsfx.control.PopOver.ArrowLocation;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
+
+import com.jfoenix.controls.JFXPopup;
 
 import controller.LocalSession;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -19,6 +25,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import model.Page;
 import vo.TEItext;
@@ -28,6 +36,9 @@ public class ShowDocumentNEW {
 
 	@FXML
 	private Button backButton;
+	
+	@FXML
+	private Button moreButton;
 
 	@FXML
 	private ListView<VBox> pageList;
@@ -71,6 +82,7 @@ public class ShowDocumentNEW {
 			isEmpty = false; // for when opening the next document
 			return;
 		}
+		initMoreButton();
 		initNavigationButton();
 		initKeyboardNavigation();
 		initTranscription();
@@ -151,6 +163,24 @@ public class ShowDocumentNEW {
 				SceneController.loadPreviousScene();
 				event.consume();
 			}
+		});
+	}
+	
+	private void initMoreButton() {
+		moreButton.setOnMouseClicked(event -> {
+			//FIXME andrebbero modificati view e controller per evitare di dover ricaricare tutto dal db
+			PopOver popOver = new PopOver();
+			//AnchorPane popOverPane = new AnchorPane();
+			DocumentProperties.setToShowDocument(LocalSession.getOpenedDocumet().getUUID());
+			try {
+				popOver.setContentNode(((BorderPane)FXMLLoader.load(new Object(){}.getClass().getResource("/fx_view/documentProperties.fxml"))));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			popOver.setArrowLocation(ArrowLocation.TOP_RIGHT);
+			popOver.show(moreButton);
 		});
 	}
 

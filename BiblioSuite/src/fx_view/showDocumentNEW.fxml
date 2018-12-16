@@ -11,6 +11,7 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.ImageView?>
 <?import org.fxmisc.richtext.CodeArea?>
+<?import javafx.scene.control.ToolBar?>
 
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
@@ -19,17 +20,21 @@
 	xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="view.ShowDocumentNEW">
 	<top>
-		<AnchorPane prefHeight="40.0">
+		<AnchorPane prefHeight="40.0" layoutX="0.0" layoutY="0.0"
+			AnchorPane.rightAnchor="0.0">
 			<children>
-				<AnchorPane layoutX="0.0" layoutY="0.0"
-					AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-					<children>
-						<Button fx:id="backButton" layoutX="0.0" layoutY="0.0"
-							mnemonicParsing="false" prefHeight="24.0" prefWidth="170.0"
-							text="⬅   Back">
-						</Button>
-					</children>
-				</AnchorPane>
+				<ToolBar AnchorPane.leftAnchor="0.0"
+					style="-fx-background-color: #00000000">
+					<Button fx:id="backButton" mnemonicParsing="false"
+						prefHeight="24.0" prefWidth="170.0" text="⬅   Back">
+					</Button>
+				</ToolBar>
+				<ToolBar AnchorPane.RightAnchor="0.0"
+					style="-fx-background-color: #00000000">
+					<Button fx:id="moreButton" mnemonicParsing="false"
+						prefHeight="24.0" prefWidth="170.0" text="More ▼">
+					</Button>
+				</ToolBar>
 			</children>
 		</AnchorPane>
 	</top>
@@ -37,7 +42,7 @@
 		<HBox BorderPane.alignment="CENTER">
 			<!-- <ScrollPane fx:id="pageListScroll" prefHeight="800.0"> <content> 
 				<VBox fx:id="pageList" prefHeight="200.0" /> </content> </ScrollPane> -->
-			<ListView fx:id="pageList" prefWidth="180.0"/>
+			<ListView fx:id="pageList" prefWidth="180.0" />
 			<StackPane prefWidth="400.0">
 				<children>
 					<ImageView fx:id="currentPage" />
@@ -56,7 +61,7 @@
 					</AnchorPane>
 				</children>
 			</StackPane>
-			<CodeArea fx:id="transcription" prefWidth="400.0"/>
+			<CodeArea fx:id="transcription" prefWidth="400.0" />
 		</HBox>
 
 	</left>
