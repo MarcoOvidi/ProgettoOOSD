@@ -67,17 +67,11 @@ public class DocumentMetadata {
 	public void setPreservationState(Integer s) {
 		this.preservationState=s;
 	}
-	//implementare inserimento con parametro una lista di tag
-	public boolean setTag(Tag t){
-		return this.tags.add(t);
+	
+	public void setTags(ArrayList<Tag> list) {
+		this.tags = list;
 	}
 	
-	public boolean setTags(ArrayList<Tag> list) {
-		return this.tags.addAll(list);
-	}
-	
-	//metodi ausiliari
-	//TODO non è ripetitivo?
 	public boolean addTag(Tag t){
 		return this.tags.add(t);
 	}

@@ -65,6 +65,8 @@ public class DocumentInfoController {
 	public ArrayList<String> getTags() {
 		ArrayList<String> res = new ArrayList<String>();
 		if (document != null) {
+			/*if (document.getMetaData().getTags() == null)
+				return res;*/
 			for (Tag tag : document.getMetaData().getTags()) {
 				res.add(tag.toString());
 			}

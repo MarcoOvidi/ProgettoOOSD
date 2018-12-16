@@ -2,7 +2,6 @@ package view;
 
 import java.text.ParseException;
 
-import com.jfoenix.controls.JFXButton.ButtonType;
 import com.jfoenix.controls.JFXCheckBox;
 
 import controller.DocumentInfoController;
@@ -11,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.LoadException;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import vo.UUIDDocument;
@@ -49,6 +47,7 @@ public class DocumentProperties {
 	public void initialize() throws DatabaseException, ParseException {		
 		loadInfo();
 		loadProjectStatus();
+		loadTags();
 		loadCategories();
 	}
 
@@ -59,6 +58,7 @@ public class DocumentProperties {
 			author.setText(documentInfoController.getAuthor());
 			composition.setText(documentInfoController.getComposition());
 			description.setText(documentInfoController.getDescription());
+			
 		} catch (LoadException | DatabaseException e) {
 			// TODO Manca gestione errori
 			e.printStackTrace();
@@ -73,6 +73,12 @@ public class DocumentProperties {
 			scanningComplete.arm();
 		if(documentInfoController.getTranscriptionComplete())
 			transcriptionComplete.arm();
+	}
+	
+	private void loadTags() {
+		for (String tag : documentInfoController.getTags()) {
+			tags.appendText(tag + " ");
+		}
 	}
 	
 	private void loadCategories() {

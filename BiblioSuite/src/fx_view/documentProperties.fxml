@@ -22,13 +22,15 @@
 	<left>
 		<AnchorPane BorderPane.alignment="CENTER">
 			<children>
-				<HBox spacing="70" layoutX="49.0" layoutY="20">
+				<HBox spacing="40" layoutX="49.0" layoutY="20">
 					<VBox spacing="20" prefWidth="240.0">
-						<Label text="Document Properties:" textFill="#aaaaaa">
+					<!-- 
+						<Label text="Document Properties:" textFill="#aaaaaa" wrapText="true" visible="false">
 							<font>
 								<Font size="28.0" />
 							</font>
 						</Label>
+					 -->
 						<HBox>
 							<Label text="Title: " style="-fx-text-fill: #f87e1a" />
 							<Label fx:id="title" />
@@ -41,10 +43,10 @@
 							<Label text="Composition: " style="-fx-text-fill: #f87e1a" />
 							<Label fx:id="composition" />
 						</HBox>
-						<HBox>
+						<VBox spacing="5">
 							<Label text="Description: " style="-fx-text-fill: #f87e1a" />
-							<TextArea fx:id="description" />
-						</HBox>
+							<TextArea fx:id="description" editable="false" wrapText="true" focusTraversable="false" mouseTransparent="true"/>
+						</VBox>
 
 					</VBox>
 					<VBox spacing="20">
@@ -54,9 +56,9 @@
 						<JFXCheckBox disable="true"
 							fx:id="transcriptionComplete" text="Transcription Complete" />
 						<Label text="Categories: " style="-fx-text-fill: #f87e1a" />
-						<TextArea fx:id="categories" editable="false" />
+						<TextArea fx:id="categories" focusTraversable="false" mouseTransparent="true" />
 						<Label text="Tags: " style="-fx-text-fill: #f87e1a" />
-						<TextArea fx:id="categories" editable="false" />
+						<TextArea fx:id="tags" editable="false" mouseTransparent="true" prefHeight="50"/>
 					</VBox>
 				</HBox>
 			</children>

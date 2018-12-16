@@ -6,8 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import controller.LocalSession;
@@ -243,6 +245,8 @@ public class DocumentQuerySet {
 						rs.getInt("composition_date"),
 						new VagueDate(rs.getInt("composition_period_from"), rs.getInt("composition_period_to")),
 						rs.getInt("preservation_state"));
+				
+				dm.setTags(loadDocumentTags(id));
 
 				d.setMetaData(dm);
 
@@ -675,7 +679,7 @@ public class DocumentQuerySet {
 
 		try {
 			con.setAutoCommit(false);
-			
+
 			ps = con.prepareStatement("insert into tag(name) value( ? );", new String[] { "ID" });
 			ps.setString(1, t.getTag());
 
@@ -691,7 +695,7 @@ public class DocumentQuerySet {
 			con.commit();
 
 			con.setAutoCommit(true);
-		
+
 		} catch (SQLException e) {
 			try {
 				con.abort(null);
@@ -713,6 +717,58 @@ public class DocumentQuerySet {
 		return tagID;
 	}
 
-	
+	/**
+	 * Recupera i tag di un documento
+	 * 
+	 * @param UUIDDocument id del documento di cui carichiamo i tag
+	 * @return ArrayList<Tag>
+	 * @exception DatabaseException in caso di mancata conessione o errori di query
+	 *                              sul DB
+	 */
+	public static ArrayList<Tag> loadDocumentTags(UUIDDocument document)
+			throws DatabaseException {
+		Connection con = null;
+
+		try {
+			con = DBConnection.connect();
+		} catch (DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;		
+		ArrayList<Tag> tags = new ArrayList<Tag>();
+		
+		try {
+			ps = con.prepareStatement("SELECT t.name FROM document d JOIN document_metadata dm JOIN tag_metadata tm "
+					+ "JOIN tag t ON d.ID=dm.ID_document AND dm.ID=tm.ID_document_metadata AND tm.ID_tag=t.ID "
+					+ "WHERE d.id=?;");
+			
+			ps.setInt(1, document.getValue());
+			
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				tags.add(new Tag(rs.getString("t.name")));
+			}
+			if (rs != null)
+				rs.close();
+
+		} catch (SQLException e) {
+			throw new DatabaseException("Errore di esecuzione della query", e);
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+
+		}
+
+		return tags;
+
+	}
 
 }
