@@ -25,7 +25,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
@@ -235,12 +234,25 @@ public class ShowDocumentNEW {
             
             File file = fileChooser.showSaveDialog(t);
             if(file != null){
+            	//chiama controller
                 DownloadController.getOperaTranscription(LocalSession.getOpenedDocumet(), file);
             }
-			//chiama controller
 		} else if (result.get() == buttonTypeTwo) {
 			//scegli url
-			//chiama controller
+			FileChooser fileChooser = new FileChooser();
+			  
+            //Set extension filter
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
+            fileChooser.getExtensionFilters().add(extFilter);
+            
+            //Show save file dialog
+            Stage t = new Stage();
+            t.setTitle("");
+            
+            File file = fileChooser.showSaveDialog(t);
+            if(file != null){
+                DownloadController.getOperaDigitalization(LocalSession.getOpenedDocumet(), file);
+            }
 		} else if (result.get() == buttonTypeThree) {
 			//scegli url
 			//chiama controller

@@ -803,7 +803,7 @@ public class ScanningWorkProjectQuerySet {
 	 * @return
 	 * @throws DatabaseException
 	 */
-	public static HashMap<UUIDDocument, String> getScanningUncompletedDocument(UUIDUser id) throws DatabaseException {
+	public static HashMap<UUIDDocument, String> getScanningUncompletedDocumentDigitalizer(UUIDUser id) throws DatabaseException {
 
 		HashMap<UUIDDocument, String> uncompletedDocument = new HashMap<UUIDDocument, String>();
 		Connection con = null;
@@ -821,6 +821,59 @@ public class ScanningWorkProjectQuerySet {
 					+ "join scanning_project as sp join scanning_project_digitalizer_partecipant  "
 					+ "as spp on d.ID=sp.ID_document  AND spp.ID_scanning_project=sp.ID "
 					+ "WHERE scanning_complete=0 AND spp.ID_digitalizer_user = ?;");
+			ps.setInt(1, id.getValue());
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				uncompletedDocument.put(new UUIDDocument(rs.getInt("ID")), rs.getString("T"));
+			}
+
+		} catch (SQLException e) {
+			throw new DatabaseException("Errore di esecuzione query", e);
+		} finally {
+
+			try {
+				if (rs != null)
+					rs.close();
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+		}
+
+		return uncompletedDocument;
+	}
+	
+	/**
+	 * Permette di estrarre tutti i documenti il cui scanning project non è
+	 * completato e l'utente parametro ne è un revisore
+	 * 
+	 * @param id
+	 * @return
+	 * @throws DatabaseException
+	 */
+	public static HashMap<UUIDDocument, String> getScanningUncompletedDocumentReviser(UUIDUser id) throws DatabaseException {
+
+		HashMap<UUIDDocument, String> uncompletedDocument = new HashMap<UUIDDocument, String>();
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DBConnection.connect();
+		} catch (DatabaseException ex) {
+			throw new DatabaseException("Errore di connessione", ex);
+		}
+
+		try {
+			ps = con.prepareStatement("select d.ID as ID ,d.title as T from document as d "
+					+ "join scanning_project as sp join scanning_project_reviser_partecipant  "
+					+ "as spp on d.ID=sp.ID_document  AND spp.ID_scanning_project=sp.ID "
+					+ "WHERE scanning_complete=0 AND spp.ID_reviser_user = ?;");
 			ps.setInt(1, id.getValue());
 
 			rs = ps.executeQuery();
@@ -1125,6 +1178,13 @@ public class ScanningWorkProjectQuerySet {
 		return availableStaff;
 	}
 	
-	
+	public static void main(String[] args) {
+		try {
+			System.out.println(getScanningUncompletedDocumentReviser(new UUIDUser(61)));
+		} catch (DatabaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 }

@@ -53,14 +53,26 @@ public class PageScanController {
 
 	}
 
-	public static void loadUncompletedDocument(UUIDUser usr) {
+	public static void loadUncompletedDocumentForDigitalizer(UUIDUser usr) {
 		try {
-			uncompletedDocument = ScanningWorkProjectQuerySet.getScanningUncompletedDocument(usr);
+			uncompletedDocument = ScanningWorkProjectQuerySet.getScanningUncompletedDocumentDigitalizer(usr);
 		} catch (DatabaseException e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 		}
 	}
+	
+	public static void loadUncompletedDocumentForReviser(UUIDUser usr) {
+		try {
+			uncompletedDocument = ScanningWorkProjectQuerySet.getScanningUncompletedDocumentReviser(usr);
+		} catch (DatabaseException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
 
 	public static HashMap<UUIDDocument, String> getUncompletedDocument() {
 		return uncompletedDocument;
@@ -85,7 +97,10 @@ public class PageScanController {
 	
 	public static void loadNewDocumentPagesOnlyToRevise(UUIDDocument doc) {
 		try {
-			currentDocumentPages = DigitalizerQuerySet.loadDocument(doc, false, false);;
+			currentDocumentPages = DigitalizerQuerySet.loadDocument(doc, false, false);
+			currentDocumentPages.addAll(DigitalizerQuerySet.loadDocument(doc, true, true));
+			currentDocumentPages.addAll(DigitalizerQuerySet.loadDocument(doc, false, true));
+			currentDocumentPages.addAll(DigitalizerQuerySet.loadDocument(doc, true, false));
 			currentDocument = doc;
 		} catch (DatabaseException e) {
 			System.err.println(e.getMessage());

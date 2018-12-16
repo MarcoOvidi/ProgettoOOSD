@@ -8,8 +8,6 @@ import java.util.Map.Entry;
 import controller.LocalSession;
 import controller.PageScanController;
 import controller.ScanningProjectController;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -149,7 +147,9 @@ public class ScanRevisor {
 
 	@FXML
 	public void insertDocument() {
-		PageScanController.loadUncompletedDocument(LocalSession.getLocalUser().getID());
+		
+		//TODO grande dubbio su quale dei due metodi!!!!!!!!
+		PageScanController.loadUncompletedDocumentForReviser(LocalSession.getLocalUser().getID());
 
 		documentList.setConverter(new StringConverter<Entry<UUIDDocument, String>>() {
 			@Override

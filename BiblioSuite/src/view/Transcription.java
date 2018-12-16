@@ -121,7 +121,7 @@ public class Transcription {
 
 	@FXML
 	public void insertDocument() {
-		PageScanController.loadUncompletedDocument(LocalSession.getLocalUser().getID());
+		PageScanController.loadUncompletedDocumentForDigitalizer(LocalSession.getLocalUser().getID());
 
 		documentList.setConverter(new StringConverter<Entry<UUIDDocument, String>>() {
 			@Override
