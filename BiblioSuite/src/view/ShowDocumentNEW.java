@@ -3,6 +3,7 @@ package view;
 import java.io.File;
 import java.io.IOException;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Optional;
 
@@ -15,6 +16,9 @@ import com.jfoenix.controls.JFXButton;
 
 import controller.DownloadController;
 import controller.LocalSession;
+import controller.PageViewController;
+import dao.DatabaseException;
+import dao.HomePageQuerySet;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -39,13 +43,14 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Page;
 import vo.TEItext;
+import vo.UUIDDocument;
 
 public class ShowDocumentNEW {
 	public static boolean isEmpty = false;
 
 	@FXML
 	private Button backButton;
-	
+
 	@FXML
 	private Button moreButton;
 
@@ -105,7 +110,6 @@ public class ShowDocumentNEW {
 
 	public void loadPageList() {
 		LinkedList<Page> pages = LocalSession.getOpenedDocumet().getPageList();
-		// System.out.println("1");
 
 		/*
 		 * if (pages.isEmpty()) {
@@ -152,8 +156,8 @@ public class ShowDocumentNEW {
 			pageList.getItems().add(vbox);
 
 		}
-		//TODO ho aggiunto file:
-		viewPage(new Image("file:"+pages.get(0).getScan().getImage().getUrl()));
+		// TODO ho aggiunto file:
+		viewPage(new Image("file:" + pages.get(0).getScan().getImage().getUrl()));
 	}
 
 	private void viewPage(Image pageImage) {
@@ -174,38 +178,194 @@ public class ShowDocumentNEW {
 			}
 		});
 	}
-	
+
 	private void initMoreButton() {
-		moreButton.setOnMouseClicked(event -> {
-			//FIXME andrebbero modificati view e controller per evitare di dover ricaricare tutto dal db
-			PopOver popOver = new PopOver();
-			AnchorPane popOverPane = new AnchorPane();
-			DocumentProperties.setToShowDocument(LocalSession.getOpenedDocumet().getUUID());
-			try {
-				popOverPane.getChildren().setAll(((BorderPane)FXMLLoader.load(new Object(){}.getClass().getResource("/fx_view/documentProperties.fxml"))));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			JFXButton downloadButton = new JFXButton("Download");
-			downloadButton.setOnMouseClicked(downloadEvent -> {
-				startDownload();
+		HashMap<UUIDDocument, String[]> myColl = null;
+
+		try {
+			myColl = HomePageQuerySet.loadMyCollectionList(LocalSession.getLocalUser().getID());
+		} catch (DatabaseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		if (!myColl.containsKey(LocalSession.getOpenedDocumet().getUUID())) {
+			moreButton.setOnMouseClicked(event -> {
+				// FIXME andrebbero modificati view e controller per evitare di dover ricaricare
+				// tutto dal db
+				PopOver popOver = new PopOver();
+				AnchorPane popOverPane = new AnchorPane();
+				DocumentProperties.setToShowDocument(LocalSession.getOpenedDocumet().getUUID());
+
+				try {
+					popOverPane.getChildren().setAll(((BorderPane) FXMLLoader.load(new Object() {
+					}.getClass().getResource("/fx_view/documentProperties.fxml"))));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				JFXButton downloadButton = new JFXButton("Download");
+				downloadButton.setOnMouseClicked(downloadEvent -> {
+					startDownload();
+				});
+
+				JFXButton addDocumentToUserCollections = null;
+
+				addDocumentToUserCollections = new JFXButton("Add Document to My Collection");
+				addDocumentToUserCollections.setOnMouseClicked(downloadEvent -> {
+					PageViewController.addDocumentFromMyCollection(LocalSession.getOpenedDocumet().getUUID(),
+							LocalSession.getLocalUser().getID());
+					popOver.hide();
+					initMoreButton();
+				});
+
+				JFXButton addPageToUserBookMark = null;
+				JFXButton removePageFromUserBookMark = null;
+
+				if (PageViewController.controlBookMark(LocalSession.getLocalUser().getID(),
+						LocalSession.getOpenedDocumet().getUUID(), Integer.valueOf(number.getText()))) {
+					// c'è
+
+					removePageFromUserBookMark = new JFXButton("Remove Page from My Book Marks");
+					AnchorPane.setBottomAnchor(removePageFromUserBookMark, 85.0);
+					AnchorPane.setLeftAnchor(removePageFromUserBookMark, 45.0);
+
+					removePageFromUserBookMark.setOnMouseClicked(downloadEvent -> {
+						PageViewController.removeBookMark(LocalSession.getLocalUser().getID(),
+								LocalSession.getOpenedDocumet().getUUID(), PageViewController.getBookMarkPageID(
+										LocalSession.getOpenedDocumet().getUUID(), Integer.valueOf(number.getText())));
+						popOver.hide();
+						initMoreButton();
+					});
+
+				}
+
+				else {
+
+					addPageToUserBookMark = new JFXButton("Add Page to My Book Marks");
+					AnchorPane.setBottomAnchor(addPageToUserBookMark, 85.0);
+					AnchorPane.setLeftAnchor(addPageToUserBookMark, 45.0);
+					addPageToUserBookMark.setOnMouseClicked(downloadEvent -> {
+						PageViewController.addBookMark(LocalSession.getLocalUser().getID(),
+								LocalSession.getOpenedDocumet().getUUID(), PageViewController.getBookMarkPageID(
+										LocalSession.getOpenedDocumet().getUUID(), Integer.valueOf(number.getText())));
+						popOver.hide();
+						initMoreButton();
+					});
+				}
+				popOverPane.getChildren().add(addDocumentToUserCollections);
+
+				if (addPageToUserBookMark != null)
+					popOverPane.getChildren().add(addPageToUserBookMark);
+				else if (removePageFromUserBookMark != null)
+					popOverPane.getChildren().add(removePageFromUserBookMark);
+
+				// only show donwload button if user as right permisison
+				if (LocalSession.getLocalUser().canDownload())
+					popOverPane.getChildren().add(downloadButton);
+
+				AnchorPane.setBottomAnchor(downloadButton, 50.0);
+				AnchorPane.setLeftAnchor(downloadButton, 45.0);
+				AnchorPane.setBottomAnchor(addDocumentToUserCollections, 15.0);
+				AnchorPane.setLeftAnchor(addDocumentToUserCollections, 45.0);
+
+				popOver.setContentNode(popOverPane);
+				popOver.setArrowLocation(ArrowLocation.TOP_RIGHT);
+				popOver.show(moreButton);
 			});
-			
-			//only show donwload button if user as right permisison
-			if(LocalSession.getLocalUser().canDownload())
-				popOverPane.getChildren().add(downloadButton);
-			
-			AnchorPane.setBottomAnchor(downloadButton, 15.0);
-			AnchorPane.setLeftAnchor(downloadButton, 45.0);
-			
-			popOver.setContentNode(popOverPane);			
-			popOver.setArrowLocation(ArrowLocation.TOP_RIGHT);
-			popOver.show(moreButton);
-		});
+		} else {
+			moreButton.setOnMouseClicked(event -> {
+				// FIXME andrebbero modificati view e controller per evitare di dover ricaricare
+				// tutto dal db
+				PopOver popOver = new PopOver();
+				AnchorPane popOverPane = new AnchorPane();
+				DocumentProperties.setToShowDocument(LocalSession.getOpenedDocumet().getUUID());
+
+				try {
+					popOverPane.getChildren().setAll(((BorderPane) FXMLLoader.load(new Object() {
+					}.getClass().getResource("/fx_view/documentProperties.fxml"))));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				JFXButton downloadButton = new JFXButton("Download");
+				downloadButton.setOnMouseClicked(downloadEvent -> {
+					startDownload();
+				});
+
+				JFXButton removeDocumentFromUserCollection = null;
+
+				removeDocumentFromUserCollection = new JFXButton("Remove Opera from My Collection");
+				removeDocumentFromUserCollection.setOnMouseClicked(downloadEvent -> {
+					PageViewController.removeDocumentFromMyCollection(LocalSession.getOpenedDocumet().getUUID(),
+							LocalSession.getLocalUser().getID());
+					popOver.hide();
+					initMoreButton();
+				});
+
+				JFXButton addPageToUserBookMark = null;
+				JFXButton removePageFromUserBookMark = null;
+
+				if (PageViewController.controlBookMark(LocalSession.getLocalUser().getID(),
+						LocalSession.getOpenedDocumet().getUUID(), Integer.valueOf(number.getText()))) {
+					// c'è
+
+					removePageFromUserBookMark = new JFXButton("Remove Page from My Book Marks");
+					AnchorPane.setBottomAnchor(removePageFromUserBookMark, 85.0);
+					AnchorPane.setLeftAnchor(removePageFromUserBookMark, 45.0);
+
+					removePageFromUserBookMark.setOnMouseClicked(downloadEvent -> {
+						PageViewController.removeBookMark(LocalSession.getLocalUser().getID(),
+								LocalSession.getOpenedDocumet().getUUID(),
+								PageViewController.getBookMarkPageID(LocalSession.getOpenedDocumet().getUUID(),
+										Integer.valueOf(((Label) pageList.getSelectionModel().getSelectedItem()
+												.getChildren().get(1)).getText())));
+						popOver.hide();
+						initMoreButton();
+					});
+
+				}
+
+				else {
+
+					addPageToUserBookMark = new JFXButton("Add Page to My Book Marks");
+					AnchorPane.setBottomAnchor(addPageToUserBookMark, 85.0);
+					AnchorPane.setLeftAnchor(addPageToUserBookMark, 45.0);
+					addPageToUserBookMark.setOnMouseClicked(downloadEvent -> {
+
+						PageViewController.addBookMark(LocalSession.getLocalUser().getID(),
+								LocalSession.getOpenedDocumet().getUUID(),
+								PageViewController.getBookMarkPageID(LocalSession.getOpenedDocumet().getUUID(),
+										Integer.valueOf(((Label) pageList.getSelectionModel().getSelectedItem()
+												.getChildren().get(1)).getText())));
+						popOver.hide();
+						initMoreButton();
+					});
+				}
+				popOverPane.getChildren().add(removeDocumentFromUserCollection);
+				if (addPageToUserBookMark != null)
+					popOverPane.getChildren().add(addPageToUserBookMark);
+				else if (removePageFromUserBookMark != null)
+					popOverPane.getChildren().add(removePageFromUserBookMark);
+
+				// only show donwload button if user as right permisison
+				if (LocalSession.getLocalUser().canDownload())
+					popOverPane.getChildren().add(downloadButton);
+
+				AnchorPane.setBottomAnchor(downloadButton, 50.0);
+				AnchorPane.setLeftAnchor(downloadButton, 45.0);
+				AnchorPane.setBottomAnchor(removeDocumentFromUserCollection, 15.0);
+				AnchorPane.setLeftAnchor(removeDocumentFromUserCollection, 45.0);
+
+				popOver.setContentNode(popOverPane);
+				popOver.setArrowLocation(ArrowLocation.TOP_RIGHT);
+				popOver.show(moreButton);
+			});
+		}
 	}
-	
+
 	private void startDownload() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Download");
@@ -216,64 +376,67 @@ public class ShowDocumentNEW {
 		ButtonType buttonTypeThree = new ButtonType("Both");
 		ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
 
-		if(LocalSession.getOpenedDocumet().getScanningWorkProject() != null && LocalSession.getOpenedDocumet().getTranscriptionWorkProject() != null)
+		if (LocalSession.getOpenedDocumet().getScanningWorkProject() != null
+				&& LocalSession.getOpenedDocumet().getTranscriptionWorkProject() != null)
 			alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeThree, buttonTypeCancel);
-		else if(LocalSession.getOpenedDocumet().getScanningWorkProject() != null && LocalSession.getOpenedDocumet().getTranscriptionWorkProject() == null)
+		else if (LocalSession.getOpenedDocumet().getScanningWorkProject() != null
+				&& LocalSession.getOpenedDocumet().getTranscriptionWorkProject() == null)
 			alert.getButtonTypes().setAll(buttonTypeTwo, buttonTypeCancel);
-		else if(LocalSession.getOpenedDocumet().getScanningWorkProject() == null && LocalSession.getOpenedDocumet().getTranscriptionWorkProject() != null)
+		else if (LocalSession.getOpenedDocumet().getScanningWorkProject() == null
+				&& LocalSession.getOpenedDocumet().getTranscriptionWorkProject() != null)
 			alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeCancel);
-		
+
 		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == buttonTypeOne){
-		    //scegli url
+		if (result.get() == buttonTypeOne) {
+			// scegli url
 			FileChooser fileChooser = new FileChooser();
-			  
-            //Set extension filter
-            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
-            fileChooser.getExtensionFilters().add(extFilter);
-            
-            //Show save file dialog
-            Stage t = new Stage();
-            t.setTitle("");
-            
-            File file = fileChooser.showSaveDialog(t);
-            if(file != null){
-            	//chiama controller
-                DownloadController.getOperaTranscription(LocalSession.getOpenedDocumet(), file);
-            }
+
+			// Set extension filter
+			FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
+			fileChooser.getExtensionFilters().add(extFilter);
+
+			// Show save file dialog
+			Stage t = new Stage();
+			t.setTitle("");
+
+			File file = fileChooser.showSaveDialog(t);
+			if (file != null) {
+				// chiama controller
+				DownloadController.getOperaTranscription(LocalSession.getOpenedDocumet(), file);
+			}
 		} else if (result.get() == buttonTypeTwo) {
-			//scegli url
+			// scegli url
 			FileChooser fileChooser = new FileChooser();
-			  
-            //Set extension filter
-            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
-            fileChooser.getExtensionFilters().add(extFilter);
-            
-            //Show save file dialog
-            Stage t = new Stage();
-            t.setTitle("");
-            
-            File file = fileChooser.showSaveDialog(t);
-            if(file != null){
-                DownloadController.getOperaDigitalization(LocalSession.getOpenedDocumet(), file);
-            }
+
+			// Set extension filter
+			FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
+			fileChooser.getExtensionFilters().add(extFilter);
+
+			// Show save file dialog
+			Stage t = new Stage();
+			t.setTitle("");
+
+			File file = fileChooser.showSaveDialog(t);
+			if (file != null) {
+				DownloadController.getOperaDigitalization(LocalSession.getOpenedDocumet(), file);
+			}
 		} else if (result.get() == buttonTypeThree) {
-			//scegli url
+			// scegli url
 			FileChooser fileChooser = new FileChooser();
-			  
-            //Set extension filter
-            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
-            fileChooser.getExtensionFilters().add(extFilter);
-            
-            //Show save file dialog
-            Stage t = new Stage();
-            t.setTitle("");
-            
-            File file = fileChooser.showSaveDialog(t);
-            if(file != null){
-                DownloadController.getOpera(LocalSession.getOpenedDocumet(), file);
-            }
-		} 
+
+			// Set extension filter
+			FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
+			fileChooser.getExtensionFilters().add(extFilter);
+
+			// Show save file dialog
+			Stage t = new Stage();
+			t.setTitle("");
+
+			File file = fileChooser.showSaveDialog(t);
+			if (file != null) {
+				DownloadController.getOpera(LocalSession.getOpenedDocumet(), file);
+			}
+		}
 	}
 
 	private void initNavigationButton() {
@@ -313,7 +476,7 @@ public class ShowDocumentNEW {
 	private void updateTranscription() {
 		int index = Integer
 				.parseInt(((Label) pageList.getSelectionModel().getSelectedItem().getChildren().get(1)).getText());
-		setTranscriptionText(LocalSession.getOpenedDocumet().getPageList().get(index-1).getTranscription().getText());
+		setTranscriptionText(LocalSession.getOpenedDocumet().getPageList().get(index - 1).getTranscription().getText());
 	}
 
 	/*
@@ -321,7 +484,7 @@ public class ShowDocumentNEW {
 	 */
 	private void updateTranscription(int index) {
 		index = Integer.parseInt(((Label) pageList.getItems().get(index).getChildren().get(1)).getText());
-		setTranscriptionText(LocalSession.getOpenedDocumet().getPageList().get(index-1).getTranscription().getText());
+		setTranscriptionText(LocalSession.getOpenedDocumet().getPageList().get(index - 1).getTranscription().getText());
 	}
 
 	private void updateTranscription(VBox elem) {

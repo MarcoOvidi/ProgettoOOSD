@@ -20,15 +20,11 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 
 import dao.DatabaseException;
-import dao.DocumentQuerySet;
 import dao.ScanningWorkProjectQuerySet;
 import dao.TranscriptionWorkProjectQuerySet;
-import javafx.fxml.LoadException;
 import model.Page;
 import model.ScanningWorkProject;
 import model.TranscriptionWorkProject;
-import vo.UUID;
-import vo.UUIDDocument;
 import vo.UUIDUser;
 
 public class DownloadController {

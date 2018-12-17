@@ -31,15 +31,33 @@ public class UUID implements Comparable<UUID> {
 	public String toString() {
 		return "UUID [value=" + value + "]";
 	}
-	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((value == null) ? 0 : value.hashCode());
+		return result;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
-		
-		if(obj == null || !(obj instanceof UUID))
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UUID other = (UUID) obj;
+		if (value == null) {
+			if (other.value != null)
 				return false;
-		else
-			return this.value == ((UUID) obj).value;
+		} else if (!value.equals(other.value))
+			return false;
+		return true;
 	}
+	
+	
 
 
 	
