@@ -355,6 +355,7 @@ public class EditUserProfile {
 				@Override
 				public void changed(ObservableValue<? extends Number> observableValue, Number entry, Number entryNew) {
 					transcriberLevel = levelChoose.getSelectionModel().getSelectedIndex()+1;
+					System.out.println(transcriberLevel);
 				}
 			});
 			levelChoose.getSelectionModel().select(AdministrationController.getTranscriberLevel(LocalSession.getLocalUser().getID()));

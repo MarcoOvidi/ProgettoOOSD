@@ -55,7 +55,7 @@ public class UpdateDocumentProperties {
 	@FXML
 	public void initialize() throws DatabaseException, ParseException {		
 		loadInfo();
-		loadProjectStatus();
+		//loadProjectStatus();
 		loadTags();
 		loadCategories();
 	}

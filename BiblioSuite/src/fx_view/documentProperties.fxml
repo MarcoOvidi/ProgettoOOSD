@@ -44,9 +44,9 @@
 						<JFXCheckBox fx:id="scanningComplete" disable="true" text="Scanning Complete" />
 						<JFXCheckBox fx:id="transcriptionComplete" disable="true" text="Transcription Complete" />
 						<Label style="-fx-text-fill: #f87e1a" text="Categories: " />
-						<TextArea fx:id="categories" focusTraversable="false" mouseTransparent="true" />
+						<TextArea fx:id="categories" editable="false" focusTraversable="false" mouseTransparent="true" />
 						<Label style="-fx-text-fill: #f87e1a" text="Tags: " />
-						<TextArea fx:id="tags" editable="false" mouseTransparent="true" prefHeight="50" />
+						<TextArea fx:id="tags" editable="false" focusTraversable="false" mouseTransparent="true" prefHeight="50" />
 					</VBox>
 				</HBox>
 			</children>

@@ -508,14 +508,31 @@ public class ManageProject {
 		manageContainer.getChildren().add(pane);
 		pane.setVisible(true);
 		DocumentProperties.setToShowDocument(clickedDocument.getId());
+		AnchorPane containerPane = new AnchorPane();
 		try {
 			//documentProperties = (FXMLLoader.load(new Object() {}.getClass().getResource("/fx_view/" + "documentProperties" + ".fxml")));
 			//documentProperties = FXMLLoader.load(new Object().getClass().getResource("/fx_view/documentProperties.fxml"));
-			documentProperties.getChildren().setAll(((BorderPane)FXMLLoader.load(new Object(){}.getClass().getResource("/fx_view/documentProperties.fxml"))));
+			containerPane.getChildren().setAll(((BorderPane)FXMLLoader.load(new Object(){}.getClass().getResource("/fx_view/documentProperties.fxml"))));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		Button editButton = new Button("Edit");
+		editButton.setOnAction(event -> {
+			try {
+				UpdateDocumentProperties.setToShowDocument(DocumentProperties.getToShowDocument());
+				documentProperties.getChildren().setAll(((BorderPane)FXMLLoader.load(new Object(){}.getClass().getResource("/fx_view/updateDocumentProperties.fxml"))));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+		containerPane.getChildren().add(editButton);
+		AnchorPane.setTopAnchor(editButton, 375.0);
+		AnchorPane.setLeftAnchor(editButton, 75.0);
+		
+		documentProperties.getChildren().setAll(containerPane);
 
 		selectedDocumentScanningProject = clickedDocument.getIdSPrj();
 		selectedDocumentTranscriptionProject = clickedDocument.getIdTPrj();
