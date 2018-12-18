@@ -10,8 +10,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.LoadException;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.FlowPane;
 import vo.UUIDDocument;
 
 public class DocumentProperties {
@@ -41,7 +43,7 @@ public class DocumentProperties {
 	TextArea categories;
 
 	@FXML
-	TextArea tags;
+	FlowPane tags;
 
 	@FXML
 	public void initialize() throws DatabaseException, ParseException {
@@ -82,7 +84,7 @@ public class DocumentProperties {
 
 	private void loadTags() {
 		for (String tag : documentInfoController.getTags()) {
-			tags.appendText(tag + " ");
+			tags.getChildren().add(new Button(tag));
 		}
 	}
 
