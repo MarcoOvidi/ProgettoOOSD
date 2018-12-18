@@ -86,19 +86,20 @@ JFXTextField, JFXPasswordField{
 	-fx-opacity: 1.0;
 } 
 
-#news{
+.titlesBox{
 	-fx-border-width: 1px 0px 0px 0px;
 	-fx-border-color: #e86e0a;
+	-fx-background-color:transparent;
 }
 
-#news-row{
+.title-row{
 	
 	-fx-background-color:#202020;
 	-fx-padding:4.0px;
 	-fx-border-width:0.0px 0.0px 1.0px 0.0px;
 	-fx-border-color:#191919;
 	}
-#news-row1{
+.title-row1{
 	
 	-fx-background-color:#222;
 	-fx-padding:4.0px;
@@ -106,14 +107,14 @@ JFXTextField, JFXPasswordField{
 	-fx-border-color:#191919;
 	}
 	
-#news-row>Label{
+.title-row>Label{
 	-fx-text-fill:#eee;
 }	
-#news-row1>Label{
+.title-row1>Label{
 	-fx-text-fill:#eee;
 }	
 
-#news-row:hover, #news-row1:hover{
+.title-row:hover, .title-row1:hover{
 	-fx-background-color:#e86e0a;
 	-fx-background-radius: 8px;
 	-fx-text-fill:#eee;

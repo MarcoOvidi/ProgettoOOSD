@@ -442,9 +442,9 @@ public class Home extends Application {
 				HBox row = new HBox();
 
 				if (c % 2 == 0)
-					row.setId("news-row");
+					row.getStyleClass().add("title-row");
 				else
-					row.setId("news-row1");
+					row.getStyleClass().add("title-row1");
 				row.getChildren().add(title1);
 				row.getChildren().add(title2);
 				row.getChildren().add(title3);
@@ -480,6 +480,7 @@ public class Home extends Application {
 		for (Entry<UUIDDocumentCollection, String> title : HomePageController.getCategories().entrySet()) {
 			// creo il nome della collezione
 			TitledPane tp = new TitledPane();
+			System.out.println(title.getValue());
 			// imposto il titolo della collezione
 			tp.setText(title.getValue());
 			// carico i documenti della collezione

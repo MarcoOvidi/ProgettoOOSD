@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXScrollPane?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Label?>
@@ -77,7 +78,7 @@
 					<content>
 						<AnchorPane prefHeight="17.0" prefWidth="707.0">
 							<children>
-								<VBox fx:id="news" layoutX="1.0" layoutY="5.0" prefHeight="11.0" prefWidth="703.0" />
+								<VBox fx:id="news" layoutX="1.0" layoutY="5.0" prefHeight="11.0" prefWidth="703.0" styleClass="titlesBox" />
 							</children>
 						</AnchorPane>
 					</content>
@@ -95,17 +96,17 @@
                      <Insets />
                   </VBox.margin>
                </TextField>
-               <VBox fx:id="searchResults" prefHeight="634.0" prefWidth="272.0" />
+               <JFXScrollPane>
+                  <children>
+                     <VBox fx:id="searchResult" prefHeight="634.0" prefWidth="272.0" styleClass="titlesBox" />
+                  </children>
+               </JFXScrollPane>
             </children>
             <padding>
                <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
             </padding>
 			</VBox>
-				<ScrollPane prefHeight="684.0" prefWidth="0.0" visible="false">
-					<content>
-						<Accordion fx:id="documentCollections" />
-					</content>
-				</ScrollPane>
+         <Accordion fx:id="documentCollections" />
 
 		</HBox>
 	</left>

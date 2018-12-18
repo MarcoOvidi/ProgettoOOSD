@@ -105,7 +105,7 @@ public class ScanRevisor {
 	}
 	
 	public void initCommentArea(){
-		commentArea.setVisible(false);
+		commentArea.setVisible(true);
 	}
 	
 	public void initAcceptButton(){

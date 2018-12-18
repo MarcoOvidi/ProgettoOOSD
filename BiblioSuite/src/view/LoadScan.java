@@ -335,7 +335,7 @@ public class LoadScan {
 	public void loadDocument(UUIDDocument document) { // FIXME tutto da testare
 
 		PageScanController.loadNewDocumentPagesOnlyToRevise(document);
-
+		
 		LinkedList<Page> pL = PageScanController.getCurrentDocumentPages();
 		pageTable.setEditable(true);
 
@@ -374,7 +374,7 @@ public class LoadScan {
 			pages.add(row);
 
 		}
-
+		
 		pageTable.setItems(pages);
 
 		number.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Rows, String>>() {
