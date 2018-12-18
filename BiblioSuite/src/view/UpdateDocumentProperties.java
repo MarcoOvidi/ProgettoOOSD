@@ -3,6 +3,7 @@ package view;
 import java.text.ParseException;
 
 import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXToggleButton;
 
 import controller.DocumentInfoController;
 import dao.DatabaseException;
@@ -12,21 +13,23 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import vo.UUIDDocument;
 
-public class DocumentProperties {
+public class UpdateDocumentProperties {
 
 	private static UUIDDocument toShowDocument;
-
+	
 	private DocumentInfoController documentInfoController;
 
 	@FXML
-	Label title;
+	TextField title;
 
 	@FXML
-	Label author;
+	TextField author;
+	
 	@FXML
-	Label composition;
+	TextField composition;
 
 	@FXML
 	TextArea description;
@@ -42,9 +45,15 @@ public class DocumentProperties {
 
 	@FXML
 	TextArea tags;
-
+	
 	@FXML
-	public void initialize() throws DatabaseException, ParseException {
+	JFXToggleButton digitalizationStatus;
+	
+	@FXML
+	JFXToggleButton transcriptionStatus;
+	
+	@FXML
+	public void initialize() throws DatabaseException, ParseException {		
 		loadInfo();
 		loadProjectStatus();
 		loadTags();
@@ -58,7 +67,7 @@ public class DocumentProperties {
 			author.setText(documentInfoController.getAuthor());
 			composition.setText(documentInfoController.getComposition());
 			description.setText(documentInfoController.getDescription());
-
+			
 		} catch (LoadException | DatabaseException e) {
 			// TODO Manca gestione errori
 			e.printStackTrace();
@@ -69,25 +78,23 @@ public class DocumentProperties {
 	}
 
 	private void loadProjectStatus() {
-		if (documentInfoController.getScanningComplete()) {
+		if(documentInfoController.getScanningComplete()) {
 			scanningComplete.setSelected(true);
 			scanningComplete.arm();
 		}
-		if (documentInfoController.getTranscriptionComplete()) {
+		if(documentInfoController.getTranscriptionComplete())
 			transcriptionComplete.setSelected(true);
 			transcriptionComplete.arm();
-		}
-
 	}
-
+	
 	private void loadTags() {
 		for (String tag : documentInfoController.getTags()) {
 			tags.appendText(tag + " ");
 		}
 	}
-
+	
 	private void loadCategories() {
-
+				
 	}
 
 	public static UUIDDocument getToShowDocument() {
@@ -95,7 +102,7 @@ public class DocumentProperties {
 	}
 
 	public static void setToShowDocument(UUIDDocument toShowDocument) {
-		DocumentProperties.toShowDocument = toShowDocument;
+		UpdateDocumentProperties.toShowDocument = toShowDocument;
 	}
 
 }

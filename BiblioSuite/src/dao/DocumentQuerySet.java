@@ -99,7 +99,6 @@ public class DocumentQuerySet {
 
 				ps.executeUpdate();
 
-				new File("resources/documents/" + id.getValue()).mkdirs();
 
 				if (ps != null)
 					ps.close();
@@ -802,6 +801,54 @@ public class DocumentQuerySet {
 		}
 
 		return tags;
+
+	}
+	
+	/**
+	 * Mostra il titolo di un document
+	 * @param id
+	 * @return
+	 * @throws DatabaseException
+	 */
+	public static String getDocumentTitle(UUIDDocument id) throws DatabaseException {
+		Connection con = null;
+
+		try {
+			con = DBConnection.connect();
+		} catch (DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String title = "";
+
+		try {
+			ps = con.prepareStatement("SELECT title from document where ID=?;");
+
+			ps.setInt(1, id.getValue());
+			
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				title = rs.getString("title");
+			}
+
+		} catch (SQLException e) {
+			throw new DatabaseException("Errore di esecuzione della query", e);
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+
+		}
+
+		return title;
 
 	}
 

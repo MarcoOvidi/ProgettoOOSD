@@ -14,9 +14,13 @@ import org.fxmisc.richtext.LineNumberFactory;
 
 import com.jfoenix.controls.JFXButton;
 
+import controller.AdministrationController;
+import controller.DocumentInfoController;
 import controller.DownloadController;
 import controller.LocalSession;
 import controller.PageViewController;
+import controller.ScanningProjectController;
+import controller.TranscriptionProjectController;
 import dao.DatabaseException;
 import dao.HomePageQuerySet;
 import javafx.application.Platform;
@@ -193,6 +197,11 @@ public class ShowDocumentNEW {
 			moreButton.setOnMouseClicked(event -> {
 				// FIXME andrebbero modificati view e controller per evitare di dover ricaricare
 				// tutto dal db
+
+				ScanningProjectController.loadScanningProject(LocalSession.getOpenedDocumet().getScanningWorkProject());
+				TranscriptionProjectController
+						.loadTranscriptionProject(LocalSession.getOpenedDocumet().getTranscriptionWorkProject());
+
 				PopOver popOver = new PopOver();
 				AnchorPane popOverPane = new AnchorPane();
 				DocumentProperties.setToShowDocument(LocalSession.getOpenedDocumet().getUUID());
@@ -205,6 +214,8 @@ public class ShowDocumentNEW {
 					e.printStackTrace();
 				}
 
+				
+			
 				JFXButton downloadButton = new JFXButton("Download");
 				downloadButton.setOnMouseClicked(downloadEvent -> {
 					startDownload();
@@ -289,6 +300,8 @@ public class ShowDocumentNEW {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				
+				
 
 				JFXButton downloadButton = new JFXButton("Download");
 				downloadButton.setOnMouseClicked(downloadEvent -> {

@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import dao.DatabaseException;
+import dao.DocumentQuerySet;
 import dao.HomePageQuerySet;
 import dao.UserAuthenticationQuerySet;
 import vo.UUIDDocument;
@@ -192,5 +193,16 @@ public class HomePageController {
 
 	public static void setListDocumentInCollections(LinkedList<String[]> listDocumentInCollections) {
 		HomePageController.listDocumentInCollections = listDocumentInCollections;
+	}
+	
+	public static String getDocumentTitle(UUIDDocument documentID) {
+		
+		try {
+			return DocumentQuerySet.getDocumentTitle(documentID);
+		} catch (DatabaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 }
