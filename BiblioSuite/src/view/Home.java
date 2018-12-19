@@ -289,11 +289,16 @@ public class Home extends Application {
 	public void fillResult(HashMap<UUIDDocument, String> result) {
 		if(!searchResult.getChildren().isEmpty())
 			searchResult.getChildren().clear();
-		
+		int c=0;
 		for(Entry<UUIDDocument, String> doc : result.entrySet()) {
 			Label d = new Label(doc.getValue());
 			d.setId(String.valueOf(doc.getKey().getValue()));
-			
+			HBox row= new HBox();
+			row.getChildren().add(d);
+			if (c % 2 == 0)
+				row.getStyleClass().add("title-row");
+			else
+				row.getStyleClass().add("title-row1");
 			d.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent mouseEvent) {
@@ -310,10 +315,11 @@ public class Home extends Application {
 							}
 						}
 					}
+					
 				}
 			});
-			
-			searchResult.getChildren().add(d);
+			c++;
+			searchResult.getChildren().add(row);
 		}
 		
 	}

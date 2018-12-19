@@ -118,7 +118,7 @@ JFXTextField, JFXPasswordField{
 	-fx-background-color:#e86e0a;
 	-fx-background-radius: 8px;
 	-fx-text-fill:#eee;
-	-fx-font-size:18px;
+	
 }
 
 
@@ -634,13 +634,10 @@ TabPane {
     -fx-border-color:#ccc;
 }
 
-
-
-
-
 .list-view .list-cell{
 	-fx-text-fill: yellow;
 }
 
-
-
+JFXScrollPane {
+	-fx-background-color: #fff;
+}
