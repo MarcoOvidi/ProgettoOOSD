@@ -41,6 +41,10 @@
 							<Label text="Email: " style="-fx-text-fill: #f87e1a" />
 							<Label fx:id="email" />
 						</HBox>
+						<HBox>
+							<Label fx:id="levelT" text="TranscriberLevel: " style="-fx-text-fill: #f87e1a" />
+							<Label fx:id="level" />
+						</HBox>
 						<HBox />
 						<HBox />
 						<JFXButton fx:id="edit" text="Edit Profile" />
@@ -48,6 +52,7 @@
 					</VBox>
 					<VBox spacing="20">
 						<Label text="permissions: " />
+						<JFXCheckBox disable="true" fx:id="active" text="Active User" />
 						<JFXCheckBox disable="true" fx:id="download" text="Download" />
 						<JFXCheckBox disable="true" fx:id="publishDocument"
 							text="PublishDocument" />

@@ -4,15 +4,75 @@
 }
 
 
-JFXButton,TextField, PasswordField{
+#searchBar{
+	-fx-border-radius:20px;
+	-fx-background-radius:20px;
+	-fx-background-color:#222;
+	-fx-border-width:1px 1px 1px 1px;
+	-fx-border-color: #e86e0a;
+	-fx-text-fill:#aaa;
+	}
+
+#homeTabPane>Tab>ScrollPane{
+	-fx-background-color: white;
+	-fx-border-width:2px 0px 0px 0px;
+	-fx-border-color: #e86e0a;
+}
+
+#message{
+	-fx-background-color:#f00;
+	-fx-border-color:#f00;
+	-fx-border-width: 3px 10px 3px 3px;
+	-fx-border-radius: 0px 20px 0px 0px;
+	-fx-background-radius: 0px 8px 0px 0px;
+	-fx-text-fill:#fff;
+    -fx-font-weight: bold;
+}
+
+Button{
+	-fx-background-color:#555;
+	-fx-text-fill:#fff;	 
+	-fx-border-radius: 4px;
+	}
+	
+Button:hover{
+	-fx-background-color:#888;
+	}
+
+JFXButton, TextField, PasswordField{
     -fx-alignment: CENTER;
 	-fx-background-color: transparent;
 	-fx-border-color:#aaa;
 	-fx-border-radius: 0.0px;
 	-fx-border-width: 0.0px 0.0px 1.5px 0.0px ;
-	-fx-text-fill:#aaa;	  
+	-fx-text-fill:#aaa;
+    -fx-highlight-fill: #f87e1a;
+    -fx-highlight-text-fill: #222
+}
+  
+JFXTextField, JFXPasswordField{
+    -fx-alignment: CENTER;
+	-fx-text-fill: #eee;
+	-fx-text-alignment: CENTER;
     -fx-highlight-fill: #f87e1a;
     -fx-highlight-text-fill: #222;
+    -jfx-unfocus-color: #ccc;
+    -jfx-focus-color: "#e86e0a";
+}
+
+#login {
+ 	-fx-background-color: #e86e0a20;
+ 	-jfx-rippler-fill: #e86e0a;
+}
+
+#register {
+ 	-fx-background-color: #e86e0a20;
+ 	-jfx-rippler-fill: #e86e0a;
+}
+
+#recover {
+ 	-fx-background-color: #e86e0a20;
+ 	-jfx-rippler-fill: #e86e0a;
 }
   
  #pageContainer{
@@ -20,36 +80,53 @@ JFXButton,TextField, PasswordField{
  	-fx-border-width:1.0px;
  	-fx-border-color:#777;
  } 
- #username,#password{
- 	-fx-text-fill: #CCC;
- }
+
 #pageContainer{
 	-fx-background-color: #111;
 	-fx-opacity: 1.0;
 } 
 
-#news-row{
+.titlesBox{
+	-fx-border-width: 1px 0px 0px 0px;
+	-fx-border-color: #e86e0a;
+	-fx-background-color:transparent;
+}
+
+.title-row{
+	
 	-fx-background-color:#202020;
 	-fx-padding:4.0px;
 	-fx-border-width:0.0px 0.0px 1.0px 0.0px;
 	-fx-border-color:#191919;
 	}
-#news-row1{
+.title-row1{
+	
 	-fx-background-color:#222;
 	-fx-padding:4.0px;
 	-fx-border-width:0.0px 0.0px 0.0px 0.0px;
 	-fx-border-color:#191919;
 	}
 	
-#news-row>Label{
-	-fx-text-fill:#aaa;
+.title-row>Label{
+	-fx-text-fill:#eee;
 }	
-#news-row1>Label{
-	-fx-text-fill:#aaa;
+.title-row1>Label{
+	-fx-text-fill:#eee;
 }	
+
+.title-row:hover, .title-row1:hover{
+	-fx-background-color:#e86e0a;
+	-fx-background-radius: 8px;
+	-fx-text-fill:#eee;
+	
+}
 
 
 AnchorPane,HBox, VBox, FlowPane{-fx-background:#222; -fx-border-width:0.0px;}
+
+.table-view .column-header .label{
+    -fx-alignment:CENTER_LEFT
+}
 
 .scroll-pane {
     -fx-background-insets: 0.0;
@@ -67,8 +144,8 @@ AnchorPane,HBox, VBox, FlowPane{-fx-background:#222; -fx-border-width:0.0px;}
 #categories{
 	-fx-alignment:center;
 	-fx-padding:4.0px;
-	
 	}
+	
 #categories>Label{
 	-fx-alignment: CENTER;
     -fx-text-fill: #aaa;
@@ -112,14 +189,6 @@ PasswordField:hover{
 	-fx-border-color:#e86e0a;
 	-fx-text-fill:#fff;	  
 }
-
-#password:focused{
-	
-}
-
-
-
-
 
 .jfx-tab-pane, .tab-pane
 {
@@ -171,10 +240,15 @@ PasswordField:hover{
     -fx-alignment: CENTER;
     -fx-text-fill: #fff;
 }
+
+tab-pane > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
+
+    -fx-border-color: transparent;
+
+}
 	
 .jfx-tab-pane> *.tab-header-area> *.tab-header-background, *.tab-pane> *.tab-header-area> *.tab-header-background {
-     -fx-opacity: 0.0;
-     }
+     -fx-opacity: 0.0;     }
      
  .jfx-tab-pane .tab-header-background { -fx-background-color: #333; }
 
@@ -244,16 +318,116 @@ TextArea:focused {
       -fx-background-color: #e86e0a;
 }
 
-.choice-box {
+.choice-box, MenuButton {
   -fx-background-color: #111;
-  -fx-mark-color: darkorange;
+  -fx-mark-color: darkorange;}
+
+MenuButton > .label { -fx-text-fill: white; }
+MenuButton .context-menu { -fx-background-color: #111; }
+MenuButton .menu-item:focused { -fx-background-color: darkorange; }
+MenuButton .menu-item > .label { -fx-text-fill: white; }
+MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
+
+
+
+
+/*-----------------------------------------------MANAGE PROJECT--------------------------------------*/
+
+.tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {-fx-border-color: transparent;}
+
+.tab1{
+	-fx-background-color: #222;
+	-fx-border-radius: 8px 8px 0px 0px;
+	-fx-border-width: 1px 1px 0px 1px;
 }
 
-.choice-box > .label { -fx-text-fill: white; }
-.choice-box .context-menu { -fx-background-color: #111; }
-.choice-box .menu-item:focused { -fx-background-color: darkorange; }
-.choice-box .menu-item > .label { -fx-text-fill: white; }
-.choice-box .menu-item:focused > .label { -fx-text-fill: black; }
+.tab1:hover{
+	-fx-background-color:#555;
+	}
+
+#transcriptionTabPane > .tab-header{
+
+    -fx-border-color: #8aa;
+
+}
+
+#scanningTabPane > .tab-header {
+
+    -fx-border-color: #aa8;
+
+}
+
+#rightTab{
+	-fx-background-radius: 0px 16px 16px 0px;
+	-fx-background-color: #555;
+	-fx-pref-width: 375px;
+	-fx-border-color: transparent;
+}
+
+#leftTab{
+	-fx-background-radius: 16px 0px 0px 16px;
+	-fx-background-color: #555;
+	-fx-pref-width: 375px;
+	-fx-border-color: transparent;
+}
+
+#leftTab:hover, #leftTab:selected, #rightTab:hover, #rightTab:selected{
+	-fx-background-color: #888;
+}	
+
+
+
+
+#scanningTab{
+	-fx-background-radius: 0px 16px 16px 0px;
+	-fx-background-color: #555;
+	-fx-pref-width: 375px;
+	-fx-border-color: transparent;
+    	}
+    	
+
+	
+#scanningTab:hover, #scanningTab:selected{
+	-fx-background-color: #88c;
+}	
+
+	
+#transcriptionTab:hover, #transcriptionTab:selected{
+	-fx-background-color: #c88;
+}	
+	
+	
+
+#transcriptionTab{
+	-fx-background-radius: 16px 0px 0px 16px;
+	-fx-background-color: #555;
+	-fx-pref-width: 375px;	
+	-fx-border-color: transparent ;
+
+}
+
+
+
+
+
+#newDocumentButton, #addTranscriberButton, #addDigitalizerButton, #addDReviserButton, #addTReviserButton{
+	-fx-background-color:#555;
+	-fx-background-radius:#10px;
+	-fx-pref-width: 450px;
+	-fx-pref-height: 40px;
+	-fx-text-fill: #eee;
+	}
+	
+#newDocumentButton{
+		-fx-pref-width: 900px;
+}	
+	
+#newDocumentButton:hover, #addTranscriberButton:hover, #addDigitalizerButton:hover,#addDReviserButton:hover, #addTReviserButton:hover {
+	-fx-text-fill: #fff;
+	-fx-background-color:#e86e0a;	
+	}	
+	
+
 
 
 .table-view{
@@ -271,11 +445,11 @@ TextArea:focused {
     -fx-background-color: transparent;
 }
 
-/* Spaltenköpfe
+/* Spaltenkï¿½pfe
     Struktur column-header-background -> column-header */
 
 .table-view .column-header-background{
-    -fx-background-color: #222;
+    -fx-background-color: #202020;
     -fx-background-radius: 8px;
 }
 
@@ -299,11 +473,10 @@ TextArea:focused {
     -fx-background-color: -fx-table-cell-border-color, #333;
     -fx-background-radius:4px;
     -fx-background-insets: 1.0, 1.0 1.0 1.0 1.0;
-    -fx-padding: 10.0; /* 0 */
+    -fx-padding: 0.0; /* 0 */
     /*-fx-border-color: 2px 0px 2px 0px black;*/
     -fx-border-color: transparent;
 	-fx-min-height:60px;
-
     -fx-table-cell-border-color: transparent;
 }
 
@@ -316,7 +489,7 @@ TextArea:focused {
     -fx-background-color: -fx-table-cell-border-color, #3a3a3a;
     -fx-background-insets: 1.0, 1.0 1.0 1.0 1.0;
     -fx-min-height:60px;
-    -fx-padding: 10.0; /* 0 */  
+    -fx-padding: 0.0; /* 0 */  
 }
 
 .table-row-cell:selected {
@@ -461,10 +634,10 @@ TabPane {
     -fx-border-color:#ccc;
 }
 
-
-
 .list-view .list-cell{
 	-fx-text-fill: yellow;
 }
 
-
+JFXScrollPane {
+	-fx-background-color: #fff;
+}
