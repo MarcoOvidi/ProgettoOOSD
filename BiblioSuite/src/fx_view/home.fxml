@@ -21,62 +21,8 @@
 	xmlns="http://javafx.com/javafx/8.0.171"
 	xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Home">
 	<left>
-		<HBox layoutX="100.0" minWidth="900" prefHeight="684.0"
-			prefWidth="1169.0" spacing="1">
-			<VBox minWidth="500" prefHeight="684.0" prefWidth="720.0">
-				<TabPane layoutX="14.0" layoutY="441.0" prefHeight="365.0"
-					prefWidth="721.0" tabClosingPolicy="UNAVAILABLE">
-					<tabs>
-						<Tab styleClass="tab1" text="Bookmarks">
-							<content>
-								<ScrollPane prefHeight="357.0" prefWidth="721.0">
-									<content>
-										<AnchorPane minHeight="0.0" minWidth="0.0"
-											prefHeight="244.0" prefWidth="483.0">
-											<children>
-												<HBox fx:id="bookmarks" layoutX="22.0" layoutY="31.0"
-													prefHeight="100.0" prefWidth="200.0" />
-											</children>
-										</AnchorPane>
-									</content>
-								</ScrollPane>
-							</content>
-						</Tab>
-						<Tab fx:id="scanningTabHome" styleClass="tab1"
-							text="Scanning Project">
-							<content>
-								<ScrollPane prefHeight="318.0" prefWidth="978.0">
-									<content>
-										<AnchorPane prefHeight="223.0" prefWidth="557.0">
-											<children>
-												<HBox fx:id="sProjects" layoutX="14.0" layoutY="14.0"
-													prefHeight="162.0" prefWidth="406.0" />
-											</children>
-										</AnchorPane>
-									</content>
-								</ScrollPane>
-							</content>
-						</Tab>
-						<Tab fx:id="transcriptionTabHome" styleClass="tab1"
-							text="Transcription Projects">
-							<content>
-								<ScrollPane prefHeight="318.0" prefWidth="978.0">
-									<content>
-										<AnchorPane prefHeight="223.0" prefWidth="557.0">
-											<children>
-												<HBox fx:id="tProjects" layoutX="14.0" layoutY="14.0"
-													prefHeight="162.0" prefWidth="406.0" />
-											</children>
-										</AnchorPane>
-									</content>
-								</ScrollPane>
-							</content>
-						</Tab>
-					</tabs>
-					<padding>
-						<Insets top="20.0" />
-					</padding>
-				</TabPane>
+		<HBox>
+			<VBox>
 				<Label text="News" textFill="#aaaaaa">
 					<font>
 						<Font size="28.0" />
@@ -102,25 +48,10 @@
 			</VBox>
 			<Separator orientation="VERTICAL" prefHeight="684.0"
 				prefWidth="0.0" />
-			<VBox prefHeight="684.0" prefWidth="396.0">
-				<children>
-					<JFXButton fx:id="catalogo" text="catalogo" />
-					<TextField fx:id="searchBar" prefHeight="10.0"
-						prefWidth="218.0" promptText="Search">
-						<VBox.margin>
-							<Insets />
-						</VBox.margin>
-					</TextField>
-					<ScrollPane >
-							<VBox fx:id="searchResult" styleClass="titlesBox" />
-					</ScrollPane>
-				</children>
-				<padding>
-					<Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
-				</padding>
+			<VBox>
+				<JFXButton fx:id="catalog" text="Catalogo"></JFXButton>
+				<JFXButton fx:id="myCollection" text="My Collection"></JFXButton>
 			</VBox>
-			<Accordion fx:id="documentCollections" />
-
 		</HBox>
 	</left>
 </BorderPane>

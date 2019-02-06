@@ -116,6 +116,19 @@ public class HomePageController {
 		
 		setNews(news);
 	}
+	
+	public static HashMap<UUIDDocument, String[]> getAllDocuments() {
+		HashMap<UUIDDocument, String[]> res = new HashMap<UUIDDocument, String[]>();
+		try {
+			res = DocumentQuerySet.getAllDocuments();
+		}
+		catch (Exception e) {
+		
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+		return res;
+	}
 
 	public static HashMap<UUIDDocument,String[]> getNews() {
 		return news;

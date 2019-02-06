@@ -851,5 +851,57 @@ public class DocumentQuerySet {
 		return title;
 
 	}
+	
+	
+	/**
+	 * Ritorna l'elenco completo di tutte le opere comprese le url delle copertine (pagina 1)
+	 * @return
+	 * @throws DatabaseException
+	 */
+	public static HashMap<UUIDDocument, String[]> getAllDocuments() throws DatabaseException {
+		Connection con = null;
+
+		try {
+			con = DBConnection.connect();
+		} catch (DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		HashMap<UUIDDocument, String[]> documents = new HashMap<UUIDDocument, String[]>();
+
+		try {
+			ps = con.prepareStatement("select d.ID,d.title,page.image "
+					+ "from document d left join page "
+					+ "on d.ID=page.ID_document and page.number=1;");
+
+			
+			rs = ps.executeQuery();
+
+			while(rs.next()) {
+				String[] info = new String[2];
+				info[0] = rs.getString("title");
+				info[1] = rs.getString("image");
+				documents.put(new UUIDDocument(rs.getInt("ID")), info);
+			}
+
+		} catch (SQLException e) {
+			throw new DatabaseException("Errore di esecuzione della query", e);
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+
+		}
+
+		return documents;
+
+	}
 
 }

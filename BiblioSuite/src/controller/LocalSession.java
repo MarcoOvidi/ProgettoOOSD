@@ -14,6 +14,7 @@ public final class LocalSession {
 	static ArrayList<String> topBarButtons = new ArrayList<String>();
 	static Document openedDocumet = null;
 	
+	@SuppressWarnings("deprecation")
 	public static Image loadImage(String url) {
 		Image image;
 		try {
