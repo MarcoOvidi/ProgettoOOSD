@@ -89,6 +89,9 @@ public class Home /* extends Application */ {
 			SceneController.loadScene("catalog");
 
 		});
+		
+		catalog.setGraphic(new ImageView(new Image("file:resources/favicon/128/database.png")));
+		myCollection.setGraphic(new ImageView(new Image("file:resources/favicon/128/bookmark-o.png")));
 	}
 
 	/*
