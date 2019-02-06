@@ -17,6 +17,10 @@ public final class LocalSession {
 	@SuppressWarnings("deprecation")
 	public static Image loadImage(String url) {
 		Image image;
+		
+		if (url == null)
+			return image = new Image ("images/missing.png");
+		
 		try {
 			image = new Image ("file:"+url);
 			System.out.println(image.impl_getUrl());

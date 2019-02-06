@@ -217,7 +217,8 @@ public class Catalog extends Application{
 		int i=0;
 		for (Map.Entry<UUIDDocument, String[]> entry : map.entrySet()) {
 			//create unit
-			images[i] = new Unit(LocalSession.loadImage(entry.getValue()[1]),i,entry.getKey());
+			Image image = LocalSession.loadImage(entry.getValue()[1]);
+			images[i] = new Unit(image,i,entry.getKey());
 			
 			//event handler
 			images[i].setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -343,7 +344,10 @@ public class Catalog extends Application{
 			setUserData(index);
 			
 			setImage(image);
-
+			
+			setFitHeight(200);
+			setFitWidth(100);
+			
 			this.id = id;
 			this.index = index;
 			getTransforms().add(rotate);
