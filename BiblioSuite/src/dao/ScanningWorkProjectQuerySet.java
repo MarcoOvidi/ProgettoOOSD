@@ -1178,13 +1178,5 @@ public class ScanningWorkProjectQuerySet {
 		return availableStaff;
 	}
 	
-	public static void main(String[] args) {
-		try {
-			System.out.println(getScanningUncompletedDocumentReviser(new UUIDUser(61)));
-		} catch (DatabaseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 
 }
