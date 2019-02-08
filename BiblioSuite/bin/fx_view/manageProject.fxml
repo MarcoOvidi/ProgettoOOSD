@@ -12,28 +12,28 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ManageProject">
 	<center>
-		<AnchorPane prefHeight="800.0" prefWidth="1400.0" BorderPane.alignment="CENTER">
+		<AnchorPane BorderPane.alignment="CENTER">
 			<children>
-            <AnchorPane fx:id="manageContainer" layoutX="56.0" layoutY="53.0" prefHeight="568.0" prefWidth="1400.0">
+            <AnchorPane fx:id="manageContainer" layoutX="56.0" layoutY="53.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="20.0">
                <children>
-                  <Label layoutX="36.0" layoutY="22.0" text="Manage a project or create new document">
+                  <Label layoutX="36.0" layoutY="22.0" text="Manage a project or create new document" visible="false">
                      <font>
                         <Font size="28.0" />
                      </font>
                   </Label>
-      				<TableView fx:id="documentTable" layoutX="36.0" layoutY="78.0" prefHeight="411.0" prefWidth="1200.0">
+      				<TableView fx:id="documentTable" layoutX="36.0" layoutY="78.0" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="20.0">
       					<columns>
       						<TableColumn fx:id="Document" prefWidth="300.0" resizable="false" text="Document" />
       						<TableColumn fx:id="Transcription_PRJ" prefWidth="300.0" resizable="false" text="Transcription Project" />
       						<TableColumn fx:id="Scanning_PRJ" prefWidth="300.0" resizable="false" text="Scanning Project" />
       					</columns>
       				</TableView>
-      				<Button fx:id="newDocumentButton" layoutX="34.0" layoutY="515.0" text="Create new document" />
+      				<Button fx:id="newDocumentButton" layoutX="34.0" layoutY="515.0" text="Create new document" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="60.0" />
                </children>
             </AnchorPane>
 				<TabPane fx:id="pane" prefHeight="630.0" prefWidth="1015.0" tabClosingPolicy="UNAVAILABLE">
 					<tabs>
-						<Tab fx:id="transcriptionTab" text="Transcription Project">
+						<Tab fx:id="transcriptionTab" text="Transcription Project" styleClass="leftTab">
 							<content>
 								<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="488.0" prefWidth="979.0">
 									<children>
@@ -78,10 +78,10 @@
 								</AnchorPane>
 							</content>
 						</Tab>
-						<Tab fx:id="propertiesTab" text="Document properties">
+						<Tab fx:id="propertiesTab" text="Document properties" styleClass="centerTab">
 						<BorderPane fx:id="documentProperties" />
 						</Tab>
-						<Tab fx:id="scanningTab" text="Scanning Project">
+						<Tab fx:id="scanningTab" text="Scanning Project" styleClass="rightTab">
 							<content>
 								<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
 									<children>

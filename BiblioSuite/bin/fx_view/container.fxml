@@ -45,7 +45,10 @@
 		</AnchorPane>
 	</top>
 	<center>
-		<BorderPane fx:id="content" layoutY="60" style=" -fx-background-image: url(images/lib.jpg);          -fx-background-position: left top, center;           -fx-background-repeat: stretch;          -fx-background-size: cover, auto;"  />
+		<BorderPane fx:id="content" layoutY="60" style=" -fx-background-image: url(images/library.png);
+			-fx-background-position: left top, center;
+			-fx-background-repeat: stretch;
+			-fx-background-size: cover, auto;"/>
 	</center>
 
 </BorderPane>

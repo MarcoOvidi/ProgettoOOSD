@@ -5,6 +5,8 @@ import java.text.ParseException;
 import java.util.List;
 import java.util.TreeMap;
 
+import javax.swing.text.AbstractDocument.Content;
+
 import controller.EditUserController;
 import controller.LocalSession;
 import controller.LoginController;
@@ -14,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.Tooltip;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -97,6 +100,8 @@ public class Container {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+
+			
 			
 		}
 	
@@ -129,6 +134,7 @@ public class Container {
 
 		//content = newContent;
 		content.getChildren().setAll(newContent);
+		//content.getChildren().get(0).setEffect(new BoxBlur());
 	}
 	
 }

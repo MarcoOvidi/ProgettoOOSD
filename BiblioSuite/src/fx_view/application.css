@@ -330,12 +330,12 @@ tab-pane > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
 }
 
 .scroll-bar:horizontal, .scroll-bar:vertical{
-    -fx-background-color:#202020;
+    -fx-background-color:transparent;
 }
 
 .increment-button, .decrement-button {
-    -fx-background-color:#202020;
-    -fx-border-color: #202020;
+    -fx-background-color:transparent;
+    -fx-border-color: transparent;
 }
 
 .scroll-bar:horizontal .track,
@@ -347,7 +347,7 @@ tab-pane > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
 
 .scroll-bar:horizontal .thumb,
 .scroll-bar:vertical .thumb {
-    -fx-background-color: #444;
+    -fx-background-color: #3CB371;
     -fx-background-radius: 5.0em;
 }
 
@@ -528,7 +528,7 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
     Struktur column-header-background -> column-header */
 
 .table-view .column-header-background{
-    -fx-background-color: #202020;
+    -fx-background-color: #0096c8cc;
     -fx-background-radius: 8px;
 }
 
@@ -549,7 +549,7 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 
 
 .table-row-cell{
-    -fx-background-color: -fx-table-cell-border-color, #333;
+    -fx-background-color: -fx-table-cell-border-color, linear-gradient(from 60% 25% to 100% 100%, #170b0b, #170b0ba0);
     -fx-background-radius:4px;
     -fx-background-insets: 1.0, 1.0 1.0 1.0 1.0;
     -fx-padding: 0.0; /* 0 */
@@ -565,7 +565,7 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 
 .table-row-cell:odd{
 	-fx-background-radius:4px;
-    -fx-background-color: -fx-table-cell-border-color, #3a3a3a;
+    -fx-background-color: -fx-table-cell-border-color, linear-gradient(from 60% 25% to 100% 100%, #202020, #202020a0);
     -fx-background-insets: 1.0, 1.0 1.0 1.0 1.0;
     -fx-min-height:60px;
     -fx-padding: 0.0; /* 0 */  
@@ -584,7 +584,9 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 .table-view > .virtual-flow > .scroll-bar:horizontal,
 .table-view > .virtual-flow > .scroll-bar:horizontal > .track,
 .table-view > .virtual-flow > .scroll-bar:horizontal > .track-background {
-    -fx-background-color: transparent;
+    -fx-background-color: #0001;
+    -fx-background-radius: 16px;
+    -fx-border-color:transparent;
 }
 
 .table-view > .virtual-flow > .scroll-bar > .increment-button, 
