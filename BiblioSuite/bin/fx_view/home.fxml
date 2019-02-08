@@ -1,25 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXScrollPane?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
-	minHeight="-Infinity" minWidth="-Infinity"
-	xmlns="http://javafx.com/javafx/8.0.171"
-	xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Home">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Home">
 	<left>
 		<HBox>
 			<VBox>
@@ -31,13 +23,11 @@
 						<Insets left="10.0" />
 					</VBox.margin>
 				</Label>
-				<ScrollPane layoutX="27.0" layoutY="155.0"
-					prefHeight="283.0" prefWidth="695.0">
+				<ScrollPane layoutX="27.0" layoutY="155.0" prefHeight="651.0" prefWidth="695.0">
 					<content>
 						<AnchorPane prefHeight="17.0" prefWidth="707.0">
 							<children>
-								<VBox fx:id="news" layoutX="1.0" layoutY="5.0"
-									prefHeight="11.0" prefWidth="703.0" styleClass="titlesBox" />
+								<VBox fx:id="news" layoutX="1.0" layoutY="5.0" prefHeight="11.0" prefWidth="703.0" styleClass="titlesBox" />
 							</children>
 						</AnchorPane>
 					</content>
@@ -46,12 +36,13 @@
 					</VBox.margin>
 				</ScrollPane>
 			</VBox>
-			<Separator orientation="VERTICAL" prefHeight="684.0"
-				prefWidth="0.0" />
-			<VBox>
-				<JFXButton fx:id="catalog" text="Catalogo"></JFXButton>
-				<JFXButton fx:id="myCollection" text="My Collection"></JFXButton>
-			</VBox>
+			<Separator orientation="VERTICAL" prefHeight="684.0" prefWidth="0.0" />
+         <AnchorPane prefHeight="685.0" prefWidth="351.0">
+            <children>
+   				<JFXButton fx:id="catalog" layoutX="166.0" layoutY="131.0" text="Catalogo" />
+   				<JFXButton fx:id="myCollection" layoutX="153.0" layoutY="408.0" text="My Collection" />
+            </children>
+         </AnchorPane>
 		</HBox>
 	</left>
 </BorderPane>

@@ -43,14 +43,14 @@
 			<!-- <ScrollPane fx:id="pageListScroll" prefHeight="800.0"> <content> 
 				<VBox fx:id="pageList" prefHeight="200.0" /> </content> </ScrollPane> -->
 			<ListView fx:id="pageList" prefWidth="180.0" />
-			<StackPane prefWidth="400.0">
+			<StackPane styleClass="transparentObj" prefWidth="400.0">
 				<children>
 					<ImageView fx:id="currentPage" />
 					<Label fx:id="message" />
-					<AnchorPane>
+					<AnchorPane styleClass="transparentObj">
 						<children>
 							<HBox spacing="20" AnchorPane.bottomAnchor="20.0"
-								AnchorPane.leftAnchor="120">
+								AnchorPane.leftAnchor="120" styleClass="transparentObj">
 								<Button fx:id="top" text="▲" />
 								<Button fx:id="previous" text="◀" />
 								<Label fx:id="number" />

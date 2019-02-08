@@ -357,6 +357,8 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 
 }
 
+
+
 #rightTab{
 	-fx-background-radius: 0px 16px 16px 0px;
 	-fx-background-color: #555;
@@ -376,32 +378,47 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 }	
 
 
+#propertiesTab {
+	-fx-background-color: #555;
+	-fx-pref-width: 300px;
+	-fx-border-color: transparent;
+	-fx-background-radius: 0px 0px 0px 0px;
+}
 
+
+
+#content{
+	-fx-opacity: 1;
+}
+
+.transparentObj{
+	-fx-background-color: transparent;
+}
 
 #scanningTab{
 	-fx-background-radius: 0px 16px 16px 0px;
 	-fx-background-color: #555;
-	-fx-pref-width: 375px;
+	-fx-pref-width: 300px;
 	-fx-border-color: transparent;
     	}
     	
 
 	
-#scanningTab:hover, #scanningTab:selected{
-	-fx-background-color: #88c;
-}	
-
-	
-#transcriptionTab:hover, #transcriptionTab:selected{
+#scanningTab:hover, #scanningTab:selected, #transcriptionTab:hover, #transcriptionTab:selected, #propertiesTab:hover, #propertiesTab:selected{
 	-fx-background-color: #c88;
 }	
+
+/* 	
+#transcriptionTab:hover, #transcriptionTab:selected{
+	-fx-background-color: #c88;
+}	*/
 	
 	
 
 #transcriptionTab{
 	-fx-background-radius: 16px 0px 0px 16px;
 	-fx-background-color: #555;
-	-fx-pref-width: 375px;	
+	-fx-pref-width: 300px;	
 	-fx-border-color: transparent ;
 
 }
