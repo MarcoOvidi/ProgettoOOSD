@@ -219,9 +219,9 @@ public class Container {
 			HBox row= new HBox();
 			row.getChildren().add(d);
 			if (c % 2 == 0)
-				row.getStyleClass().add("title-row");
+				row.getStyleClass().add("search-row");
 			else
-				row.getStyleClass().add("title-row1");
+				row.getStyleClass().add("search-row1");
 			d.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent mouseEvent) {

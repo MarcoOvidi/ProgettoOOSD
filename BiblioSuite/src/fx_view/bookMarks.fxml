@@ -23,13 +23,8 @@
 	<left>
 		<ScrollPane prefHeight="357.0" prefWidth="721.0">
 			<content>
-				<AnchorPane minHeight="0.0" minWidth="0.0"
-					prefHeight="244.0" prefWidth="483.0">
-					<children>
 						<HBox fx:id="bookmarks" layoutX="22.0" layoutY="31.0"
-							prefHeight="100.0" prefWidth="200.0" />
-					</children>
-				</AnchorPane>
+							prefHeight="100.0" prefWidth="200.0"/>
 			</content>
 		</ScrollPane>
 	</left>

@@ -55,17 +55,10 @@ public class Catalog extends Application{
 	private Accordion documentCollections;
 
 	@FXML
-	private TextField searchBar;
-
-	@FXML
 	private JFXButton catalogo;
 	
 	@FXML
-	private VBox searchResult;
-	
-	@FXML
 	public void initialize() {
-		initSearchBar();
 		loadCollections();
 		catalog();
 	}
@@ -73,75 +66,7 @@ public class Catalog extends Application{
 	
 
 	
-	
-	@FXML
-	public void initSearchBar() {
-		searchBar.textProperty().addListener(new ChangeListener<String>() {
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				int l = newValue.length();
-				if(!searchResult.getChildren().isEmpty())
-					searchResult.getChildren().clear();
-
-				if (l > 3) {
-					LinkedList<UUIDDocument> author = SearchController.searchByAuthorTitle(newValue);
-					LinkedList<UUIDDocument> tag = SearchController.searchByTag(newValue);
-					
-					HashMap<UUIDDocument, String> result = new HashMap<UUIDDocument,String>();
-					
-					for(UUIDDocument doc : author) {
-						result.put(doc, HomePageController.getDocumentTitle(doc));
-					}
-					
-					for(UUIDDocument doc : tag) {
-						result.put(doc, HomePageController.getDocumentTitle(doc));
-					}
-					
-					fillResult(result);
-						
-				}
-			}
-		});
-	}
-	
-	public void fillResult(HashMap<UUIDDocument, String> result) {
-		if(!searchResult.getChildren().isEmpty())
-			searchResult.getChildren().clear();
-		int c=0;
-		for(Entry<UUIDDocument, String> doc : result.entrySet()) {
-			Label d = new Label(doc.getValue());
-			d.setId(String.valueOf(doc.getKey().getValue()));
-			HBox row= new HBox();
-			row.getChildren().add(d);
-			if (c % 2 == 0)
-				row.getStyleClass().add("title-row");
-			else
-				row.getStyleClass().add("title-row1");
-			d.setOnMouseClicked(new EventHandler<MouseEvent>() {
-				@Override
-				public void handle(MouseEvent mouseEvent) {
-					if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-						if (mouseEvent.getClickCount() == 1) {
-							try {
-								PageViewController.showDocument(new UUIDDocument(Integer.valueOf(d.getId())));
-							} catch (LoadException e) {
-								Alert alert = new Alert(Alert.AlertType.ERROR);
-								alert.setTitle("Error");
-								alert.setContentText(e.getMessage());
-								alert.show();
-								e.printStackTrace();
-							}
-						}
-					}
-					
-				}
-			});
-			c++;
-			searchResult.getChildren().add(row);
-		}
 		
-	}
-	
 	@FXML
 	public void loadCollections() {
 		// carico le collezioni

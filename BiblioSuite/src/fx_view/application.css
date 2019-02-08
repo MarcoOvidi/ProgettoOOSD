@@ -23,7 +23,7 @@
 	}
 
 #homeTabPane>Tab>ScrollPane{
-	-fx-background-color: white;
+	-fx-background-color: transparent;
 	-fx-border-width:2.0px 0.0px 0.0px 0.0px;
 	-fx-border-color: #e86e0a;
 }
@@ -792,8 +792,9 @@ Label {
 }
 
 JFXScrollPane {
-	-fx-background-color: #fff;
+	-fx-background-color: transparent;
 }
+
 
 #activet {
 	-fx-background-color: #5559;
@@ -842,4 +843,6 @@ JFXScrollPane {
 #searchBar:hover {
 	-fx-background-color: #fff4;
 }
+
+
 
