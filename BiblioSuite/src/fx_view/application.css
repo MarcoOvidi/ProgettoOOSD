@@ -4,6 +4,7 @@
 }
 
 
+
 #searchBar{
 	-fx-border-radius:20px;
 	-fx-background-radius:20px;
@@ -94,28 +95,41 @@ JFXTextField, JFXPasswordField{
 
 .title-row{
 	
-	-fx-background-color:#202020;
+	-fx-background-color:#20202020;
+	-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #202020, transparent);
+	-fx-background-radius: 8px;
 	-fx-padding:4.0px;
 	-fx-border-width:0.0px 0.0px 1.0px 0.0px;
 	-fx-border-color:#191919;
 	}
 .title-row1{
 	
-	-fx-background-color:#222;
+	-fx-background-color:#5552;
+	-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #5552, transparent);
+	-fx-background-radius: 8px;
 	-fx-padding:4.0px;
 	-fx-border-width:0.0px 0.0px 0.0px 0.0px;
 	-fx-border-color:#191919;
 	}
 	
 .title-row>Label{
-	-fx-text-fill:#eee;
+	-fx-text-fill: rgba(200, 190, 149, 1);
 }	
 .title-row1>Label{
-	-fx-text-fill:#eee;
+	-fx-text-fill: rgba(235, 170, 100, 1);
+}	
+
+
+.title-row:hover>Label{
+	-fx-text-fill: white;
+}	
+.title-row1:hover>Label{
+	-fx-text-fill: white;
 }	
 
 .title-row:hover, .title-row1:hover{
-	-fx-background-color:#e86e0a;
+	/*-fx-background-color:#e86e0a;*/
+	-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #e86e0a, transparent);
 	-fx-background-radius: 8px;
 	-fx-text-fill:#eee;
 	
@@ -632,6 +646,10 @@ AnchorPane {
 
 TabPane {
 	 -fx-background-color: #222;
+}
+
+#newsList{
+-fx-background-color: rgba(255, 255, 255, 0); 
 }
 
 #logout{
