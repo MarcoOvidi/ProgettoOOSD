@@ -26,7 +26,7 @@
                         </TableView>
                      </content>
                   </Tab>
-                  <Tab fx:id="active" closable="false" styleClass="centerTab" text="Active User">
+                  <Tab fx:id="activet" closable="false" styleClass="centerTab" text="Active User">
                      <content>
 									<TableView fx:id="users" prefHeight="530.0" prefWidth="900.0">
 										<columns>

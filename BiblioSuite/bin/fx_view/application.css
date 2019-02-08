@@ -395,7 +395,34 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 
 /*-----------------------------------------------MANAGE PROJECT--------------------------------------*/
 
-.tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {-fx-border-color: transparent;}
+.tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
+	-fx-border-color: transparent;
+}
+
+#transcriptionPagesTab{
+	-fx-background-color: linear-gradient(from 50.0% 25.0% to 50.0% 100.0%, #202020, #20202020);
+	-fx-background-radius: 8.0px 8.0px 0.0px 0.0px;
+	-fx-border-color: transparent;
+	-fx-border-width: 1.0px 1.0px 0.0px 1.0px;
+}
+#transcriptionPagesTab:selected{
+	-fx-background-color: linear-gradient(from 50.0% 25.0% to 50.0% 100.0%, #0096c8cc, #0096c820);
+	}
+#transcriptionPagesTab:hover{
+	-fx-background-color: linear-gradient(from 50.0% 25.0% to 50.0% 100.0%, #3CB371, #2CA36120);
+	}
+#transcriptionTranscribersTab{
+	-fx-background-color: linear-gradient(from 50.0% 25.0% to 50.0% 100.0%, #202020, #20202020);
+	-fx-background-radius: 8.0px 8.0px 0.0px 0.0px;
+	-fx-border-color: transparent;
+	-fx-border-width: 1.0px 1.0px 0.0px 1.0px;
+}
+#transcriptionTranscribersTab:selected{
+	-fx-background-color: linear-gradient(from 50.0% 25.0% to 50.0% 100.0%, #0096c8cc, #0096c820);
+	}
+#transcriptionTranscribersTab:hover{
+	-fx-background-color: linear-gradient(from 50.0% 25.0% to 50.0% 100.0%, #3CB371, #2CA36120);
+	}
 
 .tab1{
 	-fx-background-color: #222;
@@ -404,7 +431,7 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 }
 
 .tab1:hover{
-	-fx-background-color:#555;
+	-fx-background-color:#222;
 	}
 
 
@@ -451,9 +478,13 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
     	
 
 	
-#scanningTab:hover, #scanningTab:selected, #transcriptionTab:hover, #transcriptionTab:selected, #propertiesTab:hover, #propertiesTab:selected{
-	-fx-background-color: #c88;
-}	
+#scanningTab:selected, #transcriptionTab:selected, #propertiesTab:selected{
+	-fx-background-color: #2CA361;
+}
+
+#scanningTab:hover, #transcriptionTab:hover, #propertiesTab:hover{
+	-fx-background-color: #3CB371;
+}
 
 /* 	
 #transcriptionTab:hover, #transcriptionTab:selected{
@@ -523,6 +554,7 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
     Struktur column-header-background -> column-header */
 
 .table-view .column-header-background{
+    -fx-background-color: linear-gradient(from 30.0% 25.0% to 100.0% 100.0%, #0096c8cc, #3CB371); /* AAAAH */
     -fx-background-color: #0096c8cc;
     -fx-background-radius: 8.0px;
 }
@@ -714,36 +746,36 @@ JFXScrollPane {
 	-fx-background-color: #fff;
 }
 
-#active {
-	-fx-background-color: #555;
+#activet {
+	-fx-background-color: #5559;
 	-fx-pref-width: 293.0px;
 	-fx-border-color: transparent;
 	-fx-background-radius: 0.0px 0.0px 0.0px 0.0px;
 }
 #inactive{
 	-fx-background-radius: 16.0px 0.0px 0.0px 16.0px;
-	-fx-background-color: #555;
+	-fx-background-color: #5559;
 	-fx-pref-width: 293.0px;	
 	-fx-border-color: transparent ;
 }
 #pending {
-	-fx-background-color: #555;
+	-fx-background-color: #5559;
 	-fx-pref-width: 293.0px;
 	-fx-border-color: transparent;
 	-fx-background-radius: 0.0px 0.0px 0.0px 0.0px;
 }
 #old{
 	-fx-background-radius: 0.0px 16.0px 16.0px 0.0px;
-	-fx-background-color: #555;
+	-fx-background-color: #5559;
 	-fx-pref-width: 293.0px;
 	-fx-border-color: transparent;
     	}   	
 
-#old:selected, #active:selected, #inactive:selected, #pending:selected{
+#old:selected, #activet:selected, #inactive:selected, #pending:selected{
 	-fx-background-color: #2CA361;
 }
 	
-#old:hover, #active:hover, #inactive:hover, #pending:hover{
+#old:hover, #activet:hover, #inactive:hover, #pending:hover{
 	-fx-background-color: #3CB371;
 }
 	

@@ -10,18 +10,18 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ManageProject">
-	<center>
-		<AnchorPane style="-fx-background-color: rgba(255, 255, 255, 0);" BorderPane.alignment="CENTER">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ManageProject">
+   <top>
+		<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="1230.0" style="-fx-background-color: rgba(255, 255, 255, 0);" BorderPane.alignment="CENTER">
 			<children>
-            <AnchorPane fx:id="manageContainer" layoutX="56.0" layoutY="53.0" style="-fx-background-color: rgba(255, 255, 255, 0);" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="20.0">
+            <AnchorPane fx:id="manageContainer" layoutX="56.0" layoutY="53.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: rgba(255, 255, 255, 0);" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="20.0">
                <children>
                   <Label layoutX="36.0" layoutY="22.0" text="Manage a project or create new document" visible="false">
                      <font>
                         <Font size="28.0" />
                      </font>
                   </Label>
-      				<TableView fx:id="documentTable" layoutX="36.0" layoutY="78.0" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="20.0">
+      				<TableView fx:id="documentTable" layoutX="36.0" layoutY="78.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="20.0">
       					<columns>
       						<TableColumn fx:id="Document" prefWidth="300.0" resizable="false" text="Document" />
       						<TableColumn fx:id="Transcription_PRJ" prefWidth="300.0" resizable="false" text="Transcription Project" />
@@ -31,17 +31,17 @@
       				<Button fx:id="newDocumentButton" layoutX="34.0" layoutY="515.0" text="Create new document" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="60.0" />
                </children>
             </AnchorPane>
-				<TabPane fx:id="pane" prefHeight="630.0" prefWidth="1015.0" tabClosingPolicy="UNAVAILABLE" style="-fx-background-color: rgba(255, 255, 255, 0);">
+				<TabPane fx:id="pane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="1230.0" style="-fx-background-color: rgba(255, 255, 255, 0);" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
 					<tabs>
 						<Tab fx:id="transcriptionTab" styleClass="leftTab" text="Transcription Project">
 							<content>
-								<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="488.0" prefWidth="979.0" style="-fx-background-color: rgba(255, 255, 255, 0);">
+								<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: rgba(255, 255, 255, 0);">
 									<children>
-										<TabPane fx:id="transcriptionTabPane" layoutY="50.0" prefHeight="545.0" prefWidth="953.0" tabClosingPolicy="UNAVAILABLE" style="-fx-background-color: rgba(255, 255, 255, 0);">
+										<TabPane fx:id="transcriptionTabPane" layoutY="50.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: rgba(255, 255, 255, 0);" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
 											<tabs>
 												<Tab fx:id="transcriptionPagesTab" styleClass="tab1" text="Pages">
 													<content>
-														<AnchorPane fx:id="transcriptionPagesAnchor" minHeight="0.0" minWidth="0.0" prefHeight="524.0" prefWidth="900.0">
+														<AnchorPane fx:id="transcriptionPagesAnchor" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
 															<children>
 																<TableView fx:id="transcriptionLog" prefHeight="438.0" prefWidth="902.0">
 																	<columns>
@@ -58,7 +58,7 @@
 												</Tab>
 												<Tab fx:id="transcriptionTranscribersTab" styleClass="tab1" text="Transcribers">
 													<content>
-														<AnchorPane fx:id="addTranscriber" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="937.0">
+														<AnchorPane fx:id="addTranscriber" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
 															<children>
 																<TableView fx:id="transcriptionStaff" prefHeight="381.0" prefWidth="902.0">
 																	<columns>
@@ -79,13 +79,13 @@
 							</content>
 						</Tab>
 						<Tab fx:id="propertiesTab" styleClass="centerTab" text="Document properties">
-						<BorderPane fx:id="documentProperties" />
+						<BorderPane fx:id="documentProperties" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
 						</Tab>
 						<Tab fx:id="scanningTab" styleClass="rightTab" text="Scanning Project">
 							<content>
-								<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: rgba(255, 255, 255, 0);">
+								<AnchorPane style="-fx-background-color: rgba(255, 255, 255, 0);">
 									<children>
-										<TabPane fx:id="scanningTabPane" layoutY="50.0" prefHeight="593.0" prefWidth="975.0" tabClosingPolicy="UNAVAILABLE" style="-fx-background-color: rgba(255, 255, 255, 0);">
+										<TabPane fx:id="scanningTabPane" layoutY="50.0" prefHeight="593.0" prefWidth="975.0" style="-fx-background-color: rgba(255, 255, 255, 0);" tabClosingPolicy="UNAVAILABLE">
 											<tabs>
 												<Tab fx:id="scanningPagesTab" styleClass="tab1" text="Pages">
 													<content>
@@ -130,5 +130,5 @@
 				</TabPane>
 			</children>
 		</AnchorPane>
-	</center>
+   </top>
 </BorderPane>
