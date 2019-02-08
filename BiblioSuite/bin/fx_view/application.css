@@ -834,3 +834,12 @@ JFXScrollPane {
 	-fx-background-color: #c88;
 }	*/
 
+#searchBar {
+	-fx-background-color: #fff2;
+	-fx-text-fill: white;
+}
+
+#searchBar:hover {
+	-fx-background-color: #fff4;
+}
+

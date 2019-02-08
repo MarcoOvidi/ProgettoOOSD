@@ -2,26 +2,47 @@ package view;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeMap;
+import java.util.Map.Entry;
 
 import javax.swing.text.AbstractDocument.Content;
 
+import org.controlsfx.control.PopOver;
+import org.controlsfx.control.PopOver.ArrowLocation;
+
 import controller.EditUserController;
+import controller.HomePageController;
 import controller.LocalSession;
 import controller.LoginController;
+import controller.PageViewController;
+import controller.SearchController;
 import dao.DatabaseException;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.LoadException;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.util.Pair;
+import vo.UUIDDocument;
 
 public class Container {
 
@@ -33,6 +54,11 @@ public class Container {
 	
 	@FXML
 	private BorderPane content;
+	
+	@FXML
+	private TextField searchBar;
+	
+	private VBox searchResult;
 	
 	@FXML
 	private Tab logout;
@@ -117,6 +143,8 @@ public class Container {
 			SceneController.loadScene(map.get(topbar.getSelectionModel().getSelectedItem().getTooltip().getText()).getKey());
 		});
 		
+		initSearch();
+		
 		//topbar.setTabMinWidth(100);
 		
 		initLogoutLink();
@@ -135,6 +163,88 @@ public class Container {
 		//content = newContent;
 		content.getChildren().setAll(newContent);
 		//content.getChildren().get(0).setEffect(new BoxBlur());
+	}
+	
+	private void initSearch() {
+
+		PopOver popOver = new PopOver();
+		AnchorPane popOverPane = new AnchorPane();
+		
+		popOverPane.setPrefHeight(200);
+		popOverPane.setPrefWidth(400);
+
+		popOver.setAutoHide(true);
+		
+		searchResult = new VBox();
+		popOverPane.getChildren().setAll(searchResult);
+		popOver.setContentNode(popOverPane);
+		popOver.setArrowLocation(ArrowLocation.TOP_CENTER);
+		//popOver.show(searchBar);
+		
+		searchBar.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				int l = newValue.length();
+
+				if (l > 3) {
+
+					LinkedList<UUIDDocument> author = SearchController.searchByAuthorTitle(newValue);
+					LinkedList<UUIDDocument> tag = SearchController.searchByTag(newValue);
+					
+					HashMap<UUIDDocument, String> result = new HashMap<UUIDDocument,String>();
+					
+					for(UUIDDocument doc : author) {
+						result.put(doc, HomePageController.getDocumentTitle(doc));
+					}
+					
+					for(UUIDDocument doc : tag) {
+						result.put(doc, HomePageController.getDocumentTitle(doc));
+					}
+					
+					fillResult(result);
+
+					popOver.show(searchBar.getParent());
+				}
+			}
+		});
+	}
+	
+	public void fillResult(HashMap<UUIDDocument, String> result) {
+		if(!searchResult.getChildren().isEmpty())
+			searchResult.getChildren().clear();
+		int c=0;
+		for(Entry<UUIDDocument, String> doc : result.entrySet()) {
+			Label d = new Label(doc.getValue());
+			d.setId(String.valueOf(doc.getKey().getValue()));
+			HBox row= new HBox();
+			row.getChildren().add(d);
+			if (c % 2 == 0)
+				row.getStyleClass().add("title-row");
+			else
+				row.getStyleClass().add("title-row1");
+			d.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent mouseEvent) {
+					if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+						if (mouseEvent.getClickCount() == 1) {
+							try {
+								PageViewController.showDocument(new UUIDDocument(Integer.valueOf(d.getId())));
+							} catch (LoadException e) {
+								Alert alert = new Alert(Alert.AlertType.ERROR);
+								alert.setTitle("Error");
+								alert.setContentText(e.getMessage());
+								alert.show();
+								e.printStackTrace();
+							}
+						}
+					}
+					
+				}
+			});
+			c++;
+			searchResult.getChildren().add(row);
+		}
+		
 	}
 	
 }
