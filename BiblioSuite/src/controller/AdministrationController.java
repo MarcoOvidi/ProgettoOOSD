@@ -3,9 +3,9 @@ package controller;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-import dao.AdministrationQuerySet;
-import dao.DatabaseException;
-import dao.EditProfileQuerySet;
+import dao.concrete.AdministrationQuerySet;
+import dao.concrete.DatabaseException;
+import dao.concrete.EditProfileQuerySet;
 import model.User;
 import vo.Request;
 import vo.UUIDRequest;
@@ -21,7 +21,7 @@ public class AdministrationController {
 	public static LinkedList<Request> getRequest(Integer i){
 		LinkedList<Request> req = null;
 		try {
-			req = AdministrationQuerySet.loadRequestsList(i);
+			req = new AdministrationQuerySet().loadRequestsList(i);
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -38,7 +38,7 @@ public class AdministrationController {
 	public static Request loadRequest(UUIDRequest id) {
 		Request r = null;
 		try {
-			r = AdministrationQuerySet.loadRequest(id);
+			r = new AdministrationQuerySet().loadRequest(id);
 		} catch (NullPointerException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
@@ -68,7 +68,7 @@ public class AdministrationController {
 	public static LinkedList<User> loadUserList(Boolean status) {
 		LinkedList<User> res = null;
 		try {
-			res = AdministrationQuerySet.loadUserList(status);
+			res = new AdministrationQuerySet().loadUserList(status);
 		} catch (DatabaseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -85,7 +85,7 @@ public class AdministrationController {
 	public static String loadUsername(UUIDUser id) {
 		String u = null;
 		try {
-			u = EditProfileQuerySet.loadUserProfile(id).getUsername();
+			u = new EditProfileQuerySet().loadUserProfile(id).getUsername();
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -99,7 +99,7 @@ public class AdministrationController {
 	 */
 	public static void ignoreUserRequest(UUIDRequest id) {
 		try{
-			AdministrationQuerySet.ignoreRequest(id);
+			new AdministrationQuerySet().ignoreRequest(id);
 		}catch(DatabaseException e ) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -113,7 +113,7 @@ public class AdministrationController {
 	 */
 	public static void answerUserRequest(UUIDRequest id, String answer) {
 		try{
-			AdministrationQuerySet.answerRequest(id, answer);
+			new AdministrationQuerySet().answerRequest(id, answer);
 		}catch(DatabaseException e ) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -127,7 +127,7 @@ public class AdministrationController {
 	 */
 	public static void modifyUserStatus(UUIDUser id , Boolean status) {
 		try {
-			AdministrationQuerySet.modifyUserStatus(id, status);
+			new AdministrationQuerySet().modifyUserStatus(id, status);
 		}catch(Exception e ) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -141,7 +141,7 @@ public class AdministrationController {
 	 */
 	public static HashMap<String, Integer> getInvolvedUser(UUIDUser u){
 		try {
-			return AdministrationQuerySet.userIsInvolved(u);
+			return new AdministrationQuerySet().userIsInvolved(u);
 		}catch(Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
@@ -156,7 +156,7 @@ public class AdministrationController {
 	 */
 	public static void changeTranscriberLevel(UUIDUser idUSer, int level) {
 		try {
-			AdministrationQuerySet.changeTranscriberLevel(idUSer, level);
+			new AdministrationQuerySet().changeTranscriberLevel(idUSer, level);
 		}catch(DatabaseException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -170,7 +170,7 @@ public class AdministrationController {
 	 */
 	public static int getTranscriberLevel(UUIDUser idUSer) {
 		try {
-			return AdministrationQuerySet.getTranscriberLevel(idUSer);
+			return new AdministrationQuerySet().getTranscriberLevel(idUSer);
 		}catch(DatabaseException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());

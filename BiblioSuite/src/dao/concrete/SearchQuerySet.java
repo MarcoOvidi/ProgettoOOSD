@@ -1,4 +1,4 @@
-package dao;
+package dao.concrete;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,9 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 
+import dao.interfaces.SearchQuerySetDAO;
 import vo.UUIDDocument;
 
-public class SearchQuerySet {
+public class SearchQuerySet implements SearchQuerySetDAO{
 
 	/**
 	 * Cerca un'opera per autore o titolo
@@ -17,7 +18,7 @@ public class SearchQuerySet {
 	 * @return
 	 * @throws DatabaseException
 	 */
-	public static LinkedList<UUIDDocument> searchByAuthorTitle(String match) throws DatabaseException {
+	public  LinkedList<UUIDDocument> searchByAuthorTitle(String match) throws DatabaseException {
 		Connection con = null;
 
 		try {
@@ -71,7 +72,7 @@ public class SearchQuerySet {
 	 * @return
 	 * @throws DatabaseException
 	 */
-	public static LinkedList<UUIDDocument> searchByTag(String match) throws DatabaseException {
+	public LinkedList<UUIDDocument> searchByTag(String match) throws DatabaseException {
 		Connection con = null;
 
 		try {

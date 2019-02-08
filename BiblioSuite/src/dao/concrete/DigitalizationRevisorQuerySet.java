@@ -1,16 +1,18 @@
-package dao;
+package dao.concrete;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import dao.interfaces.DigitalizationRevisorQuerySetDAO;
 import vo.UUIDPage;
 import vo.UUIDScanningWorkProject;
 
-public class DigitalizationRevisorQuerySet {
+public class DigitalizationRevisorQuerySet implements DigitalizationRevisorQuerySetDAO {
 
 	// aggiorna il flag di "validità" di uno ScanningWorkProject
-	public static void validated(UUIDPage id, Boolean validation) throws DatabaseException {
+	public  void validated(UUIDPage id, Boolean validation) throws DatabaseException {
 
 		Connection con = null;
 
@@ -43,7 +45,7 @@ public class DigitalizationRevisorQuerySet {
 		}
 	}
 
-	public static void revised(UUIDPage id, Boolean validation) throws DatabaseException {
+	public  void revised(UUIDPage id, Boolean validation) throws DatabaseException {
 
 		Connection con = null;
 
@@ -77,7 +79,7 @@ public class DigitalizationRevisorQuerySet {
 	}
 
 	// dichiara completato un progetto di scansione opera
-	public static void scanningProcessCompleted(UUIDScanningWorkProject id) throws DatabaseException {
+	public  void scanningProcessCompleted(UUIDScanningWorkProject id) throws DatabaseException {
 
 		Connection con = null;
 
@@ -118,7 +120,7 @@ public class DigitalizationRevisorQuerySet {
 	 * @param comment
 	 * @throws DatabaseException
 	 */
-	public static void addScanningRevisionComment(UUIDPage id, String comment) throws DatabaseException {
+	public  void addScanningRevisionComment(UUIDPage id, String comment) throws DatabaseException {
 
 		Connection con = null;
 
@@ -158,7 +160,7 @@ public class DigitalizationRevisorQuerySet {
 	 * @param comment
 	 * @throws DatabaseException
 	 */
-	public static String getScanningRevisionComment(UUIDPage id) throws DatabaseException {
+	public  String getScanningRevisionComment(UUIDPage id) throws DatabaseException {
 
 		Connection con = null;
 

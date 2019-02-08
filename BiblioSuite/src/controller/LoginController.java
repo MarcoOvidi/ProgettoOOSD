@@ -2,9 +2,9 @@ package controller;
 
 import java.sql.SQLException;
 
-import dao.DatabaseException;
-import dao.EditProfileQuerySet;
-import dao.UserAuthenticationQuerySet;
+import dao.concrete.DatabaseException;
+import dao.concrete.EditProfileQuerySet;
+import dao.concrete.UserAuthenticationQuerySet;
 import model.User;
 import view.LoginScene;
 import view.SceneController;
@@ -28,7 +28,7 @@ public class LoginController {
 			lscene.displayMessage("Connected. Loading user...");
 			if (id != null) {
 				UserID.setId(id);				
-				User user = EditProfileQuerySet.loadUserProfile(id);
+				User user = new EditProfileQuerySet().loadUserProfile(id);
 				LocalSession.getInstance();
 				//LocalSession.setLocalUser(user);
 				LocalSession.setLocalUser(user);
@@ -47,7 +47,7 @@ public class LoginController {
 	public static UUIDUser loginDB(String usr, String psw) throws DatabaseException {
 		UUIDUser id;
 		try {
-			id = UserAuthenticationQuerySet.login(usr, psw);
+			id = new UserAuthenticationQuerySet().login(usr, psw);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

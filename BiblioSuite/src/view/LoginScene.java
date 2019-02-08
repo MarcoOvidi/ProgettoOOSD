@@ -3,7 +3,7 @@ package view;
 import java.text.ParseException;
 
 import controller.LoginController;
-import dao.DatabaseException;
+import dao.concrete.DatabaseException;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;

@@ -1,9 +1,9 @@
 package controller;
 
-import dao.AdministrationQuerySet;
-import dao.DatabaseException;
-import dao.EditProfileQuerySet;
-import dao.UserAuthenticationQuerySet;
+import dao.concrete.AdministrationQuerySet;
+import dao.concrete.DatabaseException;
+import dao.concrete.EditProfileQuerySet;
+import dao.concrete.UserAuthenticationQuerySet;
 import model.User;
 import view.SceneController;
 import vo.UUIDUser;
@@ -24,7 +24,7 @@ public class EditUserController {
 		if (getEditingUser().equals(getToEditUser().getID()))
 			return true;
 		try {
-			if (UserAuthenticationQuerySet.permissionsControl(12, editingUser))
+			if (new UserAuthenticationQuerySet().permissionsControl(12, editingUser))
 				return true;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -38,7 +38,7 @@ public class EditUserController {
 		if (editingUser.equals(toEditUser.getID()))
 			return false;
 		try {
-			if (UserAuthenticationQuerySet.permissionsControl(12, editingUser))
+			if (new UserAuthenticationQuerySet().permissionsControl(12, editingUser))
 				return true;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -61,8 +61,8 @@ public class EditUserController {
 			// FIXME il metodo updateUserProfile non aggiorna i permessi
 			// per ora aggiungo qui la chiamata all'altro ma forse dovrebbe farlo il metodo
 			// del dao?
-			EditProfileQuerySet.updateUserProfile(getToEditUser().getID(), getToEditUser());
-			AdministrationQuerySet.updateUserPermissions(getToEditUser().getID(), getToEditUser().getPermissions());
+			new EditProfileQuerySet().updateUserProfile(getToEditUser().getID(), getToEditUser());
+			new AdministrationQuerySet().updateUserPermissions(getToEditUser().getID(), getToEditUser().getPermissions());
 
 			//System.out.println(getToEditUser().getID());
 			//System.out.println(getToEditUser().getLevel());
@@ -84,7 +84,7 @@ public class EditUserController {
 
 	public static void setToEditUser(UUIDUser toEditUser) {
 		try {
-			EditUserController.toEditUser = EditProfileQuerySet.loadUserProfile(toEditUser);
+			EditUserController.toEditUser = new EditProfileQuerySet().loadUserProfile(toEditUser);
 		} catch (DatabaseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -1,21 +1,22 @@
-package dao;
+package dao.concrete;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import dao.interfaces.TranscriptionReviserQuerySetDAO;
 import vo.UUIDPage;
 import vo.UUIDTranscriptionWorkProject;
 
-public class TranscriptionReviserQuerySet {
+public class TranscriptionReviserQuerySet implements TranscriptionReviserQuerySetDAO{
 	
 	/* Segnala completato un TranscriptionWorkProject
 	 * @param UUIDTranscriptionWorkProject Id del TranscriptionWorkProject da segnalare completato
 	 * @return Boolean true se la modifica è andata a buon fine
 	 * @exception DatabaseException in caso di errori nella connessione con il DB o di esecuzione query
 	 */
-	public static Boolean completed(UUIDTranscriptionWorkProject id) throws DatabaseException {
+	public  Boolean completed(UUIDTranscriptionWorkProject id) throws DatabaseException {
 		Connection con = null;
 		
 		try {
@@ -58,7 +59,7 @@ public class TranscriptionReviserQuerySet {
 	 * @exception DatabaseException in caso di errori nella connessione con il DB o di esecuzione query 
 	 */
 	
-	public static Boolean validated(UUIDPage id) throws DatabaseException {
+	public  Boolean validated(UUIDPage id) throws DatabaseException {
 		Connection con = null;
 		
 		try {
@@ -100,7 +101,7 @@ public class TranscriptionReviserQuerySet {
 	 * @return Boolean true se l'operazione è andata a buon fine
 	 * @exception DatabaseException in caso di errori nella connessione con il DB o di esecuzione query 
 	 */
-	public static Boolean revised(UUIDPage id) throws DatabaseException{
+	public  Boolean revised(UUIDPage id) throws DatabaseException{
 		Connection con = null;
 		
 		try {
@@ -142,7 +143,7 @@ public class TranscriptionReviserQuerySet {
 	 * @param comment
 	 * @throws DatabaseException
 	 */
-	public static void addTranscriptionRevisionComment(UUIDPage id, String comment) throws DatabaseException {
+	public  void addTranscriptionRevisionComment(UUIDPage id, String comment) throws DatabaseException {
 
 		Connection con = null;
 		
@@ -182,7 +183,7 @@ public class TranscriptionReviserQuerySet {
 	 * @param comment
 	 * @throws DatabaseException
 	 */
-	public static String getTranscriptionRevisionComment(UUIDPage id) throws DatabaseException {
+	public  String getTranscriptionRevisionComment(UUIDPage id) throws DatabaseException {
 
 		Connection con = null;
 

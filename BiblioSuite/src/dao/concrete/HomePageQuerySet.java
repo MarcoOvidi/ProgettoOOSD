@@ -1,4 +1,4 @@
-package dao;
+package dao.concrete;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
+import dao.interfaces.HomePageQuerySetDAO;
 import vo.BookMark;
 import vo.DocumentMetadata;
 import vo.Tag;
@@ -21,9 +22,9 @@ import vo.UUIDTranscriptionWorkProject;
 import vo.UUIDUser;
 import vo.VagueDate;
 
-public class HomePageQuerySet {
+public class HomePageQuerySet implements HomePageQuerySetDAO{
 
-	public static HashMap<UUIDDocument, String> loadNews(int newsNumb) throws DatabaseException {
+	public  HashMap<UUIDDocument, String> loadNews(int newsNumb) throws DatabaseException {
 		HashMap<UUIDDocument, String> trNews = loadTranscriptionNews(newsNumb / 2);
 		HashMap<UUIDDocument, String> scNews = loadScanningNews(newsNumb / 2);
 
@@ -40,7 +41,7 @@ public class HomePageQuerySet {
 	 * @return
 	 * @throws DatabaseException
 	 */
-	private static HashMap<UUIDDocument, String> loadTranscriptionNews(int newsNumber) throws DatabaseException {
+	private  HashMap<UUIDDocument, String> loadTranscriptionNews(int newsNumber) throws DatabaseException {
 
 		Connection con = null;
 
@@ -90,7 +91,7 @@ public class HomePageQuerySet {
 	 * @return
 	 * @throws DatabaseException
 	 */
-	private static HashMap<UUIDDocument, String> loadScanningNews(int newsNumber) throws DatabaseException {
+	private  HashMap<UUIDDocument, String> loadScanningNews(int newsNumber) throws DatabaseException {
 
 		Connection con = null;
 
@@ -142,7 +143,7 @@ public class HomePageQuerySet {
 	 * @return HashMap<Integer,String> Mappa di Id progetti di trascrizione e titolo
 	 *         dell'opera associata
 	 */
-	public static HashMap<UUIDTranscriptionWorkProject, String[]> loadMyTranscriptionWorkProjectList(UUIDUser usr)
+	public  HashMap<UUIDTranscriptionWorkProject, String[]> loadMyTranscriptionWorkProjectList(UUIDUser usr)
 			throws DatabaseException {
 
 		Connection con = null;
@@ -199,7 +200,7 @@ public class HomePageQuerySet {
 	 * @return HashMap<Integer,String> Mappa di Id progetti di digitalizzazione e
 	 *         titolo dell'opera associata
 	 */
-	public static HashMap<UUIDScanningWorkProject, String[]> loadMyScanningWorkProjectList(UUIDUser usr)
+	public  HashMap<UUIDScanningWorkProject, String[]> loadMyScanningWorkProjectList(UUIDUser usr)
 			throws DatabaseException {
 		Connection con = null;
 
@@ -256,7 +257,7 @@ public class HomePageQuerySet {
 	 * @exception DatabaseException in caso di errori di connessione o esecuzione
 	 *                              query nel DB
 	 */
-	public static HashMap<UUIDDocument, String[]> loadMyCollectionList(UUIDUser usr) throws DatabaseException {
+	public  HashMap<UUIDDocument, String[]> loadMyCollectionList(UUIDUser usr) throws DatabaseException {
 		Connection con = null;
 
 		try {
@@ -315,7 +316,7 @@ public class HomePageQuerySet {
 	 * @exception DatabaseException in caso di mancata conessione o errori di query
 	 *                              sul DB
 	 */
-	public static HashMap<Integer, DocumentMetadata> loadMyCollectionMetaData(UUIDUser usr) throws DatabaseException {
+	public  HashMap<Integer, DocumentMetadata> loadMyCollectionMetaData(UUIDUser usr) throws DatabaseException {
 		Connection con = null;
 
 		try {
@@ -398,7 +399,7 @@ public class HomePageQuerySet {
 	 *         value un BookMark
 	 * @throw DatabaseException
 	 */
-	public static HashMap<Integer, BookMark> loadMyBookMarksList(UUIDUser usr) throws DatabaseException {
+	public  HashMap<Integer, BookMark> loadMyBookMarksList(UUIDUser usr) throws DatabaseException {
 		Connection con = null;
 
 		try {
@@ -449,7 +450,7 @@ public class HomePageQuerySet {
 	 * @throws DatabaseException
 	 * @throws SQLException
 	 */
-	public static HashMap<UUIDDocumentCollection, String> loadLibraryCollectionList()
+	public  HashMap<UUIDDocumentCollection, String> loadLibraryCollectionList()
 			throws DatabaseException, SQLException {
 		Connection con = null;
 
@@ -497,7 +498,7 @@ public class HomePageQuerySet {
 	 * @exception DatabaseException Per errori di connessione al DB o di esecuzione
 	 *                              delle query
 	 */
-	public static LinkedList<String[]> loadCollection(UUIDDocumentCollection idc) throws DatabaseException {
+	public  LinkedList<String[]> loadCollection(UUIDDocumentCollection idc) throws DatabaseException {
 		Connection con = null;
 
 		try {
@@ -563,7 +564,7 @@ public class HomePageQuerySet {
 	 * @throws SQLException
 	 */
 	
-	public static LinkedList<String[]> loadLibraryCollectionListWithDocument(UUIDDocumentCollection docColl)
+	public  LinkedList<String[]> loadLibraryCollectionListWithDocument(UUIDDocumentCollection docColl)
 			throws DatabaseException, SQLException {
 		Connection con = null;
 

@@ -2,7 +2,7 @@ package view;
 
 import java.text.ParseException;
 
-import dao.DatabaseException;
+import dao.concrete.DatabaseException;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 

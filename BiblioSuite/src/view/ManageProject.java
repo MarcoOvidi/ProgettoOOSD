@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.Color;
 import java.awt.Toolkit;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,14 +17,13 @@ import controller.PageTranscriptionController;
 import controller.RoleController;
 import controller.ScanningProjectController;
 import controller.TranscriptionProjectController;
-import dao.DatabaseException;
-import dao.ScanningWorkProjectQuerySet;
-import dao.TranscriptionWorkProjectQuerySet;
+import dao.concrete.DatabaseException;
+import dao.concrete.ScanningWorkProjectQuerySet;
+import dao.concrete.TranscriptionWorkProjectQuerySet;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -42,7 +40,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.text.Font;
 import model.Page;
 import model.User;
@@ -53,8 +50,8 @@ import vo.UUIDScanningWorkProject;
 import vo.UUIDTranscriptionWorkProject;
 import vo.UUIDUser;
 import vo.view.DocumentRow;
-import vo.view.StaffRow;
 import vo.view.Formatter;
+import vo.view.StaffRow;
 
 public class ManageProject {
 
@@ -268,7 +265,7 @@ public class ManageProject {
 				format = "\u2718 In progress";
 			DocumentRow dr = new DocumentRow(array[0], format, entry.getKey());
 
-			document.put(ScanningWorkProjectQuerySet.loadUUIDDocument(entry.getKey()), dr);
+			document.put(new ScanningWorkProjectQuerySet().loadUUIDDocument(entry.getKey()), dr);
 
 		}
 
@@ -277,17 +274,17 @@ public class ManageProject {
 			// TODO chiamare tramite controller
 			String[] array = entry.getValue();
 			// TODO questo cazzo di if non funziona va sempre nell'else
-			if (document.containsKey(TranscriptionWorkProjectQuerySet.loadUUIDDocument(entry.getKey()))) {
+			if (document.containsKey(new TranscriptionWorkProjectQuerySet().loadUUIDDocument(entry.getKey()))) {
 				String format = "";
 				if (array[1].equalsIgnoreCase("true"))
 					format = "\u2714 Complete";
 				else if (array[1].equals("false"))
 					format = "\u2718 In progress";
 
-				DocumentRow dr = document.get(TranscriptionWorkProjectQuerySet.loadUUIDDocument(entry.getKey()));
+				DocumentRow dr = document.get(new TranscriptionWorkProjectQuerySet().loadUUIDDocument(entry.getKey()));
 				dr.setTranscription_PRJ(format);
 				dr.setIdTPrj(entry.getKey());
-				document.put(TranscriptionWorkProjectQuerySet.loadUUIDDocument(entry.getKey()), dr);
+				document.put(new TranscriptionWorkProjectQuerySet().loadUUIDDocument(entry.getKey()), dr);
 			} else {
 				String format = "";
 				if (array[1].equalsIgnoreCase("true"))
@@ -295,13 +292,13 @@ public class ManageProject {
 				else if (array[1].equals("false"))
 					format = "\u2718 In progress";
 				DocumentRow d = new DocumentRow(array[0], format, entry.getKey());
-				document.put(TranscriptionWorkProjectQuerySet.loadUUIDDocument(entry.getKey()), d);
+				document.put(new TranscriptionWorkProjectQuerySet().loadUUIDDocument(entry.getKey()), d);
 			}
 		}
 
 		for (Entry<UUIDDocument, DocumentRow> entry : document.entrySet()) {
 			if (entry.getValue().getIdTPrj() == null)
-				if (TranscriptionWorkProjectQuerySet.ifExistTranscriptionProject(entry.getKey())) {
+				if (new TranscriptionWorkProjectQuerySet().ifExistTranscriptionProject(entry.getKey())) {
 					DocumentRow transcription = entry.getValue();
 					transcription.setTranscription_PRJ("\u2718 Not allowed");
 					entry.setValue(transcription);
@@ -312,7 +309,7 @@ public class ManageProject {
 				}
 
 			if (entry.getValue().getIdSPrj() == null)
-				if (ScanningWorkProjectQuerySet.ifExistScanningProject(entry.getKey())) {
+				if (new ScanningWorkProjectQuerySet().ifExistScanningProject(entry.getKey())) {
 					DocumentRow scanning = entry.getValue();
 					scanning.setScanning_PRJ("\u2718 Not allowed");
 					entry.setValue(scanning);
@@ -1207,7 +1204,7 @@ public class ManageProject {
 
 		try {
 			PageTranscriptionController
-					.loadTranscriptionLog(TranscriptionWorkProjectQuerySet.loadUUIDDocument(dR.getIdTPrj()));
+					.loadTranscriptionLog(new TranscriptionWorkProjectQuerySet().loadUUIDDocument(dR.getIdTPrj()));
 
 			if (listLog != null) {
 				listLog.clear();
@@ -1263,7 +1260,7 @@ public class ManageProject {
 		listScanLog = FXCollections.observableArrayList();
 
 		try {
-			PageScanController.loadScanningLog(ScanningWorkProjectQuerySet.loadUUIDDocument(dR.getIdSPrj()));
+			PageScanController.loadScanningLog(new ScanningWorkProjectQuerySet().loadUUIDDocument(dR.getIdSPrj()));
 
 			if (listScanLog != null) {
 				listScanLog.clear();

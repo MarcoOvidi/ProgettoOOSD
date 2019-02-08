@@ -5,7 +5,7 @@ import java.text.ParseException;
 import controller.AdministrationController;
 import controller.EditUserController;
 import controller.LocalSession;
-import dao.DatabaseException;
+import dao.concrete.DatabaseException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;

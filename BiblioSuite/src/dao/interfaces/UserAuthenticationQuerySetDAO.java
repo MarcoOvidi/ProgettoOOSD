@@ -2,7 +2,7 @@ package dao.interfaces;
 
 import java.sql.SQLException;
 
-import dao.DatabaseException;
+import dao.concrete.DatabaseException;
 import vo.UUIDUser;
 import vo.UserPermissions;
 

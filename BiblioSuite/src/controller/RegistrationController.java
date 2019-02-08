@@ -2,8 +2,8 @@ package controller;
 
 import java.sql.SQLException;
 
-import dao.DatabaseException;
-import dao.UserAuthenticationQuerySet;
+import dao.concrete.DatabaseException;
+import dao.concrete.UserAuthenticationQuerySet;
 
 public class RegistrationController {
 
@@ -21,7 +21,7 @@ public class RegistrationController {
 		
 		boolean res = false;
 		try {
-			res = UserAuthenticationQuerySet.registration(username, password, name, surname, email);
+			res = new UserAuthenticationQuerySet().registration(username, password, name, surname, email);
 		} catch (DatabaseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -49,7 +49,7 @@ public class RegistrationController {
 		//TODO da completare
 		if (checkValidUsername(username))
 			return false;
-		return (!UserAuthenticationQuerySet.checkIfUsernameExists(username));
+		return (! new UserAuthenticationQuerySet().checkIfUsernameExists(username));
 	}
 
 }

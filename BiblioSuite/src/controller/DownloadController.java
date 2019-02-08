@@ -19,9 +19,9 @@ import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 
-import dao.DatabaseException;
-import dao.ScanningWorkProjectQuerySet;
-import dao.TranscriptionWorkProjectQuerySet;
+import dao.concrete.DatabaseException;
+import dao.concrete.ScanningWorkProjectQuerySet;
+import dao.concrete.TranscriptionWorkProjectQuerySet;
 import model.Page;
 import model.ScanningWorkProject;
 import model.TranscriptionWorkProject;
@@ -114,7 +114,7 @@ public class DownloadController {
 
 		TranscriptionWorkProject tPrj = null;
 		try {
-			tPrj = TranscriptionWorkProjectQuerySet.loadTranscriptionWorkProject(doc.getTranscriptionWorkProject());
+			tPrj = new TranscriptionWorkProjectQuerySet().loadTranscriptionWorkProject(doc.getTranscriptionWorkProject());
 		} catch (NullPointerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -283,7 +283,7 @@ public class DownloadController {
 		ScanningWorkProject sPrj = null;
 		try {
 			System.out.println(doc.getUUID());
-			sPrj = ScanningWorkProjectQuerySet.loadScanningWorkProject(doc.getScanningWorkProject());
+			sPrj = new ScanningWorkProjectQuerySet().loadScanningWorkProject(doc.getScanningWorkProject());
 		} catch (NullPointerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -457,7 +457,7 @@ public class DownloadController {
 		ScanningWorkProject sPrj = null;
 		try {
 			System.out.println(doc.getUUID());
-			sPrj = ScanningWorkProjectQuerySet.loadScanningWorkProject(doc.getScanningWorkProject());
+			sPrj = new ScanningWorkProjectQuerySet().loadScanningWorkProject(doc.getScanningWorkProject());
 		} catch (NullPointerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -468,7 +468,7 @@ public class DownloadController {
 		
 		TranscriptionWorkProject tPrj = null;
 		try {
-			tPrj = TranscriptionWorkProjectQuerySet.loadTranscriptionWorkProject(doc.getTranscriptionWorkProject());
+			tPrj = new TranscriptionWorkProjectQuerySet().loadTranscriptionWorkProject(doc.getTranscriptionWorkProject());
 		} catch (NullPointerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

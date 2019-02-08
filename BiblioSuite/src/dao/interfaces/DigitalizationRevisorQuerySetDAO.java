@@ -1,6 +1,6 @@
 package dao.interfaces;
 
-import dao.DatabaseException;
+import dao.concrete.DatabaseException;
 import vo.UUIDPage;
 import vo.UUIDScanningWorkProject;
 

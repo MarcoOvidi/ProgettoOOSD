@@ -2,8 +2,8 @@ package controller;
 
 import java.text.ParseException;
 
-import dao.DatabaseException;
-import dao.DocumentQuerySet;
+import dao.concrete.DatabaseException;
+import dao.concrete.DocumentQuerySet;
 import vo.UUIDDocument;
 
 public class CreateDocumentController {
@@ -14,7 +14,7 @@ public class CreateDocumentController {
 		UUIDDocument id = null;
 
 		try {
-			id = DocumentQuerySet.insertDocument(title, author, description, composition_date, composition_period_from,
+			id = new DocumentQuerySet().insertDocument(title, author, description, composition_date, composition_period_from,
 					composition_period_to, preservation_state);
 		} catch (DatabaseException | ParseException e) {
 			// TODO Auto-generated catch block

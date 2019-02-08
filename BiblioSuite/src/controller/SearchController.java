@@ -2,8 +2,8 @@ package controller;
 
 import java.util.LinkedList;
 
-import dao.DatabaseException;
-import dao.SearchQuerySet;
+import dao.concrete.DatabaseException;
+import dao.concrete.SearchQuerySet;
 import vo.UUIDDocument;
 
 public class SearchController {
@@ -13,7 +13,7 @@ public class SearchController {
 		LinkedList<UUIDDocument> documents = null;
 
 		try {
-			documents = SearchQuerySet.searchByAuthorTitle(expr);
+			documents = new SearchQuerySet().searchByAuthorTitle(expr);
 		} catch (DatabaseException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
@@ -27,7 +27,7 @@ public class SearchController {
 		LinkedList<UUIDDocument> documents = null;
 
 		try {
-			documents = SearchQuerySet.searchByTag(expr);
+			documents = new SearchQuerySet().searchByTag(expr);
 		} catch (DatabaseException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();

@@ -2,7 +2,7 @@ package dao.interfaces;
 
 import java.util.LinkedList;
 
-import dao.DatabaseException;
+import dao.concrete.DatabaseException;
 import vo.Request;
 import vo.UUIDRequest;
 import vo.UUIDUser;

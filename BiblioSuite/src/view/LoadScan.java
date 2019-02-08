@@ -8,8 +8,8 @@ import java.util.Optional;
 
 import controller.LocalSession;
 import controller.PageScanController;
-import dao.DatabaseException;
-import dao.ScanningWorkProjectQuerySet;
+import dao.concrete.DatabaseException;
+import dao.concrete.ScanningWorkProjectQuerySet;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -141,7 +141,7 @@ public class LoadScan {
 	public static void setToOpenDocumentFromScanningProject(UUIDScanningWorkProject swp)
 			throws NullPointerException, DatabaseException {
 		// FIXME andrebbe incapsulato in un metodo del controller
-		LoadScan.toOpenDocument = ScanningWorkProjectQuerySet.loadUUIDDocument(swp);
+		LoadScan.toOpenDocument = new ScanningWorkProjectQuerySet().loadUUIDDocument(swp);
 	}
 
 	public static void setToOpenDocument(UUIDDocument toOpenDocument) {

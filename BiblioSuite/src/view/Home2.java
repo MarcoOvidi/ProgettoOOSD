@@ -1,18 +1,15 @@
 package view;
 
-import java.io.File;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
-import com.jfoenix.controls.JFXListView;
 
 import controller.HomePageController;
 import controller.PageViewController;
-import controller.ScanningProjectController;
-import dao.DatabaseException;
+import dao.concrete.DatabaseException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;

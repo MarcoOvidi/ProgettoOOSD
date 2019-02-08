@@ -12,7 +12,7 @@ import controller.AdministrationController;
 import controller.EditUserController;
 import controller.LocalSession;
 import controller.RoleController;
-import dao.DatabaseException;
+import dao.concrete.DatabaseException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;

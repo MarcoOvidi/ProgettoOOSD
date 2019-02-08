@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-import dao.DatabaseException;
+import dao.concrete.DatabaseException;
 import vo.BookMark;
 import vo.DocumentMetadata;
 import vo.UUIDDocument;

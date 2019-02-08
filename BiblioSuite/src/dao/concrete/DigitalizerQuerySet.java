@@ -1,4 +1,4 @@
-package dao;
+package dao.concrete;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 
+import dao.interfaces.DigitalizerQuerySetDAO;
 import model.Page;
 import model.PageScan;
 import model.PageScanStaff;
@@ -14,7 +15,7 @@ import vo.UUIDDocument;
 import vo.UUIDPage;
 import vo.UUIDUser;
 
-public class DigitalizerQuerySet { // COMPLETATA E VERIFICATA DEF
+public class DigitalizerQuerySet implements DigitalizerQuerySetDAO{ // COMPLETATA E VERIFICATA DEF
 
 	/**
 	 * 
@@ -27,7 +28,7 @@ public class DigitalizerQuerySet { // COMPLETATA E VERIFICATA DEF
 	 * @throws DatabaseException
 	 * @see UUIDDocument
 	 */
-	public static LinkedList<Page> loadDocument(UUIDDocument id, Boolean revision, Boolean validation)
+	public  LinkedList<Page> loadDocument(UUIDDocument id, Boolean revision, Boolean validation)
 			throws DatabaseException {
 		Connection con = null;
 
@@ -84,7 +85,7 @@ public class DigitalizerQuerySet { // COMPLETATA E VERIFICATA DEF
 	 * @see vo.UUIDPage
 	 * @see vo.Image
 	 */
-	public static void updatePage(UUIDPage id, Image img) throws DatabaseException {
+	public  void updatePage(UUIDPage id, Image img) throws DatabaseException {
 		Connection con = null;
 
 		try {
@@ -124,7 +125,7 @@ public class DigitalizerQuerySet { // COMPLETATA E VERIFICATA DEF
 	 * @see vo.UUIDPage
 	 * @see vo.Image
 	 */
-	public static void updatePageNumber(UUIDPage id, Integer number) throws DatabaseException {
+	public  void updatePageNumber(UUIDPage id, Integer number) throws DatabaseException {
 		Connection con = null;
 
 		try {
@@ -156,7 +157,7 @@ public class DigitalizerQuerySet { // COMPLETATA E VERIFICATA DEF
 		}
 	}
 
-	public static UUIDPage createPage(Integer number, Image img, UUIDUser digitalizer, UUIDDocument doc) throws DatabaseException {
+	public  UUIDPage createPage(Integer number, Image img, UUIDUser digitalizer, UUIDDocument doc) throws DatabaseException {
 		Connection con = null;
 
 		try {
@@ -213,7 +214,7 @@ public class DigitalizerQuerySet { // COMPLETATA E VERIFICATA DEF
 		return id;
 	}
 
-	public static void deletePage(UUIDPage page) throws DatabaseException {
+	public  void deletePage(UUIDPage page) throws DatabaseException {
 
 		Connection con = null;
 		

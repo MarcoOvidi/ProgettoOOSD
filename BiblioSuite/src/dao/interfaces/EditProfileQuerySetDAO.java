@@ -1,6 +1,6 @@
 package dao.interfaces;
 
-import dao.DatabaseException;
+import dao.concrete.DatabaseException;
 import model.User;
 import vo.UUIDUser;
 

@@ -1,4 +1,4 @@
-package dao;
+package dao.concrete;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,17 +6,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 
+import dao.interfaces.PageViewQuerySetDAO;
 import vo.BookMark;
 import vo.UUIDBookMark;
 import vo.UUIDDocument;
 import vo.UUIDPage;
 import vo.UUIDUser;
 
-public class PageViewQuerySet {
+public class PageViewQuerySet implements PageViewQuerySetDAO{
 
 	// seleziona tutti i segnalibri riguardanti un'opera che appartengono all'utente
 	// che li ha creati
-	public static LinkedList<BookMark> loadBookmarksDocument(UUIDUser ID_user, UUIDDocument ID_doc)
+	public  LinkedList<BookMark> loadBookmarksDocument(UUIDUser ID_user, UUIDDocument ID_doc)
 			throws DatabaseException {
 
 		Connection con = null;
@@ -62,7 +63,7 @@ public class PageViewQuerySet {
 		return pages;
 	}
 
-	public static void removeBookmarksDocument(UUIDBookMark ID_bm) throws DatabaseException {
+	public  void removeBookmarksDocument(UUIDBookMark ID_bm) throws DatabaseException {
 
 		Connection con = null;
 
@@ -95,7 +96,7 @@ public class PageViewQuerySet {
 		}
 	}
 
-	public static void addBookmarksDocument(BookMark bm) throws DatabaseException {
+	public  void addBookmarksDocument(BookMark bm) throws DatabaseException {
 
 		Connection con = null;
 
@@ -130,7 +131,7 @@ public class PageViewQuerySet {
 		}
 	}
 
-	public static void addToMyCollectins(UUIDDocument id, UUIDUser user) throws DatabaseException {
+	public  void addToMyCollectins(UUIDDocument id, UUIDUser user) throws DatabaseException {
 
 		Connection con = null;
 
@@ -162,7 +163,7 @@ public class PageViewQuerySet {
 		}
 	}
 
-	public static void removeFromMyCollectins(UUIDDocument id, UUIDUser user) throws DatabaseException {
+	public  void removeFromMyCollectins(UUIDDocument id, UUIDUser user) throws DatabaseException {
 
 		Connection con = null;
 
@@ -203,7 +204,7 @@ public class PageViewQuerySet {
 	 * @return
 	 * @throws DatabaseException
 	 */
-	public static boolean controlMyBookMarks(UUIDUser user, UUIDDocument id, int pageNumber) throws DatabaseException {
+	public  boolean controlMyBookMarks(UUIDUser user, UUIDDocument id, int pageNumber) throws DatabaseException {
 
 		Connection con = null;
 
@@ -251,7 +252,7 @@ public class PageViewQuerySet {
 	 * @return
 	 * @throws DatabaseException
 	 */
-	public static UUIDPage getMyBookMarkPageID(UUIDDocument id, int pageNumber)
+	public  UUIDPage getMyBookMarkPageID(UUIDDocument id, int pageNumber)
 			throws DatabaseException {
 
 		Connection con = null;
@@ -299,7 +300,7 @@ public class PageViewQuerySet {
 	 * @return
 	 * @throws DatabaseException
 	 */
-	public static void addPageToMyBookMarks(UUIDUser user, UUIDDocument id, UUIDPage pageNumber)
+	public  void addPageToMyBookMarks(UUIDUser user, UUIDDocument id, UUIDPage pageNumber)
 			throws DatabaseException {
 
 		Connection con = null;
@@ -343,7 +344,7 @@ public class PageViewQuerySet {
 	 * @return
 	 * @throws DatabaseException
 	 */
-	public static void removePageFromMyBookMarks(UUIDUser user, UUIDDocument id, UUIDPage pageNumber)
+	public  void removePageFromMyBookMarks(UUIDUser user, UUIDDocument id, UUIDPage pageNumber)
 			throws DatabaseException {
 
 		Connection con = null;

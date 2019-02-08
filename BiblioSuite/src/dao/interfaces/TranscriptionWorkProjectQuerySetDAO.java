@@ -3,7 +3,7 @@ package dao.interfaces;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-import dao.DatabaseException;
+import dao.concrete.DatabaseException;
 import model.TranscriptionWorkProject;
 import vo.UUIDDocument;
 import vo.UUIDTranscriptionWorkProject;

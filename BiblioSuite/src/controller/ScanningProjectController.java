@@ -3,10 +3,10 @@ package controller;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-import dao.DatabaseException;
-import dao.DigitalizationRevisorQuerySet;
-import dao.EditProfileQuerySet;
-import dao.ScanningWorkProjectQuerySet;
+import dao.concrete.DatabaseException;
+import dao.concrete.DigitalizationRevisorQuerySet;
+import dao.concrete.EditProfileQuerySet;
+import dao.concrete.ScanningWorkProjectQuerySet;
 import model.ScanningWorkProject;
 import model.User;
 import vo.UUIDPage;
@@ -21,7 +21,7 @@ public class ScanningProjectController {
 	
 	public static void validatePage(UUIDPage p , Boolean b) {
 		try {
-			DigitalizationRevisorQuerySet.validated(p, b);
+			new DigitalizationRevisorQuerySet().validated(p, b);
 		} catch (DatabaseException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
@@ -30,7 +30,7 @@ public class ScanningProjectController {
 	
 	public static void revisedPage(UUIDPage p , Boolean b) {
 		try {
-			DigitalizationRevisorQuerySet.revised(p, b);
+			new DigitalizationRevisorQuerySet().revised(p, b);
 		} catch (DatabaseException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
@@ -49,7 +49,7 @@ public class ScanningProjectController {
 	public static void loadCoordinatedScanningPRoject() {
 
 		try {
-			coordinatedScanningProject = ScanningWorkProjectQuerySet
+			coordinatedScanningProject = new ScanningWorkProjectQuerySet()
 					.loadMyCoordinatedScanningWorkProjectList(LocalSession.getLocalUser().getID());
 		} catch (DatabaseException e) {
 			e.printStackTrace();
@@ -67,7 +67,7 @@ public class ScanningProjectController {
 
 	public static void loadScanningProject(UUIDScanningWorkProject idSPrj) {
 		try {
-			sPrj = ScanningWorkProjectQuerySet.loadScanningWorkProject(idSPrj);
+			sPrj = new ScanningWorkProjectQuerySet().loadScanningWorkProject(idSPrj);
 		} catch (DatabaseException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
@@ -76,7 +76,7 @@ public class ScanningProjectController {
 	
 	public static void setScanningComment(UUIDPage id , String comment) {
 		try{
-			DigitalizationRevisorQuerySet.addScanningRevisionComment(id, comment);
+			new DigitalizationRevisorQuerySet().addScanningRevisionComment(id, comment);
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -87,7 +87,7 @@ public class ScanningProjectController {
 	public static User getUserProfile(UUIDUser user) {
 		User u = null;
 		try {
-			u = EditProfileQuerySet.loadUserProfile(user);
+			u = new EditProfileQuerySet().loadUserProfile(user);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -98,7 +98,7 @@ public class ScanningProjectController {
 	
 	public static LinkedList<UUIDUser> getAvailadbleDigitalizers(UUIDScanningWorkProject ids){
 		try {
-			return ScanningWorkProjectQuerySet.getAvailableDigitalizers(ids);
+			return new ScanningWorkProjectQuerySet().getAvailableDigitalizers(ids);
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -108,7 +108,7 @@ public class ScanningProjectController {
 	
 	public static LinkedList<UUIDUser> getAvailadbleRevisers(UUIDScanningWorkProject ids){
 		try {
-			return ScanningWorkProjectQuerySet.getAvailableRevisers(ids);
+			return new ScanningWorkProjectQuerySet().getAvailableRevisers(ids);
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -118,7 +118,7 @@ public class ScanningProjectController {
 	
 	public String getDigitalizationComment(UUIDPage id) {
 		try {
-			return DigitalizationRevisorQuerySet.getScanningRevisionComment(id);
+			return new DigitalizationRevisorQuerySet().getScanningRevisionComment(id);
 		}catch(DatabaseException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());

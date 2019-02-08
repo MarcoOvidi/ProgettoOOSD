@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-import dao.DatabaseException;
-import dao.DigitalizerQuerySet;
-import dao.ScanningWorkProjectQuerySet;
+import dao.concrete.DatabaseException;
+import dao.concrete.DigitalizerQuerySet;
+import dao.concrete.ScanningWorkProjectQuerySet;
 import javafx.scene.image.Image;
 import model.Document;
 import model.Page;
@@ -31,10 +31,10 @@ public class PageScanController {
 	
 	public static void loadScanningLog(UUIDDocument doc) {
 		try{
-			setScanningLog(DigitalizerQuerySet.loadDocument(doc, false, false));
-			scanningLog.addAll(DigitalizerQuerySet.loadDocument(doc, false, true));
-			scanningLog.addAll(DigitalizerQuerySet.loadDocument(doc, true, false));
-			scanningLog.addAll(DigitalizerQuerySet.loadDocument(doc, true, true));
+			setScanningLog(new DigitalizerQuerySet().loadDocument(doc, false, false));
+			scanningLog.addAll(new DigitalizerQuerySet().loadDocument(doc, false, true));
+			scanningLog.addAll(new DigitalizerQuerySet().loadDocument(doc, true, false));
+			scanningLog.addAll(new DigitalizerQuerySet().loadDocument(doc, true, true));
 		}catch(Exception e) {
 			e.printStackTrace();
 			e.getMessage();
@@ -55,7 +55,7 @@ public class PageScanController {
 
 	public static void loadUncompletedDocumentForDigitalizer(UUIDUser usr) {
 		try {
-			uncompletedDocument = ScanningWorkProjectQuerySet.getScanningUncompletedDocumentDigitalizer(usr);
+			uncompletedDocument = new ScanningWorkProjectQuerySet().getScanningUncompletedDocumentDigitalizer(usr);
 		} catch (DatabaseException e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
@@ -64,7 +64,7 @@ public class PageScanController {
 	
 	public static void loadUncompletedDocumentForReviser(UUIDUser usr) {
 		try {
-			uncompletedDocument = ScanningWorkProjectQuerySet.getScanningUncompletedDocumentReviser(usr);
+			uncompletedDocument = new ScanningWorkProjectQuerySet().getScanningUncompletedDocumentReviser(usr);
 		} catch (DatabaseException e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
@@ -84,10 +84,10 @@ public class PageScanController {
 
 	public static void loadNewDocumentPages(UUIDDocument doc) {
 		try {
-			currentDocumentPages = DigitalizerQuerySet.loadDocument(doc, false, false);
-			currentDocumentPages.addAll(DigitalizerQuerySet.loadDocument(doc, false, true));
-			currentDocumentPages.addAll(DigitalizerQuerySet.loadDocument(doc, true, false));
-			currentDocumentPages.addAll(DigitalizerQuerySet.loadDocument(doc, true, true));
+			currentDocumentPages = new DigitalizerQuerySet().loadDocument(doc, false, false);
+			currentDocumentPages.addAll(new DigitalizerQuerySet().loadDocument(doc, false, true));
+			currentDocumentPages.addAll(new DigitalizerQuerySet().loadDocument(doc, true, false));
+			currentDocumentPages.addAll(new DigitalizerQuerySet().loadDocument(doc, true, true));
 			currentDocument = doc;
 		} catch (DatabaseException e) {
 			System.err.println(e.getMessage());
@@ -97,10 +97,10 @@ public class PageScanController {
 	
 	public static void loadNewDocumentPagesOnlyToRevise(UUIDDocument doc) {
 		try {
-			currentDocumentPages = DigitalizerQuerySet.loadDocument(doc, false, false);
-			currentDocumentPages.addAll(DigitalizerQuerySet.loadDocument(doc, true, true));
-			currentDocumentPages.addAll(DigitalizerQuerySet.loadDocument(doc, false, true));
-			currentDocumentPages.addAll(DigitalizerQuerySet.loadDocument(doc, true, false));
+			currentDocumentPages = new DigitalizerQuerySet().loadDocument(doc, false, false);
+			currentDocumentPages.addAll(new DigitalizerQuerySet().loadDocument(doc, true, true));
+			currentDocumentPages.addAll(new DigitalizerQuerySet().loadDocument(doc, false, true));
+			currentDocumentPages.addAll(new DigitalizerQuerySet().loadDocument(doc, true, false));
 			currentDocument = doc;
 		} catch (DatabaseException e) {
 			System.err.println(e.getMessage());
@@ -110,7 +110,7 @@ public class PageScanController {
 
 	public static void loadUncompletedDocumentPagesFilters(UUIDDocument doc, Boolean revised, Boolean validated) {
 		try {
-			currentDocumentPages = DigitalizerQuerySet.loadDocument(doc, revised, validated);
+			currentDocumentPages = new DigitalizerQuerySet().loadDocument(doc, revised, validated);
 		} catch (DatabaseException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
@@ -123,7 +123,7 @@ public class PageScanController {
 
 	public static void updatePageNumber(UUIDPage id, Integer number) {
 		try {
-			DigitalizerQuerySet.updatePageNumber(id, number);
+			new DigitalizerQuerySet().updatePageNumber(id, number);
 		} catch (DatabaseException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
@@ -139,20 +139,20 @@ public class PageScanController {
 		vo.Image img = new vo.Image("temp");
 		
 		try {
-			page = DigitalizerQuerySet.createPage(num, img, LocalSession.localUser.getID(), currentDocument);
+			page = new DigitalizerQuerySet().createPage(num, img, LocalSession.localUser.getID(), currentDocument);
 			
 			String URL;
 			URL = ImageUploader.uploadImage(image, page.getValue().toString());
 			img = new vo.Image(URL);
 			
-			DigitalizerQuerySet.updatePage(page, img);
+			new DigitalizerQuerySet().updatePage(page, img);
 		} catch (DatabaseException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.err.println(">>> Error creating file: Reverting changes to database...");
 			try {
-				DigitalizerQuerySet.deletePage(page);
+				new DigitalizerQuerySet().deletePage(page);
 				System.err.println("Done.");
 			} catch (DatabaseException e1) {
 				e1.printStackTrace();

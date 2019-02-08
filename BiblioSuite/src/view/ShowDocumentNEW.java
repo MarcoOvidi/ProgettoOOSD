@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.util.Comparator;
@@ -13,18 +12,15 @@ import org.controlsfx.control.PopOver.ArrowLocation;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 
-import com.itextpdf.layout.property.Background;
 import com.jfoenix.controls.JFXButton;
 
-import controller.AdministrationController;
-import controller.DocumentInfoController;
 import controller.DownloadController;
 import controller.LocalSession;
 import controller.PageViewController;
 import controller.ScanningProjectController;
 import controller.TranscriptionProjectController;
-import dao.DatabaseException;
-import dao.HomePageQuerySet;
+import dao.concrete.DatabaseException;
+import dao.concrete.HomePageQuerySet;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -43,10 +39,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Page;
@@ -191,7 +185,7 @@ public class ShowDocumentNEW {
 		HashMap<UUIDDocument, String[]> myColl = null;
 
 		try {
-			myColl = HomePageQuerySet.loadMyCollectionList(LocalSession.getLocalUser().getID());
+			myColl = new HomePageQuerySet().loadMyCollectionList(LocalSession.getLocalUser().getID());
 		} catch (DatabaseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

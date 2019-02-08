@@ -1,15 +1,17 @@
-package dao;
+package dao.concrete;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
+
+import dao.interfaces.RequestToAdminQuerySetDAO;
 import vo.Request;
 import vo.UUIDRequest;
 import vo.UUIDUser;
 
-public class RequestToAdminQuerySet {
+public class RequestToAdminQuerySet implements RequestToAdminQuerySetDAO{
 	//query completate e funzionamento verificato
 	
 	/* Inserisce nel db una nuova richiesta fatta da un utente
@@ -18,7 +20,7 @@ public class RequestToAdminQuerySet {
 	 * @exception NullPointerException se la Request paramentro è null
 	 * @exception DatabaseException per problemi di connessione o query sul DB
 	 */
-	public static UUIDRequest sendRequestToAdmin(Request req) throws NullPointerException,DatabaseException{
+	public  UUIDRequest sendRequestToAdmin(Request req) throws NullPointerException,DatabaseException{
 		if (req == null)
 			throw new NullPointerException("La richiesta non ha un contenuto");
 		
@@ -79,7 +81,7 @@ public class RequestToAdminQuerySet {
 	 * @exception NullPointerException se la Request paramentro è null
 	 * @exception DatabaseException per problemi di connessione o query sul DB
 	 */
-	public static LinkedList<Request> loadAllRequestToAdmin(UUIDUser id) throws DatabaseException,NullPointerException{
+	public  LinkedList<Request> loadAllRequestToAdmin(UUIDUser id) throws DatabaseException,NullPointerException{
 		if (id == null)
 			throw new NullPointerException("Id non vallido");
 		
@@ -131,7 +133,7 @@ public class RequestToAdminQuerySet {
 	 * @param UUIDRequest id della richiesta da cancellare
 	 * @return Boolean indica se la richiesta è andata a buon fine
 	 */
-	public static Boolean undoRequestToAdmin(UUIDUser idu,UUIDRequest idr) throws NullPointerException,DatabaseException {
+	public  Boolean undoRequestToAdmin(UUIDUser idu,UUIDRequest idr) throws NullPointerException,DatabaseException {
 		if(idu == null)
 			throw new NullPointerException("Utente non valido");
 		if(idr == null)

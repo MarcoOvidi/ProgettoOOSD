@@ -11,10 +11,10 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import dao.DatabaseException;
-import dao.DocumentQuerySet;
-import dao.HomePageQuerySet;
-import dao.UserAuthenticationQuerySet;
+import dao.concrete.DatabaseException;
+import dao.concrete.DocumentQuerySet;
+import dao.concrete.HomePageQuerySet;
+import dao.concrete.UserAuthenticationQuerySet;
 import vo.UUIDDocument;
 import vo.UUIDDocumentCollection;
 import vo.UUIDScanningWorkProject;
@@ -35,7 +35,7 @@ public class HomePageController {
 	
 	public static void loadDocumentInCollections(UUIDDocumentCollection doc) {
 		try {
-			listDocumentInCollections = HomePageQuerySet.loadLibraryCollectionListWithDocument(doc);
+			listDocumentInCollections = new HomePageQuerySet().loadLibraryCollectionListWithDocument(doc);
 		}catch(DatabaseException | SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -44,7 +44,7 @@ public class HomePageController {
 		
 	public static void loadCategories() {
 		try {
-			categories = HomePageQuerySet.loadLibraryCollectionList();
+			categories = new HomePageQuerySet().loadLibraryCollectionList();
 		} catch (DatabaseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -56,7 +56,7 @@ public class HomePageController {
 	
 	public static void loadMyCollection() {
 		try {
-			myCollection = HomePageQuerySet.loadMyCollectionList(LocalSession.getLocalUser().getID());
+			myCollection = new HomePageQuerySet().loadMyCollectionList(LocalSession.getLocalUser().getID());
 		} catch (DatabaseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -66,7 +66,7 @@ public class HomePageController {
 
 	public static void loadMyTranscriptionProjects() {
 		try {
-			setMyTPrj(HomePageQuerySet.loadMyTranscriptionWorkProjectList(LocalSession.getLocalUser().getID()));
+			setMyTPrj(new HomePageQuerySet().loadMyTranscriptionWorkProjectList(LocalSession.getLocalUser().getID()));
 		} catch (DatabaseException e) {
 			e.printStackTrace();
 			e.getMessage();
@@ -75,7 +75,7 @@ public class HomePageController {
 	
 	public static void loadMyScanningProjects() {
 		try {
-			setMySPrj(HomePageQuerySet.loadMyScanningWorkProjectList(LocalSession.getLocalUser().getID()));
+			setMySPrj(new HomePageQuerySet().loadMyScanningWorkProjectList(LocalSession.getLocalUser().getID()));
 		} catch (DatabaseException e) {
 			e.printStackTrace();
 			e.getMessage();
@@ -91,7 +91,7 @@ public class HomePageController {
 
 		
 		
-		Iterator<Entry<UUIDDocument, String>> itr = HomePageQuerySet.loadNews(20).entrySet().iterator();
+		Iterator<Entry<UUIDDocument, String>> itr = new HomePageQuerySet().loadNews(20).entrySet().iterator();
 		
 		while(itr.hasNext()) {
 			Map.Entry<UUIDDocument, String> entry = itr.next();
@@ -120,7 +120,7 @@ public class HomePageController {
 	public static HashMap<UUIDDocument, String[]> getAllDocuments() {
 		HashMap<UUIDDocument, String[]> res = new HashMap<UUIDDocument, String[]>();
 		try {
-			res = DocumentQuerySet.getAllDocuments();
+			res = new DocumentQuerySet().getAllDocuments();
 		}
 		catch (Exception e) {
 		
@@ -167,7 +167,7 @@ public class HomePageController {
 		Boolean perm = false;
 		try {
 		
-			perm = UserAuthenticationQuerySet.permissionsControl(2, LocalSession.getLocalUser().getID());
+			perm = new UserAuthenticationQuerySet().permissionsControl(2, LocalSession.getLocalUser().getID());
 		
 		}catch(DatabaseException e) {
 			e.getMessage();
@@ -186,7 +186,7 @@ public class HomePageController {
 		Boolean perm = false;
 		try {
 		
-			perm = UserAuthenticationQuerySet.permissionsControl(5, LocalSession.getLocalUser().getID());
+			perm = new UserAuthenticationQuerySet().permissionsControl(5, LocalSession.getLocalUser().getID());
 		
 		}catch(DatabaseException e) {
 			e.getMessage();
@@ -211,7 +211,7 @@ public class HomePageController {
 	public static String getDocumentTitle(UUIDDocument documentID) {
 		
 		try {
-			return DocumentQuerySet.getDocumentTitle(documentID);
+			return new DocumentQuerySet().getDocumentTitle(documentID);
 		} catch (DatabaseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

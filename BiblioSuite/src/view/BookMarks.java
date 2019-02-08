@@ -4,7 +4,6 @@ import java.util.Map.Entry;
 
 import controller.HomePageController;
 import controller.PageViewController;
-import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.LoadException;
 import javafx.scene.control.Alert;
@@ -14,7 +13,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import vo.UUIDDocument;
 
 

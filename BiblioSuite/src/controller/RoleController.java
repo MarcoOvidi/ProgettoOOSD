@@ -2,11 +2,11 @@ package controller;
 
 import java.util.HashMap;
 
-import dao.AdministrationQuerySet;
-import dao.DatabaseException;
-import dao.ScanningWorkProjectQuerySet;
-import dao.TranscriptionWorkProjectQuerySet;
-import dao.UserAuthenticationQuerySet;
+import dao.concrete.AdministrationQuerySet;
+import dao.concrete.DatabaseException;
+import dao.concrete.ScanningWorkProjectQuerySet;
+import dao.concrete.TranscriptionWorkProjectQuerySet;
+import dao.concrete.UserAuthenticationQuerySet;
 import vo.UUIDScanningWorkProject;
 import vo.UUIDTranscriptionWorkProject;
 import vo.UUIDUser;
@@ -21,7 +21,7 @@ public class RoleController {
 	public static boolean controlUserPermission(Integer permNumber, UUIDUser userID) {
 		Boolean b = false;
 		try {
-			b = UserAuthenticationQuerySet.permissionsControl(permNumber, userID);
+			b = new UserAuthenticationQuerySet().permissionsControl(permNumber, userID);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -31,7 +31,7 @@ public class RoleController {
 
 	public static void addTranscriberUserInTrascriptionProject(UUIDUser user, UUIDTranscriptionWorkProject project) {
 		try {
-			TranscriptionWorkProjectQuerySet.insertTranscriberUser(project, user);
+			new TranscriptionWorkProjectQuerySet().insertTranscriberUser(project, user);
 		} catch (DatabaseException e) {
 			e.printStackTrace();
 			System.out.println(e.getCause());
@@ -41,7 +41,7 @@ public class RoleController {
 
 	public static void addReviserUserInTrascriptionProject(UUIDUser user, UUIDTranscriptionWorkProject project) {
 		try {
-			TranscriptionWorkProjectQuerySet.insertReviserUser(user, project);
+			new TranscriptionWorkProjectQuerySet().insertReviserUser(user, project);
 		} catch (DatabaseException e) {
 			e.printStackTrace();
 			System.out.println(e.getCause());
@@ -51,7 +51,7 @@ public class RoleController {
 
 	public static void removeTranscriberUserInTrascriptionProject(UUIDUser user, UUIDTranscriptionWorkProject project) {
 		try {
-			TranscriptionWorkProjectQuerySet.removeTranscriberUser(user, project);
+			new TranscriptionWorkProjectQuerySet().removeTranscriberUser(user, project);
 		} catch (DatabaseException e) {
 			e.printStackTrace();
 			System.out.println(e.getCause());
@@ -61,7 +61,7 @@ public class RoleController {
 
 	public static void removeReviserUserInTrascriptionProject(UUIDUser user, UUIDTranscriptionWorkProject project) {
 		try {
-			TranscriptionWorkProjectQuerySet.removeReviserUser(user, project);
+			new TranscriptionWorkProjectQuerySet().removeReviserUser(user, project);
 		} catch (DatabaseException e) {
 			e.printStackTrace();
 			System.out.println(e.getCause());
@@ -71,7 +71,7 @@ public class RoleController {
 
 	public static void addDigitalizerUserInScanningProject(UUIDUser user, UUIDScanningWorkProject project) {
 		try {
-			ScanningWorkProjectQuerySet.insertDigitalizerUser(project, user);
+			new ScanningWorkProjectQuerySet().insertDigitalizerUser(project, user);
 		} catch (DatabaseException e) {
 			e.printStackTrace();
 			System.out.println(e.getCause());
@@ -81,7 +81,7 @@ public class RoleController {
 
 	public static void addReviserUserInScanningProject(UUIDUser user, UUIDScanningWorkProject project) {
 		try {
-			ScanningWorkProjectQuerySet.insertReviserUser(user, project);
+			new ScanningWorkProjectQuerySet().insertReviserUser(user, project);
 		} catch (DatabaseException e) {
 			e.printStackTrace();
 			System.out.println(e.getCause());
@@ -91,7 +91,7 @@ public class RoleController {
 
 	public static void removeDigitalizerUserInScanningProject(UUIDUser user, UUIDScanningWorkProject project) {
 		try {
-			ScanningWorkProjectQuerySet.removeDigitalizerUser(user, project);
+			new ScanningWorkProjectQuerySet().removeDigitalizerUser(user, project);
 		} catch (DatabaseException e) {
 			e.printStackTrace();
 			System.out.println(e.getCause());
@@ -101,7 +101,7 @@ public class RoleController {
 
 	public static void removeReviserUserInScanningProject(UUIDUser user, UUIDScanningWorkProject project) {
 		try {
-			ScanningWorkProjectQuerySet.removeReviserUser(user, project);
+			new ScanningWorkProjectQuerySet().removeReviserUser(user, project);
 		} catch (DatabaseException e) {
 			e.printStackTrace();
 			System.out.println(e.getCause());
@@ -111,7 +111,7 @@ public class RoleController {
 
 	public static void changeTransriptionProjectCoordinator(UUIDUser newCoord, UUIDTranscriptionWorkProject idPrj) {
 		try {
-			TranscriptionWorkProjectQuerySet.changeTranscriptionProjectCoordinator(newCoord, idPrj);
+			new TranscriptionWorkProjectQuerySet().changeTranscriptionProjectCoordinator(newCoord, idPrj);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -120,7 +120,7 @@ public class RoleController {
 
 	public static void changeScanningProjectCoordinator(UUIDUser newCoord, UUIDScanningWorkProject idPrj) {
 		try {
-			ScanningWorkProjectQuerySet.changeScanningProjectCoordinator(newCoord, idPrj);
+			new ScanningWorkProjectQuerySet().changeScanningProjectCoordinator(newCoord, idPrj);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -131,7 +131,7 @@ public class RoleController {
 		HashMap<UUIDUser,String> coord = new HashMap<UUIDUser , String>();
 		
 		try{
-			coord = AdministrationQuerySet.showCoordinatorList();
+			coord = new AdministrationQuerySet().showCoordinatorList();
 		}catch(Exception e ) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -142,7 +142,7 @@ public class RoleController {
 	
 	public static UserPermissions getUserPermission(UUIDUser id) {
 		try {
-			return UserAuthenticationQuerySet.getUSerPermission(id);
+			return new UserAuthenticationQuerySet().getUSerPermission(id);
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -152,7 +152,7 @@ public class RoleController {
 	
 	public static void replaceCoordinator(UUIDUser oldCoordinator , UUIDUser newCoordinator) {
 		try {
-			AdministrationQuerySet.replaceCoordinator(oldCoordinator, newCoordinator);
+			new AdministrationQuerySet().replaceCoordinator(oldCoordinator, newCoordinator);
 		}catch(DatabaseException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -161,7 +161,7 @@ public class RoleController {
 	
 	public static void removeUserFromAllProjects(UUIDUser id) {
 		try {
-			AdministrationQuerySet.removeUserFromAllProjects(id);
+			new AdministrationQuerySet().removeUserFromAllProjects(id);
 		}catch(DatabaseException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());

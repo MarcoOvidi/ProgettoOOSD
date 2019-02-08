@@ -1,4 +1,4 @@
-package dao;
+package dao.concrete;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 
+import dao.interfaces.TranscriberQuerySetDAO;
 import model.Page;
 import model.PageTranscription;
 import model.PageTranscriptionStaff;
@@ -14,7 +15,7 @@ import vo.UUIDDocument;
 import vo.UUIDPage;
 import vo.UUIDUser;
 
-public class TranscriberQuerySet {
+public class TranscriberQuerySet implements TranscriberQuerySetDAO{
 
 	/*
 	 * Seleziona la trascrizione di una pagina di un'opera
@@ -30,7 +31,7 @@ public class TranscriberQuerySet {
 	 * @exception NullPointerException in caso i parametri di input siano non validi
 	 * 
 	 */
-	public static PageTranscription loadTranscription(UUIDPage id) throws DatabaseException, NullPointerException {
+	public  PageTranscription loadTranscription(UUIDPage id) throws DatabaseException, NullPointerException {
 		if (id == null)
 			throw new NullPointerException("Id non valido");
 
@@ -92,7 +93,7 @@ public class TranscriberQuerySet {
 	 * 
 	 * @exception NullPointerException in caso i parametri di input siano non validi
 	 */
-	public static Boolean updateText(TEItext text, UUIDPage id) throws DatabaseException, NullPointerException {
+	public  Boolean updateText(TEItext text, UUIDPage id) throws DatabaseException, NullPointerException {
 		if (id == null)
 			throw new NullPointerException("Id non valido");
 		if (text == null)
@@ -139,7 +140,7 @@ public class TranscriberQuerySet {
 	 * @throws DatabaseException
 	 * @see UUIDDocument
 	 */
-	public static LinkedList<Page> loadDocument(UUIDDocument id)
+	public  LinkedList<Page> loadDocument(UUIDDocument id)
 			throws DatabaseException {
 		Connection con = null;
 

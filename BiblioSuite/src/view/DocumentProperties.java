@@ -5,7 +5,7 @@ import java.text.ParseException;
 import com.jfoenix.controls.JFXCheckBox;
 
 import controller.DocumentInfoController;
-import dao.DatabaseException;
+import dao.concrete.DatabaseException;
 import javafx.fxml.FXML;
 import javafx.fxml.LoadException;
 import javafx.scene.control.Alert;

@@ -1,13 +1,15 @@
-package dao;
+package dao.concrete;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import dao.interfaces.UserAuthenticationQuerySetDAO;
 import vo.UUIDUser;
 import vo.UserPermissions;
 
-public class UserAuthenticationQuerySet { //COMPLETATA E TUTTA FUNZIONANTE
+public class UserAuthenticationQuerySet implements UserAuthenticationQuerySetDAO{ //COMPLETATA E TUTTA FUNZIONANTE
 	
 	/**
 	 * @param username Username che l'utente desidera avere
@@ -18,7 +20,7 @@ public class UserAuthenticationQuerySet { //COMPLETATA E TUTTA FUNZIONANTE
 	 * @return True se l'operazione di registrazione è andata a buon fine 
 	 * @throws DatabaseException
 	 */
-	public static boolean registration(String username , String password, String name, 
+	public  boolean registration(String username , String password, String name, 
 			String surname, String email) throws DatabaseException {
 		Connection con = null;
 		
@@ -70,7 +72,7 @@ public class UserAuthenticationQuerySet { //COMPLETATA E TUTTA FUNZIONANTE
 	 * @throws SQLException
 	 * @throws DatabaseException
 	 */
-	public static boolean checkIfUsernameExists(String username) throws SQLException, DatabaseException {
+	public  boolean checkIfUsernameExists(String username) throws SQLException, DatabaseException {
 		Connection con = null;
 		
 		try {
@@ -121,7 +123,7 @@ public class UserAuthenticationQuerySet { //COMPLETATA E TUTTA FUNZIONANTE
 	 * @throws SQLException
 	 * @throws DatabaseException
 	 */
-	public static UUIDUser login(String usr, String psw) throws SQLException, DatabaseException {
+	public  UUIDUser login(String usr, String psw) throws SQLException, DatabaseException {
 		Connection con = null;
 		
 		try {
@@ -163,7 +165,7 @@ public class UserAuthenticationQuerySet { //COMPLETATA E TUTTA FUNZIONANTE
 		}			
 	}
 	
-	public static UserPermissions getUSerPermission(UUIDUser usr) throws DatabaseException {
+	public  UserPermissions getUSerPermission(UUIDUser usr) throws DatabaseException {
 		Connection con = null;
 		
 		try {
@@ -233,7 +235,7 @@ public class UserAuthenticationQuerySet { //COMPLETATA E TUTTA FUNZIONANTE
 	 * @throws DatabaseException
 	 * @throws Exception
 	 */
-	public static boolean permissionsControl(Integer permNumb , UUIDUser id) throws DatabaseException, Exception{
+	public  boolean permissionsControl(Integer permNumb , UUIDUser id) throws DatabaseException, Exception{
 		
 		switch(permNumb) {
 		case 1 :
@@ -268,7 +270,7 @@ public class UserAuthenticationQuerySet { //COMPLETATA E TUTTA FUNZIONANTE
 	}	
 	
 	
-	private static boolean control(String permission, UUIDUser userID) throws DatabaseException {
+	private  boolean control(String permission, UUIDUser userID) throws DatabaseException {
 			
 			Connection con = null;
 		

@@ -6,12 +6,11 @@ import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXToggleButton;
 
 import controller.DocumentInfoController;
-import dao.DatabaseException;
+import dao.concrete.DatabaseException;
 import javafx.fxml.FXML;
 import javafx.fxml.LoadException;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import vo.UUIDDocument;
@@ -77,6 +76,7 @@ public class UpdateDocumentProperties {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private void loadProjectStatus() {
 		if(documentInfoController.getScanningComplete()) {
 			scanningComplete.setSelected(true);

@@ -1,4 +1,4 @@
-package dao;
+package dao.concrete;
 
 import java.io.File;
 import java.sql.Connection;
@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.Map.Entry;
 
 import controller.LocalSession;
+import dao.interfaces.DocumentQuerySetDAO;
 import javafx.fxml.LoadException;
 import model.Document;
 import model.Page;
@@ -31,7 +32,7 @@ import vo.UUIDTranscriptionWorkProject;
 import vo.UUIDUser;
 import vo.VagueDate;
 
-public class DocumentQuerySet {
+public class DocumentQuerySet implements DocumentQuerySetDAO {
 
 	/**
 	 * Inserisce un nuovo documento
@@ -41,7 +42,7 @@ public class DocumentQuerySet {
 	 * @return Boolean: true se l'operazione è andata a buon fine , false altrimenti
 	 */
 	// TODO questo metodo carica solo il titolo del documento giusto ?
-	public static UUIDDocument insertDocument(String title, String author, String description, String composition_date,
+	public  UUIDDocument insertDocument(String title, String author, String description, String composition_date,
 			String composition_period_from, String composition_period_to, String preservation_state)
 			throws DatabaseException, ParseException {
 
@@ -207,7 +208,7 @@ public class DocumentQuerySet {
 		}
 	}
 
-	public static Document loadDocument(UUIDDocument id) throws DatabaseException, LoadException {
+	public  Document loadDocument(UUIDDocument id) throws DatabaseException, LoadException {
 		Connection con = null;
 
 		try {
@@ -380,7 +381,7 @@ public class DocumentQuerySet {
 	/*
 	 * Come loadDocument ma ignora pagine non revisionate
 	 */
-	public static Document loadDocumentToView(UUIDDocument id) throws DatabaseException, LoadException {
+	public  Document loadDocumentToView(UUIDDocument id) throws DatabaseException, LoadException {
 		Connection con = null;
 
 		try {
@@ -560,7 +561,7 @@ public class DocumentQuerySet {
 	 * @return
 	 * @throws DatabaseException
 	 */
-	public static HashMap<Integer, Tag> loadAvailableTag() throws DatabaseException {
+	public  HashMap<Integer, Tag> loadAvailableTag() throws DatabaseException {
 		Connection con = null;
 
 		try {
@@ -606,7 +607,7 @@ public class DocumentQuerySet {
 	 * @return
 	 * @throws DatabaseException
 	 */
-	public static void addTagToDocument(UUIDDocumentMetadata id, HashMap<Integer, Tag> tags) throws DatabaseException {
+	public  void addTagToDocument(UUIDDocumentMetadata id, HashMap<Integer, Tag> tags) throws DatabaseException {
 		Connection con = null;
 
 		try {
@@ -652,7 +653,7 @@ public class DocumentQuerySet {
 	 * @return
 	 * @throws DatabaseException
 	 */
-	public static UUIDDocumentMetadata getDocumentMetadataOfDocument(UUIDDocument id) throws DatabaseException {
+	public  UUIDDocumentMetadata getDocumentMetadataOfDocument(UUIDDocument id) throws DatabaseException {
 		Connection con = null;
 
 		try {
@@ -696,7 +697,7 @@ public class DocumentQuerySet {
 	 * @return
 	 * @throws DatabaseException
 	 */
-	public static Integer insertNewTag(Tag t) throws DatabaseException {
+	public  Integer insertNewTag(Tag t) throws DatabaseException {
 
 		Connection con = null;
 
@@ -758,7 +759,7 @@ public class DocumentQuerySet {
 	 * @exception DatabaseException in caso di mancata conessione o errori di query
 	 *                              sul DB
 	 */
-	public static ArrayList<Tag> loadDocumentTags(UUIDDocument document)
+	public  ArrayList<Tag> loadDocumentTags(UUIDDocument document)
 			throws DatabaseException {
 		Connection con = null;
 
@@ -810,7 +811,7 @@ public class DocumentQuerySet {
 	 * @return
 	 * @throws DatabaseException
 	 */
-	public static String getDocumentTitle(UUIDDocument id) throws DatabaseException {
+	public  String getDocumentTitle(UUIDDocument id) throws DatabaseException {
 		Connection con = null;
 
 		try {
@@ -858,7 +859,7 @@ public class DocumentQuerySet {
 	 * @return
 	 * @throws DatabaseException
 	 */
-	public static HashMap<UUIDDocument, String[]> getAllDocuments() throws DatabaseException {
+	public  HashMap<UUIDDocument, String[]> getAllDocuments() throws DatabaseException {
 		Connection con = null;
 
 		try {

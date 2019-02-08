@@ -1,4 +1,4 @@
-package dao;
+package dao.concrete;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -10,7 +10,9 @@ import vo.UserInformations;
 import model.User;
 import java.util.Date;
 
-public class EditProfileQuerySet {
+import dao.interfaces.EditProfileQuerySetDAO;
+
+public class EditProfileQuerySet implements EditProfileQuerySetDAO{
 	
 	/*Seleziona tutti i campi anagrafici di un determinato utente
 	 * @param user un UUID dell'utente di cui si vogliono prelevare i dati dal database
@@ -19,7 +21,7 @@ public class EditProfileQuerySet {
 	 * @exception NullPointerException se non vienete trovato l'utente passato come parametro nel db
 	 */
 	
-	public static User loadUserProfile(UUIDUser user) throws DatabaseException{
+	public  User loadUserProfile(UUIDUser user) throws DatabaseException{
 		Connection con = null;
 		
 		try {
@@ -50,7 +52,7 @@ public class EditProfileQuerySet {
 		    	  Email em = new Email(email);
 		    	  UserInformations ui = new UserInformations(name,surname,regDate,em,pass);   
 		    	  //user creations
-		    	  usr = new User(user,username,ui,status,UserAuthenticationQuerySet.getUSerPermission(user));
+		    	  usr = new User(user,username,ui,status,new UserAuthenticationQuerySet().getUSerPermission(user));
 			}
 			
 		}catch(SQLException e) {
@@ -79,7 +81,7 @@ public class EditProfileQuerySet {
 	 * @param toUpdate utente fittizio sul quale vengono riportate le informazioni da cambiare e quelle che persistono
 	 * @return Boolean 0 se l'operazione non ha effettuato modifiche all'utente toChange, 1 altrimenti
 	 */
-	public static boolean updateUserProfile(UUIDUser toChange,User toUpdate) throws DatabaseException {
+	public  boolean updateUserProfile(UUIDUser toChange,User toUpdate) throws DatabaseException {
 		Connection con = null;
 		
 		try {

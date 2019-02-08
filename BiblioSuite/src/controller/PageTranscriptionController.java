@@ -2,10 +2,10 @@ package controller;
 
 import java.util.LinkedList;
 
-import dao.DatabaseException;
-import dao.DigitalizerQuerySet;
-import dao.DocumentQuerySet;
-import dao.TranscriberQuerySet;
+import dao.concrete.DatabaseException;
+import dao.concrete.DigitalizerQuerySet;
+import dao.concrete.DocumentQuerySet;
+import dao.concrete.TranscriberQuerySet;
 import javafx.fxml.LoadException;
 import model.Document;
 import model.Page;
@@ -22,7 +22,7 @@ public class PageTranscriptionController {
 	
 	public static void loadTranscriptionLog(UUIDDocument doc) {
 		try{
-			transcriptionLog = TranscriberQuerySet.loadDocument(doc);
+			transcriptionLog = new TranscriberQuerySet().loadDocument(doc);
 		}catch(Exception e) {
 			e.printStackTrace();
 			e.getMessage();
@@ -67,10 +67,10 @@ public class PageTranscriptionController {
 
 	public static void loadNewDocumentPages(UUIDDocument doc) {
 		try {
-			currentDocumentPages = DigitalizerQuerySet.loadDocument(doc, false, false);
-			currentDocumentPages.addAll(DigitalizerQuerySet.loadDocument(doc, false, true));
-			currentDocumentPages.addAll(DigitalizerQuerySet.loadDocument(doc, true, false));
-			currentDocumentPages.addAll(DigitalizerQuerySet.loadDocument(doc, true, true));
+			currentDocumentPages = new DigitalizerQuerySet().loadDocument(doc, false, false);
+			currentDocumentPages.addAll(new DigitalizerQuerySet().loadDocument(doc, false, true));
+			currentDocumentPages.addAll(new DigitalizerQuerySet().loadDocument(doc, true, false));
+			currentDocumentPages.addAll(new DigitalizerQuerySet().loadDocument(doc, true, true));
 			currentDocument = doc;
 		} catch (DatabaseException e) {
 			System.err.println(e.getMessage());
@@ -80,7 +80,7 @@ public class PageTranscriptionController {
 	
 	public static void loadNewDocumentPagesOnlyNotRevised(UUIDDocument doc) {
 		try {
-			currentDocumentPages = DigitalizerQuerySet.loadDocument(doc, false, false); // c'è un errore 
+			currentDocumentPages = new DigitalizerQuerySet().loadDocument(doc, false, false); // c'è un errore 
 			
 			
 			currentDocument = doc;
@@ -95,7 +95,7 @@ public class PageTranscriptionController {
 		try{
 			//doc = DocumentQuerySet.loadDocument(document);
 			//FIXME potrebbe causare problemi questa cosa?
-			doc = DocumentQuerySet.loadDocumentToView(document);
+			doc = new DocumentQuerySet().loadDocumentToView(document);
 		}catch(DatabaseException e) {
 			e.getMessage();
 			e.printStackTrace();

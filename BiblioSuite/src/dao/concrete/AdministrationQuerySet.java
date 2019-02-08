@@ -1,4 +1,4 @@
-package dao;
+package dao.concrete;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import dao.interfaces.AdministratorQuerySetDAO;
 import model.User;
 import vo.Email;
 import vo.Request;
@@ -16,7 +17,7 @@ import vo.UUIDUser;
 import vo.UserInformations;
 import vo.UserPermissions;
 
-public class AdministrationQuerySet { // tutto ok
+public class AdministrationQuerySet implements AdministratorQuerySetDAO { // tutto ok
 
 	/**
 	 * Questo metodo cambia lo stato di un utente da attivo a inattivo e viceversa
@@ -31,7 +32,7 @@ public class AdministrationQuerySet { // tutto ok
 	 * 
 	 * @exception DatabaseException
 	 */
-	public static Boolean modifyUserStatus(UUIDUser user, Boolean status) throws DatabaseException {
+	public  Boolean modifyUserStatus(UUIDUser user, Boolean status) throws DatabaseException {
 		Connection con = null;
 
 		try {
@@ -84,7 +85,7 @@ public class AdministrationQuerySet { // tutto ok
 	 * @exception SQLException
 	 * 
 	 */
-	public static boolean updateUserPermissions(UUIDUser user, UserPermissions up) throws DatabaseException {
+	public Boolean updateUserPermissions(UUIDUser user, UserPermissions up) throws DatabaseException {
 
 		Connection con = null;
 
@@ -143,7 +144,7 @@ public class AdministrationQuerySet { // tutto ok
 	 * @return HashMap<Integer,String> l'intero(chiave) rappresenta l'UUIDRequest e
 	 *         la String l'oogetto della request
 	 */
-	public static LinkedList<Request> loadRequestsList(int b) throws DatabaseException {
+	public LinkedList<Request> loadRequestsList(int b) throws DatabaseException {
 
 		Connection con = null;
 
@@ -207,7 +208,7 @@ public class AdministrationQuerySet { // tutto ok
 	 * @throws NullPointerException In caso l'id parametro non sia presente nel db
 	 * @see vo.UUIDRequest
 	 */
-	public static Request loadRequest(UUIDRequest id) throws NullPointerException, DatabaseException {
+	public  Request loadRequest(UUIDRequest id) throws NullPointerException, DatabaseException {
 
 		if (id == null)
 			throw new NullPointerException("Errore, id richiesta non valido");
@@ -260,7 +261,7 @@ public class AdministrationQuerySet { // tutto ok
 	 * @return Boolean true se l'operazione è andata a buon fine , false altrimenti
 	 * @see vo.UUIDRequest
 	 */
-	public static Boolean answerRequest(UUIDRequest id, String answer) throws DatabaseException {
+	public  Boolean answerRequest(UUIDRequest id, String answer) throws DatabaseException {
 		Connection con = null;
 
 		try {
@@ -305,7 +306,7 @@ public class AdministrationQuerySet { // tutto ok
 	 * 
 	 * @see vo.UUIDRequest
 	 */
-	public static Boolean ignoreRequest(UUIDRequest id) throws DatabaseException {
+	public  Boolean ignoreRequest(UUIDRequest id) throws DatabaseException {
 		Connection con = null;
 
 		try {
@@ -348,7 +349,7 @@ public class AdministrationQuerySet { // tutto ok
 	 * @exception SQLException in caso di errori relativi al database
 	 */
 
-	public static LinkedList<User> loadUserList(Boolean b) throws DatabaseException {
+	public  LinkedList<User> loadUserList(Boolean b) throws DatabaseException {
 		Connection con = null;
 
 		try {
@@ -380,7 +381,7 @@ public class AdministrationQuerySet { // tutto ok
 				Email em = new Email(email);
 				UserInformations ui = new UserInformations(name, surname, regDate, em, pass);
 
-				result.add(new User(id, username, ui, status, UserAuthenticationQuerySet.getUSerPermission(id)));
+				result.add(new User(id, username, ui, status, new UserAuthenticationQuerySet().getUSerPermission(id)));
 			}
 
 		} catch (SQLException e) {
@@ -406,7 +407,7 @@ public class AdministrationQuerySet { // tutto ok
 	 * @return
 	 * @throws DatabaseException
 	 */
-	public static HashMap<UUIDUser, String> showCoordinatorList() throws DatabaseException {
+	public  HashMap<UUIDUser, String> showCoordinatorList() throws DatabaseException {
 		Connection con = null;
 
 		try {
@@ -456,7 +457,7 @@ public class AdministrationQuerySet { // tutto ok
 	 * @return
 	 * @throws DatabaseException
 	 */
-	public static HashMap<String, Integer> userIsInvolved(UUIDUser id) throws DatabaseException {
+	public  HashMap<String, Integer> userIsInvolved(UUIDUser id) throws DatabaseException {
 		Connection con = null;
 
 		try {
@@ -571,7 +572,7 @@ public class AdministrationQuerySet { // tutto ok
 	 * @return
 	 * @throws DatabaseException
 	 */
-	public static void replaceCoordinator(UUIDUser oldCoordinator, UUIDUser newCoordinator) throws DatabaseException {
+	public  void replaceCoordinator(UUIDUser oldCoordinator, UUIDUser newCoordinator) throws DatabaseException {
 		Connection con = null;
 
 		try {
@@ -623,7 +624,7 @@ public class AdministrationQuerySet { // tutto ok
 	 * @param id
 	 * @throws DatabaseException
 	 */
-	public static void removeUserFromAllProjects(UUIDUser id) throws DatabaseException {
+	public  void removeUserFromAllProjects(UUIDUser id) throws DatabaseException {
 		Connection con = null;
 
 		try {
@@ -688,7 +689,7 @@ public class AdministrationQuerySet { // tutto ok
 	 * @return
 	 * @throws DatabaseException
 	 */
-	public static void changeTranscriberLevel(UUIDUser id, int level) throws DatabaseException {
+	public  void changeTranscriberLevel(UUIDUser id, int level) throws DatabaseException {
 		Connection con = null;
 
 		try {
@@ -731,7 +732,7 @@ public class AdministrationQuerySet { // tutto ok
 	 * @return
 	 * @throws DatabaseException
 	 */
-	public static int getTranscriberLevel(UUIDUser id) throws DatabaseException {
+	public  int getTranscriberLevel(UUIDUser id) throws DatabaseException {
 		Connection con = null;
 
 		try {

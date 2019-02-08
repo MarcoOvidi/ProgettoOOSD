@@ -8,7 +8,7 @@ import com.jfoenix.controls.JFXButton;
 
 import controller.HomePageController;
 import controller.PageViewController;
-import dao.DatabaseException;
+import dao.concrete.DatabaseException;
 import javafx.fxml.FXML;
 import javafx.fxml.LoadException;
 import javafx.scene.control.Alert;

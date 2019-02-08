@@ -5,8 +5,8 @@ import java.util.Map.Entry;
 import controller.LocalSession;
 import controller.PageScanController;
 import controller.PageTranscriptionController;
-import dao.DatabaseException;
-import dao.TranscriptionWorkProjectQuerySet;
+import dao.concrete.DatabaseException;
+import dao.concrete.TranscriptionWorkProjectQuerySet;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -112,7 +112,7 @@ public class Transcription {
 	public static void setToOpenDocumentFromTranscriptionProject(UUIDTranscriptionWorkProject swp)
 			throws NullPointerException, DatabaseException {
 		// FIXME andrebbe incapsulato in un metodo del controller
-		Transcription.toOpenDocument = TranscriptionWorkProjectQuerySet.loadUUIDDocument(swp);
+		Transcription.toOpenDocument = new TranscriptionWorkProjectQuerySet().loadUUIDDocument(swp);
 	}
 
 	public static void setToOpenDocument(UUIDDocument toOpenDocument) {

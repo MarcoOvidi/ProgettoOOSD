@@ -3,10 +3,10 @@ package controller;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-import dao.DatabaseException;
-import dao.EditProfileQuerySet;
-import dao.TranscriptionReviserQuerySet;
-import dao.TranscriptionWorkProjectQuerySet;
+import dao.concrete.DatabaseException;
+import dao.concrete.EditProfileQuerySet;
+import dao.concrete.TranscriptionReviserQuerySet;
+import dao.concrete.TranscriptionWorkProjectQuerySet;
 import model.TranscriptionWorkProject;
 import model.User;
 import vo.UUIDPage;
@@ -31,7 +31,7 @@ public class TranscriptionProjectController {
 	
 	public static void loadCoordinatedTranscriptionPRoject() {
 		try{
-			coordinatedTranscriptionProject = TranscriptionWorkProjectQuerySet.loadMyCoordinatedTranscriptionWorkProjectList(LocalSession.getLocalUser().getID());
+			coordinatedTranscriptionProject = new TranscriptionWorkProjectQuerySet().loadMyCoordinatedTranscriptionWorkProjectList(LocalSession.getLocalUser().getID());
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -48,7 +48,7 @@ public class TranscriptionProjectController {
 	
 	public static void loadTranscriptionProject(UUIDTranscriptionWorkProject idTPrj) {
 		try{
-			tPrj = TranscriptionWorkProjectQuerySet.loadTranscriptionWorkProject(idTPrj);
+			tPrj = new TranscriptionWorkProjectQuerySet().loadTranscriptionWorkProject(idTPrj);
 		}catch(DatabaseException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
@@ -58,7 +58,7 @@ public class TranscriptionProjectController {
 	public static User getUserProfile(UUIDUser user) {
 		User u = null;
 		try{
-			u = EditProfileQuerySet.loadUserProfile(user);
+			u = new EditProfileQuerySet().loadUserProfile(user);
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -69,7 +69,7 @@ public class TranscriptionProjectController {
 	
 	public static void setTranscriptionComment(UUIDPage id , String comment) {
 		try{
-			TranscriptionReviserQuerySet.addTranscriptionRevisionComment(id, comment);
+			new TranscriptionReviserQuerySet().addTranscriptionRevisionComment(id, comment);
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -78,7 +78,7 @@ public class TranscriptionProjectController {
 	
 	public static LinkedList<UUIDUser> getAvailableTranscribers(UUIDTranscriptionWorkProject ids , int level){
 		try {
-			return TranscriptionWorkProjectQuerySet.getAvailableTranscribers(ids,level);
+			return new TranscriptionWorkProjectQuerySet().getAvailableTranscribers(ids,level);
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -88,7 +88,7 @@ public class TranscriptionProjectController {
 	
 	public static LinkedList<UUIDUser> getAvailableRevisers(UUIDTranscriptionWorkProject ids){
 		try {
-			return TranscriptionWorkProjectQuerySet.getAvailableRevisers(ids);
+			return new TranscriptionWorkProjectQuerySet().getAvailableRevisers(ids);
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -98,7 +98,7 @@ public class TranscriptionProjectController {
 	
 	public String getTranscriptionComment(UUIDPage id) {
 		try {
-			return TranscriptionReviserQuerySet.getTranscriptionRevisionComment(id);
+			return new TranscriptionReviserQuerySet().getTranscriptionRevisionComment(id);
 		}catch(DatabaseException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());

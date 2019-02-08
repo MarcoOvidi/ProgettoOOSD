@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 
 import controller.RegistrationController;
-import dao.DatabaseException;
+import dao.concrete.DatabaseException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;

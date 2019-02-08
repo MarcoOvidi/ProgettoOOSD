@@ -4,7 +4,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import dao.DatabaseException;
+import dao.concrete.DatabaseException;
 import javafx.fxml.LoadException;
 import model.Document;
 import vo.Tag;

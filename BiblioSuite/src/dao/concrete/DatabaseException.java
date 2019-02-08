@@ -1,4 +1,4 @@
-package dao;
+package dao.concrete;
 
 
 public class DatabaseException extends Exception {

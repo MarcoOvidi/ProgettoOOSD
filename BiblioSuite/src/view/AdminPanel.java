@@ -7,8 +7,8 @@ import java.util.Optional;
 import controller.AdministrationController;
 import controller.EditUserController;
 import controller.LocalSession;
-import dao.DatabaseException;
-import dao.EditProfileQuerySet;
+import dao.concrete.DatabaseException;
+import dao.concrete.EditProfileQuerySet;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -191,7 +191,7 @@ public class AdminPanel {
 	}
 
 	private void refreshRow(TableRow<UserRow> row) throws DatabaseException {
-		User user = EditProfileQuerySet.loadUserProfile(row.getItem().getId());
+		User user = new EditProfileQuerySet().loadUserProfile(row.getItem().getId());
 		UserRow newRow = new UserRow(user.getID(), user.getUsername(), user.getInformations().getName(),
 				user.getInformations().getSurname(), user.getInformations().getMail());
 
