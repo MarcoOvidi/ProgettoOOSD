@@ -39,7 +39,7 @@
 }
 
 Button{
-	-fx-background-color:#555;
+	-fx-background-color:#5559;
 	-fx-text-fill:#fff;	 
 	-fx-border-radius: 4.0px;
 	}
@@ -155,7 +155,10 @@ JFXTextField, JFXPasswordField{
 }
 
 
-AnchorPane,HBox, VBox, FlowPane{-fx-background:#222; -fx-border-width:0.0px;}
+AnchorPane,HBox, VBox, FlowPane{
+	-fx-background: transparent;
+	-fx-border-width:0.0px;
+}
 
 .table-view .column-header .label{
     -fx-alignment:CENTER_LEFT
@@ -284,8 +287,7 @@ tab-pane > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
      -fx-opacity: 0.0;     }
      
  .jfx-tab-pane .tab-header-background { 
-	-fx-background-color: linear-gradient(from 50.0% 25.0% to 50.0% 100.0%, #e86e0a, #e86e0a70);
- 	-fx-background-color: #f87e1a;
+	-fx-background-color: #f87e1a;
 	-fx-background-color: linear-gradient(from 0.0% 50.0% to 75.0% 50.0%, #f87e1a60, #f87e1a);
  }
  
@@ -326,7 +328,7 @@ tab-pane > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
 }
 
 .scroll-pane {
-    -fx-background-color: #202020;
+    -fx-background-color: transparent;
 }
 
 .scroll-bar:horizontal, .scroll-bar:vertical{
@@ -381,8 +383,30 @@ TextArea:focused {
 }
 
 .choice-box, MenuButton {
-  -fx-background-color: #111;
-  -fx-mark-color: darkorange;}
+  -fx-background-color: #5559;
+  -fx-mark-color: #3CB371;
+}
+
+.choice-box > .label {
+	-fx-text-fill: #eee;
+}
+
+.choice-box .context-menu{
+  -fx-background-color: #5559;
+  -fx-mark-color: #3CB371;
+}
+
+.choice-box .menu-item:focused {
+  -fx-background-color: #0096c8cc;
+}
+
+.choice-box .menu-item > .label {
+	-fx-text-fill: #eee;
+}
+
+.choice-box .menu-item:focused > .label {
+	-fx-text-fill: white;
+}
 
 MenuButton > .label { -fx-text-fill: white; }
 MenuButton .context-menu { -fx-background-color: #111; }
@@ -421,6 +445,31 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 	-fx-background-color: linear-gradient(from 50.0% 25.0% to 50.0% 100.0%, #0096c8cc, #0096c820);
 	}
 #transcriptionTranscribersTab:hover{
+	-fx-background-color: linear-gradient(from 50.0% 25.0% to 50.0% 100.0%, #3CB371, #2CA36120);
+	}
+
+#scanningPagesTab{
+	-fx-background-color: linear-gradient(from 50.0% 25.0% to 50.0% 100.0%, #202020, #20202020);
+	-fx-background-radius: 8.0px 8.0px 0.0px 0.0px;
+	-fx-border-color: transparent;
+	-fx-border-width: 1.0px 1.0px 0.0px 1.0px;
+}
+#scanningPagesTab:selected{
+	-fx-background-color: linear-gradient(from 50.0% 25.0% to 50.0% 100.0%, #0096c8cc, #0096c820);
+	}
+#scanningPagesTab:hover{
+	-fx-background-color: linear-gradient(from 50.0% 25.0% to 50.0% 100.0%, #3CB371, #2CA36120);
+	}
+#scanningDigitalizersTab{
+	-fx-background-color: linear-gradient(from 50.0% 25.0% to 50.0% 100.0%, #202020, #20202020);
+	-fx-background-radius: 8.0px 8.0px 0.0px 0.0px;
+	-fx-border-color: transparent;
+	-fx-border-width: 1.0px 1.0px 0.0px 1.0px;
+}
+#scanningDigitalizersTab:selected{
+	-fx-background-color: linear-gradient(from 50.0% 25.0% to 50.0% 100.0%, #0096c8cc, #0096c820);
+	}
+#scanningDigitalizersTab:hover{
 	-fx-background-color: linear-gradient(from 50.0% 25.0% to 50.0% 100.0%, #3CB371, #2CA36120);
 	}
 
@@ -516,7 +565,7 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 
 
 #newDocumentButton, #addTranscriberButton, #addDigitalizerButton, #addDReviserButton, #addTReviserButton{
-	-fx-background-color:#555;
+	-fx-background-color:#5559;
 	-fx-background-radius:#10px;
 	-fx-pref-width: 450.0px;
 	-fx-pref-height: 40.0px;
@@ -701,7 +750,7 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 }
 
 .title {
-	-fx-text-fill: #aaa;
+	-fx-text-fill: #fff;
 }
 
 .highlight {
@@ -784,6 +833,4 @@ JFXScrollPane {
 #transcriptionTab:hover, #transcriptionTab:selected{
 	-fx-background-color: #c88;
 }	*/
-	
-	
 

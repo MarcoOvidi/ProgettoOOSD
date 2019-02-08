@@ -534,9 +534,10 @@ public class ManageProject {
 			}
 		});
 		containerPane.getChildren().add(editButton);
+		
 		AnchorPane.setTopAnchor(editButton, 375.0);
 		AnchorPane.setLeftAnchor(editButton, 75.0);
-		
+
 		documentProperties.getChildren().setAll(containerPane);
 		
 		manageContainer.setBackground(new Background(new BackgroundFill(null, null, null)));

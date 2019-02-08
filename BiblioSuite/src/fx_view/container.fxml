@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.control.TabPane?>
@@ -17,17 +18,29 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTabPane?>
 
-<BorderPane id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity"
-	minHeight="720" minWidth="1280" xmlns="http://javafx.com/javafx/9.0.1"
+<BorderPane id="rootPane" maxHeight="-Infinity"
+	maxWidth="-Infinity" minHeight="720" minWidth="1280"
+	xmlns="http://javafx.com/javafx/9.0.1"
 	xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Container">
 	<top>
-		<AnchorPane BorderPane.alignment="CENTER">
+		<AnchorPane BorderPane.alignment="CENTER" >
 			<children>
-				<JFXTabPane  fx:id="topbar" AnchorPane.leftAnchor="0.0"
-					AnchorPane.rightAnchor="0.0" tabClosingPolicy="UNAVAILABLE" 
-					/>
-				<JFXTabPane fx:id="rightbar" AnchorPane.rightAnchor="10.0"
-					tabClosingPolicy="UNAVAILABLE">
+				<JFXTabPane fx:id="topbar" AnchorPane.leftAnchor="0.0"
+					AnchorPane.rightAnchor="0.0" tabClosingPolicy="UNAVAILABLE" />
+				<TabPane AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="520.0"
+					tabClosingPolicy="UNAVAILABLE" style="-fx-background-color: rgba(255, 255, 255, 0);">
+					<tabs>
+						<Tab fx:id="searchTab" style="-fx-background-color: rgba(255, 255, 255, 0);">
+							<graphic>
+								<TextField fx:id="searchBar" prefHeight="10.0"
+									prefWidth="218.0" promptText="Search" style="-fx-background-color: rgba(255, 255, 255, 0);">
+								</TextField>
+							</graphic>
+						</Tab>
+					</tabs>
+				</TabPane>
+				<JFXTabPane fx:id="rightbar"
+					AnchorPane.rightAnchor="10.0" tabClosingPolicy="UNAVAILABLE">
 					<tabs>
 						<Tab fx:id="logout" text="Logout">
 							<graphic>
@@ -45,10 +58,11 @@
 		</AnchorPane>
 	</top>
 	<center>
-		<BorderPane fx:id="content" layoutY="60" style=" -fx-background-image: url(images/library.png);
+		<BorderPane fx:id="content" layoutY="60"
+			style=" -fx-background-image: url(images/library.png);
 			-fx-background-position: left top, center;
 			-fx-background-repeat: stretch;
-			-fx-background-size: cover, auto;"/>
+			-fx-background-size: cover, auto;" />
 	</center>
 
 </BorderPane>

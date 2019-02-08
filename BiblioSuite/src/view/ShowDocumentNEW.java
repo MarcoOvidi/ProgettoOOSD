@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.util.Comparator;
@@ -12,6 +13,7 @@ import org.controlsfx.control.PopOver.ArrowLocation;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 
+import com.itextpdf.layout.property.Background;
 import com.jfoenix.controls.JFXButton;
 
 import controller.AdministrationController;
@@ -41,8 +43,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Page;
@@ -213,8 +217,8 @@ public class ShowDocumentNEW {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
 				
+				popOverPane.setStyle("-fx-background-color: #222;");
 			
 				JFXButton downloadButton = new JFXButton("Download");
 				downloadButton.setOnMouseClicked(downloadEvent -> {
@@ -302,6 +306,7 @@ public class ShowDocumentNEW {
 				}
 				
 				
+				popOverPane.setStyle("-fx-background-color: #222;");
 
 				JFXButton downloadButton = new JFXButton("Download");
 				downloadButton.setOnMouseClicked(downloadEvent -> {
