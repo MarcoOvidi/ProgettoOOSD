@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Toolkit;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -37,7 +39,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.text.Font;
 import model.Page;
 import model.User;
@@ -533,6 +538,11 @@ public class ManageProject {
 		AnchorPane.setLeftAnchor(editButton, 75.0);
 		
 		documentProperties.getChildren().setAll(containerPane);
+		
+		manageContainer.setBackground(new Background(new BackgroundFill(null, null, null)));
+		pane.setBackground(new Background(new BackgroundFill(null, null, null)));
+		containerPane.setBackground(new Background(new BackgroundFill(null, null, null)));
+		documentProperties.setBackground(new Background(new BackgroundFill(null, null, null)));
 
 		selectedDocumentScanningProject = clickedDocument.getIdSPrj();
 		selectedDocumentTranscriptionProject = clickedDocument.getIdTPrj();

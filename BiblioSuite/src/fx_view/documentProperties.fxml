@@ -10,12 +10,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.FlowPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.DocumentProperties">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.DocumentProperties" style="-fx-background-color: rgba(255, 255, 255, 0);">
 	<left>
-		<AnchorPane BorderPane.alignment="CENTER">
+		<AnchorPane BorderPane.alignment="CENTER" style="-fx-background-color: rgba(255, 255, 255, 0);">
 			<children>
-				<HBox layoutX="49.0" layoutY="20" spacing="40">
-					<VBox prefWidth="240.0" spacing="20">
+				<HBox layoutX="49.0" layoutY="20" spacing="40" style="-fx-background-color: rgba(255, 255, 255, 0);">
+					<VBox prefWidth="240.0" spacing="20" >
 					<!-- 
 						<Label text="Document Properties:" textFill="#aaaaaa" wrapText="true" visible="false">
 							<font>

@@ -14,26 +14,26 @@
 
 
 #searchBar{
-	-fx-border-radius:20px;
-	-fx-background-radius:20px;
+	-fx-border-radius:20.0px;
+	-fx-background-radius:20.0px;
 	-fx-background-color:#222;
-	-fx-border-width:1px 1px 1px 1px;
+	-fx-border-width:1.0px 1.0px 1.0px 1.0px;
 	-fx-border-color: #e86e0a;
 	-fx-text-fill:#aaa;
 	}
 
 #homeTabPane>Tab>ScrollPane{
 	-fx-background-color: white;
-	-fx-border-width:2px 0px 0px 0px;
+	-fx-border-width:2.0px 0.0px 0.0px 0.0px;
 	-fx-border-color: #e86e0a;
 }
 
 #message{
 	-fx-background-color:#f00;
 	-fx-border-color:#f00;
-	-fx-border-width: 3px 10px 3px 3px;
-	-fx-border-radius: 0px 20px 0px 0px;
-	-fx-background-radius: 0px 8px 0px 0px;
+	-fx-border-width: 3.0px 10.0px 3.0px 3.0px;
+	-fx-border-radius: 0.0px 20.0px 0.0px 0.0px;
+	-fx-background-radius: 0.0px 8.0px 0.0px 0.0px;
 	-fx-text-fill:#fff;
     -fx-font-weight: bold;
 }
@@ -41,7 +41,7 @@
 Button{
 	-fx-background-color:#555;
 	-fx-text-fill:#fff;	 
-	-fx-border-radius: 4px;
+	-fx-border-radius: 4.0px;
 	}
 	
 Button:hover{
@@ -96,7 +96,7 @@ JFXTextField, JFXPasswordField{
 } 
 
 .titlesBox{
-	-fx-border-width: 1px 0px 0px 0px;
+	-fx-border-width: 1.0px 0.0px 0.0px 0.0px;
 	-fx-border-color: #e86e0a;
 	-fx-background-color:transparent;
 }
@@ -104,8 +104,8 @@ JFXTextField, JFXPasswordField{
 .title-row{
 	
 	-fx-background-color:#20202020;
-	-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #202020, transparent);
-	-fx-background-radius: 8px;
+	-fx-background-color: linear-gradient(from 25.0% 25.0% to 100.0% 100.0%, #202020, transparent);
+	-fx-background-radius: 8.0px;
 	-fx-padding:4.0px;
 	-fx-border-width:0.0px 0.0px 1.0px 0.0px;
 	-fx-border-color:#191919;
@@ -113,29 +113,29 @@ JFXTextField, JFXPasswordField{
 .title-row1{
 	
 	-fx-background-color:#5552;
-	-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #5552, transparent);
-	-fx-background-radius: 8px;
+	-fx-background-color: linear-gradient(from 25.0% 25.0% to 100.0% 100.0%, #5552, transparent);
+	-fx-background-radius: 8.0px;
 	-fx-padding:4.0px;
 	-fx-border-width:0.0px 0.0px 0.0px 0.0px;
 	-fx-border-color:#191919;
 	}
 	
 #rightHomePanel{
-	-fx-background-color: linear-gradient(from 25% 50% to 100% 50%, #0004, #000);
+	-fx-background-color: linear-gradient(from 25.0% 50.0% to 100.0% 50.0%, #0004, #000);
 		-fx-background-color:transparent;
 }	
 
 #rightHomePanel > JFXButton{
-	-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #555, transparent);
-	-fx-background-radius: 20px;
+	-fx-background-color: linear-gradient(from 25.0% 25.0% to 100.0% 100.0%, #555, transparent);
+	-fx-background-radius: 20.0px;
 }
 	
 	
 .title-row>Label{
-	-fx-text-fill: rgba(200, 190, 149, 1);
+	-fx-text-fill: rgba(200.0, 190.0, 149.0, 1.0);
 }	
 .title-row1>Label{
-	-fx-text-fill: rgba(235, 170, 100, 1);
+	-fx-text-fill: rgba(235.0, 170.0, 100.0, 1.0);
 }	
 
 
@@ -148,8 +148,8 @@ JFXTextField, JFXPasswordField{
 
 .title-row:hover, .title-row1:hover{
 	/*-fx-background-color:#e86e0a;*/
-	-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #e86e0a, transparent);
-	-fx-background-radius: 8px;
+	-fx-background-color: linear-gradient(from 25.0% 25.0% to 100.0% 100.0%, #e86e0a, transparent);
+	-fx-background-radius: 8.0px;
 	-fx-text-fill:#eee;
 	
 }
@@ -284,9 +284,9 @@ tab-pane > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
      -fx-opacity: 0.0;     }
      
  .jfx-tab-pane .tab-header-background { 
-	-fx-background-color: linear-gradient(from 50% 25% to 50% 100%, #e86e0a, #e86e0a70);
+	-fx-background-color: linear-gradient(from 50.0% 25.0% to 50.0% 100.0%, #e86e0a, #e86e0a70);
  	-fx-background-color: #f87e1a;
-	-fx-background-color: linear-gradient(from 0% 50% to 75% 50%, #f87e1a60, #f87e1a);
+	-fx-background-color: linear-gradient(from 0.0% 50.0% to 75.0% 50.0%, #f87e1a60, #f87e1a);
  }
  
  
@@ -399,13 +399,14 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 
 .tab1{
 	-fx-background-color: #222;
-	-fx-border-radius: 8px 8px 0px 0px;
-	-fx-border-width: 1px 1px 0px 1px;
+	-fx-border-radius: 8.0px 8.0px 0.0px 0.0px;
+	-fx-border-width: 1.0px 1.0px 0.0px 1.0px;
 }
 
 .tab1:hover{
 	-fx-background-color:#555;
 	}
+
 
 #transcriptionTabPane > .tab-header{
 
@@ -421,36 +422,20 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 
 
 
-#rightTab{
-	-fx-background-radius: 0px 16px 16px 0px;
-	-fx-background-color: #555;
-	-fx-pref-width: 375px;
-	-fx-border-color: transparent;
-}
-
-#leftTab{
-	-fx-background-radius: 16px 0px 0px 16px;
-	-fx-background-color: #555;
-	-fx-pref-width: 375px;
-	-fx-border-color: transparent;
-}
-
-#leftTab:hover, #leftTab:selected, #rightTab:hover, #rightTab:selected{
-	-fx-background-color: #888;
-}	
+	
 
 
 #propertiesTab {
 	-fx-background-color: #555;
-	-fx-pref-width: 300px;
+	-fx-pref-width: 300.0px;
 	-fx-border-color: transparent;
-	-fx-background-radius: 0px 0px 0px 0px;
+	-fx-background-radius: 0.0px 0.0px 0.0px 0.0px;
 }
 
 
 
 #content{
-	-fx-opacity: 1;
+	-fx-opacity: 1.0;
 }
 
 .transparentObj{
@@ -458,9 +443,9 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 }
 
 #scanningTab{
-	-fx-background-radius: 0px 16px 16px 0px;
+	-fx-background-radius: 0.0px 16.0px 16.0px 0.0px;
 	-fx-background-color: #555;
-	-fx-pref-width: 300px;
+	-fx-pref-width: 300.0px;
 	-fx-border-color: transparent;
     	}
     	
@@ -478,9 +463,9 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 	
 
 #transcriptionTab{
-	-fx-background-radius: 16px 0px 0px 16px;
+	-fx-background-radius: 16.0px 0.0px 0.0px 16.0px;
 	-fx-background-color: #555;
-	-fx-pref-width: 300px;	
+	-fx-pref-width: 300.0px;	
 	-fx-border-color: transparent ;
 
 }
@@ -489,16 +474,26 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 
 
 
+#content{
+	-fx-opacity: 1.0;
+}
+
+.transparentObj{
+	-fx-background-color: transparent;
+}
+
+
+
 #newDocumentButton, #addTranscriberButton, #addDigitalizerButton, #addDReviserButton, #addTReviserButton{
 	-fx-background-color:#555;
 	-fx-background-radius:#10px;
-	-fx-pref-width: 450px;
-	-fx-pref-height: 40px;
+	-fx-pref-width: 450.0px;
+	-fx-pref-height: 40.0px;
 	-fx-text-fill: #eee;
 	}
 	
 #newDocumentButton{
-		-fx-pref-width: 900px;
+		-fx-pref-width: 900.0px;
 }	
 	
 #newDocumentButton:hover, #addTranscriberButton:hover, #addDigitalizerButton:hover,#addDReviserButton:hover, #addTReviserButton:hover {
@@ -512,7 +507,7 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 .table-view{
    -fx-background-color: transparent;
    -fx-table-cell-border-color: transparent;
-	-fx-font-size: 16px;
+	-fx-font-size: 16.0px;
 }
 
 
@@ -529,7 +524,7 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 
 .table-view .column-header-background{
     -fx-background-color: #0096c8cc;
-    -fx-background-radius: 8px;
+    -fx-background-radius: 8.0px;
 }
 
 .table-view .column-header-background .label{
@@ -549,13 +544,13 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 
 
 .table-row-cell{
-    -fx-background-color: -fx-table-cell-border-color, linear-gradient(from 60% 25% to 100% 100%, #170b0b, #170b0ba0);
-    -fx-background-radius:4px;
+    -fx-background-color: -fx-table-cell-border-color, linear-gradient(from 60.0% 25.0% to 100.0% 100.0%, #170b0b, #170b0ba0);
+    -fx-background-radius:4.0px;
     -fx-background-insets: 1.0, 1.0 1.0 1.0 1.0;
     -fx-padding: 0.0; /* 0 */
     /*-fx-border-color: 2px 0px 2px 0px black;*/
     -fx-border-color: transparent;
-	-fx-min-height:60px;
+	-fx-min-height:60.0px;
     -fx-table-cell-border-color: transparent;
 }
 
@@ -564,17 +559,17 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 }
 
 .table-row-cell:odd{
-	-fx-background-radius:4px;
-    -fx-background-color: -fx-table-cell-border-color, linear-gradient(from 60% 25% to 100% 100%, #202020, #202020a0);
+	-fx-background-radius:4.0px;
+    -fx-background-color: -fx-table-cell-border-color, linear-gradient(from 60.0% 25.0% to 100.0% 100.0%, #202020, #202020a0);
     -fx-background-insets: 1.0, 1.0 1.0 1.0 1.0;
-    -fx-min-height:60px;
+    -fx-min-height:60.0px;
     -fx-padding: 0.0; /* 0 */  
 }
 
 .table-row-cell:selected {
 	-fx-background-color: #777;
     -fx-background-insets: 0.0;
-    -fx-background-radius: 4px;
+    -fx-background-radius: 4.0px;
     }
 
 
@@ -585,7 +580,7 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 .table-view > .virtual-flow > .scroll-bar:horizontal > .track,
 .table-view > .virtual-flow > .scroll-bar:horizontal > .track-background {
     -fx-background-color: #0001;
-    -fx-background-radius: 16px;
+    -fx-background-radius: 16.0px;
     -fx-border-color:transparent;
 }
 
@@ -621,7 +616,7 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 }
 
 #topbar{
-	-fx-background-color: rgba(100,30,0,1);
+	-fx-background-color: rgba(100.0,30.0,0.0,1.0);
     -fx-border-width: 0.0px 0.0px 1.0px 0.0px;
     -fx-border-color:#aaaa;
     -fx-tab-max-width:49.0px;
@@ -691,7 +686,7 @@ Label {
 
 
 #newsList{
--fx-background-color: rgba(255, 255, 255, 0); 
+-fx-background-color: rgba(255.0, 255.0, 255.0, 0.0); 
 }
 
 #logout{
@@ -718,3 +713,45 @@ Label {
 JFXScrollPane {
 	-fx-background-color: #fff;
 }
+
+#active {
+	-fx-background-color: #555;
+	-fx-pref-width: 293.0px;
+	-fx-border-color: transparent;
+	-fx-background-radius: 0.0px 0.0px 0.0px 0.0px;
+}
+#inactive{
+	-fx-background-radius: 16.0px 0.0px 0.0px 16.0px;
+	-fx-background-color: #555;
+	-fx-pref-width: 293.0px;	
+	-fx-border-color: transparent ;
+}
+#pending {
+	-fx-background-color: #555;
+	-fx-pref-width: 293.0px;
+	-fx-border-color: transparent;
+	-fx-background-radius: 0.0px 0.0px 0.0px 0.0px;
+}
+#old{
+	-fx-background-radius: 0.0px 16.0px 16.0px 0.0px;
+	-fx-background-color: #555;
+	-fx-pref-width: 293.0px;
+	-fx-border-color: transparent;
+    	}   	
+
+#old:selected, #active:selected, #inactive:selected, #pending:selected{
+	-fx-background-color: #2CA361;
+}
+	
+#old:hover, #active:hover, #inactive:hover, #pending:hover{
+	-fx-background-color: #3CB371;
+}
+	
+
+/* 	
+#transcriptionTab:hover, #transcriptionTab:selected{
+	-fx-background-color: #c88;
+}	*/
+	
+	
+
