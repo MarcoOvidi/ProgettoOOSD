@@ -3,7 +3,6 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -30,8 +29,7 @@
 						</AnchorPane>
 				
 			</VBox>
-			<Separator orientation="VERTICAL" prefHeight="684.0" prefWidth="0.0" />
-         <AnchorPane prefHeight="685.0" prefWidth="600.0" style="-fx-background-color: rgba(0, 0, 0, 0.2);" id="rightHomePanel">
+         <AnchorPane id="rightHomePanel" prefHeight="685.0" prefWidth="600.0" style="-fx-background-color: rgba(0, 0, 0, 0.2);">
             <children>
    				<JFXButton fx:id="catalog" layoutX="166.0" layoutY="131.0" text="Catalogo" />
    				<JFXButton fx:id="myCollection" layoutX="153.0" layoutY="408.0" text="My Collection" />

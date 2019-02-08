@@ -1,7 +1,15 @@
+@font-face {
+    font-family: Alice;
+    src: url('../../resources/Alice-Regular.ttf');
+}
+
+
 .root {
      -fx-background-color: #333;
      /*-fx-background-radius: 10;*/
 }
+
+
 
 
 
@@ -111,6 +119,17 @@ JFXTextField, JFXPasswordField{
 	-fx-border-width:0.0px 0.0px 0.0px 0.0px;
 	-fx-border-color:#191919;
 	}
+	
+#rightHomePanel{
+	-fx-background-color: linear-gradient(from 25% 50% to 100% 50%, #0004, #000);
+		-fx-background-color:transparent;
+}	
+
+#rightHomePanel > JFXButton{
+	-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #555, transparent);
+	-fx-background-radius: 20px;
+}
+	
 	
 .title-row>Label{
 	-fx-text-fill: rgba(200, 190, 149, 1);
@@ -264,11 +283,40 @@ tab-pane > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
 .jfx-tab-pane> *.tab-header-area> *.tab-header-background, *.tab-pane> *.tab-header-area> *.tab-header-background {
      -fx-opacity: 0.0;     }
      
- .jfx-tab-pane .tab-header-background { -fx-background-color: #333; }
+ .jfx-tab-pane .tab-header-background { 
+	-fx-background-color: linear-gradient(from 50% 25% to 50% 100%, #e86e0a, #e86e0a70);
+ 	-fx-background-color: #f87e1a;
+	-fx-background-color: linear-gradient(from 0% 50% to 75% 50%, #f87e1a60, #f87e1a);
+ }
+ 
+ 
+ .jfx-tab-pane .headers-region
+{
+	-fx-background-color: transparent;
+}
+.jfx-tab-pane .tab-header-area .jfx-rippler
+{
+-jfx-rippler-fill: orange;
+}
 
-#gotoprofile{
-	
-	
+.jfx-tab-pane .tab-selected-line
+{
+-fx-border-color:#e86e0a;
+-fx-background-color: #e86e0a;
+}
+
+ #rightbar .tab-header-background{
+ 	-fx-background-color: #f87e1a;
+ }
+ 
+#rightbar .tab-selected-line
+{
+-fx-border-color:transparent;
+-fx-background-color: transparent;
+}
+
+
+#gotoprofile{	
 }
 
 #scrollPage{
@@ -571,7 +619,7 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 }
 
 #topbar{
-	-fx-background-color: #333;
+	-fx-background-color: rgba(100,30,0,1);
     -fx-border-width: 0.0px 0.0px 1.0px 0.0px;
     -fx-border-color:#aaaa;
     -fx-tab-max-width:49.0px;
@@ -635,18 +683,10 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 	-fx-text-fill: #f87e1a;
 }
 
-
-BorderPane {
-	 -fx-background-color: #222;
+Label {
+	-fx-font-family: 'Alice';	
 }
 
-AnchorPane {
-	 -fx-background-color: #222;
-}
-
-TabPane {
-	 -fx-background-color: #222;
-}
 
 #newsList{
 -fx-background-color: rgba(255, 255, 255, 0); 

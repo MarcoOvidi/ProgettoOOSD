@@ -1,48 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import javafx.scene.control.Label?>
-<?import com.jfoenix.controls.JFXPasswordField?>
-<?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXCheckBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.layout.HBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
-	minHeight="-Infinity" minWidth="-Infinity"
-	xmlns="http://javafx.com/javafx/9.0.1"
-	xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.UserProfile">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.UserProfile">
 	<left>
-		<AnchorPane BorderPane.alignment="CENTER">
+		<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="CENTER">
 			<children>
-				<HBox spacing="70" layoutX="49.0" layoutY="20">
-					<VBox spacing="20" prefWidth="240.0">
+				<HBox layoutX="49.0" layoutY="20" spacing="70">
+					<VBox prefWidth="240.0" spacing="20">
 						<Label text="My profile" textFill="#aaaaaa">
 							<font>
 								<Font size="28.0" />
 							</font>
 						</Label>
 						<HBox>
-							<Label text="Username: " style="-fx-text-fill: #f87e1a" />
+							<Label style="-fx-text-fill: #f87e1a" text="Username: " />
 							<Label fx:id="username" />
 						</HBox>
 						<HBox>
-							<Label text="Name: " style="-fx-text-fill: #f87e1a" />
+							<Label style="-fx-text-fill: #f87e1a" text="Name: " />
 							<Label fx:id="name" />
 						</HBox>
 						<HBox>
-							<Label text="Surname: " style="-fx-text-fill: #f87e1a" />
+							<Label style="-fx-text-fill: #f87e1a" text="Surname: " />
 							<Label fx:id="surname" />
 						</HBox>
 						<HBox>
-							<Label text="Email: " style="-fx-text-fill: #f87e1a" />
+							<Label style="-fx-text-fill: #f87e1a" text="Email: " />
 							<Label fx:id="email" />
 						</HBox>
 						<HBox>
-							<Label fx:id="levelT" text="TranscriberLevel: " style="-fx-text-fill: #f87e1a" />
+							<Label fx:id="levelT" style="-fx-text-fill: #f87e1a" text="TranscriberLevel: " />
 							<Label fx:id="level" />
 						</HBox>
 						<HBox />
@@ -52,27 +47,18 @@
 					</VBox>
 					<VBox spacing="20">
 						<Label text="permissions: " />
-						<JFXCheckBox disable="true" fx:id="active" text="Active User" />
-						<JFXCheckBox disable="true" fx:id="download" text="Download" />
-						<JFXCheckBox disable="true" fx:id="publishDocument"
-							text="PublishDocument" />
-						<JFXCheckBox disable="true" fx:id="editMetaData"
-							text="EditMetaData" />
-						<JFXCheckBox disable="true" fx:id="addNewProject"
-							text="AddNewProject" />
-						<JFXCheckBox disable="true" fx:id="assignDigitalizationTask"
-							text="AssignDigitalizationTask" />
-						<JFXCheckBox disable="true" fx:id="upload" text="Upload" />
-						<JFXCheckBox disable="true" fx:id="requestTranscriptionTask"
-							text="RequestTranscriptionTask" />
-						<JFXCheckBox disable="true" fx:id="assignTranscriptionTask"
-							text="AssignTranscriptionTask" />
-						<JFXCheckBox disable="true" fx:id="modifyTranscription"
-							text="ModifyTranscription" />
-						<JFXCheckBox disable="true" fx:id="reviewPage"
-							text="ReviewPage" />
-						<JFXCheckBox disable="true" fx:id="reviewTranscription"
-							text="ReviewTranscription" />
+						<JFXCheckBox fx:id="active" disable="true" text="Active User" />
+						<JFXCheckBox fx:id="download" disable="true" text="Download" />
+						<JFXCheckBox fx:id="publishDocument" disable="true" text="PublishDocument" />
+						<JFXCheckBox fx:id="editMetaData" disable="true" text="EditMetaData" />
+						<JFXCheckBox fx:id="addNewProject" disable="true" text="AddNewProject" />
+						<JFXCheckBox fx:id="assignDigitalizationTask" disable="true" text="AssignDigitalizationTask" />
+						<JFXCheckBox fx:id="upload" disable="true" text="Upload" />
+						<JFXCheckBox fx:id="requestTranscriptionTask" disable="true" text="RequestTranscriptionTask" />
+						<JFXCheckBox fx:id="assignTranscriptionTask" disable="true" text="AssignTranscriptionTask" />
+						<JFXCheckBox fx:id="modifyTranscription" disable="true" text="ModifyTranscription" />
+						<JFXCheckBox fx:id="reviewPage" disable="true" text="ReviewPage" />
+						<JFXCheckBox fx:id="reviewTranscription" disable="true" text="ReviewTranscription" />
 
 					</VBox>
 				</HBox>

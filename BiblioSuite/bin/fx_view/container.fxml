@@ -24,7 +24,8 @@
 		<AnchorPane BorderPane.alignment="CENTER">
 			<children>
 				<JFXTabPane  fx:id="topbar" AnchorPane.leftAnchor="0.0"
-					AnchorPane.rightAnchor="0.0" tabClosingPolicy="UNAVAILABLE" />
+					AnchorPane.rightAnchor="0.0" tabClosingPolicy="UNAVAILABLE" 
+					/>
 				<JFXTabPane fx:id="rightbar" AnchorPane.rightAnchor="10.0"
 					tabClosingPolicy="UNAVAILABLE">
 					<tabs>
@@ -44,7 +45,7 @@
 		</AnchorPane>
 	</top>
 	<center>
-		<BorderPane fx:id="content" layoutY="60" />
+		<BorderPane fx:id="content" layoutY="60" style=" -fx-background-image: url(images/lib.jpg);          -fx-background-position: left top, center;           -fx-background-repeat: stretch;          -fx-background-size: cover, auto;"  />
 	</center>
 
 </BorderPane>
