@@ -7,10 +7,8 @@ import java.util.Map.Entry;
 
 import controller.LocalSession;
 import controller.PageScanController;
-import controller.ScanningProjectController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -22,7 +20,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
@@ -81,11 +78,11 @@ public class ScanRevisor {
 	@FXML
 	private Button rejectButton;
 	
-	@FXML
-	private Button confirmButton;
+	//@FXML
+	//private Button confirmButton;
 	
-	@FXML
-	private TextArea commentArea;
+	//@FXML
+	//private TextArea commentArea;
 	
 	
 	private UUIDPage currentPage;
@@ -101,29 +98,29 @@ public class ScanRevisor {
 		initClosePageContainerButton();
 		initAcceptButton();
 		initRejectButton();
-		initConfirmButton();
+		//initConfirmButton();
 		initCommentArea();
 	}
 	
 	public void initCommentArea(){
-		commentArea.setVisible(true);
+		//commentArea.setVisible(true);
 	}
 	
 	public void initAcceptButton(){
 		acceptButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 			isValidated=true;
-			commentArea.setVisible(false);
+			//commentArea.setVisible(false);
 	      });	
 	};
 	
 	public void initRejectButton(){
 		rejectButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 			isValidated=false;
-			commentArea.setVisible(true);
+			//commentArea.setVisible(true);
 		});	
 	};
 	
-	public void initConfirmButton() {
+	/*public void initConfirmButton() {
 		confirmButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 			pageContainer.setVisible(false);
 			ScanningProjectController.validatePage(currentPage, isValidated);
@@ -132,7 +129,7 @@ public class ScanRevisor {
 			Event.fireEvent(loadDocumentButton, new MouseEvent(MouseEvent.MOUSE_CLICKED, 0,
 	                0, 0, 0, MouseButton.PRIMARY, 1, true, true, true, true,
 	                true, true, true, true, true, true, null));		});	
-	}
+	}*/
 	
 	
 	

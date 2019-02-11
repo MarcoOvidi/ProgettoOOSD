@@ -85,15 +85,15 @@ JFXTextField, JFXPasswordField{
 }
   
  #pageContainer{
- 	-fx-background-color: #2228;
+ 	-fx-background-color: rgba(0,0,0,0.85);
  	-fx-border-width:1.0px;
- 	-fx-border-color:#0096c8cc;
+ 	-fx-border-color:#0096c8cc; 	
  } 
-
+/* 
 #pageContainer{
 	-fx-background-color: #111;
 	-fx-opacity: 1.0;
-} 
+} */
 
 .titlesBox{
 	-fx-border-width: 1.0px 0.0px 0.0px 0.0px;
