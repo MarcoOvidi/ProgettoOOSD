@@ -17,6 +17,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableRow;
@@ -54,7 +55,7 @@ public class ScanRevisor {
 	private TableColumn<Rows, String> number;
 
 	@FXML
-	private TableColumn<Rows, ImageView> image;
+	private TableColumn<Rows, Image> image;
 
 	@FXML
 	private TableColumn<Rows, String> revisioned;
@@ -177,7 +178,27 @@ public class ScanRevisor {
 		pages = FXCollections.observableArrayList();
 		number.setCellValueFactory(new PropertyValueFactory<Rows, String>("Number"));
 		number.setCellFactory(TextFieldTableCell.<Rows>forTableColumn());
-		image.setCellValueFactory(new PropertyValueFactory<Rows, ImageView>("Image"));
+		
+		image.setCellFactory(param -> {
+			// Set up the ImageView
+			final ImageView imageview = new ImageView();
+			imageview.setFitHeight(160);
+			imageview.setFitWidth(90);
+
+			// Set up the Table
+			TableCell<Rows, Image> cell = new TableCell<Rows, Image>() {
+				public void updateItem(Image item, boolean empty) {
+					if (item != null) {
+						imageview.setImage(item);
+					}
+				}
+			};
+			// Attach the imageview to the cell
+			cell.setGraphic(imageview);
+			return cell;
+		});
+		
+		image.setCellValueFactory(new PropertyValueFactory<Rows, Image>("Image"));
 		revisioned.setCellValueFactory(new PropertyValueFactory<Rows, String>("Revisioned"));
 		validated.setCellValueFactory(new PropertyValueFactory<Rows, String>("Validated"));
 
