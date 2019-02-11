@@ -33,51 +33,7 @@
             </AnchorPane>
 				<TabPane fx:id="pane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="1230.0" style="-fx-background-color: rgba(255, 255, 255, 0);" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
 					<tabs>
-						<Tab fx:id="transcriptionTab" styleClass="leftTab" text="Transcription Project">
-							<content>
-								<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: rgba(255, 255, 255, 0);">
-									<children>
-										<TabPane fx:id="transcriptionTabPane" layoutY="50.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: rgba(255, 255, 255, 0);" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-											<tabs>
-												<Tab fx:id="transcriptionPagesTab" styleClass="tab1" text="Pages">
-													<content>
-														<AnchorPane fx:id="transcriptionPagesAnchor" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-															<children>
-																<TableView fx:id="transcriptionLog" prefHeight="438.0" prefWidth="902.0">
-																	<columns>
-																		<TableColumn fx:id="pageNumber" prefWidth="150.0" text="Page" />
-																		<TableColumn fx:id="transcriptionReviser" prefWidth="150.0" text="Reviser" />
-																		<TableColumn fx:id="transcriptionRevised" prefWidth="150.0" text="Revised" />
-																		<TableColumn fx:id="transcriptionValidated" prefWidth="150.0" text="Validated" />
-																		<TableColumn fx:id="transcriptionTranscriber" prefWidth="150.0" text="Transcriber" />
-																	</columns>
-																</TableView>
-															</children>
-														</AnchorPane>
-													</content>
-												</Tab>
-												<Tab fx:id="transcriptionTranscribersTab" styleClass="tab1" text="Transcribers">
-													<content>
-														<AnchorPane fx:id="addTranscriber" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-															<children>
-																<TableView fx:id="transcriptionStaff" prefHeight="381.0" prefWidth="902.0">
-																	<columns>
-																		<TableColumn fx:id="usernameTranscriber" prefWidth="300.0" text="User" />
-																		<TableColumn fx:id="roleTranscriber" prefWidth="300.0" text="Role" />
-																	</columns>
-																</TableView>
-                                                <Button fx:id="addTranscriberButton" layoutY="401.0" mnemonicParsing="false" text="Add Transcriber" />
-                                                <Button fx:id="addTReviserButton" layoutX="451.0" layoutY="401.0" mnemonicParsing="false" text="Add Reviser" />
-															</children>
-														</AnchorPane>
-													</content>
-												</Tab>
-											</tabs>
-										</TabPane>
-									</children>
-								</AnchorPane>
-							</content>
-						</Tab>
+						
 						<Tab fx:id="propertiesTab" styleClass="centerTab" text="Document properties">
 						<BorderPane fx:id="documentProperties" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
 						</Tab>
@@ -116,6 +72,51 @@
 																</TableView>
                                                 <Button fx:id="addDigitalizerButton" layoutY="401.0" mnemonicParsing="false" text="Add Digitalizer" />
                                                 <Button fx:id="addDReviserButton" layoutX="451.0" layoutY="401.0" mnemonicParsing="false" text="Add Reviser" />
+															</children>
+														</AnchorPane>
+													</content>
+												</Tab>
+											</tabs>
+										</TabPane>
+									</children>
+								</AnchorPane>
+							</content>
+						</Tab>
+						<Tab fx:id="transcriptionTab" styleClass="leftTab" text="Transcription Project">
+							<content>
+								<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: rgba(255, 255, 255, 0);">
+									<children>
+										<TabPane fx:id="transcriptionTabPane" layoutY="50.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: rgba(255, 255, 255, 0);" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+											<tabs>
+												<Tab fx:id="transcriptionPagesTab" styleClass="tab1" text="Pages">
+													<content>
+														<AnchorPane fx:id="transcriptionPagesAnchor" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+															<children>
+																<TableView fx:id="transcriptionLog" prefHeight="438.0" prefWidth="902.0">
+																	<columns>
+																		<TableColumn fx:id="pageNumber" prefWidth="150.0" text="Page" />
+																		<TableColumn fx:id="transcriptionReviser" prefWidth="150.0" text="Reviser" />
+																		<TableColumn fx:id="transcriptionRevised" prefWidth="150.0" text="Revised" />
+																		<TableColumn fx:id="transcriptionValidated" prefWidth="150.0" text="Validated" />
+																		<TableColumn fx:id="transcriptionTranscriber" prefWidth="150.0" text="Transcriber" />
+																	</columns>
+																</TableView>
+															</children>
+														</AnchorPane>
+													</content>
+												</Tab>
+												<Tab fx:id="transcriptionTranscribersTab" styleClass="tab1" text="Transcribers">
+													<content>
+														<AnchorPane fx:id="addTranscriber" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+															<children>
+																<TableView fx:id="transcriptionStaff" prefHeight="381.0" prefWidth="902.0">
+																	<columns>
+																		<TableColumn fx:id="usernameTranscriber" prefWidth="300.0" text="User" />
+																		<TableColumn fx:id="roleTranscriber" prefWidth="300.0" text="Role" />
+																	</columns>
+																</TableView>
+                                                <Button fx:id="addTranscriberButton" layoutY="401.0" mnemonicParsing="false" text="Add Transcriber" />
+                                                <Button fx:id="addTReviserButton" layoutX="451.0" layoutY="401.0" mnemonicParsing="false" text="Add Reviser" />
 															</children>
 														</AnchorPane>
 													</content>

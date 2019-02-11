@@ -18,7 +18,7 @@
 	minHeight="-Infinity" minWidth="-Infinity"
 	xmlns="http://javafx.com/javafx/8.0.171"
 	xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="view.ShowDocumentNEW">
+	fx:controller="view.ShowDocument">
 	<top>
 		<AnchorPane prefHeight="40.0" layoutX="0.0" layoutY="0.0"
 			AnchorPane.rightAnchor="0.0">

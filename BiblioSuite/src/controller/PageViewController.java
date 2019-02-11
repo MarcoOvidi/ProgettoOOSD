@@ -24,7 +24,7 @@ public class PageViewController {
 		}
 		if(doc != null) {
 			LocalSession.setOpenedDocumet(doc);
-			SceneController.loadScene("showDocumentNEW", false);
+			SceneController.loadScene("showDocument", false);
 		}
 		
 	}

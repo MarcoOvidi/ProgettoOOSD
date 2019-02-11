@@ -39,14 +39,14 @@
 							<Label style="-fx-text-fill: #f87e1a" text="Description: " />
 							<TextArea fx:id="description" focusTraversable="true" mouseTransparent="false" wrapText="true" />
 						</VBox>
-                  <JFXButton text="Save" />
+                  <JFXButton fx:id="saveButton" text="Save" />
 
 					</VBox>
 					<VBox spacing="20">
 						<HBox>
                      <children>
-                        <JFXToggleButton fx:id="digitalizationStatus" text="Digitalization Complete" />
-                        <JFXToggleButton fx:id="transcriptionStatus" text="Transcription Complete" />
+                        <JFXToggleButton fx:id="scanningComplete" text="Digitalization Complete" />
+                        <JFXToggleButton fx:id="transcriptionComplete" text="Transcription Complete" />
                      </children></HBox>
 						<Label style="-fx-text-fill: #f87e1a" text="Categories: " />
 						<TextArea fx:id="categories" focusTraversable="true" mouseTransparent="false" />

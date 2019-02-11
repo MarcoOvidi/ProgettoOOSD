@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import dao.concrete.DatabaseException;
+import dao.concrete.DigitalizationRevisorQuerySet;
 import dao.concrete.DocumentQuerySet;
+import dao.concrete.TranscriptionReviserQuerySet;
 import javafx.fxml.LoadException;
 import model.Document;
 import vo.Tag;
@@ -88,6 +90,32 @@ public class DocumentInfoController {
 			return TranscriptionProjectController.isCompleted();
 		}
 		return false;
+	}
+
+	public void setScanningComplete() {
+		setScanningComplete(true);
+	}
+	
+	public void setScanningComplete(boolean b) {
+		try {
+			new DigitalizationRevisorQuerySet().scanningProcessCompleted(document.getScanningWorkProject());
+		} catch (DatabaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void setTranscriptionComplete() {
+		setScanningComplete(true);
+	}
+	
+	public void setTranscriptionComplete(boolean b) {
+		try {
+			new TranscriptionReviserQuerySet().completed(document.getTranscriptionWorkProject());
+		} catch (DatabaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public ArrayList<String> getCategories() {

@@ -537,6 +537,8 @@ public class ManageProject {
 
 		documentProperties.getChildren().setAll(containerPane);
 		
+		//if (clickedDocument.getIdTPrj())
+		
 		manageContainer.setBackground(new Background(new BackgroundFill(null, null, null)));
 		pane.setBackground(new Background(new BackgroundFill(null, null, null)));
 		containerPane.setBackground(new Background(new BackgroundFill(null, null, null)));
