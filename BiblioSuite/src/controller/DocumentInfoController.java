@@ -13,6 +13,7 @@ import model.Document;
 import vo.Tag;
 import vo.UUIDDocument;
 import vo.UUIDDocumentMetadata;
+import vo.UUIDPage;
 import vo.VagueDate;
 
 public class DocumentInfoController {
@@ -171,6 +172,16 @@ public class DocumentInfoController {
 		} catch (DatabaseException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
+			return null;
+		}
+	}
+	
+	public static UUIDPage getPageID(UUIDDocument id, int number) {
+		try {
+			return new DocumentQuerySet().getPageUUID(id, number);
+		} catch (DatabaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 			return null;
 		}
 	}

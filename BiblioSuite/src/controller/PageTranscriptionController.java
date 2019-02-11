@@ -12,7 +12,9 @@ import javafx.fxml.LoadException;
 import model.Document;
 import model.Page;
 import view.SceneController;
+import vo.TEItext;
 import vo.UUIDDocument;
+import vo.UUIDPage;
 import vo.UUIDUser;
 
 public class PageTranscriptionController {
@@ -63,6 +65,15 @@ public class PageTranscriptionController {
 
 	public static void setTranscriptionLog(LinkedList<Page> transcriptionLog) {
 		PageTranscriptionController.transcriptionLog = transcriptionLog;
+	}
+	
+	public static void saveTranscription(UUIDPage page, String transcription) {
+		try {
+			new TranscriberQuerySet().updateText(new TEItext(transcription), page);
+		} catch (NullPointerException | DatabaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 

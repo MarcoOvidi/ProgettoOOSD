@@ -904,5 +904,59 @@ public class DocumentQuerySet implements DocumentQuerySetDAO {
 		return documents;
 
 	}
+	
+	
+	/**
+	 * UUIDPage from UUIDDocument and page number
+	 */
+	public  UUIDPage getPageUUID(UUIDDocument doc, int pageNumber) throws DatabaseException {
+		Connection con = null;
+
+		try {
+			con = DBConnection.connect();
+		} catch (DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+	
+
+		try {
+			ps = con.prepareStatement("select ID from page where ID_document=? AND number=?");
+			ps.setInt(1, doc.getValue());
+			ps.setInt(2, pageNumber);
+			
+			rs = ps.executeQuery();
+
+			if(rs.next()) {
+				return new UUIDPage(rs.getInt("ID"));
+			}
+
+		} catch (SQLException e) {
+			throw new DatabaseException("Errore di esecuzione della query", e);
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+
+		}
+		return null;
+
+	}
+	
+	public static void main(String[] foo) {
+		try {
+			System.out.println(new DocumentQuerySet().getPageUUID(new UUIDDocument(193), 1));
+		} catch (DatabaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 }

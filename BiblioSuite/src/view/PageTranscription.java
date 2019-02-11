@@ -7,7 +7,10 @@ import java.util.LinkedList;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 
+import controller.DocumentInfoController;
 import controller.LocalSession;
+import controller.PageTranscriptionController;
+import controller.PageViewController;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -23,6 +26,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import model.Page;
 import vo.TEItext;
+import vo.UUIDPage;
 
 public class PageTranscription {
 	public static boolean isEmpty = false;
@@ -78,12 +82,22 @@ public class PageTranscription {
 		initNavigationButton();
 		initKeyboardNavigation();
 		initTranscription();
+		initSaveButton();
 
 		pageList.getSelectionModel().selectFirst();
 		updatePageNumber();
 
 		Platform.runLater(() -> pageList.requestFocus());
 
+	}
+	
+	private void initSaveButton() {
+		saveButton.setOnAction(event -> {
+			System.out.println(LocalSession.getOpenedDocumet().getUUID());
+			System.out.println(Integer.parseInt(number.getText()));
+			UUIDPage page = DocumentInfoController.getPageID(LocalSession.getOpenedDocumet().getUUID(), Integer.parseInt(number.getText()));
+			PageTranscriptionController.saveTranscription(page, transcription.getText());
+		});
 	}
 
 	public void loadPageList() {
@@ -130,6 +144,7 @@ public class PageTranscription {
 				viewPage(pageIcon);
 				updateTranscription(vbox);
 				event.consume();
+				updatePageNumber();
 			});
 
 			pageList.getItems().add(vbox);
@@ -226,9 +241,11 @@ public class PageTranscription {
 		top.setFocusTraversable(false);
 		bottom.setFocusTraversable(false);
 		transcription.setFocusTraversable(false);
+		backButton.setFocusTraversable(false);
+		saveButton.setFocusTraversable(false);
 
 		pageList.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-			if (event.getCode() == KeyCode.LEFT) {
+			/*if (event.getCode() == KeyCode.LEFT) {
 				previous();
 			}
 			if (event.getCode() == KeyCode.RIGHT) {
@@ -239,6 +256,7 @@ public class PageTranscription {
 				if (newIndex >= 0) {
 					number.setText(((Label) pageList.getItems().get(newIndex).getChildren().get(1)).getText());
 					updatePage(newIndex);
+					updateTranscription();
 				}
 			}
 			if (event.getCode() == KeyCode.DOWN) {
@@ -246,6 +264,7 @@ public class PageTranscription {
 				if (newIndex < pageList.getItems().size()) {
 					number.setText(((Label) pageList.getItems().get(newIndex).getChildren().get(1)).getText());
 					updatePage(newIndex);
+					updateTranscription();
 				}
 			}
 			if (event.getCode() == KeyCode.PAGE_UP) {
@@ -253,9 +272,11 @@ public class PageTranscription {
 				if (newIndex >= 0) {
 					number.setText(((Label) pageList.getItems().get(newIndex).getChildren().get(1)).getText());
 					updatePage(newIndex);
+					updateTranscription();
 				} else if (newIndex == -1) {
 					number.setText(((Label) pageList.getItems().get(0).getChildren().get(1)).getText());
 					updatePage(0);
+					updateTranscription();
 				}
 			}
 			if (event.getCode() == KeyCode.PAGE_DOWN) {
@@ -263,14 +284,17 @@ public class PageTranscription {
 				if (newIndex < pageList.getItems().size()) {
 					number.setText(((Label) pageList.getItems().get(newIndex).getChildren().get(1)).getText());
 					updatePage(newIndex);
+					updateTranscription();
 				} else if (newIndex == pageList.getItems().size()) {
 					number.setText(((Label) pageList.getItems().get(newIndex - 1).getChildren().get(1)).getText());
 					updatePage(newIndex - 1);
+					updateTranscription();
 				}
 			}
 			if (event.getCode() == KeyCode.HOME) {
 				number.setText(((Label) pageList.getItems().get(0).getChildren().get(1)).getText());
 				updatePage(0);
+				updateTranscription();
 			}
 			if (event.getCode() == KeyCode.END) {
 				number.setText(((Label) pageList.getItems().get(pageList.getItems().size() - 1).getChildren().get(1))
@@ -279,7 +303,23 @@ public class PageTranscription {
 			}
 			if (event.getCode() == KeyCode.ESCAPE) {
 				backButton.requestFocus();
+			}*/
+			if (event.getCode() == KeyCode.LEFT) {
+				previous();
 			}
+			if (event.getCode() == KeyCode.RIGHT) {
+				next();
+			}
+			if (event.getCode() == KeyCode.UP) {
+				event.consume();
+				previous();
+			}
+
+			if (event.getCode() == KeyCode.DOWN) {
+				event.consume();
+				next();
+			}
+			
 		});
 	}
 
