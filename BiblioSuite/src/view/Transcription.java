@@ -3,7 +3,6 @@ package view;
 import java.util.Map.Entry;
 
 import controller.LocalSession;
-import controller.PageScanController;
 import controller.PageTranscriptionController;
 import dao.concrete.DatabaseException;
 import dao.concrete.TranscriptionWorkProjectQuerySet;
@@ -121,8 +120,8 @@ public class Transcription {
 
 	@FXML
 	public void insertDocument() {
-		PageScanController.loadUncompletedDocumentForDigitalizer(LocalSession.getLocalUser().getID());
-
+		PageTranscriptionController.loadUncompletedDocumentForTranscriber(LocalSession.getLocalUser().getID());
+		
 		documentList.setConverter(new StringConverter<Entry<UUIDDocument, String>>() {
 			@Override
 			public String toString(Entry<UUIDDocument, String> a) {
@@ -135,7 +134,7 @@ public class Transcription {
 			}
 		});
 
-		for (Entry<UUIDDocument, String> e : PageScanController.getUncompletedDocument().entrySet()) {
+		for (Entry<UUIDDocument, String> e : PageTranscriptionController.getUncompletedDocument().entrySet()) {
 			documentList.getItems().add(e);
 			if (e.getKey().equals(toOpenDocument)) {
 				documentList.getSelectionModel().select(e);

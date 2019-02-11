@@ -59,7 +59,7 @@ public class LoadScan {
 	private TableColumn<Rows, String> number;
 
 	@FXML
-	private TableColumn<Rows, Image> image;
+	private TableColumn<Rows, ImageView> image;
 
 	@FXML
 	private TableColumn<Rows, String> revisioned;
@@ -290,7 +290,7 @@ public class LoadScan {
 			imageview.setFitWidth(90);
 
 			// Set up the Table
-			TableCell<Rows, Image> cell = new TableCell<Rows, Image>() {
+			TableCell<Rows, ImageView> cell = new TableCell<Rows, ImageView>() {
 				public void updateItem(Image item, boolean empty) {
 					if (item != null) {
 						imageview.setImage(item);
@@ -301,8 +301,8 @@ public class LoadScan {
 			cell.setGraphic(imageview);
 			return cell;
 		});
-
-		image.setCellValueFactory(new PropertyValueFactory<Rows, Image>("Image"));
+		
+		image.setCellValueFactory(new PropertyValueFactory<Rows, ImageView>("Image"));
 		revisioned.setCellValueFactory(new PropertyValueFactory<Rows, String>("Revisioned"));
 		validated.setCellValueFactory(new PropertyValueFactory<Rows, String>("Validated"));
 
@@ -367,8 +367,8 @@ public class LoadScan {
 
 			Image img = LocalSession.loadImage(page.getScan().getImage().getUrl());
 
-			ImageView imgView = new ImageView();
-			imgView.setImage(img);
+			//ImageView imgView = new ImageView();
+			//imgView.setImage(img);
 
 			Rows row = new Rows(page.getPageNumber().toString(), rev, val, page.getID(), img);
 			pages.add(row);

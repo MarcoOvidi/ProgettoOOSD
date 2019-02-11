@@ -44,6 +44,7 @@ public interface TranscriptionWorkProjectQuerySetDAO {
 			throws DatabaseException, NullPointerException;
 	public LinkedList<UUIDUser> getAvailableRevisers(UUIDTranscriptionWorkProject ids)
 			throws DatabaseException, NullPointerException;
-	
+	public  HashMap<UUIDDocument, String> getTranscriptionUncompletedDocumentTranscriber(UUIDUser id) throws DatabaseException;
+	public  HashMap<UUIDDocument, String> getTranscriptionUncompletedDocumentReviser(UUIDUser id) throws DatabaseException;
 	
 }

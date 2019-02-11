@@ -1,19 +1,22 @@
 package controller;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import dao.concrete.DatabaseException;
 import dao.concrete.DigitalizerQuerySet;
 import dao.concrete.DocumentQuerySet;
 import dao.concrete.TranscriberQuerySet;
+import dao.concrete.TranscriptionWorkProjectQuerySet;
 import javafx.fxml.LoadException;
 import model.Document;
 import model.Page;
 import view.SceneController;
 import vo.UUIDDocument;
+import vo.UUIDUser;
 
 public class PageTranscriptionController {
-	
+	private static HashMap<UUIDDocument, String> uncompletedDocument = new HashMap<UUIDDocument, String>();
 	private static LinkedList<Page> currentDocumentPages;
 	private static UUIDDocument currentDocument;
 	private static LinkedList<Page> transcriptionLog;
@@ -33,6 +36,29 @@ public class PageTranscriptionController {
 		return transcriptionLog;
 	}
 
+	public static void loadUncompletedDocumentForTranscriber(UUIDUser usr) {
+		try {
+			uncompletedDocument = new TranscriptionWorkProjectQuerySet().getTranscriptionUncompletedDocumentTranscriber(usr);		} catch (DatabaseException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	public static void loadUncompletedDocumentForReviser(UUIDUser usr) {
+		try {
+			uncompletedDocument = new TranscriptionWorkProjectQuerySet().getTranscriptionUncompletedDocumentReviser(usr);
+		} catch (DatabaseException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+
+	public static HashMap<UUIDDocument, String> getUncompletedDocument() {
+		return uncompletedDocument;
+	}
 
 
 	public static void setTranscriptionLog(LinkedList<Page> transcriptionLog) {

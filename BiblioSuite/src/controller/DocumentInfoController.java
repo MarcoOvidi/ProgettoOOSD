@@ -7,6 +7,7 @@ import dao.concrete.DatabaseException;
 import dao.concrete.DigitalizationRevisorQuerySet;
 import dao.concrete.DocumentQuerySet;
 import dao.concrete.TranscriptionReviserQuerySet;
+import dao.concrete.TranscriptionWorkProjectQuerySet;
 import javafx.fxml.LoadException;
 import model.Document;
 import vo.Tag;
@@ -98,10 +99,19 @@ public class DocumentInfoController {
 	
 	public void setScanningComplete(boolean b) {
 		try {
-			new DigitalizationRevisorQuerySet().scanningProcessCompleted(document.getScanningWorkProject());
+			new DigitalizationRevisorQuerySet().scanningProcessCompleted(document.getScanningWorkProject(),b);
 		} catch (DatabaseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		if(b) {
+			try {
+				//TODO solo se non esiste già
+				new TranscriptionWorkProjectQuerySet().insertTranscriptionWorkProject(LocalSession.getLocalUser().getID(),document.getUUID());
+			} catch (DatabaseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	

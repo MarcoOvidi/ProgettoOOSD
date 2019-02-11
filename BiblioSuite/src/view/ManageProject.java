@@ -537,7 +537,9 @@ public class ManageProject {
 
 		documentProperties.getChildren().setAll(containerPane);
 		
-		//if (clickedDocument.getIdTPrj())
+		if (clickedDocument.getIdTPrj() == null) {
+			transcriptionTab.setDisable(true);
+		}
 		
 		manageContainer.setBackground(new Background(new BackgroundFill(null, null, null)));
 		pane.setBackground(new Background(new BackgroundFill(null, null, null)));

@@ -67,10 +67,15 @@ public class UpdateDocumentProperties {
 	
 	private void updateProjectStatus() {
 		if (scanningComplete.isSelected() && !documentInfoController.getScanningComplete()) {
-			documentInfoController.setScanningComplete();
+			documentInfoController.setScanningComplete(true);
+			
 		}
 		if (transcriptionComplete.isSelected() && !documentInfoController.getTranscriptionComplete()) {
 			documentInfoController.setTranscriptionComplete();
+		}
+		
+		if (!scanningComplete.isSelected() && documentInfoController.getScanningComplete()) {
+			documentInfoController.setScanningComplete(false);
 		}
 	}
 

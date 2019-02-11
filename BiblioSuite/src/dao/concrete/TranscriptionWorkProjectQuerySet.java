@@ -17,9 +17,9 @@ import vo.UUIDDocument;
 import vo.UUIDTranscriptionWorkProject;
 import vo.UUIDUser;
 
-public class TranscriptionWorkProjectQuerySet  implements TranscriptionWorkProjectQuerySetDAO{
+public class TranscriptionWorkProjectQuerySet implements TranscriptionWorkProjectQuerySetDAO {
 	// TODO Cosa manca?
-	public  UUIDTranscriptionWorkProject insertTranscriptionWorkProject(LinkedList<UUIDUser> transcribers,
+	public UUIDTranscriptionWorkProject insertTranscriptionWorkProject(LinkedList<UUIDUser> transcribers,
 			LinkedList<UUIDUser> revisers, UUIDUser coordinator, Boolean completed, UUIDDocument doc)
 			throws DatabaseException {
 		Connection con = null;
@@ -108,6 +108,58 @@ public class TranscriptionWorkProjectQuerySet  implements TranscriptionWorkProje
 		return id;
 	}
 
+	public UUIDTranscriptionWorkProject insertTranscriptionWorkProject(UUIDUser coordinator, UUIDDocument doc)
+			throws DatabaseException {
+		Connection con = null;
+
+		try {
+			con = DBConnection.connect();
+		} catch (DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		UUIDTranscriptionWorkProject id = null;
+
+		try {
+			con.setAutoCommit(false);
+			ps = con.prepareStatement(
+					"insert into transcription_project(ID_coordinator, ID_document,transcription_complete) values (?,?,false);",
+					new String[] { "ID" });
+			ps.setInt(1, coordinator.getValue());
+			ps.setInt(2, doc.getValue());
+
+			ps.addBatch();
+			ps.executeBatch();
+
+			rs = ps.getGeneratedKeys();
+			if (rs.next()) {
+				id = new UUIDTranscriptionWorkProject(rs.getInt(1));
+			}
+			con.commit();
+			con.setAutoCommit(true);
+		} catch (SQLException e) {
+			try {
+				con.abort(null);
+			} catch (SQLException f) {
+				DBConnection.logDatabaseException(new DatabaseException("Duplicato", f));
+			}
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+
+		}
+
+		return id;
+	}
+
 	/*
 	 * Seleziona un transcriptionWorkProject con il relativo personale
 	 * 
@@ -115,7 +167,7 @@ public class TranscriptionWorkProjectQuerySet  implements TranscriptionWorkProje
 	 * 
 	 * @return TranscriptionWorkProject oggetto completo
 	 */
-	public  TranscriptionWorkProject loadTranscriptionWorkProject(UUIDTranscriptionWorkProject id)
+	public TranscriptionWorkProject loadTranscriptionWorkProject(UUIDTranscriptionWorkProject id)
 			throws DatabaseException, NullPointerException {
 		if (id == null)
 			throw new NullPointerException("Id non valido poichè nullo");
@@ -224,7 +276,7 @@ public class TranscriptionWorkProjectQuerySet  implements TranscriptionWorkProje
 	 * 
 	 * @throws NullPointerException in caso i parametri di input siano nulli
 	 */
-	public  Boolean insertTranscriberUser(UUIDTranscriptionWorkProject ids, UUIDUser id)
+	public Boolean insertTranscriberUser(UUIDTranscriptionWorkProject ids, UUIDUser id)
 			throws DatabaseException, NullPointerException {
 		if (ids == null)
 			throw new NullPointerException("Id Progetto non valido");
@@ -280,7 +332,7 @@ public class TranscriptionWorkProjectQuerySet  implements TranscriptionWorkProje
 	 * 
 	 * @throws NullPointerException in caso i parametri di input siano nulli
 	 */
-	public  Boolean insertReviserUser(UUIDUser id, UUIDTranscriptionWorkProject ids)
+	public Boolean insertReviserUser(UUIDUser id, UUIDTranscriptionWorkProject ids)
 			throws DatabaseException, NullPointerException {
 		if (ids == null)
 			throw new NullPointerException("Id Progetto non valido");
@@ -337,7 +389,7 @@ public class TranscriptionWorkProjectQuerySet  implements TranscriptionWorkProje
 	 * 
 	 * @throws NullPointerException in caso i parametri di input siano nulli
 	 */
-	public  Boolean removeTranscriberUser(UUIDUser id, UUIDTranscriptionWorkProject ids)
+	public Boolean removeTranscriberUser(UUIDUser id, UUIDTranscriptionWorkProject ids)
 			throws DatabaseException, NullPointerException {
 		if (ids == null)
 			throw new NullPointerException("Id Progetto non valido");
@@ -393,7 +445,7 @@ public class TranscriptionWorkProjectQuerySet  implements TranscriptionWorkProje
 	 * 
 	 * @throws NullPointerException in caso i parametri di input siano nulli
 	 */
-	public  Boolean removeReviserUser(UUIDUser id, UUIDTranscriptionWorkProject ids)
+	public Boolean removeReviserUser(UUIDUser id, UUIDTranscriptionWorkProject ids)
 			throws DatabaseException, NullPointerException {
 		if (ids == null)
 			throw new NullPointerException("Id Progetto non valido");
@@ -450,7 +502,7 @@ public class TranscriptionWorkProjectQuerySet  implements TranscriptionWorkProje
 	 * 
 	 * @throws NullPointerException in caso i parametri di input siano nulli
 	 */
-	public  Integer insertTranscriberUser(LinkedList<UUIDUser> idl, UUIDTranscriptionWorkProject ids)
+	public Integer insertTranscriberUser(LinkedList<UUIDUser> idl, UUIDTranscriptionWorkProject ids)
 			throws DatabaseException, NullPointerException {
 		if (idl == null)
 			throw new NullPointerException("Lista di utenti non valida");
@@ -514,7 +566,7 @@ public class TranscriptionWorkProjectQuerySet  implements TranscriptionWorkProje
 	 * 
 	 * @throws NullPointerException in caso i parametri di input siano nulli
 	 */
-	public  Integer insertReviserUser(LinkedList<UUIDUser> idl, UUIDTranscriptionWorkProject ids)
+	public Integer insertReviserUser(LinkedList<UUIDUser> idl, UUIDTranscriptionWorkProject ids)
 			throws DatabaseException, NullPointerException {
 		if (idl == null)
 			throw new NullPointerException("Lista di utenti non valida");
@@ -578,7 +630,7 @@ public class TranscriptionWorkProjectQuerySet  implements TranscriptionWorkProje
 	 * 
 	 * @throws NullPointerException in caso i parametri di input siano nulli
 	 */
-	public  Integer removeTranscriberUser(LinkedList<UUIDUser> idl, UUIDTranscriptionWorkProject ids)
+	public Integer removeTranscriberUser(LinkedList<UUIDUser> idl, UUIDTranscriptionWorkProject ids)
 			throws DatabaseException, NullPointerException {
 		if (idl == null)
 			throw new NullPointerException("Lista di utenti non valida");
@@ -627,22 +679,23 @@ public class TranscriptionWorkProjectQuerySet  implements TranscriptionWorkProje
 		}
 	}
 
-	/*
+	/**
 	 * Rimuoveuna lista di utenti Revisori da un progetto di Trascrizione
 	 * 
 	 * @param UUIDTranscriptionWorkProject ID del progetto da cui si devono
-	 * eliminare gli utenti
+	 *                                     eliminare gli utenti
 	 * 
-	 * @param LinkedList<UUIDUser> ID degli utenti da eliminare
+	 * @param                              LinkedList<UUIDUser> ID degli utenti da
+	 *                                     eliminare
 	 * 
 	 * @return Integer numero di Revisori correttamente rimossi dal progetto di
-	 * trascrizione
+	 *         trascrizione
 	 * 
 	 * @throw DatabaseException in caso di errori di connessione ad DB o sulle query
 	 * 
 	 * @throws NullPointerException in caso i parametri di input siano nulli
 	 */
-	public  Integer removeReviserUser(LinkedList<UUIDUser> idl, UUIDTranscriptionWorkProject ids)
+	public Integer removeReviserUser(LinkedList<UUIDUser> idl, UUIDTranscriptionWorkProject ids)
 			throws DatabaseException, NullPointerException {
 		if (idl == null)
 			throw new NullPointerException("Lista di utenti non valida");
@@ -692,7 +745,7 @@ public class TranscriptionWorkProjectQuerySet  implements TranscriptionWorkProje
 	}
 
 	// cancella un TranscriptionWorkProject con il relativo personale
-	public  Boolean deleteTranscriptionWorkProject(UUIDTranscriptionWorkProject id)
+	public Boolean deleteTranscriptionWorkProject(UUIDTranscriptionWorkProject id)
 			throws DatabaseException, NullPointerException {
 		if (id == null)
 			throw new NullPointerException("Id non vallido");
@@ -736,7 +789,7 @@ public class TranscriptionWorkProjectQuerySet  implements TranscriptionWorkProje
 	 * @return UUIDDocument UUID of the Document
 	 */
 
-	public  UUIDDocument loadUUIDDocument(UUIDTranscriptionWorkProject id)
+	public UUIDDocument loadUUIDDocument(UUIDTranscriptionWorkProject id)
 			throws DatabaseException, NullPointerException {
 		if (id == null)
 			throw new NullPointerException("Id non valido");
@@ -788,8 +841,8 @@ public class TranscriptionWorkProjectQuerySet  implements TranscriptionWorkProje
 	 * @return HashMap<Integer,String> Mappa di Id progetti di trascrizione e titolo
 	 *         dell'opera associata
 	 */
-	public  HashMap<UUIDTranscriptionWorkProject, String[]> loadMyCoordinatedTranscriptionWorkProjectList(
-			UUIDUser usr) throws DatabaseException {
+	public HashMap<UUIDTranscriptionWorkProject, String[]> loadMyCoordinatedTranscriptionWorkProjectList(UUIDUser usr)
+			throws DatabaseException {
 
 		Connection con = null;
 
@@ -835,7 +888,7 @@ public class TranscriptionWorkProjectQuerySet  implements TranscriptionWorkProje
 		return twpl;
 	}
 
-	public  boolean ifExistTranscriptionProject(UUIDDocument doc) throws DatabaseException {
+	public boolean ifExistTranscriptionProject(UUIDDocument doc) throws DatabaseException {
 		Connection con = null;
 
 		try {
@@ -886,7 +939,7 @@ public class TranscriptionWorkProjectQuerySet  implements TranscriptionWorkProje
 	 * @throws DatabaseException
 	 * @throws NullPointerException
 	 */
-	public  Boolean changeTranscriptionProjectCoordinator(UUIDUser id, UUIDTranscriptionWorkProject ids)
+	public Boolean changeTranscriptionProjectCoordinator(UUIDUser id, UUIDTranscriptionWorkProject ids)
 			throws DatabaseException, NullPointerException {
 		if (ids == null)
 			throw new NullPointerException("Id Progetto non valido");
@@ -926,23 +979,24 @@ public class TranscriptionWorkProjectQuerySet  implements TranscriptionWorkProje
 		}
 
 	}
-	
+
 	/**
-	 * Recupera tutti gli utenti attivi, che soni transcrittori e che non fanno già parte del progetto sia come trascrittori che come revisori
+	 * Recupera tutti gli utenti attivi, che soni transcrittori e che non fanno già
+	 * parte del progetto sia come trascrittori che come revisori
+	 * 
 	 * @param ids
 	 * @return
 	 * @throws DatabaseException
 	 * @throws NullPointerException
 	 */
-	public  LinkedList<UUIDUser> getAvailableTranscribers(UUIDTranscriptionWorkProject ids, int level)
+	public LinkedList<UUIDUser> getAvailableTranscribers(UUIDTranscriptionWorkProject ids, int level)
 			throws DatabaseException, NullPointerException {
 		if (ids == null)
 			throw new NullPointerException("Id Progetto non valido");
 
-
 		Connection con = null;
 		LinkedList<UUIDUser> availableStaff = new LinkedList<UUIDUser>();
-		
+
 		try {
 			con = DBConnection.connect();
 		} catch (DatabaseException ex) {
@@ -950,13 +1004,12 @@ public class TranscriptionWorkProjectQuerySet  implements TranscriptionWorkProje
 		}
 
 		PreparedStatement ps = null;
-		
+
 		ResultSet rs = null;
 
 		try {
 			ps = con.prepareStatement("select u.ID from user as u join perm_authorization as perm "
-					+ "on u.ID=perm.ID_user "
-					+ "WHERE modifyTranscription=1 and status = 1 and level=? "
+					+ "on u.ID=perm.ID_user " + "WHERE modifyTranscription=1 and status = 1 and level=? "
 					+ "and u.ID not in( select ID_transcriber_user from transcription_project_transcriber_partecipant where ID_transcription_project=?) "
 					+ "AND u.ID not in( select ID_reviser_user from transcription_project_reviser_partecipant where ID_transcription_project=?) "
 					+ "AND u.ID not in( select ID_coordinator from transcription_project where ID=?);");
@@ -966,18 +1019,17 @@ public class TranscriptionWorkProjectQuerySet  implements TranscriptionWorkProje
 			ps.setInt(4, ids.getValue());
 
 			rs = ps.executeQuery();
-			
-			while(rs.next()) {
+
+			while (rs.next()) {
 				availableStaff.add(new UUIDUser(rs.getInt("ID")));
 			}
-			
-			
+
 		} catch (SQLException e) {
 			throw new DatabaseException("Errore di esecuzione query", e);
 		} finally {
 
 			try {
-				if(rs != null)
+				if (rs != null)
 					rs.close();
 				if (ps != null)
 					ps.close();
@@ -989,23 +1041,24 @@ public class TranscriptionWorkProjectQuerySet  implements TranscriptionWorkProje
 		}
 		return availableStaff;
 	}
-	
+
 	/**
-	 * Recupera tutti gli utenti attivi, che sono revisori e che non fanno già parte del progetto sia come trascrittori che come revisori e coordinatori
+	 * Recupera tutti gli utenti attivi, che sono revisori e che non fanno già parte
+	 * del progetto sia come trascrittori che come revisori e coordinatori
+	 * 
 	 * @param ids
 	 * @return
 	 * @throws DatabaseException
 	 * @throws NullPointerException
 	 */
-	public  LinkedList<UUIDUser> getAvailableRevisers(UUIDTranscriptionWorkProject ids)
+	public LinkedList<UUIDUser> getAvailableRevisers(UUIDTranscriptionWorkProject ids)
 			throws DatabaseException, NullPointerException {
 		if (ids == null)
 			throw new NullPointerException("Id Progetto non valido");
 
-
 		Connection con = null;
 		LinkedList<UUIDUser> availableStaff = new LinkedList<UUIDUser>();
-		
+
 		try {
 			con = DBConnection.connect();
 		} catch (DatabaseException ex) {
@@ -1013,13 +1066,12 @@ public class TranscriptionWorkProjectQuerySet  implements TranscriptionWorkProje
 		}
 
 		PreparedStatement ps = null;
-		
+
 		ResultSet rs = null;
 
 		try {
 			ps = con.prepareStatement("select u.ID from user as u join perm_authorization as perm "
-					+ "on u.ID=perm.ID_user "
-					+ "WHERE reviewTranscription=1 and status = 1 and "
+					+ "on u.ID=perm.ID_user " + "WHERE reviewTranscription=1 and status = 1 and "
 					+ "u.ID not in( select ID_transcriber_user from transcription_project_transcriber_partecipant where ID_transcription_project=?) "
 					+ "AND u.ID not in( select ID_reviser_user from transcription_project_reviser_partecipant where ID_transcription_project=?) "
 					+ "AND u.ID not in( select ID_coordinator from transcription_project where ID=?) ;");
@@ -1028,18 +1080,17 @@ public class TranscriptionWorkProjectQuerySet  implements TranscriptionWorkProje
 			ps.setInt(3, ids.getValue());
 
 			rs = ps.executeQuery();
-			
-			while(rs.next()) {
+
+			while (rs.next()) {
 				availableStaff.add(new UUIDUser(rs.getInt("ID")));
 			}
-			
-			
+
 		} catch (SQLException e) {
 			throw new DatabaseException("Errore di esecuzione query", e);
 		} finally {
 
 			try {
-				if(rs != null)
+				if (rs != null)
 					rs.close();
 				if (ps != null)
 					ps.close();
@@ -1051,7 +1102,113 @@ public class TranscriptionWorkProjectQuerySet  implements TranscriptionWorkProje
 		}
 		return availableStaff;
 	}
-	
 
+	/**
+	 * Permette di estrarre tutti i documenti il cui scanning project non è
+	 * completato e l'utente parametro ne è un digitalizzatore
+	 * 
+	 * @param id
+	 * @return
+	 * @throws DatabaseException
+	 */
+	public HashMap<UUIDDocument, String> getTranscriptionUncompletedDocumentTranscriber(UUIDUser id)
+			throws DatabaseException {
+
+		HashMap<UUIDDocument, String> uncompletedDocument = new HashMap<UUIDDocument, String>();
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DBConnection.connect();
+		} catch (DatabaseException ex) {
+			throw new DatabaseException("Errore di connessione", ex);
+		}
+
+		try {
+			ps = con.prepareStatement("select d.ID as ID ,d.title as T from document as d "
+					+ "join transcription_project as sp join transcription_project_transcriber_partecipant  "
+					+ "as spp on d.ID=sp.ID_document  AND spp.ID_transcription_project=sp.ID "
+					+ "WHERE transcription_complete=0 AND spp.ID_transcriber_user = ?;");
+			ps.setInt(1, id.getValue());
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				uncompletedDocument.put(new UUIDDocument(rs.getInt("ID")), rs.getString("T"));
+			}
+
+		} catch (SQLException e) {
+			throw new DatabaseException("Errore di esecuzione query", e);
+		} finally {
+
+			try {
+				if (rs != null)
+					rs.close();
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+		}
+
+		return uncompletedDocument;
+	}
+
+	/**
+	 * Permette di estrarre tutti i documenti il cui scanning project non è
+	 * completato e l'utente parametro ne è un revisore
+	 * 
+	 * @param id
+	 * @return
+	 * @throws DatabaseException
+	 */
+	public HashMap<UUIDDocument, String> getTranscriptionUncompletedDocumentReviser(UUIDUser id)
+			throws DatabaseException {
+
+		HashMap<UUIDDocument, String> uncompletedDocument = new HashMap<UUIDDocument, String>();
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DBConnection.connect();
+		} catch (DatabaseException ex) {
+			throw new DatabaseException("Errore di connessione", ex);
+		}
+
+		try {
+			ps = con.prepareStatement("select d.ID as ID ,d.title as T from document as d "
+					+ "join transcription_project as sp join transcription_project_reviser_partecipant  "
+					+ "as spp on d.ID=sp.ID_document  AND spp.ID_transcription_project=sp.ID "
+					+ "WHERE transcriptiong_complete=0 AND spp.ID_reviser_user = ?;");
+			ps.setInt(1, id.getValue());
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				uncompletedDocument.put(new UUIDDocument(rs.getInt("ID")), rs.getString("T"));
+			}
+
+		} catch (SQLException e) {
+			throw new DatabaseException("Errore di esecuzione query", e);
+		} finally {
+
+			try {
+				if (rs != null)
+					rs.close();
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+		}
+
+		return uncompletedDocument;
+	}
 
 }

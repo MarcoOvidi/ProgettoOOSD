@@ -1,5 +1,6 @@
 package view;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 
@@ -135,7 +136,9 @@ public class PageTranscription {
 
 		}
 
-		viewPage(new Image(pages.get(0).getScan().getImage().getUrl()));
+		//Collections.sort(pages);
+		//System.out.println(pages.get(0).getScan().getImage().getUrl());
+		viewPage(new Image("file:"+pages.get(0).getScan().getImage().getUrl()));
 	}
 
 	private void viewPage(Image pageImage) {

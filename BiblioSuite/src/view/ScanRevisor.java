@@ -212,8 +212,8 @@ public class ScanRevisor {
 				}
 
 				Image img = LocalSession.loadImage(page.getScan().getImage().getUrl());
-				ImageView imgView = new ImageView();
-				imgView.setImage(img);
+				//ImageView imgView = new ImageView();
+				//imgView.setImage(img);
 				
 				pages.add(new Rows(page.getPageNumber().toString(), rev, val, page.getID(), img));
 

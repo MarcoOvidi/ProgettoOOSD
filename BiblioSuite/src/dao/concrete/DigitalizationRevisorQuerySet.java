@@ -111,6 +111,40 @@ public class DigitalizationRevisorQuerySet implements DigitalizationRevisorQuery
 			}
 		}
 	}
+	
+	public  void scanningProcessCompleted(UUIDScanningWorkProject id,boolean b) throws DatabaseException {
+
+		Connection con = null;
+
+		try {
+			con = DBConnection.connect();
+		} catch (DatabaseException ex) {
+			throw new DatabaseException("Errore di connessione", ex);
+		}
+
+		PreparedStatement ps = null;
+
+		try {
+			ps = con.prepareStatement("UPDATE scanning_project SET scanning_complete=? WHERE ID=?");
+
+			ps.setBoolean(1, b);
+			ps.setInt(2, id.getValue());
+
+			ps.executeUpdate();
+
+		} catch (SQLException e) {
+			throw new DatabaseException("Errore di esecuzione query", e);
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+		}
+	}
 
 	/**
 	 * Permette di aggiungere un commento all'ultima digitalizzazione della pagina
