@@ -27,6 +27,7 @@ import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
@@ -38,6 +39,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
@@ -120,8 +122,19 @@ public class Catalog extends Application{
 			for(int j=0; j<4; j++) {
 				if (!itr.hasNext())
 					break;
-				Button button = new Button(itr.next().getValue());
-				gridPane.add(button, j, i);
+				ImageView img = new ImageView(new Image("file:resources/tails/tail"+(((i%3)+1)*4+j+1)+".png"));
+				StackPane stackPane = new StackPane();
+				img.maxHeight(100);
+				img.maxHeight(100);
+				//img.minHeight(200);
+				//img.maxWidth(200);
+				stackPane.setMaxWidth(100);
+				stackPane.setMaxHeight(100);
+				stackPane.getChildren().add(img);
+				Label label = new Label(itr.next().getValue());
+				//button.setGraphic(img);
+				stackPane.getChildren().add(label);
+				gridPane.add(stackPane, j, i);
 			}
 			if (!itr.hasNext())
 				break;
