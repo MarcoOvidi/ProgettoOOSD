@@ -7,6 +7,7 @@ import dao.concrete.DatabaseException;
 import dao.concrete.DigitalizerQuerySet;
 import dao.concrete.DocumentQuerySet;
 import dao.concrete.TranscriberQuerySet;
+import dao.concrete.TranscriptionReviserQuerySet;
 import dao.concrete.TranscriptionWorkProjectQuerySet;
 import javafx.fxml.LoadException;
 import model.Document;
@@ -126,7 +127,7 @@ public class PageTranscriptionController {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void transcribeDocument(UUIDDocument document) throws LoadException {
 		Document doc = null;
 		try{
@@ -142,7 +143,42 @@ public class PageTranscriptionController {
 			//PageTranscriptionController.setToEditPageNumber(0);
 			SceneController.loadScene("pageTranscription", false);
 		}
-		
+	}
+
+	public static void reviewDocumentTranscription(UUIDDocument document) throws LoadException {
+		Document doc = null;
+		try{
+			//doc = DocumentQuerySet.loadDocument(document);
+			//FIXME potrebbe causare problemi questa cosa?
+			doc = new DocumentQuerySet().loadDocumentToView(document);
+		}catch(DatabaseException e) {
+			e.getMessage();
+			e.printStackTrace();
+		}
+		if(doc != null) {
+			LocalSession.setOpenedDocumet(doc);
+			//PageTranscriptionController.setToEditPageNumber(0);
+			SceneController.loadScene("pageTranscriptionReview", false);
+		}
+	}
+	
+
+	public static void setPageRevised(UUIDPage page, boolean b) {
+		try {
+			new TranscriptionReviserQuerySet().revised(page, b);
+		} catch (DatabaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void setPageValidated(UUIDPage page, boolean b) {
+		try {
+			new TranscriptionReviserQuerySet().validated(page, b);
+		} catch (DatabaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/*public static void transcribeDocument(UUIDDocument document, int page) throws LoadException {

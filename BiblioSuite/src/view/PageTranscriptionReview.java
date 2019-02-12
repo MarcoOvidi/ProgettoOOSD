@@ -9,6 +9,7 @@ import org.fxmisc.richtext.LineNumberFactory;
 import controller.DocumentInfoController;
 import controller.LocalSession;
 import controller.PageTranscriptionController;
+import dao.concrete.TranscriptionReviserQuerySet;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -26,13 +27,15 @@ import model.Page;
 import vo.TEItext;
 import vo.UUIDPage;
 
-public class PageTranscription {
+public class PageTranscriptionReview {
 	public static boolean isEmpty = false;
 
 	@FXML
 	private Button backButton;
 	@FXML
 	private Button saveButton;
+	@FXML
+	private Button validateButton;
 
 	@FXML
 	private ListView<VBox> pageList;
@@ -81,6 +84,7 @@ public class PageTranscription {
 		initKeyboardNavigation();
 		initTranscription();
 		initSaveButton();
+		initValidateButton();
 
 		pageList.getSelectionModel().selectFirst();
 		updatePageNumber();
@@ -96,7 +100,14 @@ public class PageTranscription {
 			UUIDPage page = DocumentInfoController.getPageID(LocalSession.getOpenedDocumet().getUUID(), Integer.parseInt(number.getText()));
 			
 			PageTranscriptionController.saveTranscription(page, transcription.getText());
-			PageTranscriptionController.setPageRevised(DocumentInfoController.getPageID(LocalSession.getOpenedDocumet().getUUID(), Integer.parseInt(number.getText())), false);
+			PageTranscriptionController.setPageRevised(DocumentInfoController.getPageID(LocalSession.getOpenedDocumet().getUUID(), Integer.parseInt(number.getText())), true);			
+		});
+	}
+	
+	private void initValidateButton() {
+		validateButton.setOnAction(event -> {
+			PageTranscriptionController.setPageValidated(DocumentInfoController.getPageID(LocalSession.getOpenedDocumet().getUUID(), Integer.parseInt(number.getText())), true);
+			transcription.setDisable(true); 
 		});
 	}
 

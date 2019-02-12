@@ -59,7 +59,7 @@ public class TranscriptionReviserQuerySet implements TranscriptionReviserQuerySe
 	 * @exception DatabaseException in caso di errori nella connessione con il DB o di esecuzione query 
 	 */
 	
-	public  Boolean validated(UUIDPage id) throws DatabaseException {
+	public  Boolean validated(UUIDPage id, boolean b) throws DatabaseException {
 		Connection con = null;
 		
 		try {
@@ -72,8 +72,9 @@ public class TranscriptionReviserQuerySet implements TranscriptionReviserQuerySe
 		Integer result = null;
 		
 		try {
-			ps = con.prepareStatement("UPDATE page SET transcription_convalidation = 1 WHERE id=?");
-			ps.setInt(1, id.getValue());
+			ps = con.prepareStatement("UPDATE page SET transcription_convalidation = ? WHERE id=?");
+			ps.setBoolean(1, b);
+			ps.setInt(2, id.getValue());
 			
 			result = ps.executeUpdate();
 			
@@ -101,7 +102,7 @@ public class TranscriptionReviserQuerySet implements TranscriptionReviserQuerySe
 	 * @return Boolean true se l'operazione è andata a buon fine
 	 * @exception DatabaseException in caso di errori nella connessione con il DB o di esecuzione query 
 	 */
-	public  Boolean revised(UUIDPage id) throws DatabaseException{
+	public  Boolean revised(UUIDPage id, boolean b) throws DatabaseException{
 		Connection con = null;
 		
 		try {
@@ -114,8 +115,9 @@ public class TranscriptionReviserQuerySet implements TranscriptionReviserQuerySe
 		Integer result = null;
 		
 		try {
-			ps = con.prepareStatement("UPDATE page SET transcription_revised = 1 WHERE id=?");
-			ps.setInt(1, id.getValue());
+			ps = con.prepareStatement("UPDATE page SET transcription_revised = ? WHERE id=?");
+			ps.setBoolean(1, b);
+			ps.setInt(2, id.getValue());
 			
 			result = ps.executeUpdate();
 			

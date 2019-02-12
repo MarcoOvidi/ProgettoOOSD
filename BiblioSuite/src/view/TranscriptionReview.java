@@ -26,7 +26,7 @@ import vo.UUIDDocument;
 import vo.UUIDTranscriptionWorkProject;
 import vo.view.Rows;
 
-public class Transcription {
+public class TranscriptionReview {
 
 	private static UUIDDocument toOpenDocument = null;
 
@@ -111,11 +111,11 @@ public class Transcription {
 	public static void setToOpenDocumentFromTranscriptionProject(UUIDTranscriptionWorkProject swp)
 			throws NullPointerException, DatabaseException {
 		// FIXME andrebbe incapsulato in un metodo del controller
-		Transcription.toOpenDocument = new TranscriptionWorkProjectQuerySet().loadUUIDDocument(swp);
+		TranscriptionReview.toOpenDocument = new TranscriptionWorkProjectQuerySet().loadUUIDDocument(swp);
 	}
 
 	public static void setToOpenDocument(UUIDDocument toOpenDocument) {
-		Transcription.toOpenDocument = toOpenDocument;
+		TranscriptionReview.toOpenDocument = toOpenDocument;
 	}
 
 	@FXML
@@ -196,7 +196,7 @@ public class Transcription {
 	public void loadDocument(UUIDDocument document) { // FIXME tutto da testare
 		
 		try {
-			PageTranscriptionController.reviewDocumentTranscription(document);
+			PageTranscriptionController.transcribeDocument(document);
 		} catch (LoadException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

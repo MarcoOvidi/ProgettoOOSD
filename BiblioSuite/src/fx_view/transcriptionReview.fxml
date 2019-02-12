@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Transcription">
+	<top>
+		<AnchorPane prefHeight="800.0" prefWidth="1400.0" BorderPane.alignment="CENTER">
+			<children>
+				<ScrollPane layoutX="14.0" layoutY="115.0" prefHeight="530.0" prefWidth="1182.0">
+					<content>
+						<VBox fx:id="scanList" prefWidth="1035.0">
+							<children>
+								<TableView fx:id="pageTable" prefHeight="500.0">
+									<columns>
+										<TableColumn fx:id="number" prefWidth="75.0" text="Number" />
+										<TableColumn fx:id="image" editable="false" prefWidth="75.0" sortable="false" text="Page" />
+										<TableColumn fx:id="revisioned" editable="false" prefWidth="100.0" sortable="false" text="Revisioned" />
+										<TableColumn fx:id="validated" editable="false" prefWidth="100.0" sortable="false" text="Validated" />
+									</columns>
+								</TableView>
+							</children>
+						</VBox>
+					</content>
+				</ScrollPane>
+				<Label layoutX="14.0" layoutY="14.0" prefHeight="40.0" prefWidth="285.0" styleClass="title" text="Select document:">
+					<font>
+						<Font size="28.0" />
+					</font>
+				</Label>
+				<ChoiceBox fx:id="documentList" layoutX="240.0" layoutY="23.0" prefWidth="150.0" />
+			
+			</children>
+		</AnchorPane>
+	</top>
+</BorderPane>

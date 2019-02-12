@@ -69,6 +69,7 @@ public class Container {
 		map.put("Upload", new Pair<String,String>("loadScan","image"));
 		map.put("Transcription", new Pair<String,String>("transcription","file-text"));
 		map.put("Review", new Pair<String,String>("scanRevisor","edit"));
+		map.put("Transcription Review", new Pair<String,String>("transcriptionReview","edit"));
 		map.put("Admin", new Pair<String,String>("adminPanel","briefcase"));
 	}
 	
