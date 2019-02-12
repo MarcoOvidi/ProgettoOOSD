@@ -31,8 +31,8 @@
 			</VBox>
          <AnchorPane id="rightHomePanel" prefHeight="685.0" prefWidth="600.0" style="-fx-background-color: rgba(0, 0, 0, 0.2);">
             <children>
-   				<JFXButton fx:id="catalog" layoutX="166.0" layoutY="131.0" text="Catalogo" />
-   				<JFXButton fx:id="myCollection" layoutX="153.0" layoutY="408.0" text="My Collection" />
+         				<JFXButton fx:id="catalog" layoutX="166.0" layoutY="131.0" text="Catalogo" />
+         				<JFXButton fx:id="myCollection" layoutX="153.0" layoutY="408.0" text="My Collection" />
             </children>
          </AnchorPane>
 		</HBox>

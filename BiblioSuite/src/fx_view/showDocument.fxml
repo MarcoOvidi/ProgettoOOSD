@@ -20,7 +20,7 @@
 	xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="view.ShowDocument">
 	<top>
-		<AnchorPane prefHeight="40.0" layoutX="0.0" layoutY="0.0"
+		<AnchorPane fx:id="menuDocumentView" prefHeight="40.0" layoutX="0.0" layoutY="0.0"
 			AnchorPane.rightAnchor="0.0">
 			<children>
 				<ToolBar AnchorPane.leftAnchor="0.0"
@@ -29,7 +29,7 @@
 						prefHeight="24.0" prefWidth="170.0" text="⬅   Back">
 					</Button>
 				</ToolBar>
-				<ToolBar AnchorPane.RightAnchor="0.0"
+				<ToolBar  AnchorPane.RightAnchor="0.0"
 					style="-fx-background-color: #00000000">
 					<Button fx:id="moreButton" mnemonicParsing="false"
 						prefHeight="24.0" prefWidth="170.0" text="More ▼">

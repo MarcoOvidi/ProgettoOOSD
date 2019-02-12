@@ -23,7 +23,7 @@ import javafx.util.Duration;
 
 public class LoginScene {
 
-	private static boolean autoLogin = false;
+	private static boolean autoLogin = true;
 
 	String controllerUrl = "LoginController";
 

@@ -88,6 +88,8 @@ JFXTextField, JFXPasswordField{
  	-fx-background-color: rgba(0,0,0,0.85);
  	-fx-border-width:1.0px;
  	-fx-border-color:#0096c8cc; 	
+ 	-fx-border-radius:16px;
+ 	-fx-background-radius:16px;
  } 
 /* 
 #pageContainer{
@@ -542,7 +544,7 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 	
 
 
-#propertiesTab {
+#scanningTab {
 	-fx-background-color: #555;
 	-fx-pref-width: 300.0px;
 	-fx-border-color: transparent;
@@ -559,7 +561,7 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 	-fx-background-color: transparent;
 }
 
-#scanningTab{
+#transcriptionTab{
 	-fx-background-radius: 0.0px 16.0px 16.0px 0.0px;
 	-fx-background-color: #555;
 	-fx-pref-width: 300.0px;
@@ -583,7 +585,7 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 	
 	
 
-#transcriptionTab{
+#propertiesTab{
 	-fx-background-radius: 16.0px 0.0px 0.0px 16.0px;
 	-fx-background-color: #555;
 	-fx-pref-width: 300.0px;	
@@ -742,6 +744,24 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
     -fx-border-width: 0.0px 0.0px 1.0px 0.0px;
     -fx-border-color:#aaaa;
     -fx-tab-max-width:49.0px;
+}
+
+#menuDocumentView{
+	-fx-background-color: linear-gradient(from 50.0% 60.0% to 50.0% 100.0%, #0096c8cc, #0096c888);
+	-fx-padding:7px;
+}
+#backButton{
+	-fx-background-color: #5559;
+}
+
+
+#moreButton{
+		-fx-background-color: #5559;
+	
+}
+
+#moreButton:hover{
+	-fx-background-color: #3CB371;
 }
 
 #rightbar{

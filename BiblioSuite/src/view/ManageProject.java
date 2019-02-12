@@ -539,6 +539,7 @@ public class ManageProject {
 		
 		if (clickedDocument.getIdTPrj() == null) {
 			transcriptionTab.setDisable(true);
+			transcriptionTab.setStyle(" -fx-background-color: #555;");
 		}
 		
 		manageContainer.setBackground(new Background(new BackgroundFill(null, null, null)));

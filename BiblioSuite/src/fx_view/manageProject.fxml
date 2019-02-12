@@ -34,10 +34,10 @@
 				<TabPane fx:id="pane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="1230.0" style="-fx-background-color: rgba(255, 255, 255, 0);" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
 					<tabs>
 						
-						<Tab fx:id="propertiesTab" styleClass="centerTab" text="Document properties">
+						<Tab fx:id="propertiesTab" styleClass="leftTab" text="Document properties">
 						<BorderPane fx:id="documentProperties" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
 						</Tab>
-						<Tab fx:id="scanningTab" styleClass="rightTab" text="Scanning Project">
+						<Tab fx:id="scanningTab" styleClass="centerTab" text="Scanning Project">
 							<content>
 								<AnchorPane style="-fx-background-color: rgba(255, 255, 255, 0);">
 									<children>
@@ -82,7 +82,7 @@
 								</AnchorPane>
 							</content>
 						</Tab>
-						<Tab fx:id="transcriptionTab" styleClass="leftTab" text="Transcription Project">
+						<Tab fx:id="transcriptionTab" styleClass="rightTab" text="Transcription Project">
 							<content>
 								<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: rgba(255, 255, 255, 0);">
 									<children>
