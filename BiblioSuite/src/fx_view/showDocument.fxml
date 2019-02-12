@@ -23,13 +23,13 @@
 		<AnchorPane fx:id="menuDocumentView" prefHeight="40.0" layoutX="0.0" layoutY="0.0"
 			AnchorPane.rightAnchor="0.0">
 			<children>
-				<ToolBar AnchorPane.leftAnchor="0.0"
+				<ToolBar AnchorPane.leftAnchor="0.0" AnchorPane.bottomAnchor="3.0"
 					style="-fx-background-color: #00000000">
 					<Button fx:id="backButton" mnemonicParsing="false"
 						prefHeight="24.0" prefWidth="170.0" text="⬅   Back">
 					</Button>
 				</ToolBar>
-				<ToolBar  AnchorPane.RightAnchor="0.0"
+				<ToolBar  AnchorPane.RightAnchor="0.0" AnchorPane.bottomAnchor="3.0"
 					style="-fx-background-color: #00000000">
 					<Button fx:id="moreButton" mnemonicParsing="false"
 						prefHeight="24.0" prefWidth="170.0" text="More ▼">
@@ -43,7 +43,7 @@
 			<!-- <ScrollPane fx:id="pageListScroll" prefHeight="800.0"> <content> 
 				<VBox fx:id="pageList" prefHeight="200.0" /> </content> </ScrollPane> -->
 			<ListView fx:id="pageList" prefWidth="180.0" />
-			<StackPane styleClass="transparentObj" prefWidth="400.0">
+			<StackPane styleClass="transparentObj" prefWidth="400.0" style="-fx-padding: 0px 25px 0px 25px;" >
 				<children>
 					<ImageView fx:id="currentPage" />
 					<Label fx:id="message" />
@@ -61,7 +61,7 @@
 					</AnchorPane>
 				</children>
 			</StackPane>
-			<CodeArea fx:id="transcription" prefWidth="400.0" />
+			<CodeArea fx:id="transcription" prefWidth="600.0" />
 		</HBox>
 
 	</left>

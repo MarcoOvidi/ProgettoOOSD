@@ -102,7 +102,8 @@ public class ShowDocument {
 		initNavigationButton();
 		initKeyboardNavigation();
 		initTranscription();
-
+		
+		
 		pageList.getSelectionModel().selectFirst();
 		updatePageNumber();
 

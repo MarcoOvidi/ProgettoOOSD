@@ -15,7 +15,7 @@
 		<AnchorPane BorderPane.alignment="CENTER">
 			<children>
 				<HBox layoutX="49.0" layoutY="20" spacing="40" >
-					<VBox prefWidth="240.0" spacing="20" >
+					<VBox prefWidth="250.0" spacing="20" >
 					<!-- 
 						<Label text="Document Properties:" textFill="#aaaaaa" wrapText="true" visible="false">
 							<font>

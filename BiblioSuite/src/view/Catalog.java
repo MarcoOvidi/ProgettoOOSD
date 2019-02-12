@@ -1,8 +1,10 @@
 package view;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import com.jfoenix.controls.JFXButton;
@@ -34,6 +36,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
@@ -46,17 +50,87 @@ import vo.view.DocumentRow;
 public class Catalog extends Application{
 	@FXML
 	private Accordion documentCollections;
+	
+	@FXML
+	private AnchorPane categoriesPane;
 
 	@FXML
 	private JFXButton catalogo;
 	
 	@FXML
 	public void initialize() {
+		initCategoriesPane();
 		loadCollections();
 		catalog();
 	}
 	
-	
+	@FXML
+	public void initCategoriesPane() {
+		GridPane gridPane = new GridPane();
+		
+		HomePageController.loadCategories();
+		
+		
+		HashMap<UUIDDocumentCollection, String> categories = HomePageController.getCategories();
+		Set<Entry<UUIDDocumentCollection, String>> set = categories.entrySet();
+		Iterator<Entry<UUIDDocumentCollection, String>> itr = set.iterator();
+		
+		/*
+		int column = 0;
+		int row=0;
+		int pos=0;
+		for (Entry<UUIDDocumentCollection, String> title : HomePageController.getCategories().entrySet()) {
+			switch (pos) {
+			case 0:
+				Button button = new Button(title.getValue());
+				gridPane.add(button, column, row);
+				column++;
+				pos++;
+				break;
+			case 1:
+				Button button1 = new Button(title.getValue());
+				gridPane.add(button1, column, row);
+				column++;
+				pos++;
+				break;
+			case 2:
+				Button button2 = new Button(title.getValue());
+				gridPane.add(button2, column, row);
+				column++;
+				pos++;
+				break;
+			case 3:
+				Button button3 = new Button(title.getValue());
+				gridPane.add(button3, column, row);
+				column=0;
+				row++;
+				pos=0;
+				break;
+			default:
+				break;
+			}
+		}*/
+		
+		
+		int nr=0;
+		if(categories.size()%4!=0)
+			nr=1;
+		
+		for(int i=0; i<categories.size()/4+nr; i++) {
+			for(int j=0; j<4; j++) {
+				if (!itr.hasNext())
+					break;
+				Button button = new Button(itr.next().getValue());
+				gridPane.add(button, j, i);
+			}
+			if (!itr.hasNext())
+				break;
+		}
+		
+		categoriesPane.getChildren().add(gridPane);
+
+		
+	}
 
 	
 		

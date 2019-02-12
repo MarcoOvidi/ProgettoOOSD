@@ -722,8 +722,9 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 }
 
 .list-cell:filled:selected:focused, .list-cell:filled:selected {
-    /*-fx-background-color: linear-gradient(#328BDB 0%, #207BCF 25%, #1973C9 75%, #0A65BF 100%);*/
-    -fx-background-color: darkorange;
+    /*-fx-background-color: #3CB371;*/
+    -fx-background-color: linear-gradient(#328BDB 0%, #207BCF 25%, #1973C9 75%, #0A65BF 100%);
+    -fx-background-color: linear-gradient(#3CB371 0%, #3CB371 25%, #2CA361 75%, #0C8341 100%);
     -fx-text-fill: white;
 }
 
@@ -739,6 +740,11 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
     -fx-text-fill: white;
 }
 
+#pageList:focused {
+	-fx-border-color: transparent;
+    -fx-border-width: 0.0px 0.0px 1.0px 0.0px;
+}
+
 #topbar{
 	-fx-background-color: rgba(100.0,30.0,0.0,1.0);
     -fx-border-width: 0.0px 0.0px 1.0px 0.0px;
@@ -747,7 +753,7 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 }
 
 #menuDocumentView{
-	-fx-background-color: linear-gradient(from 50.0% 60.0% to 50.0% 100.0%, #0096c8cc, #0096c888);
+	-fx-background-color: linear-gradient(from 50.0% 20.0% to 50.0% 100.0%, #0096c8cc, #0A65BF);
 	-fx-padding:7px;
 }
 #backButton{
@@ -755,12 +761,14 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 }
 
 
+
+
 #moreButton{
 		-fx-background-color: #5559;
 	
 }
 
-#moreButton:hover{
+#backButton:hover, #moreButton:hover{
 	-fx-background-color: #3CB371;
 }
 
@@ -775,13 +783,13 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 .styled-text-area {
 	-fx-border-width:0.0px 1.0px 0.0px 2.0px;
     -fx-alignment: CENTER;
-    -fx-border-color:#e86e0a;
+    -fx-border-color:#eee;
     -fx-background-color: #202020;
 }
 
 .styled-text-area:focused {
 	-fx-border-width:0.0px 5.0px 0.0px 2.0px;
-    -fx-border-color:#e86e0a;
+    -fx-border-color:#eee;
     -fx-background-color: #232323;
 }
 
@@ -905,6 +913,11 @@ JFXScrollPane {
 #searchBar:hover {
 	-fx-background-color: #fff4;
 }
-
+/* 
+#pageList{
+	-fx-border-width: 0.0px 1.0px 0.0px 0.0px;
+	-fx-border-color: red; 	
+}
+*/
 
 
