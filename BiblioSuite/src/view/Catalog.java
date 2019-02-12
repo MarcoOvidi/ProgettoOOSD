@@ -1,7 +1,9 @@
 package view;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -39,6 +41,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
@@ -49,104 +52,104 @@ import vo.UUIDDocument;
 import vo.UUIDDocumentCollection;
 import vo.view.DocumentRow;
 
-public class Catalog extends Application{
+public class Catalog extends Application {
 	@FXML
 	private Accordion documentCollections;
-	
+
 	@FXML
 	private AnchorPane categoriesPane;
 
 	@FXML
 	private JFXButton catalogo;
-	
+
 	@FXML
 	public void initialize() {
 		initCategoriesPane();
 		loadCollections();
 		catalog();
 	}
-	
+
 	@FXML
 	public void initCategoriesPane() {
 		GridPane gridPane = new GridPane();
-		
+
 		HomePageController.loadCategories();
-		
-		
+
 		HashMap<UUIDDocumentCollection, String> categories = HomePageController.getCategories();
 		Set<Entry<UUIDDocumentCollection, String>> set = categories.entrySet();
 		Iterator<Entry<UUIDDocumentCollection, String>> itr = set.iterator();
-		
+
 		/*
-		int column = 0;
-		int row=0;
-		int pos=0;
-		for (Entry<UUIDDocumentCollection, String> title : HomePageController.getCategories().entrySet()) {
-			switch (pos) {
-			case 0:
-				Button button = new Button(title.getValue());
-				gridPane.add(button, column, row);
-				column++;
-				pos++;
-				break;
-			case 1:
-				Button button1 = new Button(title.getValue());
-				gridPane.add(button1, column, row);
-				column++;
-				pos++;
-				break;
-			case 2:
-				Button button2 = new Button(title.getValue());
-				gridPane.add(button2, column, row);
-				column++;
-				pos++;
-				break;
-			case 3:
-				Button button3 = new Button(title.getValue());
-				gridPane.add(button3, column, row);
-				column=0;
-				row++;
-				pos=0;
-				break;
-			default:
-				break;
-			}
-		}*/
-		
-		
-		int nr=0;
-		if(categories.size()%4!=0)
-			nr=1;
-		
-		for(int i=0; i<categories.size()/4+nr; i++) {
-			for(int j=0; j<4; j++) {
+		 * int column = 0; int row=0; int pos=0; for (Entry<UUIDDocumentCollection,
+		 * String> title : HomePageController.getCategories().entrySet()) { switch (pos)
+		 * { case 0: Button button = new Button(title.getValue()); gridPane.add(button,
+		 * column, row); column++; pos++; break; case 1: Button button1 = new
+		 * Button(title.getValue()); gridPane.add(button1, column, row); column++;
+		 * pos++; break; case 2: Button button2 = new Button(title.getValue());
+		 * gridPane.add(button2, column, row); column++; pos++; break; case 3: Button
+		 * button3 = new Button(title.getValue()); gridPane.add(button3, column, row);
+		 * column=0; row++; pos=0; break; default: break; } }
+		 */
+
+		LinkedList<String> colors = new LinkedList<String>();
+
+		colors.add("orange");
+		colors.add("green");
+		colors.add("violet");
+		colors.add("red");
+		colors.add("yellow");
+		colors.add("pink");
+		colors.add("brown");
+
+		int nr = 0;
+		if (categories.size() % 4 != 0)
+			nr = 1;
+
+		Iterator<String> colorsIterator = colors.iterator();
+
+		for (int i = 0; i < categories.size() / 4 + nr; i++) {
+			for (int j = 0; j < 4; j++) {
 				if (!itr.hasNext())
 					break;
-				ImageView img = new ImageView(new Image("file:resources/tails/tail"+(((i%3)+1)*4+j+1)+".png"));
+				ImageView img = new ImageView(
+						new Image("file:resources/tails/tail" + (((4 * i + j + 12) % 12) + 1) + ".png"));
 				StackPane stackPane = new StackPane();
-				img.maxHeight(100);
-				img.maxHeight(100);
-				//img.minHeight(200);
-				//img.maxWidth(200);
-				stackPane.setMaxWidth(100);
-				stackPane.setMaxHeight(100);
+				img.setFitHeight(200);
+				img.setFitWidth(200);
+				// img.minHeight(200);
+				// img.maxWidth(200);
 				stackPane.getChildren().add(img);
-				Label label = new Label(itr.next().getValue());
-				//button.setGraphic(img);
-				stackPane.getChildren().add(label);
+				StackPane pane = new StackPane();
+				Label label = new Label(itr.next().getValue().toUpperCase());
+				label.setStyle("-fx-text-fill:white; -fx-font-size: 16; -fx-font-weight: bold;");
+				if (!colorsIterator.hasNext()) {
+					colorsIterator = null;
+					colorsIterator = colors.iterator();
+				}
+				
+				StackPane layer1 = new StackPane();
+				layer1.setStyle("-fx-opacity:0.2; -fx-pref-width:200px; -fx-pref-height:200px; -fx-background-color:"
+						+ colorsIterator.next() + ";");
+				StackPane layer2 = new StackPane();
+				layer2.setStyle("-fx-opacity:0.5; -fx-background-color:#000");
+				
+				pane.getChildren().add(layer1);
+				pane.getChildren().add(layer2);
+				pane.getChildren().add(label);
+				// button.setGraphic(img);
+				stackPane.getChildren().add(pane);
+				stackPane.setStyle("-fx-pref-width:100px; -fx-pref-height:100px");
+				img.setStyle("-fx-opacity:0.4; -fx-border-weight: 1px; -fx-border-color: white; ");
 				gridPane.add(stackPane, j, i);
 			}
 			if (!itr.hasNext())
 				break;
 		}
-		
+
 		categoriesPane.getChildren().add(gridPane);
 
-		
 	}
 
-	
-		
 	@FXML
 	public void loadCollections() {
 		// carico le collezioni
@@ -208,52 +211,47 @@ public class Catalog extends Application{
 			documentCollections.getPanes().add(tp);
 		}
 	}
-	
-	public void start(Stage stage) throws Exception {
-		//HostServices hs = getHostServices();
-		//String folder = hs.resolveURI(hs.getDocumentBase(), "imgs/animals/");
 
-		//int[] index = { 0 };
-		
+	public void start(Stage stage) throws Exception {
+		// HostServices hs = getHostServices();
+		// String folder = hs.resolveURI(hs.getDocumentBase(), "imgs/animals/");
+
+		// int[] index = { 0 };
+
 		HashMap<UUIDDocument, String[]> map = HomePageController.getAllDocuments();
 
 		Unit[] images = new Unit[map.size()];
-		
-		int i=0;
+
+		int i = 0;
 		for (Map.Entry<UUIDDocument, String[]> entry : map.entrySet()) {
-			//create unit
+			// create unit
 			Image image = LocalSession.loadImage(entry.getValue()[1]);
-			images[i] = new Unit(image,i,entry.getKey());
-			
-			//event handler
+			images[i] = new Unit(image, i, entry.getKey());
+
+			// event handler
 			images[i].setOnMouseClicked(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent mouseEvent) {
 					if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-							try {
-								PageViewController.showDocument(entry.getKey());
-							} catch (LoadException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
+						try {
+							PageViewController.showDocument(entry.getKey());
+						} catch (LoadException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				}
 			});
-			
-			//increment counter
+
+			// increment counter
 			i++;
 		}
-				
-				/*Stream.of(
-				new File(
-						new URI(folder).getPath()
-						).list()
-				).map(
-						name -> hs.resolveURI(folder, name)
-						).map(
-								url -> new Unit(url, index[0]++)
-								).toArray(Unit[]::new);
-								*/
+
+		/*
+		 * Stream.of( new File( new URI(folder).getPath() ).list() ).map( name ->
+		 * hs.resolveURI(folder, name) ).map( url -> new Unit(url, index[0]++)
+		 * ).toArray(Unit[]::new);
+		 */
 
 //		for (int i = 0; i < images.length; i++) {
 //			images[i].setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -344,15 +342,15 @@ public class Catalog extends Application{
 		final TranslateTransition transition = new TranslateTransition(Duration.millis(300), this);
 
 		public Unit(Image image, int index, UUIDDocument id) {
-			//super(imageUrl);
+			// super(imageUrl);
 			setEffect(reflection);
 			setUserData(index);
-			
+
 			setImage(image);
-			
+
 			setFitHeight(200);
 			setFitWidth(100);
-			
+
 			this.id = id;
 			this.index = index;
 			getTransforms().add(rotate);
@@ -387,7 +385,7 @@ public class Catalog extends Application{
 		}
 
 	}
-	
+
 	public void catalog() {
 		catalogo.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 			try {
@@ -401,6 +399,4 @@ public class Catalog extends Application{
 		});
 	}
 
-	
-	
 }
