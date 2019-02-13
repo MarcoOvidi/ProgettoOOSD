@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 
 import controller.LocalSession;
 import controller.PageScanController;
+import controller.ScanningProjectController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -109,6 +110,11 @@ public class ScanRevisor {
 	public void initAcceptButton() {
 		acceptButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 			isValidated = true;
+			ScanningProjectController.validatePage(currentPage, true);
+			ScanningProjectController.revisedPage(currentPage, true);
+			pageContainer.setVisible(false);
+			pages.remove(new Rows(currentPage));
+			pageTable.refresh();
 			// commentArea.setVisible(false);
 		});
 	};
@@ -116,6 +122,11 @@ public class ScanRevisor {
 	public void initRejectButton() {
 		rejectButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 			isValidated = false;
+			ScanningProjectController.revisedPage(currentPage, true);
+			ScanningProjectController.validatePage(currentPage, false);
+			pageContainer.setVisible(false);
+			pages.remove(new Rows(currentPage));
+			pageTable.refresh();
 			// commentArea.setVisible(true);
 		});
 	};
