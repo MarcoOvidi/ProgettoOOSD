@@ -158,9 +158,11 @@ public class PageTranscriptionController {
 		if(doc != null) {
 			LocalSession.setOpenedDocumet(doc);
 			//PageTranscriptionController.setToEditPageNumber(0);
+			System.out.println("PIPPO");
 			SceneController.loadScene("pageTranscriptionReview", false);
 		}
 	}
+	
 	
 
 	public static void setPageRevised(UUIDPage page, boolean b) {

@@ -196,7 +196,7 @@ public class Transcription {
 	public void loadDocument(UUIDDocument document) { // FIXME tutto da testare
 		
 		try {
-			PageTranscriptionController.reviewDocumentTranscription(document);
+			PageTranscriptionController.transcribeDocument(document);
 		} catch (LoadException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
