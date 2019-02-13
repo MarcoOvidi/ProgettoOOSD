@@ -46,7 +46,7 @@
 			<StackPane styleClass="transparentObj" prefWidth="400.0" style="-fx-padding: 0px 25px 0px 25px;" >
 				<children>
 					<ImageView fx:id="currentPage" />
-					<Label fx:id="message" />
+					<!-- <Label fx:id="message" /> -->
 					<AnchorPane styleClass="transparentObj">
 						<children>
 							<HBox spacing="20" AnchorPane.bottomAnchor="10.0"

@@ -11,7 +11,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Home">
 	<left>
-		<HBox style=" -fx-background-image: url(images/lib.jpg);          -fx-background-position: left top, center;           -fx-background-repeat: stretch;          -fx-background-size: cover, auto;"> 
+		<HBox style=" -fx-background-image: url(images/library.jpg);          -fx-background-position: left top, center;           -fx-background-repeat: stretch;          -fx-background-size: cover, auto;"> 
 			<VBox id="newsList" style="-fx-background-color: rgba(255, 255, 255, 0);">
 				<Label style="-fx-background-color: rgba(255, 255, 255, 0);" text="News" textFill="#aaaaaa">
 					<font>

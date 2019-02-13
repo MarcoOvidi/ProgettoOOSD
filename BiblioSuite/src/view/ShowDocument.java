@@ -207,7 +207,7 @@ public class ShowDocument {
 
 				try {
 					popOverPane.getChildren().setAll(((BorderPane) FXMLLoader.load(new Object() {
-					}.getClass().getResource("/fx_view/documentProperties.fxml"))));
+					}.getClass().getResource("/fx_view/documentProperties2.fxml"))));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
