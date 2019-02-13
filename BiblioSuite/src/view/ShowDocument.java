@@ -88,7 +88,7 @@ public class ShowDocument {
 		loadPageList();
 		initBackButton();
 		if (isEmpty) {
-			message.setText("Empty Document");
+			//message.setText("Empty Document");
 			transcription.setVisible(false);
 			pageList.setVisible(false);
 			next.setVisible(false);
@@ -172,7 +172,7 @@ public class ShowDocument {
 	private void initBackButton() {
 		backButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 			event.consume();
-			SceneController.loadScene("home");
+			SceneController.loadPreviousScene();
 		});
 		backButton.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
 			if (event.getCode() == KeyCode.ENTER) {
@@ -294,7 +294,7 @@ public class ShowDocument {
 
 				try {
 					popOverPane.getChildren().setAll(((BorderPane) FXMLLoader.load(new Object() {
-					}.getClass().getResource("/fx_view/documentProperties.fxml"))));
+					}.getClass().getResource("/fx_view/documentProperties2.fxml"))));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

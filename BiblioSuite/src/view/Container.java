@@ -31,6 +31,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -203,6 +204,19 @@ public class Container {
 
 					popOver.show(searchBar.getParent());
 				}
+			}
+		});
+		
+		searchBar.requestFocus();
+		searchBar.setOnKeyPressed(event -> {
+			if (event.getCode() == KeyCode.ESCAPE) {
+				searchBar.getParent().requestFocus();
+			}
+		});
+		searchBar.getParent().setOnKeyPressed(event -> {
+			if (event.getCode() == KeyCode.ESCAPE) {
+				searchBar.clear();
+				searchBar.requestFocus();
 			}
 		});
 	}

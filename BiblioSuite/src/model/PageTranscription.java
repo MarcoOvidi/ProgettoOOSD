@@ -10,6 +10,7 @@ public class PageTranscription {
 	private Boolean revised;
 	private Boolean validated;
 	private PageTranscriptionStaff staff;
+	private String comment;
 	
 	
 	//costruttore
@@ -22,7 +23,33 @@ public class PageTranscription {
 		this.staff = staff;
 	}
 	
-	//metodi get e set
+	
+	
+	public PageTranscription(TEItext text, Boolean revised, Boolean validated, PageTranscriptionStaff staff,
+			String comment) {
+		super();
+		this.text = text;
+		this.revised = revised;
+		this.validated = validated;
+		this.staff = staff;
+		this.comment = comment;
+	}
+
+
+
+	public String getComment() {
+		return comment;
+	}
+
+
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+
+
+		//metodi get e set
 		public TEItext getText() {
 			return this.text;
 		}

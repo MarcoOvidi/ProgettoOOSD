@@ -155,7 +155,7 @@ public class TranscriberQuerySet implements TranscriberQuerySetDAO{
 		LinkedList<Page> pages = new LinkedList<Page>();
 
 		try {
-			ps = con.prepareStatement("select ID,number,transcription_convalidation,transcription_revised,ID_transcription_reviser, ID_transcriber from page WHERE ID_document=?;");
+			ps = con.prepareStatement("select ID,number,transcription_convalidation,transcription_revised,ID_transcription_reviser,ID_transcriber,transcription_reviser_comment from page WHERE ID_document=?;");
 			ps.setInt(1, id.getValue());
 
 			rs = ps.executeQuery();
@@ -173,7 +173,7 @@ public class TranscriberQuerySet implements TranscriberQuerySetDAO{
 										new PageTranscriptionStaff(
 												new UUIDUser(rs.getInt("ID_transcriber")), 
 												new UUIDUser(rs.getInt("ID_transcription_reviser"))
-												)
+												), rs.getString("transcription_reviser_comment")
 										)
 								)
 						);

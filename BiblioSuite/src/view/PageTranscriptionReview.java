@@ -9,6 +9,7 @@ import org.fxmisc.richtext.LineNumberFactory;
 import controller.DocumentInfoController;
 import controller.LocalSession;
 import controller.PageTranscriptionController;
+import controller.TranscriptionProjectController;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -16,6 +17,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -48,6 +50,9 @@ public class PageTranscriptionReview {
 
 	@FXML
 	private CodeArea transcription;
+	
+	@FXML
+	private TextArea commentField;
 
 	@FXML
 	private Button previous;
@@ -99,11 +104,8 @@ public class PageTranscriptionReview {
 			UUIDPage page = DocumentInfoController.getPageID(LocalSession.getOpenedDocumet().getUUID(), Integer.parseInt(number.getText()));
 			
 			PageTranscriptionController.saveTranscription(page, transcription.getText());
-			PageTranscriptionController.setPageRevised(DocumentInfoController.getPageID(LocalSession.getOpenedDocumet().getUUID(), Integer.parseInt(number.getText())), true);	
-			
-			//SETTARE IL COMMENTO
-			
-			
+			PageTranscriptionController.setPageRevised(page, true);	
+			TranscriptionProjectController.setTranscriptionComment(page, commentField.getText());
 		});
 	}
 	
@@ -111,8 +113,9 @@ public class PageTranscriptionReview {
 		validateButton.setOnAction(event -> {
 			UUIDPage page = DocumentInfoController.getPageID(LocalSession.getOpenedDocumet().getUUID(), Integer.parseInt(number.getText()));
 			PageTranscriptionController.saveTranscription(page, transcription.getText());
-			PageTranscriptionController.setPageRevised(DocumentInfoController.getPageID(LocalSession.getOpenedDocumet().getUUID(), Integer.parseInt(number.getText())), true);
-			PageTranscriptionController.setPageValidated(DocumentInfoController.getPageID(LocalSession.getOpenedDocumet().getUUID(), Integer.parseInt(number.getText())), true);
+			PageTranscriptionController.setPageRevised(page, true);
+			PageTranscriptionController.setPageValidated(page, true);
+			TranscriptionProjectController.setTranscriptionComment(page, commentField.getText());
 			transcription.setDisable(true); 
 		});
 		
@@ -233,6 +236,7 @@ public class PageTranscriptionReview {
 		int index = pageList.getSelectionModel().getSelectedIndex();
 		Page page = LocalSession.getOpenedDocumet().getPageList().get(index);
 		setTranscriptionText(page.getTranscription().getText());
+		commentField.setText(page.getTranscription().getComment());
 		
 		if(page.getTranscription().getValidated()) {
 			transcription.setDisable(true);
@@ -240,6 +244,7 @@ public class PageTranscriptionReview {
 			saveButton.setVisible(false);
 			validateButton.setDisable(true);
 			validateButton.setVisible(false);
+			commentField.setVisible(false);
 			
 		}else {
 			transcription.setDisable(false);
@@ -247,6 +252,8 @@ public class PageTranscriptionReview {
 			saveButton.setVisible(true);
 			validateButton.setDisable(false);
 			validateButton.setVisible(true);
+			commentField.setVisible(true);
+			
 		}
 	}
 

@@ -39,7 +39,7 @@
 		</AnchorPane>
 	</top>
 	<left>
-		<HBox BorderPane.alignment="CENTER">
+		<HBox BorderPane.alignment="CENTER" styleClass="greyBackground">
 			<!-- <ScrollPane fx:id="pageListScroll" prefHeight="800.0"> <content> 
 				<VBox fx:id="pageList" prefHeight="200.0" /> </content> </ScrollPane> -->
 			
