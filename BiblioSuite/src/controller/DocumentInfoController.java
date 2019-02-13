@@ -26,6 +26,10 @@ public class DocumentInfoController {
 	public void loadDocument(UUIDDocument id) throws LoadException, DatabaseException {
 		document = new DocumentQuerySet().loadDocument(id);
 	}
+	
+	public Document getDocument() {
+		return this.document;
+	}
 
 	public String getTitle() {
 		String res = "";

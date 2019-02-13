@@ -396,6 +396,14 @@ tab-pane > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
     -fx-background-radius: 5.0em;
 }
 
+#categoriesScroll > .scroll-bar:horizontal .track,
+#categoriesScroll > .scroll-bar:vertical .track{
+    -fx-background-color: #5555;
+    -fx-border-color: transparent;
+    -fx-background-radius: 8px;
+}
+
+
 .scroll-pane > .corner {
     -fx-background-color: #202020;
     

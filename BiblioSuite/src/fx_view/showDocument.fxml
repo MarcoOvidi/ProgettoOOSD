@@ -42,14 +42,14 @@
 		<HBox BorderPane.alignment="CENTER">
 			<!-- <ScrollPane fx:id="pageListScroll" prefHeight="800.0"> <content> 
 				<VBox fx:id="pageList" prefHeight="200.0" /> </content> </ScrollPane> -->
-			<ListView fx:id="pageList" prefWidth="180.0" />
+			
 			<StackPane styleClass="transparentObj" prefWidth="400.0" style="-fx-padding: 0px 25px 0px 25px;" >
 				<children>
 					<ImageView fx:id="currentPage" />
 					<Label fx:id="message" />
 					<AnchorPane styleClass="transparentObj">
 						<children>
-							<HBox spacing="20" AnchorPane.bottomAnchor="20.0"
+							<HBox spacing="20" AnchorPane.bottomAnchor="10.0"
 								AnchorPane.leftAnchor="120" styleClass="transparentObj">
 								<Button fx:id="top" text="▲" />
 								<Button fx:id="previous" text="◀" />
@@ -62,6 +62,7 @@
 				</children>
 			</StackPane>
 			<CodeArea fx:id="transcription" prefWidth="600.0" />
+			<ListView fx:id="pageList" prefWidth="180.0" />
 		</HBox>
 
 	</left>

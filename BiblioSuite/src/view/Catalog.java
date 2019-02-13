@@ -11,9 +11,11 @@ import java.util.stream.Stream;
 
 import com.jfoenix.controls.JFXButton;
 
+import controller.DocumentInfoController;
 import controller.HomePageController;
 import controller.LocalSession;
 import controller.PageViewController;
+import dao.concrete.DatabaseException;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
@@ -51,16 +53,20 @@ import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import model.Document;
 import vo.UUIDDocument;
 import vo.UUIDDocumentCollection;
 import vo.view.DocumentRow;
 
 public class Catalog extends Application {
 	@FXML
-	private AnchorPane categoriesPane;
+	private Pane categoriesPane;
 
 	@FXML
 	private JFXButton catalogo;
+
+	@FXML
+	GridPane gridPane = new GridPane();
 
 	@FXML
 	public void initialize() {
@@ -71,8 +77,7 @@ public class Catalog extends Application {
 
 	@FXML
 	public void initCategoriesPane() {
-		GridPane gridPane = new GridPane();
-
+		gridPane.getChildren().clear();
 		HomePageController.loadCategories();
 
 		HashMap<UUIDDocumentCollection, String> categories = HomePageController.getCategories();
@@ -101,19 +106,21 @@ public class Catalog extends Application {
 		colors.add("pink");
 		colors.add("brown");
 
+		System.out.println("size " + categories.size());
 		int nr = 0;
 		if (categories.size() % 4 != 0)
 			nr = 1;
 
 		Iterator<String> colorsIterator = colors.iterator();
 
-		//ScaleTransition transition = new ScaleTransition();
+		// ScaleTransition transition = new ScaleTransition();
 		Glow glow = new Glow();
 		glow.setLevel(0.7);
 
-		
 		for (int i = 0; i < categories.size() / 4 + nr; i++) {
 			for (int j = 0; j < 4; j++) {
+				Map.Entry<UUIDDocumentCollection, String> currentCat = itr.next();
+
 				if (!itr.hasNext())
 					break;
 				ImageView img = new ImageView(
@@ -126,22 +133,24 @@ public class Catalog extends Application {
 				img.setStyle("-fx-opacity: 0.5;");
 
 				StackPane pane = new StackPane();
-				Label label = new Label(itr.next().getValue().toUpperCase());
+				Label label = new Label(currentCat.getValue().toUpperCase());
 				label.setStyle("-fx-text-fill:white; -fx-font-size: 16; -fx-font-weight: bold;");
 				if (!colorsIterator.hasNext()) {
 					colorsIterator = null;
 					colorsIterator = colors.iterator();
 				}
-				
+
 				StackPane layer1 = new StackPane();
 				StackPane layer2 = new StackPane();
 				StackPane layer3 = new StackPane();
-				
-				
-				layer1.setStyle("-fx-opacity:0.4; -fx-pref-width:200px; -fx-pref-height:200px; -fx-background-color:"+ colorsIterator.next() + ";");
+
+				String currColor = colorsIterator.next();
+				layer1.setStyle("-fx-opacity:0.4; -fx-pref-width:200px; -fx-pref-height:200px; -fx-background-color:"
+						+ currColor + ";");
 				layer2.setStyle("-fx-opacity:0.5; -fx-background-color:#555;");
-				layer3.setStyle("-fx-opacity:1; -fx-background-color:transparent; -fx-border-weight: 1px; -fx-border-color: white;");
-				
+				layer3.setStyle(
+						"-fx-opacity:1; -fx-background-color:transparent; -fx-border-weight: 1px; -fx-border-color: white;");
+
 				stackPane.getChildren().add(img);
 				pane.getChildren().add(layer1);
 				pane.getChildren().add(layer2);
@@ -152,42 +161,184 @@ public class Catalog extends Application {
 				stackPane.setStyle("-fx-pref-width:100px; -fx-pref-height:100px");
 
 				ScaleTransition transition = new ScaleTransition();
-				
+
 				stackPane.setOnMouseEntered(event -> {
 					label.setEffect(glow);
 					stackPane.setEffect(glow);
-					/*transition.setDuration(Duration.millis(200));
-					transition.setNode(stackPane);
-					transition.setByX(0.04);
-					transition.setByY(0.04);
-					transition.setAutoReverse(true);
-
-					transition.play();*/
-					//transition.playFrom(Duration.millis(200));
+					/*
+					 * transition.setDuration(Duration.millis(200)); transition.setNode(stackPane);
+					 * transition.setByX(0.04); transition.setByY(0.04);
+					 * transition.setAutoReverse(true);
+					 * 
+					 * transition.play();
+					 */
+					// transition.playFrom(Duration.millis(200));
 				});
 				stackPane.setOnMouseExited(event -> {
 					label.setEffect(null);
 					stackPane.setEffect(null);
-					//transition.setDuration(Duration.millis(200));
-					//transition.setDelay(Duration.millis(100));
-					//transition.setNode(stackPane);
-					//transition.setByX(-0.03846153846154);
-					//transition.setByY(-0.03846153846154);
-					
-					//transition.play();
+					// transition.setDuration(Duration.millis(200));
+					// transition.setDelay(Duration.millis(100));
+					// transition.setNode(stackPane);
+					// transition.setByX(-0.03846153846154);
+					// transition.setByY(-0.03846153846154);
 
-					//transition.playFrom(Duration.millis(200));
+					// transition.play();
+
+					// transition.playFrom(Duration.millis(200));
 				});
-				
+
+				stackPane.setOnMouseClicked(event -> {
+					caricaCategoria(currentCat.getKey(), currColor, glow);
+
+				});
+
 				gridPane.add(stackPane, j, i);
-				gridPane.setMargin(stackPane, new Insets(8,8,8,8));
+				gridPane.setMargin(stackPane, new Insets(8, 8, 8, 8));
 
 			}
+
 			if (!itr.hasNext())
 				break;
 		}
 
 		categoriesPane.getChildren().add(gridPane);
+
+	}
+
+	public void caricaCategoria(UUIDDocumentCollection currentCollection, String color, Glow glow) {
+		HomePageController.loadDocumentInCollections(currentCollection);
+
+		LinkedList<String[]> documentOfCurrentCollection = HomePageController.getListDocumentInCollections();
+		String[] array = new String[2];
+		array[0] = "";
+		array[1] = "indietro";
+
+		documentOfCurrentCollection.addFirst(array);
+		gridPane.getChildren().clear();
+
+		Iterator<String[]> itr = documentOfCurrentCollection.iterator();
+
+		// ____________
+
+		int nr = 0;
+		if (documentOfCurrentCollection.size() % 4 != 0)
+			nr = 1;
+
+		for (int i = 0; i < documentOfCurrentCollection.size() / 4 + nr; i++) {
+			for (int j = 0; j < 4; j++) {
+
+				if (!itr.hasNext())
+					break;
+
+				String[] currentCat = itr.next();
+
+				ImageView img = new ImageView(
+						new Image("file:resources/tails/tail" + (((4 * i + j + 12) % 12) + 1) + ".png"));
+				StackPane stackPane = new StackPane();
+				img.setFitHeight(200);
+				img.setFitWidth(200);
+				// img.minHeight(200);
+				// img.maxWidth(200);
+				img.setStyle("-fx-opacity: 0.5;");
+
+				StackPane pane = new StackPane();
+
+				Label label = new Label();
+
+				if (!currentCat[1].equalsIgnoreCase("indietro")) {
+					label.setText(currentCat[1].toUpperCase());
+				}
+
+				label.setStyle("-fx-text-fill:white; -fx-font-size: 16; -fx-font-weight: bold;");
+
+				StackPane layer1 = new StackPane();
+				StackPane layer2 = new StackPane();
+				StackPane layer3 = new StackPane();
+
+				layer1.setStyle("-fx-opacity:0.4; -fx-pref-width:200px; -fx-pref-height:200px; -fx-background-color:"
+						+ color + ";");
+				layer2.setStyle("-fx-opacity:0.5; -fx-background-color:#555;");
+				layer3.setStyle(
+						"-fx-opacity:1; -fx-background-color:transparent; -fx-border-weight: 1px; -fx-border-color: white;");
+
+				stackPane.getChildren().add(img);
+				pane.getChildren().add(layer1);
+				pane.getChildren().add(layer2);
+				pane.getChildren().add(layer3);
+				if (currentCat[1].equalsIgnoreCase("indietro")) {
+					ImageView img1 = new ImageView(new Image("file:resources/favicon/128/angle-left.png"));
+					pane.getChildren().add(img1);
+				}
+				pane.getChildren().add(label);
+				// button.setGraphic(img);
+				stackPane.getChildren().add(pane);
+				stackPane.setStyle("-fx-pref-width:100px; -fx-pref-height:100px");
+
+				ScaleTransition transition = new ScaleTransition();
+
+				stackPane.setOnMouseEntered(event -> {
+					label.setEffect(glow);
+					stackPane.setEffect(glow);
+					/*
+					 * transition.setDuration(Duration.millis(200)); transition.setNode(stackPane);
+					 * transition.setByX(0.04); transition.setByY(0.04);
+					 * transition.setAutoReverse(true);
+					 * 
+					 * transition.play();
+					 */
+					// transition.playFrom(Duration.millis(200));
+				});
+				stackPane.setOnMouseExited(event -> {
+					label.setEffect(null);
+					stackPane.setEffect(null);
+					// transition.setDuration(Duration.millis(200));
+					// transition.setDelay(Duration.millis(100));
+					// transition.setNode(stackPane);
+					// transition.setByX(-0.03846153846154);
+					// transition.setByY(-0.03846153846154);
+
+					// transition.play();
+
+					// transition.playFrom(Duration.millis(200));
+				});
+
+				if (!currentCat[1].equalsIgnoreCase("indietro")) {
+
+					stackPane.setOnMouseClicked(event -> {
+
+						try {
+							PageViewController.showDocument(new UUIDDocument(Integer.parseInt(currentCat[0])));
+						} catch (NumberFormatException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (LoadException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+
+					});
+				}else {
+					stackPane.setOnMouseClicked(event -> {
+						
+						initCategoriesPane();
+
+					});
+				}
+				
+				
+
+				gridPane.add(stackPane, j, i);
+				gridPane.setMargin(stackPane, new Insets(8, 8, 8, 8));
+
+			}
+
+			if (!itr.hasNext())
+				break;
+		}
+
+		// categoriesPane.getChildren().add(gridPane);
+		// ____________
 
 	}
 
