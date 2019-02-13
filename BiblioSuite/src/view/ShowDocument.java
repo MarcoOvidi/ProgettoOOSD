@@ -171,13 +171,13 @@ public class ShowDocument {
 
 	private void initBackButton() {
 		backButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-			SceneController.loadPreviousScene();
 			event.consume();
+			SceneController.loadScene("home");
 		});
 		backButton.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
 			if (event.getCode() == KeyCode.ENTER) {
-				SceneController.loadPreviousScene();
 				event.consume();
+				SceneController.loadScene("home");
 			}
 		});
 	}

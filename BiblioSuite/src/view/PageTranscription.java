@@ -164,13 +164,14 @@ public class PageTranscription {
 
 	private void initBackButton() {
 		backButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-			SceneController.loadPreviousScene();
+			//SceneController.loadPreviousScene();
 			event.consume();
+			SceneController.loadScene("transcription");
 		});
 		backButton.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
 			if (event.getCode() == KeyCode.ENTER) {
-				SceneController.loadPreviousScene();
 				event.consume();
+				SceneController.loadScene("transcription");				
 			}
 		});
 	}

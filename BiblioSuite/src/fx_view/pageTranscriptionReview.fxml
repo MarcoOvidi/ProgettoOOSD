@@ -16,14 +16,14 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PageTranscriptionReview">
 	<top>
-		<AnchorPane layoutX="0.0" layoutY="0.0" prefHeight="40.0" AnchorPane.rightAnchor="0.0">
+		<AnchorPane fx:id="menuDocumentView" layoutX="0.0" layoutY="0.0" prefHeight="40.0" AnchorPane.rightAnchor="0.0">
 			<children>
 				<ToolBar style="-fx-background-color: #00000000" AnchorPane.leftAnchor="0.0">
 					<Button fx:id="backButton" mnemonicParsing="false" prefHeight="24.0" prefWidth="170.0" text="⬅   Back">
 					</Button>
 				</ToolBar>
 				<ToolBar style="-fx-background-color: #00000000" AnchorPane.RightAnchor="0.0">
-					<Button fx:id="validateButton" mnemonicParsing="false" prefHeight="27.0" prefWidth="71.0" text="Validate">
+					<Button fx:id="validateButton" mnemonicParsing="false" prefHeight="27.0" prefWidth="170.0" text="Save and Validate">
 					</Button>
                <Button fx:id="saveButton" mnemonicParsing="false" prefHeight="24.0" prefWidth="170.0" text="Save and send back" />
 				</ToolBar>
@@ -55,7 +55,7 @@
 			</StackPane>
 			<!--
 			 -->
-			<CodeArea fx:id="transcription" prefWidth="400.0" />
+			<CodeArea fx:id="transcription" prefWidth="600.0" />
 		</HBox>
 
 	</left>

@@ -9,7 +9,6 @@ import org.fxmisc.richtext.LineNumberFactory;
 import controller.DocumentInfoController;
 import controller.LocalSession;
 import controller.PageTranscriptionController;
-import dao.concrete.TranscriptionReviserQuerySet;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -184,13 +183,13 @@ public class PageTranscriptionReview {
 
 	private void initBackButton() {
 		backButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-			SceneController.loadPreviousScene();
 			event.consume();
+			SceneController.loadScene("transcriptionReview");
 		});
 		backButton.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
 			if (event.getCode() == KeyCode.ENTER) {
-				SceneController.loadPreviousScene();
 				event.consume();
+				SceneController.loadScene("transcriptionReview");
 			}
 		});
 	}
