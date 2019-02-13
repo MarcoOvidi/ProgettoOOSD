@@ -756,6 +756,7 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 	-fx-background-color: linear-gradient(from 50.0% 20.0% to 50.0% 100.0%, #0096c8cc, #0A65BF);
 	-fx-padding:7px;
 }
+
 #backButton{
 	-fx-background-color: #5559;
 }

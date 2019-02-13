@@ -213,13 +213,21 @@ public class LoadScan {
 		});
 
 		while (b) {
+			
+			//TODO AGGIUNGERE CONTROLLO 
 			Optional<String> str = dialog.showAndWait();
 			if (!str.isPresent())
 				return null;
 			try {
 				res = Integer.parseInt(str.get());
 				if (isPageNumberAlreadyPresent(res))
+					//se la pagina è revisionata e non validata 
+					//elimina la vecchia immagine 
+					//metti lanuova
+					//rimettila non revisionata 
+					
 					continue;
+				
 				if (res <= 0)
 					continue;
 
