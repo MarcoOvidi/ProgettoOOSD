@@ -217,7 +217,10 @@ public class PageTranscription {
 		
 		if(page.getTranscription().getValidated()) {
 			transcription.setDisable(true);
+		}else {
+			transcription.setDisable(false);
 		}
+		
 	}
 
 	/*
@@ -357,7 +360,7 @@ public class PageTranscription {
 
 		transcription.setEditable(true);
 		transcription.setWrapText(true);
-		transcription.setFocusTraversable(false);
+		//transcription.setFocusTraversable(false);
 	}
 
 }
