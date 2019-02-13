@@ -14,6 +14,7 @@ import com.jfoenix.controls.JFXButton;
 import controller.HomePageController;
 import controller.LocalSession;
 import controller.PageViewController;
+import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -23,6 +24,7 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.LoadException;
+import javafx.geometry.Insets;
 import javafx.geometry.Point3D;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
@@ -34,6 +36,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TitledPane;
+import javafx.scene.effect.Glow;
 import javafx.scene.effect.Reflection;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -53,9 +56,6 @@ import vo.UUIDDocumentCollection;
 import vo.view.DocumentRow;
 
 public class Catalog extends Application {
-	@FXML
-	private Accordion documentCollections;
-
 	@FXML
 	private AnchorPane categoriesPane;
 
@@ -107,6 +107,11 @@ public class Catalog extends Application {
 
 		Iterator<String> colorsIterator = colors.iterator();
 
+		//ScaleTransition transition = new ScaleTransition();
+		Glow glow = new Glow();
+		glow.setLevel(0.7);
+
+		
 		for (int i = 0; i < categories.size() / 4 + nr; i++) {
 			for (int j = 0; j < 4; j++) {
 				if (!itr.hasNext())
@@ -118,7 +123,8 @@ public class Catalog extends Application {
 				img.setFitWidth(200);
 				// img.minHeight(200);
 				// img.maxWidth(200);
-				stackPane.getChildren().add(img);
+				img.setStyle("-fx-opacity: 0.5;");
+
 				StackPane pane = new StackPane();
 				Label label = new Label(itr.next().getValue().toUpperCase());
 				label.setStyle("-fx-text-fill:white; -fx-font-size: 16; -fx-font-weight: bold;");
@@ -128,19 +134,54 @@ public class Catalog extends Application {
 				}
 				
 				StackPane layer1 = new StackPane();
-				layer1.setStyle("-fx-opacity:0.2; -fx-pref-width:200px; -fx-pref-height:200px; -fx-background-color:"
-						+ colorsIterator.next() + ";");
 				StackPane layer2 = new StackPane();
-				layer2.setStyle("-fx-opacity:0.5; -fx-background-color:#000");
+				StackPane layer3 = new StackPane();
 				
+				
+				layer1.setStyle("-fx-opacity:0.4; -fx-pref-width:200px; -fx-pref-height:200px; -fx-background-color:"+ colorsIterator.next() + ";");
+				layer2.setStyle("-fx-opacity:0.5; -fx-background-color:#555;");
+				layer3.setStyle("-fx-opacity:1; -fx-background-color:transparent; -fx-border-weight: 1px; -fx-border-color: white;");
+				
+				stackPane.getChildren().add(img);
 				pane.getChildren().add(layer1);
 				pane.getChildren().add(layer2);
+				pane.getChildren().add(layer3);
 				pane.getChildren().add(label);
 				// button.setGraphic(img);
 				stackPane.getChildren().add(pane);
 				stackPane.setStyle("-fx-pref-width:100px; -fx-pref-height:100px");
-				img.setStyle("-fx-opacity:0.4; -fx-border-weight: 1px; -fx-border-color: white; ");
+
+				ScaleTransition transition = new ScaleTransition();
+				
+				stackPane.setOnMouseEntered(event -> {
+					label.setEffect(glow);
+					stackPane.setEffect(glow);
+					/*transition.setDuration(Duration.millis(200));
+					transition.setNode(stackPane);
+					transition.setByX(0.04);
+					transition.setByY(0.04);
+					transition.setAutoReverse(true);
+
+					transition.play();*/
+					//transition.playFrom(Duration.millis(200));
+				});
+				stackPane.setOnMouseExited(event -> {
+					label.setEffect(null);
+					stackPane.setEffect(null);
+					//transition.setDuration(Duration.millis(200));
+					//transition.setDelay(Duration.millis(100));
+					//transition.setNode(stackPane);
+					//transition.setByX(-0.03846153846154);
+					//transition.setByY(-0.03846153846154);
+					
+					//transition.play();
+
+					//transition.playFrom(Duration.millis(200));
+				});
+				
 				gridPane.add(stackPane, j, i);
+				gridPane.setMargin(stackPane, new Insets(8,8,8,8));
+
 			}
 			if (!itr.hasNext())
 				break;
@@ -207,8 +248,6 @@ public class Catalog extends Application {
 			lista.setItems(oss);
 			// inserisco la listview nel pane
 			tp.setContent(lista);
-			// aggiungo il pane nell'accordion
-			documentCollections.getPanes().add(tp);
 		}
 	}
 
