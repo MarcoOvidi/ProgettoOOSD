@@ -16,6 +16,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -46,6 +47,8 @@ public class PageTranscription {
 
 	@FXML
 	private CodeArea transcription;
+	@FXML
+	private TextArea commentField;
 
 	@FXML
 	private Button previous;
@@ -97,6 +100,12 @@ public class PageTranscription {
 			
 			PageTranscriptionController.saveTranscription(page, transcription.getText());
 			PageTranscriptionController.setPageRevised(DocumentInfoController.getPageID(LocalSession.getOpenedDocumet().getUUID(), Integer.parseInt(number.getText())), false);
+			transcription.setDisable(true); 
+			
+			saveButton.setDisable(true);
+			commentField.setDisable(true);
+			saveButton.setStyle("-fx-background-color:#3CB371; -fx-opacity: 1.0;");
+			saveButton.setText("Done");
 		});
 	}
 
@@ -199,6 +208,7 @@ public class PageTranscription {
 		pageList.scrollTo(pageList.getSelectionModel().getSelectedIndex());
 		updatePage();
 		updateTranscription();
+		saveButton.setText("Save");
 	}
 
 	private void updatePage() {
@@ -220,10 +230,14 @@ public class PageTranscription {
 			transcription.setDisable(true);
 			saveButton.setDisable(true);
 			saveButton.setVisible(false);
+			commentField.setDisable(true);
+			commentField.setVisible(false);
 		}else {
 			transcription.setDisable(false);
 			saveButton.setDisable(false);
 			saveButton.setVisible(true);
+			commentField.setDisable(true);
+			commentField.setVisible(false);
 		}
 		
 	}

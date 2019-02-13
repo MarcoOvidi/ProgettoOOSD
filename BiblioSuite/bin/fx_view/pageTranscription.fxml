@@ -61,7 +61,10 @@
 					</AnchorPane>
 				</children>
 			</StackPane>
-			<CodeArea fx:id="transcription" prefWidth="600.0"/>
+			 <VBox prefWidth="600.0">
+				<CodeArea fx:id="transcription" prefHeight="400"/>
+				<TextArea fx:id="commentField" promptText="Add a comment" ></TextArea>
+			</VBox>
 			<ListView fx:id="pageList" prefWidth="180.0" />
 		</HBox>
 

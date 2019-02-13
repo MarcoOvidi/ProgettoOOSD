@@ -57,8 +57,8 @@
 			<!--
 			 -->
 			 <VBox prefWidth="600.0">
-				<CodeArea fx:id="transcription" />
-				<TextArea fx:id="commentField" promptText="Add a comment" ></TextArea>
+				<CodeArea fx:id="transcription" prefHeight="550"/>
+				<TextArea fx:id="commentField" promptText="Add a comment" prefHeight="100"></TextArea>
 			</VBox>
 			<ListView fx:id="pageList" prefWidth="180.0"/>
 		</HBox>

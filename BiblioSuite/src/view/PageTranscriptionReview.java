@@ -106,6 +106,13 @@ public class PageTranscriptionReview {
 			PageTranscriptionController.saveTranscription(page, transcription.getText());
 			PageTranscriptionController.setPageRevised(page, true);	
 			TranscriptionProjectController.setTranscriptionComment(page, commentField.getText());
+			transcription.setDisable(true); 
+			
+			validateButton.setDisable(true);
+			saveButton.setDisable(true);
+			commentField.setDisable(true);
+			saveButton.setStyle("-fx-background-color:#e86e0a; -fx-opacity: 1.0;");
+			saveButton.setText("Done");
 		});
 	}
 	
@@ -117,6 +124,12 @@ public class PageTranscriptionReview {
 			PageTranscriptionController.setPageValidated(page, true);
 			TranscriptionProjectController.setTranscriptionComment(page, commentField.getText());
 			transcription.setDisable(true); 
+			
+			validateButton.setDisable(true);
+			saveButton.setDisable(true);
+			commentField.setDisable(true);
+			validateButton.setStyle("-fx-background-color:#3CB371;-fx-opacity: 1.0;");
+			validateButton.setText("Done");
 		});
 		
 		
@@ -220,6 +233,9 @@ public class PageTranscriptionReview {
 		pageList.scrollTo(pageList.getSelectionModel().getSelectedIndex());
 		updatePage();
 		updateTranscription();
+		
+		saveButton.setText("Save and send back");
+		validateButton.setText("Save and Validate");
 	}
 
 	private void updatePage() {
@@ -244,6 +260,7 @@ public class PageTranscriptionReview {
 			saveButton.setVisible(false);
 			validateButton.setDisable(true);
 			validateButton.setVisible(false);
+			commentField.setDisable(true);
 			commentField.setVisible(false);
 			
 		}else {
@@ -252,6 +269,7 @@ public class PageTranscriptionReview {
 			saveButton.setVisible(true);
 			validateButton.setDisable(false);
 			validateButton.setVisible(true);
+			commentField.setDisable(false);
 			commentField.setVisible(true);
 			
 		}
