@@ -100,15 +100,24 @@ public class PageTranscriptionReview {
 			UUIDPage page = DocumentInfoController.getPageID(LocalSession.getOpenedDocumet().getUUID(), Integer.parseInt(number.getText()));
 			
 			PageTranscriptionController.saveTranscription(page, transcription.getText());
-			PageTranscriptionController.setPageRevised(DocumentInfoController.getPageID(LocalSession.getOpenedDocumet().getUUID(), Integer.parseInt(number.getText())), true);			
+			PageTranscriptionController.setPageRevised(DocumentInfoController.getPageID(LocalSession.getOpenedDocumet().getUUID(), Integer.parseInt(number.getText())), true);	
+			
+			//SETTARE IL COMMENTO
+			
+			
 		});
 	}
 	
 	private void initValidateButton() {
 		validateButton.setOnAction(event -> {
+			UUIDPage page = DocumentInfoController.getPageID(LocalSession.getOpenedDocumet().getUUID(), Integer.parseInt(number.getText()));
+			PageTranscriptionController.saveTranscription(page, transcription.getText());
+			PageTranscriptionController.setPageRevised(DocumentInfoController.getPageID(LocalSession.getOpenedDocumet().getUUID(), Integer.parseInt(number.getText())), true);
 			PageTranscriptionController.setPageValidated(DocumentInfoController.getPageID(LocalSession.getOpenedDocumet().getUUID(), Integer.parseInt(number.getText())), true);
 			transcription.setDisable(true); 
 		});
+		
+		
 	}
 
 	public void loadPageList() {
@@ -228,6 +237,17 @@ public class PageTranscriptionReview {
 		
 		if(page.getTranscription().getValidated()) {
 			transcription.setDisable(true);
+			saveButton.setDisable(true);
+			saveButton.setVisible(false);
+			validateButton.setDisable(true);
+			validateButton.setVisible(false);
+			
+		}else {
+			transcription.setDisable(false);
+			saveButton.setDisable(false);
+			saveButton.setVisible(true);
+			validateButton.setDisable(false);
+			validateButton.setVisible(true);
 		}
 	}
 

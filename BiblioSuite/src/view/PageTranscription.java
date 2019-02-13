@@ -217,8 +217,12 @@ public class PageTranscription {
 		
 		if(page.getTranscription().getValidated()) {
 			transcription.setDisable(true);
+			saveButton.setDisable(true);
+			saveButton.setVisible(false);
 		}else {
 			transcription.setDisable(false);
+			saveButton.setDisable(false);
+			saveButton.setVisible(true);
 		}
 		
 	}
