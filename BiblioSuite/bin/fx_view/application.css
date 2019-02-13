@@ -406,20 +406,20 @@ tab-pane > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
 }
  
 .text-area .content{
-	-fx-border-width:0.0px 1.0px 0.0px 2.0px;
     -fx-alignment: CENTER;
-    -fx-border-color:#e86e0a;
       -fx-background-color: #202020;
   }
   
 TextArea {
 	-fx-text-fill: #fff;
-      -fx-highlight-fill: #e86e0a;
-       -fx-highlight-text-fill: #222;
+    -fx-highlight-fill: #e86e0a;
+    -fx-highlight-text-fill: #222;
+	-fx-border-width:0.0px 1.0px 0.0px 2.0px;
+    -fx-border-color:#e86e0a;
 }
 
 TextArea:focused {
-	-fx-border-width:0.0px 0.0px 0.0px 2.0px;
+	-fx-border-width:0.0px 12.0px 0.0px 2.0px;
     -fx-border-color:#e86e0a;
       -fx-background-color: #e86e0a;
 }
@@ -770,13 +770,13 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 .styled-text-area {
 	-fx-border-width:0.0px 1.0px 0.0px 2.0px;
     -fx-alignment: CENTER;
-    -fx-border-color:#eee;
+    -fx-border-color:#3CB371;
     -fx-background-color: #222;
     -fx-padding: 20px;
 }
 
 .styled-text-area:focused {
-	-fx-border-width:0.0px 5.0px 0.0px 2.0px;
+	-fx-border-width:0.0px 12.0px 0.0px 2.0px;
     -fx-border-color:#3CB371;
     -fx-background-color: #222;
 }
