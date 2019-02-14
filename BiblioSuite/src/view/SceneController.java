@@ -1,8 +1,12 @@
 package view;
 
+import javax.print.DocFlavor.URL;
+import javax.swing.ImageIcon;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -24,7 +28,13 @@ public class SceneController extends Application {
 
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) {try {
+		
+        java.awt.Image image = new ImageIcon("file:resources/icon.png").getImage();
+        com.apple.eawt.Application.getApplication().setDockIconImage(image);
+    } catch (Exception e) {
+        // Won't work on Windows or Linux.
+    }
 		launch(args);
 	}
 
@@ -71,6 +81,8 @@ public class SceneController extends Application {
 		}
 
 		scene.getStylesheets().add(new RootCss().getCss());
+		stage.getIcons().add(new Image("file:resources/icon.png"));
+		System.out.println(stage.getIcons().get(0));
 		stage.setResizable(true);
 
 		// stage.setFullScreen(true);

@@ -66,6 +66,7 @@ public class PageTranscription {
 
 	@FXML
 	public void initialize() {
+		
 		loadPageList();
 		initBackButton();
 		if (isEmpty) {
@@ -87,6 +88,9 @@ public class PageTranscription {
 
 		pageList.getSelectionModel().selectFirst();
 		updatePageNumber();
+		
+		message.setVisible(false);
+		commentField.setDisable(true);
 
 		Platform.runLater(() -> pageList.requestFocus());
 
@@ -225,18 +229,22 @@ public class PageTranscription {
 		int index = pageList.getSelectionModel().getSelectedIndex();
 		Page page = LocalSession.getOpenedDocumet().getPageList().get(index);
 		setTranscriptionText(page.getTranscription().getText());
+		commentField.setText(page.getTranscription().getComment());
 		
 		if(page.getTranscription().getValidated()) {
 			transcription.setDisable(true);
 			saveButton.setDisable(true);
 			saveButton.setVisible(false);
-			commentField.setDisable(true);
-			commentField.setVisible(false);
 		}else {
 			transcription.setDisable(false);
 			saveButton.setDisable(false);
 			saveButton.setVisible(true);
-			commentField.setDisable(true);
+		}
+		
+		if(page.getTranscription().getRevised()) {
+			commentField.setVisible(true);
+		}
+		else {
 			commentField.setVisible(false);
 		}
 		

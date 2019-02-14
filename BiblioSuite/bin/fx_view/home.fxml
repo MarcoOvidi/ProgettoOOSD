@@ -2,39 +2,52 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.Label?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Home">
-	<left>
-		<HBox style=" -fx-background-image: url(images/library.jpg);          -fx-background-position: left top, center;           -fx-background-repeat: stretch;          -fx-background-size: cover, auto;"> 
-			<VBox id="newsList" style="-fx-background-color: rgba(255, 255, 255, 0);">
-				<Label style="-fx-background-color: rgba(255, 255, 255, 0);" text="News" textFill="#aaaaaa">
-					<font>
-						<Font size="28.0" />
-					</font>
-					<VBox.margin>
-						<Insets left="10.0" />
-					</VBox.margin>
-				</Label>
-				
-						<AnchorPane prefHeight="17.0" prefWidth="707.0" style="-fx-background-color: rgba(0, 0, 0, 0);">
-							<children>
-								<VBox fx:id="news" layoutX="1.0" layoutY="5.0" prefHeight="11.0" prefWidth="703.0" style="-fx-background-color: rgba(0, 0, 0, 0.2);" styleClass="titlesBox" />
-							</children>
-						</AnchorPane>
-				
-			</VBox>
-         <AnchorPane id="rightHomePanel" prefHeight="685.0" prefWidth="600.0" style="-fx-background-color: rgba(0, 0, 0, 0.2);">
-            <children>
-         				<JFXButton fx:id="catalog" layoutX="166.0" layoutY="131.0" text="Catalogo" />
-         				<JFXButton fx:id="myCollection" layoutX="153.0" layoutY="408.0" text="My Collection" />
-            </children>
-         </AnchorPane>
-		</HBox>
-	</left>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
+	minHeight="-Infinity" minWidth="-Infinity"
+	xmlns="http://javafx.com/javafx/8.0.171"
+	xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Home">
+	<center>
+		<AnchorPane BorderPane.alignment="CENTER">
+			<HBox fx:id="homeContent" spacing="140" AnchorPane.topAnchor="150.0" AnchorPane.leftAnchor="120.0">
+				<children>
+					<VBox fx:id="catalog">
+						<ImageView >
+							<image>
+								<Image url="@../../resources/favicon/256/book.png" />
+							</image>
+						</ImageView>
+						<Label style="-fx-padding:0px 0px 0px 60px; -fx-font-size:28;">Catalog</Label>
+					</VBox>
+
+					<VBox fx:id="myCollection">
+						<ImageView>
+							<image>
+								<Image url="@../../resources/favicon/256/bookmark-o.png" />
+							</image>
+						</ImageView>
+						<Label style="-fx-padding:0px 0px 0px 38px; -fx-font-size:28;"> My Collection</Label>
+					</VBox>
+
+					<VBox fx:id="news">
+						<ImageView>
+							<image>
+								<Image url="@../../resources/favicon/256/rss.png" />
+							</image>
+						</ImageView>
+						<Label style="-fx-padding:0px 0px 0px 95px; -fx-font-size:28;" >News</Label>
+					</VBox>
+
+				</children>
+			</HBox>
+		</AnchorPane>
+	</center>
 </BorderPane>
