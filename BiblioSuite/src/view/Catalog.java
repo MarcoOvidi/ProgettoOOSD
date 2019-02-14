@@ -185,7 +185,6 @@ public class Catalog extends Application {
 
 				stackPane.setOnMouseClicked(event -> {
 					caricaCategoria(currentCat.getKey(), currColor, glow);
-
 				});
 
 				gridPane.add(stackPane, j, i);

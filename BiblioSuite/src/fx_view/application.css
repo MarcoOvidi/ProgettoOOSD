@@ -46,7 +46,7 @@ Button:hover{
 
 JFXButton, TextField, PasswordField{
     -fx-alignment: CENTER;
-	-fx-background-color: transparent;
+	-fx-background-color: #7775;
 	-fx-border-color:#aaa;
 	-fx-border-radius: 0.0px;
 	-fx-border-width: 0.0px 0.0px 1.5px 0.0px ;
@@ -57,6 +57,7 @@ JFXButton, TextField, PasswordField{
   
 JFXTextField, JFXPasswordField{
     -fx-alignment: CENTER;
+    -fx-background-color: #7775;
 	-fx-text-fill: #eee;
 	-fx-text-alignment: CENTER;
     -fx-highlight-fill: #f87e1a;
@@ -906,3 +907,5 @@ JFXScrollPane {
 .greyBackground{
 	-fx-background-color: linear-gradient(from 50.0% 20.0% to 50.0% 100.0%, #444, #000);	
 }
+
+Label{-fx-text-fill:white;}

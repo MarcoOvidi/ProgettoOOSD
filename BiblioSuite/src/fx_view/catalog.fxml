@@ -19,7 +19,7 @@
                   		<HBox prefHeight="514.0" prefWidth="47.0">
                   			<VBox prefHeight="684.0" prefWidth="396.0">
                   				<children>
-                  					<JFXButton fx:id="catalogo" text="catalogo" />
+                  					<JFXButton fx:id="catalogo" text="catalogo" visible="false"/>
                   				</children>
                   				<padding>
                   					<Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />

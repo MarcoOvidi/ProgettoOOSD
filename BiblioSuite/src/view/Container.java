@@ -30,7 +30,6 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
-import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
@@ -67,7 +66,7 @@ public class Container {
 	static {
 		map.put("Home", new Pair<String,String>("home","home"));
 		map.put("My Profile", new Pair<String,String>("userProfile","user-circle"));
-		map.put("Contact Admin", new Pair<String,String>("message","briefCase"));
+		map.put("Contact Admin", new Pair<String,String>("message","envelope"));
 		map.put("Manage Projects", new Pair<String,String>("manageProject","group"));
 		map.put("Upload", new Pair<String,String>("loadScan","image"));
 		map.put("Transcription", new Pair<String,String>("transcription","file-text"));
@@ -92,6 +91,7 @@ public class Container {
 		Tab tab = new Tab();
 		tab.setGraphic(imageView);
 		tab.setTooltip(tooltip);
+		
 		
 		topbar.getTabs().add(tab);
 		
@@ -209,9 +209,11 @@ public class Container {
 					
 					fillResult(result);
 
-					content.setEffect(new GaussianBlur(200.0));
+					//content.setEffect(new GaussianBlur(200.0));
+					Animations.blurOut(content);
 					popOver.setOnHiding(event -> {
-						content.setEffect(null);	
+						//content.setEffect(null);
+						Animations.blurIn(content);
 					});
 						
 					popOver.show(searchBar.getParent());

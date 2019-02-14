@@ -36,6 +36,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -46,6 +47,10 @@ import vo.UUIDDocument;
 public class ShowDocument {
 	public static boolean isEmpty = false;
 
+	@FXML
+	private HBox content;
+	
+	
 	@FXML
 	private Button backButton;
 
@@ -252,6 +257,16 @@ public class ShowDocument {
 
 			popOver.setContentNode(popOverPane);
 			popOver.setArrowLocation(ArrowLocation.TOP_RIGHT);
+
+			//content.setEffect(new GaussianBlur(200.0));
+			Animations.blurOut(content);
+			popOver.setOnHiding(event2 -> {
+				//content.setEffect(null);
+				Animations.blurIn(content);
+			});
+				
+			
+			
 			popOver.show(moreButton);
 		});
 		
