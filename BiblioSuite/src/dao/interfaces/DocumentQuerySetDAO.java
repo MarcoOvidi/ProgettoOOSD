@@ -3,6 +3,7 @@ package dao.interfaces;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import dao.concrete.DatabaseException;
 import javafx.fxml.LoadException;
@@ -25,5 +26,6 @@ public interface DocumentQuerySetDAO {
 			throws DatabaseException;
 	public String getDocumentTitle(UUIDDocument id) throws DatabaseException;
 	public HashMap<UUIDDocument, String[]> getAllDocuments() throws DatabaseException;
+	public LinkedList<String> getInvolvedCollections(UUIDDocument id) throws DatabaseException;
 	
 }

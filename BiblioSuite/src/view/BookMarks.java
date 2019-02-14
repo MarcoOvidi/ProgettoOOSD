@@ -103,6 +103,7 @@ public class BookMarks {
 
 				StackPane pane = new StackPane();
 				Label label = new Label(currentCat.getValue().toUpperCase());
+				label.setWrapText(true);
 				label.setStyle("-fx-text-fill:white; -fx-font-size: 16; -fx-font-weight: bold;");
 				if (!colorsIterator.hasNext()) {
 					colorsIterator = null;

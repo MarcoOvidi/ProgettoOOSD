@@ -12,27 +12,49 @@
 <?import javafx.scene.image.ImageView?>
 <?import org.fxmisc.richtext.CodeArea?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
 
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
 	minHeight="-Infinity" minWidth="-Infinity"
 	xmlns="http://javafx.com/javafx/8.0.171"
-	xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="view.ShowDocument">
+	xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ShowDocument">
 	<top>
-		<AnchorPane fx:id="menuDocumentView" prefHeight="40.0" layoutX="0.0" layoutY="0.0"
-			AnchorPane.rightAnchor="0.0">
+		<AnchorPane fx:id="menuDocumentView" prefHeight="40.0"
+			layoutX="0.0" layoutY="0.0" AnchorPane.rightAnchor="0.0">
 			<children>
-				<ToolBar AnchorPane.leftAnchor="0.0" AnchorPane.bottomAnchor="3.0"
+				<ToolBar AnchorPane.leftAnchor="0.0"
+					AnchorPane.bottomAnchor="3.0"
 					style="-fx-background-color: #00000000">
 					<Button fx:id="backButton" mnemonicParsing="false"
 						prefHeight="24.0" prefWidth="170.0" text="⬅   Back">
 					</Button>
 				</ToolBar>
-				<ToolBar  AnchorPane.RightAnchor="0.0" AnchorPane.bottomAnchor="3.0"
+				<ToolBar AnchorPane.RightAnchor="0.0"
+					AnchorPane.bottomAnchor="3.0"
 					style="-fx-background-color: #00000000">
+					<Button fx:id="downloadButton" mnemonicParsing="false"
+						prefHeight="24.0" prefWidth="170.0" text="Download">
+						<graphic>
+							<ImageView>
+								<image>
+									<Image url="@../../resources/favicon/16/download.png"></Image>
+								</image>
+							</ImageView>
+						</graphic>
+					</Button>
+					<Button fx:id="addDocumentToUserCollections"
+						mnemonicParsing="false" prefHeight="24.0" prefWidth="170.0" text="Add to Bookmarks">
+						<graphic>
+							<ImageView>
+								<image>
+									<Image url="@../../resources/favicon/16/bookmark-o.png"></Image>
+								</image>
+							</ImageView>
+						</graphic>
+					</Button>
 					<Button fx:id="moreButton" mnemonicParsing="false"
-						prefHeight="24.0" prefWidth="170.0" text="More ▼">
+						prefHeight="24.0" prefWidth="170.0" text="▼ More">
 					</Button>
 				</ToolBar>
 			</children>
@@ -42,8 +64,9 @@
 		<HBox BorderPane.alignment="CENTER" styleClass="greyBackground">
 			<!-- <ScrollPane fx:id="pageListScroll" prefHeight="800.0"> <content> 
 				<VBox fx:id="pageList" prefHeight="200.0" /> </content> </ScrollPane> -->
-			
-			<StackPane styleClass="transparentObj" prefWidth="400.0" style="-fx-padding: 0px 25px 0px 25px;" >
+
+			<StackPane styleClass="transparentObj" prefWidth="400.0"
+				style="-fx-padding: 0px 25px 0px 25px;">
 				<children>
 					<ImageView fx:id="currentPage" />
 					<!-- <Label fx:id="message" /> -->

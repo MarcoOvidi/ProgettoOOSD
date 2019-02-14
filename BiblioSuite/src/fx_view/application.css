@@ -5,13 +5,9 @@
 }
 
 
-.root {
+.root{
      -fx-background-color: #333;
 }
-
-
-
-
 
 #searchBar{
 	-fx-border-radius:20.0px;
@@ -265,7 +261,6 @@ PasswordField:hover{
 {
     -fx-tab-min-width:120.0px;
     -fx-open-tab-animation: grow;
-    
     -fx-background-color: #222;
     
 }
@@ -279,7 +274,7 @@ PasswordField:hover{
 }
 .jfx-tab-pane .tab, .tab-pane .tab
 {
-    -fx-background-color: #4440;
+    -fx-background-color: #4440;    
     
 }
 
@@ -382,7 +377,13 @@ tab-pane > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
 }
 
 .scroll-bar:horizontal .thumb,
-.scroll-bar:vertical .thumb {
+.scroll-bar:vertical .thumb{
+    -fx-background-color: #8888;
+    -fx-background-radius: 5.0em;
+}
+
+.scroll-bar:horizontal .thumb:hover,
+.scroll-bar:vertical .thumb:hover {
     -fx-background-color: #3CB371;
     -fx-background-radius: 5.0em;
 }
@@ -735,7 +736,7 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 #topbar{
 	-fx-background-color: rgba(100.0,30.0,0.0,1.0);
     -fx-border-width: 0.0px 0.0px 1.0px 0.0px;
-    -fx-border-color:#aaaa;
+    -fx-border-color:#bbb;
     -fx-tab-max-width:49.0px;
 }
 
@@ -751,12 +752,11 @@ MenuButton .menu-item:focused > .label { -fx-text-fill: black; }
 
 
 
-#moreButton{
-		-fx-background-color: #5559;
-	
+#moreButton,#downloadButton,#addDocumentToUserCollections{
+	-fx-background-color: #5559;
 }
 
-#backButton:hover, #moreButton:hover{
+#backButton:hover, #moreButton:hover,#downloadButton:hover,#addDocumentToUserCollections:hover{
 	-fx-background-color: #3CB371;
 }
 

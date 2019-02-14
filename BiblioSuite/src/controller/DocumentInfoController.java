@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import dao.concrete.DatabaseException;
 import dao.concrete.DigitalizationRevisorQuerySet;
@@ -29,6 +30,10 @@ public class DocumentInfoController {
 	
 	public Document getDocument() {
 		return this.document;
+	}
+	
+	public String getPagesNumber() {
+		return String.valueOf(document.getPagesNumber());
 	}
 
 	public String getTitle() {
@@ -188,6 +193,20 @@ public class DocumentInfoController {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	public static LinkedList<String> getInvolvedCollections(UUIDDocument id){
+		try {
+			return new DocumentQuerySet().getInvolvedCollections(id);
+		} catch (DatabaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public LinkedList<String> getInvolvedCollections(){
+		return getInvolvedCollections(document.getUUID());
 	}
 
 }

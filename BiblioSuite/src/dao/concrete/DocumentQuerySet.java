@@ -959,5 +959,47 @@ public class DocumentQuerySet implements DocumentQuerySetDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	public LinkedList<String> getInvolvedCollections(UUIDDocument id) throws DatabaseException{
+		Connection con = null;
+
+		try {
+			con = DBConnection.connect();
+		} catch (DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		LinkedList<String> categories = new LinkedList<String>();
+	
+
+		try {
+			ps = con.prepareStatement("select dc.name from document_collection as dc"
+					+ " join document_of_collection as dof "
+					+ "on dc.ID=dof.ID_document_collection where dof.ID_document=?;");
+			ps.setInt(1, id.getValue());
+			rs = ps.executeQuery();
+
+			while(rs.next()) {
+				categories.add(rs.getString("name"));
+			}
+
+		} catch (SQLException e) {
+			throw new DatabaseException("Errore di esecuzione della query", e);
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+
+		}
+		return categories;
+	}
 
 }

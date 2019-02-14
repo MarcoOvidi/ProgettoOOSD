@@ -29,6 +29,8 @@ public class DocumentProperties {
 	Label author;
 	@FXML
 	Label composition;
+	@FXML
+	Label pages;
 
 	@FXML
 	TextArea description;
@@ -40,7 +42,7 @@ public class DocumentProperties {
 	JFXCheckBox transcriptionComplete;
 
 	@FXML
-	TextArea categories;
+	FlowPane categories;
 
 	@FXML
 	FlowPane tags;
@@ -60,6 +62,7 @@ public class DocumentProperties {
 			author.setText(documentInfoController.getAuthor());
 			composition.setText(documentInfoController.getComposition());
 			description.setText(documentInfoController.getDescription());
+			pages.setText(documentInfoController.getPagesNumber());
 
 		} catch (LoadException | DatabaseException e) {
 			// TODO Manca gestione errori
@@ -89,7 +92,9 @@ public class DocumentProperties {
 	}
 
 	private void loadCategories() {
-
+		for (String tag : documentInfoController.getInvolvedCollections()) {
+			categories.getChildren().add(new Button(tag));
+		}
 	}
 
 	public static UUIDDocument getToShowDocument() {

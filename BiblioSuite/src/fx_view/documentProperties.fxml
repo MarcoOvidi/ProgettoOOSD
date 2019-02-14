@@ -49,7 +49,7 @@
 						<JFXCheckBox fx:id="scanningComplete" disable="true" text="Scanning Complete" />
 						<JFXCheckBox fx:id="transcriptionComplete" disable="true" text="Transcription Complete" />
 						<Label style="-fx-text-fill: #f87e1a" text="Categories: " />
-						<TextArea fx:id="categories" editable="false" focusTraversable="false" mouseTransparent="true" />
+						<FlowPane fx:id="categories" hgap="20"/>
 						<Label style="-fx-text-fill: #f87e1a" text="Tags: " />
 						<FlowPane fx:id="tags" hgap="20"></FlowPane>
 					</VBox>

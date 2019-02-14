@@ -14,7 +14,7 @@ public class ImageUploader {
 	private ImageUploader() {
 	}
 
-	/*
+	/**
 	 * Carica un'immagine e restituisce il nuovo URL
 	 * 
 	 * @return String URL della nuova immagine
@@ -33,7 +33,7 @@ public class ImageUploader {
 		return resultingURL;
 	}
 	
-	/*
+	/**
 	 * Creates a data directory for the images if it doesn't exist
 	 */
 	private static void setupDataDirectory() {
@@ -42,5 +42,4 @@ public class ImageUploader {
 	}
 
 	// TODO delete image
-
 }
