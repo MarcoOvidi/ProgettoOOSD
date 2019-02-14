@@ -72,6 +72,7 @@ public class SceneController extends Application {
 			}
 		} else {
 			try {
+				loaded=false;
 				BorderPane root = (BorderPane)FXMLLoader.load(new
 				Object(){}.getClass().getResource("/fx_view/"+name+".fxml"));
 				//Container.loadScene(name);
