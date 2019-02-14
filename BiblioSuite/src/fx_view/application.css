@@ -101,17 +101,17 @@ JFXTextField, JFXPasswordField{
 	
 	-fx-background-color:#20202020;
 	-fx-background-color: linear-gradient(from 25.0% 25.0% to 100.0% 100.0%, #202020, transparent);
-	-fx-background-radius: 8.0px;
-	-fx-padding:4.0px;
-	-fx-border-width:0.0px 0.0px 1.0px 0.0px;
+	-fx-background-radius: 0.0px;
+	-fx-padding:6.0px;
+	-fx-border-width:0.0px 0.0px 0.0px 0.0px;
 	-fx-border-color:#191919;
 	}
 .title-row1{
 	
 	-fx-background-color:#5552;
 	-fx-background-color: linear-gradient(from 25.0% 25.0% to 100.0% 100.0%, #5552, transparent);
-	-fx-background-radius: 8.0px;
-	-fx-padding:4.0px;
+	-fx-background-radius: 0.0px;
+	-fx-padding:6.0px;
 	-fx-border-width:0.0px 0.0px 0.0px 0.0px;
 	-fx-border-color:#191919;
 	}
@@ -184,7 +184,7 @@ JFXTextField, JFXPasswordField{
 
 .title-row:hover, .title-row1:hover{
 	-fx-background-color: linear-gradient(from 25.0% 25.0% to 100.0% 100.0%, #e86e0a, transparent);
-	-fx-background-radius: 8.0px;
+	-fx-background-radius: 0.0px;
 	-fx-text-fill:#eee;
 	
 }

@@ -19,14 +19,6 @@
 		<AnchorPane BorderPane.alignment="CENTER">
 			<HBox fx:id="homeContent" spacing="140" AnchorPane.topAnchor="150.0" AnchorPane.leftAnchor="120.0">
 				<children>
-					<VBox fx:id="catalog">
-						<ImageView >
-							<image>
-								<Image url="@../../resources/favicon/256/book.png" />
-							</image>
-						</ImageView>
-						<Label style="-fx-padding:0px 0px 0px 60px; -fx-font-size:28;">Catalog</Label>
-					</VBox>
 
 					<VBox fx:id="myCollection">
 						<ImageView>
@@ -35,6 +27,15 @@
 							</image>
 						</ImageView>
 						<Label style="-fx-padding:0px 0px 0px 38px; -fx-font-size:28;"> My Collection</Label>
+					</VBox>
+
+					<VBox fx:id="catalog">
+						<ImageView >
+							<image>
+								<Image url="@../../resources/favicon/256/book.png" />
+							</image>
+						</ImageView>
+						<Label style="-fx-padding:0px 0px 0px 60px; -fx-font-size:28;">Catalog</Label>
 					</VBox>
 
 					<VBox fx:id="news">

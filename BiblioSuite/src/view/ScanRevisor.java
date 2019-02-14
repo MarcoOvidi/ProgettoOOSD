@@ -88,8 +88,6 @@ public class ScanRevisor {
 
 	private UUIDPage currentPage;
 
-	private boolean isValidated;
-
 	@FXML
 	public void initialize() {
 		initPageContainer();
@@ -109,7 +107,6 @@ public class ScanRevisor {
 
 	public void initAcceptButton() {
 		acceptButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-			isValidated = true;
 			ScanningProjectController.validatePage(currentPage, true);
 			ScanningProjectController.revisedPage(currentPage, true);
 			pageContainer.setVisible(false);
@@ -121,7 +118,6 @@ public class ScanRevisor {
 
 	public void initRejectButton() {
 		rejectButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-			isValidated = false;
 			ScanningProjectController.revisedPage(currentPage, true);
 			ScanningProjectController.validatePage(currentPage, false);
 			pageContainer.setVisible(false);

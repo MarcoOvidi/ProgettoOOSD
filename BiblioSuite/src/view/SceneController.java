@@ -1,8 +1,5 @@
 package view;
 
-import javax.print.DocFlavor.URL;
-import javax.swing.ImageIcon;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -30,8 +27,6 @@ public class SceneController extends Application {
 
 	public static void main(String[] args) {try {
 		
-        java.awt.Image image = new ImageIcon("file:resources/icon.png").getImage();
-        com.apple.eawt.Application.getApplication().setDockIconImage(image);
     } catch (Exception e) {
         // Won't work on Windows or Linux.
     }

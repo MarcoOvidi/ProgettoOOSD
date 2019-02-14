@@ -26,5 +26,6 @@ public interface HomePageQuerySetDAO {
 	public LinkedList<String[]> loadCollection(UUIDDocumentCollection idc) throws DatabaseException ;
 	public LinkedList<String[]> loadLibraryCollectionListWithDocument(UUIDDocumentCollection docColl)
 			throws DatabaseException, SQLException;
+	public  HashMap<UUIDDocument, String> loadMyCollectionDocuments(UUIDUser usr) throws DatabaseException;
 	
 }

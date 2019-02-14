@@ -1,6 +1,5 @@
 package view;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -11,12 +10,9 @@ import java.util.stream.Stream;
 
 import com.jfoenix.controls.JFXButton;
 
-import controller.DocumentInfoController;
 import controller.HomePageController;
 import controller.LocalSession;
 import controller.PageViewController;
-import dao.concrete.DatabaseException;
-import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -31,7 +27,6 @@ import javafx.geometry.Point3D;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
-import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -44,7 +39,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -53,7 +47,6 @@ import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
-import model.Document;
 import vo.UUIDDocument;
 import vo.UUIDDocumentCollection;
 import vo.view.DocumentRow;
@@ -116,9 +109,12 @@ public class Catalog extends Application {
 		// ScaleTransition transition = new ScaleTransition();
 		Glow glow = new Glow();
 		glow.setLevel(0.7);
-
+		
+		
+		
 		for (int i = 0; i < categories.size() / 4 + nr; i++) {
 			for (int j = 0; j < 4; j++) {
+				
 				Map.Entry<UUIDDocumentCollection, String> currentCat = itr.next();
 
 				if (!itr.hasNext())
@@ -160,7 +156,6 @@ public class Catalog extends Application {
 				stackPane.getChildren().add(pane);
 				stackPane.setStyle("-fx-pref-width:100px; -fx-pref-height:100px");
 
-				ScaleTransition transition = new ScaleTransition();
 
 				stackPane.setOnMouseEntered(event -> {
 					label.setEffect(glow);
@@ -194,7 +189,7 @@ public class Catalog extends Application {
 				});
 
 				gridPane.add(stackPane, j, i);
-				gridPane.setMargin(stackPane, new Insets(8, 8, 8, 8));
+				GridPane.setMargin(stackPane, new Insets(8, 8, 8, 8));
 
 			}
 
@@ -275,8 +270,6 @@ public class Catalog extends Application {
 				stackPane.getChildren().add(pane);
 				stackPane.setStyle("-fx-pref-width:100px; -fx-pref-height:100px");
 
-				ScaleTransition transition = new ScaleTransition();
-
 				stackPane.setOnMouseEntered(event -> {
 					label.setEffect(glow);
 					stackPane.setEffect(glow);
@@ -329,7 +322,7 @@ public class Catalog extends Application {
 				
 
 				gridPane.add(stackPane, j, i);
-				gridPane.setMargin(stackPane, new Insets(8, 8, 8, 8));
+				GridPane.setMargin(stackPane, new Insets(8, 8, 8, 8));
 
 			}
 

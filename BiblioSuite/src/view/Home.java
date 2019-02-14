@@ -1,45 +1,12 @@
 package view;
 
 import java.text.ParseException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Set;
-import java.util.Map.Entry;
 
-import com.jfoenix.controls.JFXButton;
-
-import controller.HomePageController;
-import controller.PageViewController;
 import dao.concrete.DatabaseException;
-import javafx.animation.ScaleTransition;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.LoadException;
-import javafx.geometry.Insets;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TitledPane;
 import javafx.scene.effect.Glow;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import vo.UUIDDocument;
-import vo.UUIDDocumentCollection;
-import vo.view.DocumentRow;
 
 public class Home /* extends Application */ {
 
@@ -106,6 +73,14 @@ public class Home /* extends Application */ {
 		
 		catalog.setOnMouseClicked(event ->{
 			SceneController.loadScene("catalog");
+		});
+		
+		news.setOnMouseClicked(event ->{
+			SceneController.loadScene("news");
+		});
+		
+		myCollection.setOnMouseClicked(event ->{
+			SceneController.loadScene("bookMarks");
 		});
 		
 		

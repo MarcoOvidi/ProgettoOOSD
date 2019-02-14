@@ -63,6 +63,15 @@ public class HomePageController {
 			e.getMessage();
 		}
 	}
+	
+	public static HashMap<UUIDDocument, String> getMyPersonalCollection() {
+		try {
+			return new HomePageQuerySet().loadMyCollectionDocuments(LocalSession.getLocalUser().getID());
+		}catch(DatabaseException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	public static void loadMyTranscriptionProjects() {
 		try {

@@ -304,6 +304,50 @@ public class HomePageQuerySet implements HomePageQuerySetDAO{
 		return pc;
 
 	}
+	
+	public  HashMap<UUIDDocument, String> loadMyCollectionDocuments(UUIDUser usr) throws DatabaseException {
+		Connection con = null;
+
+		try {
+			con = DBConnection.connect();
+		} catch (DatabaseException e) {
+			throw new DatabaseException("Errore di connessione", e);
+		}
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		HashMap<UUIDDocument, String> pc = new HashMap<UUIDDocument, String>();
+
+		try {
+			ps = con.prepareStatement("select document.ID,document.title from personal_collection as pc join document "
+					+ "on pc.ID_document=document.ID  where ID_user=?;");
+			ps.setInt(1, usr.getValue());
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				
+				pc.put(new UUIDDocument(rs.getInt("ID")), rs.getString("title"));
+			}
+
+		} catch (SQLException e) {
+			throw new DatabaseException("Errore di esecuzione della query", e);
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", e));
+			}
+
+		}
+
+		return pc;
+
+	}
 
 	/**
 	 * Recupera i metadati di tutti i Document presenti nella collezione personale
