@@ -14,8 +14,19 @@ public final class LocalSession {
 	static ArrayList<String> topBarButtons = new ArrayList<String>();
 	static Document openedDocumet = null;
 
+	private static LocalSession instance = new LocalSession();
+	
+	private LocalSession() {
+		
+	}
+	
+	public static final LocalSession getInstance() {
+		return instance;
+	}
+	
+	
 	@SuppressWarnings("deprecation")
-	public static Image loadImage(String url) {
+	public Image loadImage(String url) {
 		Image image;
 
 		if (url == null)
@@ -38,41 +49,28 @@ public final class LocalSession {
 
 	}
 
-	public static Document getOpenedDocumet() {
+	public Document getOpenedDocumet() {
 		return openedDocumet;
 	}
 
-	public static void setOpenedDocumet(Document openedDocumet) {
+	public void setOpenedDocumet(Document openedDocumet) {
 		LocalSession.openedDocumet = openedDocumet;
 	}
 
-	// TODO error handling
-	private static LocalSession instance = new LocalSession();
-
-	private LocalSession() {
-
-	}
-
-	public static final LocalSession getInstance() {
-		return instance;
-	}
-
-	public static User getLocalUser() {
+	public User getLocalUser() {
 		return localUser;
 	}
 
-	public static UserInformations getLocalUserInfo() {
+	public UserInformations getLocalUserInfo() {
 		return localUser.getInformations();
 	}
 
-	private static void loadTopBarButtons() {
-		// TODO admin?
-		/*
-		 * if (permissions.admin) not show Contact Admin
-		 */
+	private void loadTopBarButtons() {
 		topBarButtons.add("Home");
 		topBarButtons.add("My Profile");
-
+		
+		if (localUser.isAdmin())
+			topBarButtons.add("Contact Admin");
 		if (localUser.isCoordinator())
 			topBarButtons.add("Manage Projects");
 		if (localUser.isUploader())
@@ -87,16 +85,16 @@ public final class LocalSession {
 			topBarButtons.add("Admin");
 	}
 
-	public static void setLocalUser(User lUser) {
+	public void setLocalUser(User lUser) {
 		localUser = lUser;
 		loadTopBarButtons();
 	}
 
-	public static List<String> getTopBarButtons() {
+	public List<String> getTopBarButtons() {
 		return topBarButtons;
 	}
 
-	public static void clear() {
+	public void clear() {
 		localUser = null;
 		topBarButtons = new ArrayList<String>();
 	}

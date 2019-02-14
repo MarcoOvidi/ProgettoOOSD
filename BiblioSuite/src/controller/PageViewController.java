@@ -23,7 +23,7 @@ public class PageViewController {
 			e.printStackTrace();
 		}
 		if(doc != null) {
-			LocalSession.setOpenedDocumet(doc);
+			LocalSessionBridge.setOpenedDocumet(doc);
 			SceneController.loadScene("showDocument", false);
 		}
 		

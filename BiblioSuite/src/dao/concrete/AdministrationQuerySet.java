@@ -296,6 +296,48 @@ public class AdministrationQuerySet implements AdministratorQuerySetDAO { // tut
 		return (result == 1);
 
 	}
+	
+	/**
+	 * Inserisce una nuova richiesta da parte di un utente
+	 * 
+	 * @param user
+	 * @param object
+	 * @param message
+	 */
+	public void sendRequest(UUIDUser user, String object, String message) throws DatabaseException {
+		Connection con = null;
+
+		try {
+			con = DBConnection.connect();
+		} catch (DatabaseException ex) {
+			throw new DatabaseException("Errore di connessione", ex);
+		}
+
+		PreparedStatement ps = null;
+
+		try {
+			ps = con.prepareStatement("INSERT INTO request(ID_user,object,message) "
+					+ "VALUE(?,?,?);");
+			ps.setInt(1, user.getValue());
+			ps.setString(2, object);
+			ps.setString(3, message);
+
+			ps.executeUpdate();
+
+		} catch (SQLException e) {
+			throw new DatabaseException("Errore nella query", e);
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException ex) {
+				DBConnection.logDatabaseException(new DatabaseException("Errore sulle risorse", ex));
+			}
+		}
+
+	}
 
 	/**
 	 * Aggiorna a non pending lo stato di una richiesta che è stata scartata

@@ -2,7 +2,7 @@ package view;
 
 import java.util.Map.Entry;
 
-import controller.LocalSession;
+import controller.LocalSessionBridge;
 import controller.PageTranscriptionController;
 import dao.concrete.DatabaseException;
 import dao.concrete.TranscriptionWorkProjectQuerySet;
@@ -120,7 +120,7 @@ public class Transcription {
 
 	@FXML
 	public void insertDocument() {
-		PageTranscriptionController.loadUncompletedDocumentForTranscriber(LocalSession.getLocalUser().getID());
+		PageTranscriptionController.loadUncompletedDocumentForTranscriber(LocalSessionBridge.getLocalUser().getID());
 		
 		documentList.setConverter(new StringConverter<Entry<UUIDDocument, String>>() {
 			@Override

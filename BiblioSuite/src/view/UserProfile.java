@@ -4,7 +4,7 @@ import java.text.ParseException;
 
 import controller.AdministrationController;
 import controller.EditUserController;
-import controller.LocalSession;
+import controller.LocalSessionBridge;
 import dao.concrete.DatabaseException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -64,15 +64,15 @@ public class UserProfile {
 	}
 
 	private void loadInfo() {
-		UserInformations info = LocalSession.getLocalUserInfo();
-		username.setText(LocalSession.getLocalUser().getUsername());
+		UserInformations info = LocalSessionBridge.getLocalUserInfo();
+		username.setText(LocalSessionBridge.getLocalUser().getUsername());
 		name.setText(info.getName());
 		surname.setText(info.getSurname());
 		email.setText(info.getMail().getEmail());
 
-		if (LocalSession.getLocalUser().isTranscriber()) {
+		if (LocalSessionBridge.getLocalUser().isTranscriber()) {
 			level.setText(
-					String.valueOf(AdministrationController.getTranscriberLevel(LocalSession.getLocalUser().getID())));
+					String.valueOf(AdministrationController.getTranscriberLevel(LocalSessionBridge.getLocalUser().getID())));
 		}else {
 			levelT.setVisible(false);
 			level.setVisible(false);
@@ -80,7 +80,7 @@ public class UserProfile {
 	}
 
 	private void loadPermissions() {
-		UserPermissions up = LocalSession.getLocalUser().getPermissions();
+		UserPermissions up = LocalSessionBridge.getLocalUser().getPermissions();
 		if (up.getActive())
 			active.setSelected(true);
 		if (up.getAddNewProjectPerm())
@@ -110,8 +110,8 @@ public class UserProfile {
 
 	private void initEditButton() {
 		edit.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-			EditUserController.setEditingUser(LocalSession.getLocalUser().getID());
-			EditUserController.setToEditUser(LocalSession.getLocalUser());
+			EditUserController.setEditingUser(LocalSessionBridge.getLocalUser().getID());
+			EditUserController.setToEditUser(LocalSessionBridge.getLocalUser());
 			SceneController.loadScene("editUserProfile");
 		});
 	}

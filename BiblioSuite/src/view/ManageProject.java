@@ -11,7 +11,7 @@ import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.TreeMap;
 
-import controller.LocalSession;
+import controller.LocalSessionBridge;
 import controller.PageScanController;
 import controller.PageTranscriptionController;
 import controller.RoleController;
@@ -590,8 +590,8 @@ public class ManageProject {
 					// se la riga cliccata non è di un utente coordinatore e chi clicca è un
 					// coordinatore o admin
 					if (!(row.getItem().getRole().equals("Coordinator"))
-							&& (RoleController.controlUserPermission(8, LocalSession.getLocalUser().getID())
-									|| RoleController.controlUserPermission(12, LocalSession.getLocalUser().getID()))) {
+							&& (RoleController.controlUserPermission(8, LocalSessionBridge.getLocalUser().getID())
+									|| RoleController.controlUserPermission(12, LocalSessionBridge.getLocalUser().getID()))) {
 
 						List<String> choices = new ArrayList<>();
 
@@ -600,7 +600,7 @@ public class ManageProject {
 						if (RoleController.controlUserPermission(7, row.getItem().getId()))
 							choices.add("Reviser");
 						choices.add("Remove user from project");
-						if (RoleController.controlUserPermission(12, LocalSession.getLocalUser().getID())
+						if (RoleController.controlUserPermission(12, LocalSessionBridge.getLocalUser().getID())
 								&& RoleController.controlUserPermission(8, row.getItem().getId())) {
 							choices.add("Coordinator");
 						}
@@ -746,7 +746,7 @@ public class ManageProject {
 
 						// se la riga cliccata è di un utente coordinatore e chi clicca è un admin
 					} else if (row.getItem().getRole().equals("Coordinator")
-							&& RoleController.controlUserPermission(12, LocalSession.getLocalUser().getID())) {
+							&& RoleController.controlUserPermission(12, LocalSessionBridge.getLocalUser().getID())) {
 						List<String> choices = new ArrayList<>();
 
 						if (RoleController.controlUserPermission(5, row.getItem().getId()))
@@ -895,8 +895,8 @@ public class ManageProject {
 					// se la riga cliccata non è di un utente coordinatore e chi clicca è un
 					// coordinatore o admin
 					if (!(row.getItem().getRole().equals("Coordinator"))
-							&& (RoleController.controlUserPermission(8, LocalSession.getLocalUser().getID())
-									|| RoleController.controlUserPermission(12, LocalSession.getLocalUser().getID()))) {
+							&& (RoleController.controlUserPermission(8, LocalSessionBridge.getLocalUser().getID())
+									|| RoleController.controlUserPermission(12, LocalSessionBridge.getLocalUser().getID()))) {
 
 						List<String> choices = new ArrayList<>();
 						if (RoleController.controlUserPermission(2, row.getItem().getId()))
@@ -904,7 +904,7 @@ public class ManageProject {
 						if (RoleController.controlUserPermission(4, row.getItem().getId()))
 							choices.add("Reviser");
 						choices.add("Remove user from project");
-						if (RoleController.controlUserPermission(12, LocalSession.getLocalUser().getID())
+						if (RoleController.controlUserPermission(12, LocalSessionBridge.getLocalUser().getID())
 								&& RoleController.controlUserPermission(8, row.getItem().getId())) {
 							choices.add("Coordinator");
 						}
@@ -1050,7 +1050,7 @@ public class ManageProject {
 
 						// se la riga cliccata è di un utente coordinatore e chi clicca è un admin
 					} else if (row.getItem().getRole().equals("Coordinator")
-							&& RoleController.controlUserPermission(12, LocalSession.getLocalUser().getID())) {
+							&& RoleController.controlUserPermission(12, LocalSessionBridge.getLocalUser().getID())) {
 						List<String> choices = new ArrayList<>();
 
 						if (RoleController.controlUserPermission(2, row.getItem().getId()))

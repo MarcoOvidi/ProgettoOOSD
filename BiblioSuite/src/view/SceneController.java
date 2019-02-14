@@ -14,6 +14,11 @@ public class SceneController extends Application {
 	private static String sceneName;
 
 	private static Scene previousScene;
+	
+	private static boolean loaded = false;
+	
+	private static FXMLLoader fxmlLoader;
+	private static Container container;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -25,11 +30,7 @@ public class SceneController extends Application {
 
 	}
 
-	public static void main(String[] args) {try {
-		
-    } catch (Exception e) {
-        // Won't work on Windows or Linux.
-    }
+	public static void main(String[] args) {
 		launch(args);
 	}
 
@@ -44,15 +45,28 @@ public class SceneController extends Application {
 			try {
 				// BorderPane root = (BorderPane)FXMLLoader.load(new
 				// Object(){}.getClass().getResource("/fx_view/"+name+".fxml"));
+				
+				
+				
 				Container.loadScene(name);
-				BorderPane root = (BorderPane) FXMLLoader.load(new Object() {
-				}.getClass().getResource("/fx_view/container.fxml"));
+				
+				
+				if(!loaded) {
+					fxmlLoader = new FXMLLoader(new Object() {
+					}.getClass().getResource("/fx_view/container.fxml"));
+					BorderPane root = (BorderPane) fxmlLoader.load();
+					container = (Container) fxmlLoader.getController();
+				loaded=true;
 
 				// scene = new Scene(root,1400,800);
 				scene = new Scene(root);
 
 				scene.setRoot(root);
 				stage.setScene(scene);
+				}
+				else {
+					container.partialInit();
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

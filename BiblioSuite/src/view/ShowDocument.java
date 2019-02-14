@@ -13,7 +13,7 @@ import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 
 import controller.DownloadController;
-import controller.LocalSession;
+import controller.LocalSessionBridge;
 import controller.PageViewController;
 import dao.concrete.DatabaseException;
 import dao.concrete.HomePageQuerySet;
@@ -113,7 +113,7 @@ public class ShowDocument {
 	}
 	
 	private void initButtons(){
-		if (!LocalSession.getLocalUser().canDownload()) {
+		if (!LocalSessionBridge.getLocalUser().canDownload()) {
 			downloadButton.setVisible(false);
 			downloadButton.setDisable(true);
 		}
@@ -121,13 +121,13 @@ public class ShowDocument {
 		HashMap<UUIDDocument, String[]> myColl = null;
 
 		try {
-			myColl = new HomePageQuerySet().loadMyCollectionList(LocalSession.getLocalUser().getID());
+			myColl = new HomePageQuerySet().loadMyCollectionList(LocalSessionBridge.getLocalUser().getID());
 		} catch (DatabaseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
-		if (myColl.containsKey(LocalSession.getOpenedDocumet().getUUID())) {
+		if (myColl.containsKey(LocalSessionBridge.getOpenedDocumet().getUUID())) {
 			addDocumentToUserCollections.setGraphic(new ImageView(new Image("file:resources/favicon/16/bookmark.png")));
 			addDocumentToUserCollections.setText("Remove bookmark");
 		}
@@ -141,15 +141,15 @@ public class ShowDocument {
 				addDocumentToUserCollections.setGraphic(new ImageView(new Image("file:resources/favicon/16/bookmark.png")));
 				addDocumentToUserCollections.setText("Remove bookmark");
 				
-				PageViewController.addDocumentFromMyCollection(LocalSession.getOpenedDocumet().getUUID(),
-						LocalSession.getLocalUser().getID());
+				PageViewController.addDocumentFromMyCollection(LocalSessionBridge.getOpenedDocumet().getUUID(),
+						LocalSessionBridge.getLocalUser().getID());
 			}
 			else {
 				addDocumentToUserCollections.setGraphic(new ImageView(new Image("file:resources/favicon/16/bookmark-o.png")));
 				addDocumentToUserCollections.setText("Add to Bookmarks");
 				
-				PageViewController.removeDocumentFromMyCollection(LocalSession.getOpenedDocumet().getUUID(),
-						LocalSession.getLocalUser().getID());
+				PageViewController.removeDocumentFromMyCollection(LocalSessionBridge.getOpenedDocumet().getUUID(),
+						LocalSessionBridge.getLocalUser().getID());
 			}
 		});
 		
@@ -160,7 +160,7 @@ public class ShowDocument {
 	}
 
 	public void loadPageList() {
-		LinkedList<Page> pages = LocalSession.getOpenedDocumet().getPageList();
+		LinkedList<Page> pages = LocalSessionBridge.getOpenedDocumet().getPageList();
 
 		/*
 		 * if (pages.isEmpty()) {
@@ -184,7 +184,7 @@ public class ShowDocument {
 		});
 
 		for (Page page : pages) {
-			Image pageIcon = LocalSession.loadImage(page.getScan().getImage().getUrl());
+			Image pageIcon = LocalSessionBridge.loadImage(page.getScan().getImage().getUrl());
 			VBox vbox = new VBox();
 			vbox.setAlignment(Pos.CENTER);
 			vbox.setPadding(new Insets(20));
@@ -238,7 +238,7 @@ public class ShowDocument {
 			
 			PopOver popOver = new PopOver();
 			AnchorPane popOverPane = new AnchorPane();
-			DocumentProperties.setToShowDocument(LocalSession.getOpenedDocumet().getUUID());
+			DocumentProperties.setToShowDocument(LocalSessionBridge.getOpenedDocumet().getUUID());
 
 			try {
 				popOverPane.getChildren().setAll(((BorderPane) FXMLLoader.load(new Object() {
@@ -267,14 +267,14 @@ public class ShowDocument {
 		ButtonType buttonTypeThree = new ButtonType("Both");
 		ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
 
-		if (LocalSession.getOpenedDocumet().getScanningWorkProject() != null
-				&& LocalSession.getOpenedDocumet().getTranscriptionWorkProject() != null)
+		if (LocalSessionBridge.getOpenedDocumet().getScanningWorkProject() != null
+				&& LocalSessionBridge.getOpenedDocumet().getTranscriptionWorkProject() != null)
 			alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeThree, buttonTypeCancel);
-		else if (LocalSession.getOpenedDocumet().getScanningWorkProject() != null
-				&& LocalSession.getOpenedDocumet().getTranscriptionWorkProject() == null)
+		else if (LocalSessionBridge.getOpenedDocumet().getScanningWorkProject() != null
+				&& LocalSessionBridge.getOpenedDocumet().getTranscriptionWorkProject() == null)
 			alert.getButtonTypes().setAll(buttonTypeTwo, buttonTypeCancel);
-		else if (LocalSession.getOpenedDocumet().getScanningWorkProject() == null
-				&& LocalSession.getOpenedDocumet().getTranscriptionWorkProject() != null)
+		else if (LocalSessionBridge.getOpenedDocumet().getScanningWorkProject() == null
+				&& LocalSessionBridge.getOpenedDocumet().getTranscriptionWorkProject() != null)
 			alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeCancel);
 
 		Optional<ButtonType> result = alert.showAndWait();
@@ -293,7 +293,7 @@ public class ShowDocument {
 			File file = fileChooser.showSaveDialog(t);
 			if (file != null) {
 				// chiama controller
-				DownloadController.getOperaTranscription(LocalSession.getOpenedDocumet(), file);
+				DownloadController.getOperaTranscription(LocalSessionBridge.getOpenedDocumet(), file);
 			}
 		} else if (result.get() == buttonTypeTwo) {
 			// scegli url
@@ -309,7 +309,7 @@ public class ShowDocument {
 
 			File file = fileChooser.showSaveDialog(t);
 			if (file != null) {
-				DownloadController.getOperaDigitalization(LocalSession.getOpenedDocumet(), file);
+				DownloadController.getOperaDigitalization(LocalSessionBridge.getOpenedDocumet(), file);
 			}
 		} else if (result.get() == buttonTypeThree) {
 			// scegli url
@@ -325,7 +325,7 @@ public class ShowDocument {
 
 			File file = fileChooser.showSaveDialog(t);
 			if (file != null) {
-				DownloadController.getOpera(LocalSession.getOpenedDocumet(), file);
+				DownloadController.getOpera(LocalSessionBridge.getOpenedDocumet(), file);
 			}
 		}
 	}
@@ -367,7 +367,7 @@ public class ShowDocument {
 	private void updateTranscription() {
 		int index = Integer
 				.parseInt(((Label) pageList.getSelectionModel().getSelectedItem().getChildren().get(1)).getText());
-		setTranscriptionText(LocalSession.getOpenedDocumet().getPageList().get(index - 1).getTranscription().getText());
+		setTranscriptionText(LocalSessionBridge.getOpenedDocumet().getPageList().get(index - 1).getTranscription().getText());
 	}
 
 	/*
@@ -375,7 +375,7 @@ public class ShowDocument {
 	 */
 	private void updateTranscription(int index) {
 		index = Integer.parseInt(((Label) pageList.getItems().get(index).getChildren().get(1)).getText());
-		setTranscriptionText(LocalSession.getOpenedDocumet().getPageList().get(index - 1).getTranscription().getText());
+		setTranscriptionText(LocalSessionBridge.getOpenedDocumet().getPageList().get(index - 1).getTranscription().getText());
 	}
 
 	private void updateTranscription(VBox elem) {

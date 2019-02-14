@@ -50,7 +50,7 @@ public class ScanningProjectController {
 
 		try {
 			coordinatedScanningProject = new ScanningWorkProjectQuerySet()
-					.loadMyCoordinatedScanningWorkProjectList(LocalSession.getLocalUser().getID());
+					.loadMyCoordinatedScanningWorkProjectList(LocalSessionBridge.getLocalUser().getID());
 		} catch (DatabaseException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());

@@ -31,7 +31,7 @@ public class TranscriptionProjectController {
 	
 	public static void loadCoordinatedTranscriptionPRoject() {
 		try{
-			coordinatedTranscriptionProject = new TranscriptionWorkProjectQuerySet().loadMyCoordinatedTranscriptionWorkProjectList(LocalSession.getLocalUser().getID());
+			coordinatedTranscriptionProject = new TranscriptionWorkProjectQuerySet().loadMyCoordinatedTranscriptionWorkProjectList(LocalSessionBridge.getLocalUser().getID());
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());

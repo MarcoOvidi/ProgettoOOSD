@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map.Entry;
 
-import controller.LocalSession;
+import controller.LocalSessionBridge;
 import dao.interfaces.DocumentQuerySetDAO;
 import javafx.fxml.LoadException;
 import model.Document;
@@ -107,7 +107,7 @@ public class DocumentQuerySet implements DocumentQuerySetDAO {
 				ps = con.prepareStatement("insert into scanning_project (ID_coordinator,ID_document,scanning_complete) "
 						+ "values(?,?,0);");
 
-				ps.setInt(1, LocalSession.getLocalUser().getID().getValue());
+				ps.setInt(1, LocalSessionBridge.getLocalUser().getID().getValue());
 				ps.setInt(2, id.getValue());
 
 				ps.executeUpdate();
@@ -181,7 +181,7 @@ public class DocumentQuerySet implements DocumentQuerySetDAO {
 				ps = con.prepareStatement("insert into scanning_project (ID_coordinator,ID_document,scanning_complete) "
 						+ "values(?,?,0);");
 
-				ps.setInt(1, LocalSession.getLocalUser().getID().getValue());
+				ps.setInt(1, LocalSessionBridge.getLocalUser().getID().getValue());
 				ps.setInt(2, id.getValue());
 
 				ps.executeUpdate();

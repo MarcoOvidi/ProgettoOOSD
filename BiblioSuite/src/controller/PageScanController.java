@@ -139,7 +139,7 @@ public class PageScanController {
 		vo.Image img = new vo.Image("temp");
 		
 		try {
-			page = new DigitalizerQuerySet().createPage(num, img, LocalSession.localUser.getID(), currentDocument);
+			page = new DigitalizerQuerySet().createPage(num, img, LocalSessionBridge.getLocalUser().getID(), currentDocument);
 			
 			String URL;
 			URL = ImageUploader.uploadImage(image, page.getValue().toString());

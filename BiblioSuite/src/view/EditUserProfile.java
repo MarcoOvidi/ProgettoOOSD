@@ -10,7 +10,7 @@ import java.util.Optional;
 
 import controller.AdministrationController;
 import controller.EditUserController;
-import controller.LocalSession;
+import controller.LocalSessionBridge;
 import controller.RoleController;
 import dao.concrete.DatabaseException;
 import javafx.beans.value.ChangeListener;
@@ -106,9 +106,9 @@ public class EditUserProfile {
 		surname.setText(info.getSurname());
 		email.setText(info.getMail().getEmail());
 
-		if (LocalSession.getLocalUser().isTranscriber()) {
+		if (LocalSessionBridge.getLocalUser().isTranscriber()) {
 			level.setText(
-					String.valueOf(AdministrationController.getTranscriberLevel(LocalSession.getLocalUser().getID())));
+					String.valueOf(AdministrationController.getTranscriberLevel(LocalSessionBridge.getLocalUser().getID())));
 		} else {
 			levelT.setVisible(false);
 			level.setVisible(false);
@@ -358,7 +358,7 @@ public class EditUserProfile {
 					System.out.println(transcriberLevel);
 				}
 			});
-			levelChoose.getSelectionModel().select(AdministrationController.getTranscriberLevel(LocalSession.getLocalUser().getID()));
+			levelChoose.getSelectionModel().select(AdministrationController.getTranscriberLevel(LocalSessionBridge.getLocalUser().getID()));
 			levelChoose.setVisible(true);
 			levelT.setVisible(true);
 			level.setVisible(false);

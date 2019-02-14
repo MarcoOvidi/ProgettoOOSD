@@ -7,7 +7,7 @@ import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 
 import controller.DocumentInfoController;
-import controller.LocalSession;
+import controller.LocalSessionBridge;
 import controller.PageTranscriptionController;
 import controller.TranscriptionProjectController;
 import javafx.application.Platform;
@@ -99,9 +99,9 @@ public class PageTranscriptionReview {
 	
 	private void initSaveButton() {
 		saveButton.setOnAction(event -> {
-			System.out.println(LocalSession.getOpenedDocumet().getUUID());
+			System.out.println(LocalSessionBridge.getOpenedDocumet().getUUID());
 			System.out.println(Integer.parseInt(number.getText()));
-			UUIDPage page = DocumentInfoController.getPageID(LocalSession.getOpenedDocumet().getUUID(), Integer.parseInt(number.getText()));
+			UUIDPage page = DocumentInfoController.getPageID(LocalSessionBridge.getOpenedDocumet().getUUID(), Integer.parseInt(number.getText()));
 			
 			PageTranscriptionController.saveTranscription(page, transcription.getText());
 			PageTranscriptionController.setPageRevised(page, true);	
@@ -118,7 +118,7 @@ public class PageTranscriptionReview {
 	
 	private void initValidateButton() {
 		validateButton.setOnAction(event -> {
-			UUIDPage page = DocumentInfoController.getPageID(LocalSession.getOpenedDocumet().getUUID(), Integer.parseInt(number.getText()));
+			UUIDPage page = DocumentInfoController.getPageID(LocalSessionBridge.getOpenedDocumet().getUUID(), Integer.parseInt(number.getText()));
 			PageTranscriptionController.saveTranscription(page, transcription.getText());
 			PageTranscriptionController.setPageRevised(page, true);
 			PageTranscriptionController.setPageValidated(page, true);
@@ -136,7 +136,7 @@ public class PageTranscriptionReview {
 	}
 
 	public void loadPageList() {
-		LinkedList<Page> pages = LocalSession.getOpenedDocumet().getPageList();
+		LinkedList<Page> pages = LocalSessionBridge.getOpenedDocumet().getPageList();
 		// System.out.println("1");
 
 		/*
@@ -161,7 +161,7 @@ public class PageTranscriptionReview {
 		});
 
 		for (Page page : pages) {
-			Image pageIcon = LocalSession.loadImage(page.getScan().getImage().getUrl());
+			Image pageIcon = LocalSessionBridge.loadImage(page.getScan().getImage().getUrl());
 			VBox vbox = new VBox();
 			vbox.setAlignment(Pos.CENTER);
 			vbox.setPadding(new Insets(20));
@@ -250,7 +250,7 @@ public class PageTranscriptionReview {
 	private void updateTranscription() {
 		//int index = Integer	.parseInt(((Label) pageList.getSelectionModel().getSelectedItem().getChildren().get(1)).getText());
 		int index = pageList.getSelectionModel().getSelectedIndex();
-		Page page = LocalSession.getOpenedDocumet().getPageList().get(index);
+		Page page = LocalSessionBridge.getOpenedDocumet().getPageList().get(index);
 		setTranscriptionText(page.getTranscription().getText());
 		commentField.setText(page.getTranscription().getComment());
 		
@@ -280,7 +280,7 @@ public class PageTranscriptionReview {
 	 */
 	private void updateTranscription(int index) {
 		index = Integer.parseInt(((Label) pageList.getItems().get(index).getChildren().get(1)).getText());
-		setTranscriptionText(LocalSession.getOpenedDocumet().getPageList().get(index-1).getTranscription().getText());
+		setTranscriptionText(LocalSessionBridge.getOpenedDocumet().getPageList().get(index-1).getTranscription().getText());
 	}
 
 	private void updateTranscription(VBox elem) {

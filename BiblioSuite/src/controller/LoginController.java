@@ -29,9 +29,9 @@ public class LoginController {
 			if (id != null) {
 				UserID.setId(id);				
 				User user = new EditProfileQuerySet().loadUserProfile(id);
-				LocalSession.getInstance();
+				//LocalSessionBridge.getInstance();
 				//LocalSession.setLocalUser(user);
-				LocalSession.setLocalUser(user);
+				LocalSessionBridge.setLocalUser(user);
 				lscene.displayMessage("Done. Loading scene");
 				SceneController.loadScene("home");
 			} else {
@@ -58,7 +58,7 @@ public class LoginController {
 	
 	public static void logout () {
 		//TODO ask for confirmation
-		LocalSession.clear();
+		LocalSessionBridge.clear();
 		//SceneController.loadScene("login");
 		SceneController.loadLogin();
 	}

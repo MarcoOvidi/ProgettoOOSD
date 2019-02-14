@@ -117,7 +117,7 @@ public class DocumentInfoController {
 		if(b) {
 			try {
 				//TODO solo se non esiste già
-				new TranscriptionWorkProjectQuerySet().insertTranscriptionWorkProject(LocalSession.getLocalUser().getID(),document.getUUID());
+				new TranscriptionWorkProjectQuerySet().insertTranscriptionWorkProject(LocalSessionBridge.getLocalUser().getID(),document.getUUID());
 			} catch (DatabaseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.Map.Entry;
 import java.util.Optional;
 
-import controller.LocalSession;
+import controller.LocalSessionBridge;
 import controller.PageScanController;
 import dao.concrete.DatabaseException;
 import dao.concrete.ScanningWorkProjectQuerySet;
@@ -257,7 +257,7 @@ public class LoadScan {
 
 	@FXML
 	public void insertDocument() {
-		PageScanController.loadUncompletedDocumentForDigitalizer(LocalSession.getLocalUser().getID());
+		PageScanController.loadUncompletedDocumentForDigitalizer(LocalSessionBridge.getLocalUser().getID());
 
 		documentList.setConverter(new StringConverter<Entry<UUIDDocument, String>>() {
 			@Override
@@ -374,7 +374,7 @@ public class LoadScan {
 				val = "\u2718";
 			}
 
-			Image img = LocalSession.loadImage(page.getScan().getImage().getUrl());
+			Image img = LocalSessionBridge.loadImage(page.getScan().getImage().getUrl());
 
 			ImageView imgView = new ImageView();
 			imgView.setImage(img);

@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Map.Entry;
 
-import controller.LocalSession;
+import controller.LocalSessionBridge;
 import controller.PageScanController;
 import controller.ScanningProjectController;
 import javafx.beans.value.ChangeListener;
@@ -153,7 +153,7 @@ public class ScanRevisor {
 	public void insertDocument() {
 
 		// TODO grande dubbio su quale dei due metodi!!!!!!!!
-		PageScanController.loadUncompletedDocumentForReviser(LocalSession.getLocalUser().getID());
+		PageScanController.loadUncompletedDocumentForReviser(LocalSessionBridge.getLocalUser().getID());
 
 		documentList.setConverter(new StringConverter<Entry<UUIDDocument, String>>() {
 			@Override
@@ -235,7 +235,7 @@ public class ScanRevisor {
 						val = "\u2718";
 					}
 
-					Image img = LocalSession.loadImage(page.getScan().getImage().getUrl());
+					Image img = LocalSessionBridge.loadImage(page.getScan().getImage().getUrl());
 					// ImageView imgView = new ImageView();
 					// imgView.setImage(img);
 

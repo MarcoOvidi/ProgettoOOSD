@@ -13,7 +13,7 @@ import org.controlsfx.control.PopOver.ArrowLocation;
 
 import controller.EditUserController;
 import controller.HomePageController;
-import controller.LocalSession;
+import controller.LocalSessionBridge;
 import controller.LoginController;
 import controller.PageViewController;
 import controller.SearchController;
@@ -30,6 +30,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
@@ -66,6 +67,7 @@ public class Container {
 	static {
 		map.put("Home", new Pair<String,String>("home","home"));
 		map.put("My Profile", new Pair<String,String>("userProfile","user-circle"));
+		map.put("Contact Admin", new Pair<String,String>("message","briefCase"));
 		map.put("Manage Projects", new Pair<String,String>("manageProject","group"));
 		map.put("Upload", new Pair<String,String>("loadScan","image"));
 		map.put("Transcription", new Pair<String,String>("transcription","file-text"));
@@ -121,6 +123,7 @@ public class Container {
 			try {
 				//newContent = (BorderPane)FXMLLoader.load(new Object(){}.getClass().getResource("/fx_view/"+name+".fxml"));
 				newContent = ((BorderPane)FXMLLoader.load(new Object(){}.getClass().getResource("/fx_view/"+name+".fxml")));
+				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -132,7 +135,7 @@ public class Container {
 	
 	@FXML
 	public void initialize() throws DatabaseException, ParseException {// container.setSpacing(5);
-		List<String> buttons = LocalSession.getTopBarButtons();
+		List<String> buttons = LocalSessionBridge.getTopBarButtons();
 
 		for (String str : buttons) {
 			initButtonLink(str, map.get(str).getKey());
@@ -162,6 +165,10 @@ public class Container {
 		//content = newContent;
 		content.getChildren().setAll(newContent);
 		//content.getChildren().get(0).setEffect(new BoxBlur());
+	}
+	
+	public void partialInit() {
+		content.getChildren().setAll(newContent);
 	}
 	
 	private void initSearch() {
@@ -202,6 +209,11 @@ public class Container {
 					
 					fillResult(result);
 
+					content.setEffect(new GaussianBlur(200.0));
+					popOver.setOnHiding(event -> {
+						content.setEffect(null);	
+					});
+						
 					popOver.show(searchBar.getParent());
 				}
 			}

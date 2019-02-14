@@ -56,7 +56,7 @@ public class HomePageController {
 	
 	public static void loadMyCollection() {
 		try {
-			myCollection = new HomePageQuerySet().loadMyCollectionList(LocalSession.getLocalUser().getID());
+			myCollection = new HomePageQuerySet().loadMyCollectionList(LocalSessionBridge.getLocalUser().getID());
 		} catch (DatabaseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -66,7 +66,7 @@ public class HomePageController {
 	
 	public static HashMap<UUIDDocument, String> getMyPersonalCollection() {
 		try {
-			return new HomePageQuerySet().loadMyCollectionDocuments(LocalSession.getLocalUser().getID());
+			return new HomePageQuerySet().loadMyCollectionDocuments(LocalSessionBridge.getLocalUser().getID());
 		}catch(DatabaseException e) {
 			e.printStackTrace();
 			return null;
@@ -75,7 +75,7 @@ public class HomePageController {
 
 	public static void loadMyTranscriptionProjects() {
 		try {
-			setMyTPrj(new HomePageQuerySet().loadMyTranscriptionWorkProjectList(LocalSession.getLocalUser().getID()));
+			setMyTPrj(new HomePageQuerySet().loadMyTranscriptionWorkProjectList(LocalSessionBridge.getLocalUser().getID()));
 		} catch (DatabaseException e) {
 			e.printStackTrace();
 			e.getMessage();
@@ -84,7 +84,7 @@ public class HomePageController {
 	
 	public static void loadMyScanningProjects() {
 		try {
-			setMySPrj(new HomePageQuerySet().loadMyScanningWorkProjectList(LocalSession.getLocalUser().getID()));
+			setMySPrj(new HomePageQuerySet().loadMyScanningWorkProjectList(LocalSessionBridge.getLocalUser().getID()));
 		} catch (DatabaseException e) {
 			e.printStackTrace();
 			e.getMessage();
@@ -176,7 +176,7 @@ public class HomePageController {
 		Boolean perm = false;
 		try {
 		
-			perm = new UserAuthenticationQuerySet().permissionsControl(2, LocalSession.getLocalUser().getID());
+			perm = new UserAuthenticationQuerySet().permissionsControl(2, LocalSessionBridge.getLocalUser().getID());
 		
 		}catch(DatabaseException e) {
 			e.getMessage();
@@ -195,7 +195,7 @@ public class HomePageController {
 		Boolean perm = false;
 		try {
 		
-			perm = new UserAuthenticationQuerySet().permissionsControl(5, LocalSession.getLocalUser().getID());
+			perm = new UserAuthenticationQuerySet().permissionsControl(5, LocalSessionBridge.getLocalUser().getID());
 		
 		}catch(DatabaseException e) {
 			e.getMessage();

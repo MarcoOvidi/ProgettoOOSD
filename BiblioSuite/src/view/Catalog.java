@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 import com.jfoenix.controls.JFXButton;
 
 import controller.HomePageController;
-import controller.LocalSession;
+import controller.LocalSessionBridge;
 import controller.PageViewController;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
@@ -408,7 +408,7 @@ public class Catalog extends Application {
 		int i = 0;
 		for (Map.Entry<UUIDDocument, String[]> entry : map.entrySet()) {
 			// create unit
-			Image image = LocalSession.loadImage(entry.getValue()[1]);
+			Image image = LocalSessionBridge.loadImage(entry.getValue()[1]);
 			images[i] = new Unit(image, i, entry.getKey());
 
 			// event handler

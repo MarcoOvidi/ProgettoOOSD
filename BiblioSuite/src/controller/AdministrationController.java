@@ -177,4 +177,19 @@ public class AdministrationController {
 			return -1;
 		}
 	}
+	
+	/**
+	 * Crea una nuova richiesta all'amministratore
+	 * @param user
+	 * @param object
+	 * @param message
+	 */
+	public static void sendRequest(UUIDUser user, String object, String message) {
+		try {
+			new AdministrationQuerySet().sendRequest(user, object, message);
+		} catch (DatabaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

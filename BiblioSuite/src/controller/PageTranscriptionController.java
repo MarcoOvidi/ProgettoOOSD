@@ -139,7 +139,7 @@ public class PageTranscriptionController {
 			e.printStackTrace();
 		}
 		if(doc != null) {
-			LocalSession.setOpenedDocumet(doc);
+			LocalSessionBridge.setOpenedDocumet(doc);
 			//PageTranscriptionController.setToEditPageNumber(0);
 			SceneController.loadScene("pageTranscription", false);
 		}
@@ -156,7 +156,7 @@ public class PageTranscriptionController {
 			e.printStackTrace();
 		}
 		if(doc != null) {
-			LocalSession.setOpenedDocumet(doc);
+			LocalSessionBridge.setOpenedDocumet(doc);
 			//PageTranscriptionController.setToEditPageNumber(0);
 			System.out.println("PIPPO");
 			SceneController.loadScene("pageTranscriptionReview", false);

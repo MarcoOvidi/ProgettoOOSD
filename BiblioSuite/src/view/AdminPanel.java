@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import controller.AdministrationController;
 import controller.EditUserController;
-import controller.LocalSession;
+import controller.LocalSessionBridge;
 import dao.concrete.DatabaseException;
 import dao.concrete.EditProfileQuerySet;
 import javafx.collections.FXCollections;
@@ -142,7 +142,7 @@ public class AdminPanel {
 				if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
 					users.refresh();
 
-					EditUserController.setEditingUser(LocalSession.getLocalUser().getID());
+					EditUserController.setEditingUser(LocalSessionBridge.getLocalUser().getID());
 					EditUserController.setToEditUser(row.getItem().getId());
 					EditUserController.startEditing();
 
