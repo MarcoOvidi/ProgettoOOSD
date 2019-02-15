@@ -38,7 +38,7 @@ public final class LocalSession {
 		} catch (IllegalArgumentException e) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Error");
-			alert.setContentText(e.getMessage() + "\n" + url + "\nCheck you database, motherfucker");
+			alert.setContentText(e.getMessage() + "\n" + url + "\nCheck you database");
 			alert.show();
 			e.printStackTrace();
 
@@ -69,7 +69,7 @@ public final class LocalSession {
 		topBarButtons.add("Home");
 		topBarButtons.add("My Profile");
 		
-		if (localUser.isAdmin())
+		if (!localUser.isAdmin())
 			topBarButtons.add("Contact Admin");
 		if (localUser.isCoordinator())
 			topBarButtons.add("Manage Projects");

@@ -469,7 +469,6 @@ public class EditUserProfile {
 
 	private void grantCoordinator() {
 		addNewProject.setSelected(true);
-		;
 		assignDigitalizationTask.setSelected(true);
 		assignTranscriptionTask.setSelected(true);
 		editMetaData.setSelected(true);
