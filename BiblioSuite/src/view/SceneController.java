@@ -12,7 +12,8 @@ public class SceneController extends Application {
 	private static Scene scene;
 	private static Stage stage;
 	private static String sceneName;
-
+	
+	private static String previousSceneName;
 	private static Scene previousScene;
 	
 	private static boolean loaded = false;
@@ -40,6 +41,7 @@ public class SceneController extends Application {
 
 	public static void loadScene(String name, boolean showTopBar) {
 		previousScene = scene;
+		previousSceneName = sceneName; 
 		sceneName = name;
 		if (showTopBar) {
 			try {
@@ -104,6 +106,8 @@ public class SceneController extends Application {
 
 		// stage.initStyle(StageStyle.UNDECORATED);
 		stage.show();
+		
+		
 
 
 	}
@@ -141,6 +145,10 @@ public class SceneController extends Application {
 	}
 
 	public static void loadPreviousScene() {
+
+		Container.loadScene(previousSceneName);
+		container.partialInit();
+		sceneName = previousSceneName; 
 
 		scene = previousScene;
 		stage.setScene(previousScene);

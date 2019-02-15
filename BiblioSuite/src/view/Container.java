@@ -58,6 +58,8 @@ public class Container {
 	
 	private VBox searchResult;
 	
+	private static PopOver popOver = new PopOver();;
+	
 	@FXML
 	private Tab logout;
 
@@ -89,11 +91,19 @@ public class Container {
 		tooltip.setFont(new Font(14));
 		
 		Tab tab = new Tab();
+		/*topbar.setOnMouseEntered(event -> {
+			Animations.blurIn(content);
+		});
+		topbar.setOnMouseExited(event -> {
+			Animations.blurOut(content);
+		});*/
 		tab.setGraphic(imageView);
 		tab.setTooltip(tooltip);
 		
-		
 		topbar.getTabs().add(tab);
+		tab.setOnSelectionChanged(evetn -> {			
+			popOver.hide();
+		});
 		
 		if (link.equals(SceneController.getSceneName())) {
 			topbar.getSelectionModel().select(tab);
@@ -114,6 +124,7 @@ public class Container {
 
 		logout.getTabPane().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 			// SceneController.loadScene("login");
+			popOver.hide();
 			LoginController.logout();
 			event.consume();
 		});
@@ -173,7 +184,7 @@ public class Container {
 	
 	private void initSearch() {
 
-		PopOver popOver = new PopOver();
+		popOver = new PopOver();
 		AnchorPane popOverPane = new AnchorPane();
 		
 		popOverPane.setPrefHeight(200);
@@ -210,10 +221,10 @@ public class Container {
 					fillResult(result);
 
 					//content.setEffect(new GaussianBlur(200.0));
-					Animations.blurOut(content);
+					Animations.blurIn(content);
 					popOver.setOnHiding(event -> {
 						//content.setEffect(null);
-						Animations.blurIn(content);
+						Animations.blurOut(content);
 					});
 						
 					popOver.show(searchBar.getParent());

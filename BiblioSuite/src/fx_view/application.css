@@ -57,7 +57,7 @@ JFXButton, TextField, PasswordField{
   
 JFXTextField, JFXPasswordField{
     -fx-alignment: CENTER;
-    -fx-background-color: #7775;
+    -fx-background-color: transparent;
 	-fx-text-fill: #eee;
 	-fx-text-alignment: CENTER;
     -fx-highlight-fill: #f87e1a;
@@ -908,4 +908,13 @@ JFXScrollPane {
 	-fx-background-color: linear-gradient(from 50.0% 20.0% to 50.0% 100.0%, #444, #000);	
 }
 
-Label{-fx-text-fill:white;}
+Label{
+	-fx-text-fill:white;
+}
+
+#loginTitle {
+	-fx-text-fill: linear-gradient(from 50.0% 20.0% to 50.0% 100.0%, #e86e0a, #e86e0a22);
+}
+
+
+

@@ -87,6 +87,8 @@ public class ShowDocument {
 
 	@FXML
 	private Label message;
+	
+	private PopOver popOver = new PopOver();
 
 	@FXML
 	public void initialize() {
@@ -241,7 +243,13 @@ public class ShowDocument {
 			// FIXME andrebbero modificati view e controller per evitare di dover ricaricare
 			// tutto dal db
 			
-			PopOver popOver = new PopOver();
+			if(popOver.isShowing()) {
+				popOver.hide();
+				moreButton.setText("▼ More");
+				return;
+			}
+			
+			popOver = new PopOver();
 			AnchorPane popOverPane = new AnchorPane();
 			DocumentProperties.setToShowDocument(LocalSessionBridge.getOpenedDocumet().getUUID());
 
@@ -259,13 +267,13 @@ public class ShowDocument {
 			popOver.setArrowLocation(ArrowLocation.TOP_RIGHT);
 
 			//content.setEffect(new GaussianBlur(200.0));
-			Animations.blurOut(content);
+			Animations.blurIn(content);
 			popOver.setOnHiding(event2 -> {
 				//content.setEffect(null);
-				Animations.blurIn(content);
+				Animations.blurOut(content);
 			});
 				
-			
+			moreButton.setText("▲ More");
 			
 			popOver.show(moreButton);
 		});

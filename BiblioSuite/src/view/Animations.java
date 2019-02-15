@@ -9,7 +9,7 @@ import javafx.util.Duration;
 
 public final class Animations {
 
-	public static void blurIn(Node node, int duration) {
+	public static void blurOut(Node node, int duration) {
 	    GaussianBlur blur = (GaussianBlur) node.getEffect();
 	    Timeline timeline = new Timeline();
 	    KeyValue kv = new KeyValue(blur.radiusProperty(), 0.0);
@@ -19,7 +19,7 @@ public final class Animations {
 	    timeline.play();
 	}
 
-	public static void blurOut(Node node,int duration) {
+	public static void blurIn(Node node,int duration) {
 	    GaussianBlur blur = new GaussianBlur(0.0);
 	    node.setEffect(blur);
 	    Timeline timeline = new Timeline();
@@ -29,12 +29,12 @@ public final class Animations {
 	    timeline.play();
 	}
 	
-	public static void blurIn(Node node) {
-	    blurIn(node,200);
-	}
-	
 	public static void blurOut(Node node) {
 	    blurOut(node,200);
+	}
+	
+	public static void blurIn(Node node) {
+	    blurIn(node,200);
 	}
 	
 	//public static void fade
