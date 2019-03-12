@@ -14,7 +14,7 @@
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
 	minHeight="-Infinity" minWidth="-Infinity"
 	xmlns="http://javafx.com/javafx/8.0.171"
-	xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Home">
+	xmlns:fx="http://javafx.com/fxml/1" fx:controller="fx_view.controller.Home">
 	<center>
 		<AnchorPane BorderPane.alignment="CENTER">
 			<HBox fx:id="homeContent" spacing="140" AnchorPane.topAnchor="150.0" AnchorPane.leftAnchor="120.0">

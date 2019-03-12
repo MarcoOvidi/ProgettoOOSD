@@ -10,7 +10,7 @@
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
 	minHeight="-Infinity" minWidth="-Infinity"
 	xmlns="http://javafx.com/javafx/8.0.171"
-	xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.News">
+	xmlns:fx="http://javafx.com/fxml/1" fx:controller="fx_view.controller.News">
 	<AnchorPane style="-fx-background-color: transparent; " >
 		<VBox id="newsList" style="-fx-background-color: transparent; " AnchorPane.topAnchor="40.0" AnchorPane.leftAnchor="270.0">
 					<Label style="-fx-background-color: rgba(255, 255, 255, 0); -fx-padding: 0px 0px 0px 320px;" text="News" textFill="#fff">

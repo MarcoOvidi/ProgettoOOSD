@@ -5,10 +5,10 @@ import java.sql.SQLException;
 import dao.concrete.DatabaseException;
 import dao.concrete.EditProfileQuerySet;
 import dao.concrete.UserAuthenticationQuerySet;
+import fx_view.controller.LoginScene;
+import fx_view.controller.SceneController;
+import fx_view.controller.UserID;
 import model.User;
-import view.LoginScene;
-import view.SceneController;
-import view.UserID;
 import vo.UUIDUser;
 
 public class LoginController {

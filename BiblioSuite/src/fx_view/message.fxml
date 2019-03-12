@@ -14,7 +14,7 @@
 <BorderPane id="rootPane" maxHeight="-Infinity"
 	maxWidth="-Infinity" minHeight="720" minWidth="1280"
 	xmlns="http://javafx.com/javafx/9.0.1"
-	xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Message" >
+	xmlns:fx="http://javafx.com/fxml/1" fx:controller="fx_view.controller.Message" >
 	
 	<AnchorPane style="-fx-background-color: transparent;">
 		<Label	AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="150.0" style="-fx-font-size: 28px;"> Write message to administrator</Label>

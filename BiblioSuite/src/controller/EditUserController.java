@@ -4,8 +4,8 @@ import dao.concrete.AdministrationQuerySet;
 import dao.concrete.DatabaseException;
 import dao.concrete.EditProfileQuerySet;
 import dao.concrete.UserAuthenticationQuerySet;
+import fx_view.controller.SceneController;
 import model.User;
-import view.SceneController;
 import vo.UUIDUser;
 
 public class EditUserController {
